@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block body %}
+    <style>
+        @media print {
+            .print_a {
+                overflow: visible !important;
+            }
+        }
+        thead { display: table-header-group; }
+        tr{page-break-inside: avoid !important;}
+    </style>
+
+    <h1></h1>
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('done_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+    <hr>
+    <div class="print_a">
+    <table class="table table-sm thead-dark">
+        <thead>
+            <tr>
+                <th>{% trans %} JobId {% endtrans %}</th>
+                <th>{% trans %} JobName  {% endtrans %}</th>
+                <th>{% trans %} RoadSection {% endtrans %}</th>
+                <th>{% trans %} RoadSectionBegin {% endtrans %}</th>
+                <th>{% trans %} RoadSectionEnd {% endtrans %}</th>
+                <th>{% trans %} Unit of {% endtrans %}</th>
+                <th>{% trans %} Quantity {% endtrans %}</th>
+                <th>{% trans %} username {% endtrans %}</th>
+                <th>{% trans %} Date {% endtrans %}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'DoneJobDate'|trans, 'd.DoneJobDate') }} </th>
+                <th>{% trans %}  {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for done_job in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <tr>
+                <td>{{ done_job.JobId }}</td>
+                <td>{{ done_job.JobName }}</td>
+                <td>{{ done_job.RoadSection }}</td>
+                <td>{{ done_job.RoadSectionBegin }}</td>
+                <td>{{ done_job.RoadSectionEnd }}</td>
+                <td>{{ done_job.UnitOf }}</td>
+                <td>{{ done_job.Quantity }}</td>
+                <td>{{ done_job.Username }}</td>
+                <td>{{ done_job.Date ? done_job.Date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+                    <a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <hr>
+{% endblock %}

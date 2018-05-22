@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New RoadSection{% endblock %}
+
+{% block body %}
+    <h1>Create new RoadSection</h1>
+
+    {{ include('road_section/_form.html.twig') }}
+
+    <a href="{{ path('road_section_index') }}">back to list</a>
+{% endblock %}

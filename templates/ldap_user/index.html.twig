@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LdapUser index{% endblock %}
+
+{% block body %}
+    <h1>LdapUser index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>UnitId</th>
+                <th>SubUnitId</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ldap_user in ldap_users %}
+            <tr>
+                <td>{{ ldap_user.id }}</td>
+                <td>{{ ldap_user.name }}</td>
+                <td>{{ ldap_user.Unit.unitId }}</td>
+                <td>{{ ldap_user.subunit.subunitId | default(' ') }}</td>
+                <td>
+                    <a href="{{ path('ldap_user_show', {'id': ldap_user.id}) }}">show</a>
+                    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ldap_user_new') }}">Create new</a>
+{% endblock %}

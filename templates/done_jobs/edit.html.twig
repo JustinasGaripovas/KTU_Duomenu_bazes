@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}Edit DoneJobs{% endblock %}
+
+{% block body %}
+    <h1>Edit DoneJobs</h1>
+
+    {{ include('done_jobs/_form.html.twig', {'button_label': 'Update'|trans }) }}
+
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
+    <br>
+    {{ include('done_jobs/_delete_form.html.twig') }}
+{% endblock %}

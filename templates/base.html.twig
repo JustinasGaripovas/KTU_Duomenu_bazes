@@ -1,0 +1,45 @@
+{% trans_default_domain 'translation' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <script type="text/javascript" src=""></script>
+        {% endblock %}
+        <script src="{{ asset('css/style.css') }}"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+    {% block top_menu %}
+        <nav class="navbar navbar-default navbar-static-top navbar navbar-dark bg-dark" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{ path('main') }}">Test</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="divider"></li>
+                <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
+                </li>
+            </ul>
+        </nav>
+    {% endblock %}
+    <div class="container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% block body %}
+        {% endblock %}
+    </div>
+    </body>
+</html>

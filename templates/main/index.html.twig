@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %} TEST TEST TEST!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <ul>
+            <h1>{% trans %}Jobs{% endtrans %}</h1>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
+            <br>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
+            <h1>{% trans %}Ldap users{% endtrans %}</h1>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
+            <h1>{% trans %}Road Sections{% endtrans %}</h1>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
+            <h1>{% trans %}Reports{% endtrans %}</h1>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
+        </ul>
+    </div>
+{% endblock %}

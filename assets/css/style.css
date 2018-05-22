@@ -1,0 +1,17 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+table {
+	font-size: 1em;
+}
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+@media print {
+	.print_a {
+		overflow: visible !important;
+	}
+}
+thead { display: table-header-group; }
+table{word-break: break-word; }
+tr{page-break-inside: avoid !important;}

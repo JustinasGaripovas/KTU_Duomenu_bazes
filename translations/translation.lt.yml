@@ -1,0 +1,48 @@
+Name: Vardas
+group: Grupė
+unit: Padalinys
+LdapUser users administration: Vartotojų administravimas
+UnitId: Padalinio nr.
+Username: Vartotojo vardas
+username: Vardas
+Password: Slaptažodis
+Sign in: Prisijungti
+Job name: Darbas
+Road section: Kelio ruožas
+Road section begin: Pradžia
+Road section end: Pabaiga
+Quantity: Kiekis
+Done job date: Atlikimo data
+Save: Įrašyti
+Unit of: Vnt.
+Date: Data
+back to list: Atgal
+Year: Metai
+Month: Mėnuo
+Day: Diena
+Hour: Valanda
+Minute: Minutė
+Unit of label: Mato vienetas
+RoadSectionBegin: Pradžia
+RoadSectionEnd: Pabaiga
+RoadSection: Atkarpa
+JobName: Darbas
+JobId: Šifras
+DoneJobDate: Atlikta
+actions: Veiksmai
+no records found: Įrašų duomenų bazėje nėra
+New: Naujas įrašas
+Edit: Redaguoti
+Logout: Atsijungti
+New Job: Duomenų įvedimas
+Jobs list: Atliktų darbų sąrašas
+LdapUsers list: Vartotojų sąrašas
+Road Sections: Kelių ruožai
+Jobs: Darbai
+Ldap users: Ldap vartotojai
+Delete: Ištrinti
+Update: Atnaujinti
+Done Jobs report: Atliktų darbų ataskaita
+Reports: Ataskaitos
+Comments: Pastabos
+

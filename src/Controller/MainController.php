@@ -22,17 +22,17 @@ class MainController extends Controller
      */
     public function index()
     {
-        //if(!$this->getUserNameFromSession()){
+        if(!$this->getUserNameFromSession()){
             return $this->render('main/index.html.twig', [
                 'controller_name' => 'MainController',
             ]);
-        //}
-        //else {
-          //  $this->saveUserInDataBase();
-            //return $this->render('main/index.html.twig', [
-              //  'controller_name' => 'MainController',
-            //]);
-        //}
+        }
+        else {
+          $this->saveUserInDataBase();
+            return $this->render('main/index.html.twig', [
+               'controller_name' => 'MainController',
+            ]);
+        }
 
     }
 

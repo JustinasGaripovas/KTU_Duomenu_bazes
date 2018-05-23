@@ -2,17 +2,7 @@
 {% trans_default_domain 'translation' %}
 
 {% block body %}
-    <style>
-        @media print {
-            .print_a {
-                overflow: visible !important;
-            }
-        }
-        thead { display: table-header-group; }
-        tr{page-break-inside: avoid !important;}
-    </style>
 
-    <h1></h1>
     <a class="btn btn-success btn-block btn-lg" href="{{ path('done_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
     <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
     <hr>

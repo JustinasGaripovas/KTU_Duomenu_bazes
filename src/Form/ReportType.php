@@ -4,7 +4,9 @@ namespace App\Form;
 
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
@@ -25,6 +27,16 @@ class ReportType extends AbstractType
                 'attr' => [
                     'class' => 'js-datepicker-2',
                     'autocomplete'=>'off']
+            ))
+            ->add('Preview', SubmitType::class,array(
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ]
+            ))
+            ->add('GeneratePDF', SubmitType::class,array(
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ]
             ))
         ;
     }

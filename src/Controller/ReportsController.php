@@ -14,11 +14,13 @@ class ReportsController extends Controller
     /**
      * @Route("/reports", name="reports")
      */
+
     public function index(Request $request)
     {
         $form = $this->createForm(ReportType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->html='';
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
             $username = $this->getUser()->getUserName();
@@ -26,29 +28,34 @@ class ReportsController extends Controller
             $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.Date ASC";
             $query = $em->createQuery($dql);
             $report = $query->execute();
+            $html = $this->renderView('reports/report.html.twig', ['report' => $report]);
+
+            if($form->get('GeneratePDF')->isClicked()) {
+                return new PdfResponse(
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                    'file.pdf'
+                );
+            }
+
+            /*if ($request->get('do') === '1') {
+                $fileName = sha1(time());
+                $html = $this->renderView('reports/report.html.twig', ['report' => $report]);
+                $this->get('knp_snappy.pdf')->generateFromHtml($html, ['orientation' => 'Landscape'], '/home/administrator/Sites/DAIS/files/' . $fileName . '.pdf');
+
+                $this->addFlash(
+                    'notice',
+                    'Your file have been generated and saved to disk!'
+                );
+            }*/
+            /*if ($request->get('do') === '2') {
+                return new PdfResponse(
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                    'file.pdf'
+                );
+            }*/
 
             return $this->render('reports/index.html.twig',['form' => $form->createView(), 'report' => $report]);
         }
-       /*
-        if ($request->get('do') === '1') {
-            $fileName = sha1(time());
-            $html = $this->renderView('reports/index.html.twig', ['report' => $report]);
-            $this->get('knp_snappy.pdf')->generateFromHtml($html, ['orientation' => 'Landscape'], '/home/administrator/Sites/DAIS/files/' . $fileName . '.pdf');
-
-            $this->addFlash(
-                'notice',
-                'Your file have been generated and saved to disk!'
-            );
-
-            return $this->render('reports/index.html.twig', ['report' => $report]);
-        }
-        if ($request->get('do') === '2') {
-            $html = $this->renderView('reports/index.html.twig', ['report' => $report]);
-            return new PdfResponse(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
-                'file.pdf'
-            );
-        }*/
         else {
             return $this->render('reports/index.html.twig', ['form' => $form->createView(), ['report' => null]]);
         }

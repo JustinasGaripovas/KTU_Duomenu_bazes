@@ -16,6 +16,7 @@ class ReportsController extends Controller
      */
     public function index(Request $request)
     {
+        $report = '';
         $form = $this->createForm(ReportType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -50,7 +51,7 @@ class ReportsController extends Controller
             );
         }*/
         else {
-            return $this->render('reports/form.html.twig', ['form' => $form->createView()]);
+            return $this->render('reports/form.html.twig', ['form' => $form->createView(), ['report' => $report]]);
         }
     }
 }

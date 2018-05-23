@@ -1,22 +1,5 @@
-{% extends 'base.html.twig' %}
 
-{% block head %}
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{{ asset('js/datepicker-lt.js') }}"></script>
-    <script>
-        $( function() {
-        $( ".js-datepicker-1" ).datepicker();
-        $( ".js-datepicker-2" ).datepicker();
-        });
-    </script>
-{% endblock %}
-
-{% block body %}
 {{ form_start(form) }}
     {{ form_widget(form) }}
 <button class="btn">{{ button_label|default('Generate') }}</button>
 {{ form_end(form) }}
-{% endblock %}

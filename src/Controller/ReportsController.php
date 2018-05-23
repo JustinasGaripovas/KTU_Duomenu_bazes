@@ -28,7 +28,7 @@ class ReportsController extends Controller
             $query = $em->createQuery($dql);
             $report = $query->execute();
 
-            return $this->render('reports/index.html.twig', ['report' => $report]);
+            return $this->render('reports/index.html.twig',['form' => $form->createView(), 'report' => $report]);
         }
        /*
         if ($request->get('do') === '1') {
@@ -51,7 +51,7 @@ class ReportsController extends Controller
             );
         }*/
         else {
-            return $this->render('reports/form.html.twig', ['form' => $form->createView(), ['report' => $report]]);
+            return $this->render('reports/index.html.twig', ['form' => $form->createView(), ['report' => $report]]);
         }
     }
 }

@@ -16,8 +16,11 @@
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('js/datepicker-lt.js') }}"></script>
-    <script>
-        $( ".js-datepicker" ).datepicker();
+        <script>
+        $( function() {
+            $( ".js-datepicker-1" ).datepicker();
+            $( ".js-datepicker-2" ).datepicker();
+        });
     </script>
 </head>
 
@@ -67,7 +70,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="13">no records found</td>
+                        <td colspan="13">{% trans %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

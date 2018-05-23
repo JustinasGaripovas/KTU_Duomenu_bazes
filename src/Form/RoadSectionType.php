@@ -27,6 +27,7 @@ class RoadSectionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RoadSection::class,
+            'translation_domain' => 'translation'
         ]);
     }
 }

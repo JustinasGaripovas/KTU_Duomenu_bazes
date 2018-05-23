@@ -40,6 +40,7 @@ class LdapUserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => LdapUser::class,
+            'translation_domain' => 'translation'
         ]);
     }
 }

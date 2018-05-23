@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'translation' %}
 
-{% block title %} Redaguoti {{ done_job.id }}{% endblock %}
+{% block title %} {{ done_job.jobId }}{% endblock %}
 
 {% block body %}
-    <h1>Redaguoti {{ done_job.id }}</h1>
+    <h2>{{ done_job.jobId }}</h2>
 
     {{ include('done_jobs/_form.html.twig', {'button_label': 'Update'|trans }) }}
-
-    <a class="btn btn-light btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
-    <br>
     {{ include('done_jobs/_delete_form.html.twig') }}
+    <a class="btn btn-info btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

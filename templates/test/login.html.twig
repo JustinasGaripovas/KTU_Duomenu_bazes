@@ -53,10 +53,10 @@
 
         </style>
 
-    <form action="{{ path('login') }}" method="post" class="form-signin" >
+    <form>br action="{{ path('login') }}" method="post" class="form-signin" >
         <div class="text-center mb-4">
             <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
-            <h1 class="h3 mb-3 font-weight-normal"> DARBŲ APSKAITOS INFORMACINĖ SISTEMA </h1>
+            <h1 class="h3 font-weight-normal"> DARBŲ APSKAITOS INFORMACINĖ SISTEMA </h1>
             <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
         </div>
 
@@ -67,7 +67,7 @@
         <div class="form-label-group">
             <input type="text" id="username" name="_username" class="form-control" placeholder="Username" value="{{ last_username }}" required autofocus>
         </div>
-
+        <br>
         <div class="form-label-group">
             <input type="password" id="password" class="form-control" placeholder="Password" name="_password" required>
         </div>

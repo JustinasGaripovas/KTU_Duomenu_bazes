@@ -11,6 +11,6 @@
 /.config
 ###< symfony/web-server-bundle ###
 
-###> symfony/config ##
+###> symfony/ ##
 /config/
-###< symfony/config ###
+###< symfony/ ###

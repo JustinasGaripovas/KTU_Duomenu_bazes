@@ -32,7 +32,8 @@ class ReportType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'mapped'=>false
+            'mapped'=>false,
+            'translation_domain' => 'translation'
         ]);
     }
 }

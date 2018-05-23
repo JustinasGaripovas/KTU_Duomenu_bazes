@@ -54,7 +54,7 @@
         </style>
 
     <form action="{{ path('login') }}" method="post" class="form-signin" >
-        <div class="text-center mb-4">
+        <div class="text-center">
             <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
             <h1 class="h3 font-weight-normal"> DARBŲ APSKAITOS INFORMACINĖ SISTEMA </h1>
             <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
@@ -65,13 +65,13 @@
         {% endif %}
 
         <div class="form-label-group">
-            <input type="text" id="username" name="_username" class="form-control" placeholder="Username" value="{{ last_username }}" required autofocus>
+            <input type="text" id="username" name="_username" class="form-control" placeholder="{% trans %}Username{% endtrans %}" value="{{ last_username }}" required autofocus>
         </div>
         <br>
         <div class="form-label-group">
-            <input type="password" id="password" class="form-control" placeholder="Password" name="_password" required>
+            <input type="password" id="password" class="form-control" placeholder="{% trans %}Password{% endtrans %}" name="_password" required>
         </div>
-
+        <br>
         <button class="btn btn-lg btn-success btn-block" type="submit">{% trans %} Sign in {% endtrans %}</button>
         <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p>
     </form>

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'translation' %}
 
-{% block title %}Edit DoneJobs{% endblock %}
+{% block title %} Redaguoti {{ done_job.id }}{% endblock %}
 
 {% block body %}
-    <h1>Edit DoneJobs</h1>
+    <h1>Redaguoti {{ done_job.id }}</h1>
 
     {{ include('done_jobs/_form.html.twig', {'button_label': 'Update'|trans }) }}
 

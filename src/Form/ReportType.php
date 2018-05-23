@@ -16,11 +16,15 @@ class ReportType extends AbstractType
         $builder
             ->add('From', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array(
                 'mapped'=> false,
-                'attr' => ['class' => 'js-datepicker-1']
+                'attr' => [
+                    'class' => 'js-datepicker-1',
+                    'autocomplete'=>'off']
             ))
             ->add('To', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array(
                 'mapped'=> false,
-                'attr' => ['class' => 'js-datepicker-2']
+                'attr' => [
+                    'class' => 'js-datepicker-2',
+                    'autocomplete'=>'off']
             ))
         ;
     }

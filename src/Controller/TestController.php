@@ -61,13 +61,14 @@ class TestController extends Controller
      * @Route("/admin", name="admin")
      *
      */
-    public function admin(SessionInterface $session, UserInterface $user)
+    public function admin()
     {
-        var_dump('----------------------------------------------------------------------------------');
+        //$user = 'darius.zvirblis';
+        //var_dump('----------------------------------------------------------------------------------');
         //$sc = "admddarizvi";
         //$session = new Session();
 
-        var_dump($this->user='admddarizvi');
+        //var_dump($this->user='admddarizvi');
 
 
        /* if ($sc == 'admddarizvi') {
@@ -83,7 +84,7 @@ class TestController extends Controller
 
         var_dump($this->getUser()->getUsername());*/
 
-        /*$ldap = Ldap::create('ext_ldap', array(
+        $ldap = Ldap::create('ext_ldap', array(
             'host' => '192.168.192.10',
             'encryption' => 'none',
         ));
@@ -92,16 +93,27 @@ class TestController extends Controller
         }
         else{
 
-            $ldap->bind('cn=testas testas,cn=Users,dc=DAIS,dc=local', 'ZXCvbn123++');
-            $query = $ldap->query('dc=DAIS,dc=local', '(&(objectCategory=person)(objectclass=User)(sAMAccountName=darius.zvirblis))');
+            $ad = ldap_connect("ldap://192.168.192.10");
+           @ldap_bind($ad,'cn=testas testas,cn=Users,dc=KP,dc=local', 'ZXCvbn123++');
+
+           $this->getDN($ad,"darius.zvirblis", "dc=KP,dc=local");
+           var_dump($this->getDN($ad,"darius.zvirblis", "dc=KP,dc=local"));
+
+           //LDAP recursive search
+           $ch = $this->checkGroupEx($ad, "cn=Darius Zvirblis, OU=Administracija ,dc=KP,dc=local", "CN=KN-CB-Bendri,OU=Groups,OU=Administracija,DC=KP,DC=local");
+
+           var_dump($ch);
+           //end of LDAP recursive search
+           /* $query = $ldap->query('dc=KP,dc=local', '(&(objectclass=User)(sAMAccountName=darius.zvirblis))');
             $results = $query->execute();
             if (!$results){
                 var_dump("error");
             }
             else{
+                var_dump($results);
 
-            }
-        }*/
+            }*/
+        }
 
         //var_dump($this->getUser());
         //$em = $this->getDoctrine()->getManager();
@@ -133,4 +145,36 @@ class TestController extends Controller
             var_dump('adminas');
         }
     }
+
+
+
+
+    function checkGroupEx($ad, $userdn, $groupdn) {
+        $attributes = array('memberof');
+        $result = ldap_read($ad, $userdn, '(objectclass=*)', $attributes);
+        if ($result === FALSE) { return FALSE; };
+        $entries = ldap_get_entries($ad, $result);
+        var_dump($entries);
+        if ($entries['count'] <= 0) {
+            var_dump($entries['count']);
+            return FALSE; };
+        if (empty($entries[0]['memberof'])) { return FALSE; } else {
+            for ($i = 0; $i < $entries[0]['memberof']['count']; $i++) {
+                if ($entries[0]['memberof'][$i] == $groupdn) { return TRUE; }
+                elseif ($this->checkGroupEx($ad, $entries[0]['memberof'][$i], $groupdn)) { return TRUE; };
+            };
+        };
+        return FALSE;
+    }
+
+    function getDN($ad, $samaccountname, $basedn) {
+        $attributes = array('dn');
+        $result = ldap_search($ad, $basedn,
+            "(samaccountname={$samaccountname})", $attributes);
+        if ($result === FALSE) { return ''; }
+        $entries = ldap_get_entries($ad, $result);
+        if ($entries['count']>0) { return $entries[0]['dn']; }
+        else { return ''; }
+    }
+
 }

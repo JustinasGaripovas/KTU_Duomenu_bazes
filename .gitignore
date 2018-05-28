@@ -10,7 +10,3 @@
 /.web-server-pid
 /.config
 ###< symfony/web-server-bundle ###
-
-###> symfony/ ##
-/config/
-###< symfony/ ###

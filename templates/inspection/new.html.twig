@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}New Inspection{% endblock %}
+
+{% block body %}
+    <script>
+        $( function() {
+            $(".js-datepicker").datepicker();
+        });
+    </script>
+    <h1>{% trans %}Create new Inspection{% endtrans %}</h1>
+
+    {{ include('inspection/_form.html.twig') }}
+
+    <a href="{{ path('inspection_index') }}">back to list</a>
+{% endblock %}

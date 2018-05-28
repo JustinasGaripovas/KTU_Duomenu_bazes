@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inspection index{% endblock %}
+
+{% block body %}
+    <h1>Inspection index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RoadId</th>
+                <th>Note</th>
+                <th>RepairDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inspection in inspections %}
+            <tr>
+                <td>{{ inspection.id }}</td>
+                <td>{{ inspection.RoadId }}</td>
+                <td>{{ inspection.Note }}</td>
+                <td>{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
+                    <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('inspection_new') }}">Create new</a>
+{% endblock %}

@@ -29,8 +29,10 @@ class DoneJobsType extends AbstractType
             ->add('DoneJobDate',  DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,
-                'autocomplete'=>'off',
-                'attr' => ['class' => 'js-datepicker']
+                'attr' => [
+                    'class' => 'js-datepicker',
+                    'autocomplete'=>'off'
+                    ]
                 ))
         ;
     }

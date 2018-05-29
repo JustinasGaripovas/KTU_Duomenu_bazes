@@ -118,7 +118,8 @@ class DoneJobsController extends Controller
                 'notice',
                 'Record updated successfully!'
             );
-            return $this->redirectToRoute('done_jobs_edit', ['id' => $doneJob->getId()]);
+            //return $this->redirectToRoute('done_jobs_edit', ['id' => $doneJob->getId()]);
+            return $this->redirectToRoute('done_jobs_index');
         }
 
         return $this->render('done_jobs/edit.html.twig', [

@@ -20,12 +20,7 @@ class DoneJobsType extends AbstractType
             ->add('RoadSection')
             ->add('RoadSectionBegin')
             ->add('RoadSectionEnd')
-            ->add('UnitOfLabel', null, array(
-                'mapped' => false,
-                'disabled' => true
-            ))
-            ->add('UnitOf', HiddenType::class, array(
-            ))
+            ->add('UnitOf')
             ->add('Quantity')
             ->add('Username', HiddenType::class, array(
                 'disabled' => true,

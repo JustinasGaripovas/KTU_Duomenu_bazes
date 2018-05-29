@@ -47,7 +47,7 @@ class DoneJobs
     private $UnitOf;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Quantity;
 
@@ -67,7 +67,7 @@ class DoneJobs
     private $Date;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $DoneJobDate;
 

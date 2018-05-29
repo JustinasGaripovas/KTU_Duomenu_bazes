@@ -21,7 +21,9 @@ class DoneJobsType extends AbstractType
             ->add('RoadSectionBegin')
             ->add('RoadSectionEnd')
             ->add('UnitOf')
-            ->add('Quantity')
+            ->add('Quantity', null, array(
+                'autocomplete'=>'off'
+            ))
             ->add('Username', HiddenType::class, array(
                 'disabled' => true,
                 'required' => true
@@ -29,6 +31,7 @@ class DoneJobsType extends AbstractType
             ->add('DoneJobDate',  DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,
+                'autocomplete'=>'off',
                 'attr' => ['class' => 'js-datepicker']
                 ))
         ;

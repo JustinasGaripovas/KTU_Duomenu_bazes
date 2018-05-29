@@ -34,6 +34,9 @@ class DoneJobsType extends AbstractType
                     'autocomplete'=>'off'
                     ]
                 ))
+            ->add('note', null, array(
+                'required' => false
+            ))
         ;
     }
 

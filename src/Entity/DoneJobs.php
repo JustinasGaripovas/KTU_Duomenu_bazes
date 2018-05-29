@@ -71,6 +71,11 @@ class DoneJobs
      */
     private $DoneJobDate;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $Note;
+
 
     public function getId()
     {
@@ -205,6 +210,18 @@ class DoneJobs
     public function setUnitOf(?string $UnitOf): self
     {
         $this->UnitOf = $UnitOf;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->Note;
+    }
+
+    public function setNote(?string $Note): self
+    {
+        $this->Note = $Note;
 
         return $this;
     }

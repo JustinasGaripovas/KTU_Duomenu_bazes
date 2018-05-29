@@ -20,7 +20,7 @@
                 <th>{% trans %} username {% endtrans %}</th>
                 <th>{% trans %} Date {% endtrans %}</th>
                 <th>{{ knp_pagination_sortable(pagination, 'DoneJobDate'|trans, 'd.DoneJobDate') }} </th>
-                <th>{% trans %}  {% endtrans %}</th>
+                <th>{% trans %} Note  {% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -37,6 +37,7 @@
                 <td>{{ done_job.Username }}</td>
                 <td>{{ done_job.Date ? done_job.Date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                <td>{{ done_job.Note }}</td>
                 <td>
                     <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
                     <a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>

@@ -22,10 +22,10 @@
         {% for inspection in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
             <tr>
-                <td>{{ inspection.RoadId }}</td>
-                <td>{{ inspection.Note }}</td>
-                <td>{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
-                <td>
+                <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
+                <td style="text-align: center; vertical-align: middle">
                     {% for job in inspection.getJob %}
                         {% if job.DoneJobDate != null %}
                         <a href="{{ path('done_jobs_show', {'id': job.Id}) }}">{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }}</a>
@@ -34,8 +34,8 @@
                     {% endfor %}
                     <a class="btn btn-success" href="{{ path('done_jobs_add_job_to_inspection', {'id': inspection.Id}) }}">
                         <i class="fa fa-plus-circle"></i> {% trans %} Add {% endtrans %}</a>
-                <td>{{ inspection.Username }}</td>
-                <td>
+                <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+                <td style="text-align: center; vertical-align: middle">
                     <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
                     <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
                 </td>

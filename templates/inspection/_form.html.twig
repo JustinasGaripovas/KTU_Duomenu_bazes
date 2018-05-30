@@ -1,4 +1,22 @@
+<script>
+    $( function() {
+        function log( message ) {
+            $( "<div>" ).text( message ).prependTo( "#log" );
+            $( "#log" ).scrollTop( 0 );
+        }
+        $( "#inspection_RoadId" ).autocomplete({
+            source: "{{ path('search/road') }}",
+            minLength: 2,
+            delay: 500,
+            select: function( event, ui ) {
+                //  $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
+                //    $('#done_jobs_RoadSectionEnd').val(ui.item.section_end)
+            },
+        });
+        $( ".js-datepicker" ).datepicker();
+    });
+</script>
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
 {{ form_end(form) }}

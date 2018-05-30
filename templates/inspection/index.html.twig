@@ -1,27 +1,41 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Inspection index{% endblock %}
+{% trans_default_domain 'translation' %}
+{% block title %} {% trans %}Inspection {% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Inspection index</h1>
-
-    <table class="table">
+    <h2>{% trans %}Inspection {% endtrans %} </h2>
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('inspection_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+    <br>
+    <table class="table table-sm thead-dark table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>RoadId</th>
-                <th>Note</th>
-                <th>RepairDate</th>
-                <th>actions</th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}</th>
+                <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
-        {% for inspection in inspections %}
+
+        {% for inspection in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
             <tr>
-                <td>{{ inspection.id }}</td>
                 <td>{{ inspection.RoadId }}</td>
                 <td>{{ inspection.Note }}</td>
-                <td>{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    {% for job in inspection.getJob %}
+                        {% if job.DoneJobDate != null %}
+                        <a href="{{ path('done_jobs_show', {'id': job.Id}) }}">{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }}</a>
+                            <br>
+                    {% endif %}
+                    {% endfor %}
+                    <a class="btn btn-success" href="{{ path('done_jobs_add_job_to_inspection', {'id': inspection.Id}) }}">
+                        <i class="fa fa-plus-circle"></i> {% trans %} Add {% endtrans %}</a>
+                <td>{{ inspection.Username }}</td>
                 <td>
                     <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
                     <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
@@ -34,6 +48,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('inspection_new') }}">Create new</a>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

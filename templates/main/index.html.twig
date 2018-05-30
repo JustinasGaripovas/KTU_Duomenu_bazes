@@ -7,6 +7,10 @@
 
     <div class="container">
         <ul>
+            <h1>{% trans %}Inspection {% endtrans %}</h1>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
+            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_index') }}">{% trans %} Inspections List {% endtrans %}</a>
+            <br>
             <h1>{% trans %}Jobs{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
             <br>

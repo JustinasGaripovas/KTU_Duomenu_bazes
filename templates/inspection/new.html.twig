@@ -3,14 +3,10 @@
 {% block title %}New Inspection{% endblock %}
 
 {% block body %}
-    <script>
-        $( function() {
-            $(".js-datepicker").datepicker();
-        });
-    </script>
+
     <h1>{% trans %}Create new Inspection{% endtrans %}</h1>
 
     {{ include('inspection/_form.html.twig') }}
 
-    <a href="{{ path('inspection_index') }}">back to list</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('inspection_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

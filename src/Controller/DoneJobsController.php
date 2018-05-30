@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DoneJobs;
+use App\Entity\Inspection;
 use App\Form\DoneJobsType;
 use App\Repository\DoneJobsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -108,7 +109,9 @@ class DoneJobsController extends Controller
      */
     public function edit(Request $request, DoneJobs $doneJob): Response
     {
+        $userName = $this->getUser()->getUserName();
         $form = $this->createForm(DoneJobsType::class, $doneJob);
+        $doneJob->setUsername($userName);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -144,5 +147,43 @@ class DoneJobsController extends Controller
         }
 
         return $this->redirectToRoute('done_jobs_index');
+    }
+
+
+    /**
+     * @Route("/add/{id}", name="done_jobs_add_job_to_inspection", methods="GET|POST")
+     */
+
+    public function addJobToInspectionById(Request $request, $id): Response
+    {
+        $doneJob = new DoneJobs();
+        $inspection = $this->getDoctrine()->getRepository('App:Inspection')->find($id);
+        $doneJob->setInspection($inspection);
+        $userName = $this->getUser()->getUserName();
+        //$userName= "darius.zvirblis";
+        $recordTime = new \DateTime("now");
+        $doneJob->setUsername($userName);
+        $doneJob->setDate($recordTime);
+        $doneJob->setDoneJobDate(new \DateTime("now"));
+        $form = $this->createForm(DoneJobsType::class, $doneJob);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($doneJob);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'New record successfully added to database!'
+            );
+
+            return $this->redirectToRoute('done_jobs_index');
+        }
+
+        return $this->render('done_jobs/new.html.twig', [
+            'done_job' => $doneJob,
+            'form' => $form->createView(),
+        ]);
     }
 }

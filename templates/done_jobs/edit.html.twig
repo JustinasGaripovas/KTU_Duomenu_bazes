@@ -8,6 +8,30 @@
 
     <script>
         $( function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            var job_id = '';
+            $( "#done_jobs_JobName" ).autocomplete({
+                source: "{{ path('search') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_JobId').val(ui.item.job_id),
+                        $('#done_jobs_UnitOf').val(ui.item.unit_of),
+                        $('#done_jobs_UnitOfLabel').val(ui.item.unit_of)
+                }
+            });
+            $( "#done_jobs_RoadSection" ).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
+                        $('#done_jobs_RoadSectionEnd').val(ui.item.section_end)
+                },
+            });
             $( ".js-datepicker" ).datepicker();
         });
     </script>

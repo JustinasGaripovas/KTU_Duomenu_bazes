@@ -76,6 +76,11 @@ class DoneJobs
      */
     private $Note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Inspection", inversedBy="Job")
+     */
+    private $inspection;
+
 
     public function getId()
     {
@@ -222,6 +227,18 @@ class DoneJobs
     public function setNote(?string $Note): self
     {
         $this->Note = $Note;
+
+        return $this;
+    }
+
+    public function getInspection(): ?Inspection
+    {
+        return $this->inspection;
+    }
+
+    public function setInspection(?Inspection $inspection): self
+    {
+        $this->inspection = $inspection;
 
         return $this;
     }

@@ -8,5 +8,5 @@
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid
-/.config
+/config
 ###< symfony/web-server-bundle ###

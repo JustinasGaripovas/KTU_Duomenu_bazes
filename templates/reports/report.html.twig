@@ -37,9 +37,8 @@
                     <th>{% trans %} Unit of {% endtrans %}</th>
                     <th>{% trans %} Quantity {% endtrans %}</th>
                     <th>{% trans %} username {% endtrans %}</th>
-                    <th>{% trans %} Date {% endtrans %}</th>
                     <th>{% trans %} DoneJobDate {% endtrans %}</th>
-                    <th style="width: 200px">{% trans %} Comments  {% endtrans %}</th>
+                    <th>{% trans %} Comments  {% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,7 +53,6 @@
                         <td>{{ done_job.UnitOf }}</td>
                         <td>{{ done_job.Quantity }}</td>
                         <td>{{ done_job.Username }}</td>
-                        <td>{{ done_job.Date ? done_job.Date|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
                         <td>{{ done_job.Note }}</td>
                     </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DoneJobs;
 use App\Entity\Inspection;
 use App\Form\InspectionType;
 use App\Repository\InspectionRepository;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @Route("/inspection")
@@ -18,9 +20,21 @@ class InspectionController extends Controller
     /**
      * @Route("/", name="inspection_index", methods="GET")
      */
-    public function index(InspectionRepository $inspectionRepository): Response
+    public function index(InspectionRepository $inspectionRepository, Request $request): Response
     {
-        return $this->render('inspection/index.html.twig', ['inspections' => $inspectionRepository->findAll()]);
+        $username = $this->getUser()->getUserName();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            20/*limit per page*/
+        );
+
+        return $this->render('inspection/index.html.twig', ['pagination' => $pagination]);
     }
 
     /**
@@ -29,10 +43,22 @@ class InspectionController extends Controller
     public function new(Request $request): Response
     {
         $inspection = new Inspection();
+        $job = new DoneJobs();
+        $job->setJobId('');
+        $job->setJobName('');
+        $job->setRoadSection('');
+        $job->setRoadSectionBegin('0');
+        $job->setRoadSectionEnd('0');
+        $job->setUsername('');
+        $job->setDate(new \DateTime("now"));
+        $inspection -> setUsername($this->getUser()->getUserName());
+        $inspection -> setDate(new \DateTime("now"));
+        $inspection->addJob($job);
         $form = $this->createForm(InspectionType::class, $inspection);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($inspection);
             $em->flush();

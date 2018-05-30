@@ -45,6 +45,10 @@
                 <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
+                <th>{% trans %} Note {% endtrans %}</th>
+                <td>{{ done_job.Note }}</td>
+            </tr>
+            <tr>
             </tr>
         </tbody>
     </table>

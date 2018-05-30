@@ -4,9 +4,9 @@
 /public/bundles/
 /var/
 /vendor/
+/config/
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
 /.web-server-pid
-/config
 ###< symfony/web-server-bundle ###

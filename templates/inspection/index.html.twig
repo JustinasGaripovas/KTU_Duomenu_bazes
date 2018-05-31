@@ -28,13 +28,8 @@
                 <td style="text-align: center; vertical-align: middle">
                     {% for job in inspection.getJob %}
                         {% if job.DoneJobDate != null %}
-                        <a data-placement="auto" data-toggle="tooltip" data-html="true" title="
-                        <b>Data:</b> {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }} <br>
-                        <b>Darbas:</b> {{ job.JobName }} <br>
-                        <b>Kelias:</b> {{ job.RoadSection }} <br>
-                        <b>Kiekis:</b> {{ job.Quantity }}
-                        " href="{{ path('done_jobs_show', {'id': job.Id}) }}">{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }}</a>
-                            <br>
+                        <a data-placement="auto" data-toggle="tooltip" data-html="true" title="<b>Data:</b> {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }} <br><b>Darbas:</b> {{ job.JobName }} <br><b>Kelias:</b> {{ job.RoadSection }} <br><b>Kiekis:</b> {{ job.Quantity }}
+                        " href="{{ path('done_jobs_show', {'id': job.Id}) }}">{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }}</a><br>
                     {% endif %}
                     {% endfor %}
                     <a class="btn btn-success" href="{{ path('done_jobs_add_job_to_inspection', {'id': inspection.Id}) }}">
@@ -55,4 +50,9 @@
     <div class="navigation d-flex justify-content-center">
         {{ knp_pagination_render(pagination) }}
     </div>
+<script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 {% endblock %}

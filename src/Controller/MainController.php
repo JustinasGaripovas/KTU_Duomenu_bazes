@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\LdapUser;
-use App\Entity\Unit;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -12,13 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="/", schemes={"https"})
+     * @Route("/", name="/")
      */
     public function rewriteDefaultPath() {
         return $this->redirectToRoute('main');
     }
     /**
-     * @Route("/main", name="main", schemes={"https"})
+     * @Route("/main", name="main")
      */
     public function index()
     {
@@ -37,7 +36,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/login", name="login", schemes={"https"})
+     * @Route("/login", name="login")
      */
     public function login(Request $request, AuthenticationUtils $authUtils)
     {

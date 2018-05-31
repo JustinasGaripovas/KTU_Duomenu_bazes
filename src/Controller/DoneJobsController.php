@@ -178,10 +178,10 @@ class DoneJobsController extends Controller
                 'New record successfully added to database!'
             );
 
-            return $this->redirectToRoute('done_jobs_index');
+            return $this->redirectToRoute('inspection_index');
         }
 
-        return $this->render('done_jobs/new.html.twig', [
+        return $this->render('done_jobs/new_for_inspection.html.twig', [
             'done_job' => $doneJob,
             'form' => $form->createView(),
         ]);

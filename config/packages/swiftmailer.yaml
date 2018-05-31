@@ -1,0 +1,4 @@
+swiftmailer:
+    url: 'smtp://192.168.192.11:25'
+    spool: { type: 'memory' }
+    delivery_addresses: ['darius.zvirblis@keliuprieziura.lt']

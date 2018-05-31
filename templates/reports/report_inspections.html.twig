@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+        <br>
+        <hr>
+
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}</th>
+                    <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for inspection in report | default ('') %}
+                    <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
+                        <td style="text-align: center; vertical-align: middle">
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            ________________________________________________________________________________________________
+        </div>
+    {% endblock %}

@@ -60,4 +60,37 @@ class ReportsController extends Controller
             return $this->render('reports/index.html.twig', ['form' => $form->createView(), ['report' => null]]);
         }
     }
+
+    /**
+     * @Route("/reports/inspection", name="inspection_reports")
+     */
+
+    public function inspectionRepor(Request $request)
+    {
+        $form = $this->createForm(ReportType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->html='';
+            $from = $form->get('From')->getData();
+            $to = $form->get('To')->getData();
+            $username = $this->getUser()->getUserName();
+            $em = $this->get('doctrine.orm.entity_manager');
+            $dql = "SELECT d FROM App:Inspection d WHERE (d.Username = '$username' AND d.RepairDate >= '$from' AND d.RepairDate <= '$to') ORDER BY d.RepairDate ASC";
+            $query = $em->createQuery($dql);
+            $report = $query->execute();
+            $html = $this->renderView('reports/report_inspections.html.twig', ['report' => $report]);
+
+            if($form->get('GeneratePDF')->isClicked()) {
+                return new PdfResponse(
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                    'file.pdf'
+                );
+            }
+
+            return $this->render('reports/index_inspections.html.twig',['form' => $form->createView(), 'report' => $report]);
+        }
+        else {
+            return $this->render('reports/index_inspections.html.twig', ['form' => $form->createView(), ['report' => null]]);
+        }
+    }
 }

@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 class MainController extends Controller
 {
     /**
-     * @Route("/", name="/")
+     * @Route("/", name="/", schemes={"https"})
      */
     public function rewriteDefaultPath() {
         return $this->redirectToRoute('main');
     }
     /**
-     * @Route("/main", name="main")
+     * @Route("/main", name="main", schemes={"https"})
      */
     public function index()
     {
@@ -37,7 +37,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="login", schemes={"https"})
      */
     public function login(Request $request, AuthenticationUtils $authUtils)
     {

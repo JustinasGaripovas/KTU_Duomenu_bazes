@@ -20,11 +20,12 @@ class InspectionController extends Controller
     /**
      * @Route("/", name="inspection_index", methods="GET")
      */
+
     public function index(InspectionRepository $inspectionRepository, Request $request): Response
     {
         $username = $this->getUser()->getUserName();
         $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+        $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.id DESC";
         $query = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');

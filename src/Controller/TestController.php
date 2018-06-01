@@ -79,7 +79,7 @@ class TestController extends Controller
 
            //var_dump($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "ADMD.admins"));
 
-           $isMemberOfGroup = $this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "ADMD.admins");
+           $isMemberOfGroup = $this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins");
 
            //var_dump($isMemberOfGroup);
 

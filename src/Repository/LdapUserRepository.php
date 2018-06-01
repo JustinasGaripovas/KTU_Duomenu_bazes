@@ -48,7 +48,7 @@ class LdapUserRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findUserByUserName($value): ?LdapUser
+   /* public function findUserByUserName($value): ?LdapUser
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.name = :val')
@@ -57,6 +57,6 @@ class LdapUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
-    }
+    }*/
 
 }

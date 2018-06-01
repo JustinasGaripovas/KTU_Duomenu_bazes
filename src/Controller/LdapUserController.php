@@ -21,7 +21,7 @@ class LdapUserController extends Controller
     public function index(LdapUserRepository $ldapUserRepository): Response
     {
         $userName = $this->getUser()->getUserName();
-        return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findAll()]);
+        return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findBy(['name'=>$userName])]);
     }
 
     /**

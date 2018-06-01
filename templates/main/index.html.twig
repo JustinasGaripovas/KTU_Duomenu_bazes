@@ -15,12 +15,12 @@
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
             <br>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
-            <br>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %} All Jobs{% endtrans %}</a>
             <h1>{% trans %}Ldap users{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
+            {% if is_granted('ROLE_ADMIN') %}
             <h1>{% trans %}Road Sections{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
+            {% endif %}
             <h1>{% trans %}Reports{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>

@@ -1,7 +1,30 @@
-
 {% trans_default_domain 'translation' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <script src="{{ asset('css/style.css') }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        @media print {
+            .print_a {
+                overflow: visible !important;
+            }
+        }
+        thead { display: table-header-group; }
+        tr{page-break-inside: avoid !important;}
+    </style>
 
-    {% block body %}
+</head>
+<body>
         <script>
             $( function() {
                 $( ".js-datepicker-1" ).datepicker();
@@ -18,8 +41,11 @@
             tr{page-break-inside: avoid !important;}
         </style>
         <br>
-        <hr>
         <div class="print_a">
+            <div style="font-size: 1.5em" class="d-flex justify-content-center flex-nowrap"><b>PATRULINĖS APŽIŪROS AKTAS Nr.......</b></div>
+            <br>
+            <div class="d-flex justify-content-center">Apžiūros data:.................</div>
+            <br>
             <table class="table table-sm thead-dark table-bordered">
                 <thead>
                 <tr>
@@ -27,8 +53,6 @@
                     <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
-                    <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
-                    <th> </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,15 +68,17 @@
                                     <br>
                                 {% endif %}
                             {% endfor %} </td>
-                        <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
-                    </tr>
+                </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">no records found</td>
+                        <td colspan="5">{% trans %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            ________________________________________________________________________________________________
+            <div class="d-flex justify-content-left flex-nowrap"><b>Apžiūrą atliko:</b></div>
+            <br>
+            <div class="d-flex justify-content-left">...............................................................................</div>
         </div>
-    {% endblock %}
+</body>
+</html>

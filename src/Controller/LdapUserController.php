@@ -27,7 +27,7 @@ class LdapUserController extends Controller
     /**
      * @Route("/new", name="ldap_user_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    /*public function new(Request $request): Response
     {
         $ldapUser = new LdapUser();
         $form = $this->createForm(LdapUserType::class, $ldapUser);
@@ -45,7 +45,7 @@ class LdapUserController extends Controller
             'ldap_user' => $ldapUser,
             'form' => $form->createView(),
         ]);
-    }
+    }*/
 
     /**
      * @Route("/{id}", name="ldap_user_show", methods="GET")
@@ -66,7 +66,7 @@ class LdapUserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ldap_user_edit', ['id' => $ldapUser->getId()]);
+            return $this->redirectToRoute('main', ['id' => $ldapUser->getId()]);
         }
 
         return $this->render('ldap_user/edit.html.twig', [
@@ -78,7 +78,7 @@ class LdapUserController extends Controller
     /**
      * @Route("/{id}", name="ldap_user_delete", methods="DELETE")
      */
-    public function delete(Request $request, LdapUser $ldapUser): Response
+    /*public function delete(Request $request, LdapUser $ldapUser): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ldapUser->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
@@ -87,5 +87,5 @@ class LdapUserController extends Controller
         }
 
         return $this->redirectToRoute('ldap_user_index');
-    }
+    }*/
 }

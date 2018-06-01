@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 
 /**
@@ -22,43 +23,37 @@ class DoneJobsController extends Controller
     /**
      * @Route("/", name="done_jobs_index", methods="GET")
      */
-    public function index(DoneJobsRepository $doneJobsRepository, Request $request): Response
+    public function index(DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        $username = $this->getUser()->getUserName();
-        $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
-        $query = $em->createQuery($dql);
+        if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+            $username = $this->getUser()->getUserName();
+            $em = $this->get('doctrine.orm.entity_manager');
+            $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
+            $query = $em->createQuery($dql);
 
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            20/*limit per page*/
-        );
-        // parameters to template
-
-        if ($request->get('do') === '1') {
-            $fileName = sha1(time());
-            $html = $this->renderView('done_jobs/index.html.twig', ['pagination' => $pagination]);
-            $this->get('knp_snappy.pdf')->generateFromHtml($html, '/home/administrator/Sites/DAIS/files/'.$fileName.'.pdf');
-
-            $this->addFlash(
-                'notice',
-                'Your file have been generated and saved to disk!'
-            );
-
-            return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
-        }
-        elseif ($request->get('do') === '2') {
-            $html = $this->renderView('done_jobs/index.html.twig', ['pagination' => $pagination]);
-            return new PdfResponse(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
-            'file.pdf'
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                20/*limit per page*/
             );
         }
+
         else {
-            return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+            $query = $em->createQuery($dql);
+
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                20/*limit per page*/
+            );
         }
+
+            return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
 
     }
 

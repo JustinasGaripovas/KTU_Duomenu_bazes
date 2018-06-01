@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 
 /**
  * @Route("/ldap/user")
@@ -18,10 +20,16 @@ class LdapUserController extends Controller
     /**
      * @Route("/", name="ldap_user_index", methods="GET")
      */
-    public function index(LdapUserRepository $ldapUserRepository): Response
+    public function index(LdapUserRepository $ldapUserRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        $userName = $this->getUser()->getUserName();
-        return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findBy(['name'=>$userName])]);
+        if (false === $authChecker->isGranted('ROLE_ADMIN')) {
+            $userName = $this->getUser()->getUserName();
+            return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findBy(['name'=>$userName])]);
+        }
+
+        else {
+            return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findAll()]);
+        }
     }
 
     /**

@@ -94,7 +94,7 @@ class ReportsController extends Controller
 
             if($form->get('GeneratePDF')->isClicked()) {
                 return new PdfResponse(
-                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                    $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Portrait']),
                     'file.pdf'
                 );
             }

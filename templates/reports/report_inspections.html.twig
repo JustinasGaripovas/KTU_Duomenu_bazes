@@ -13,6 +13,12 @@
     <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( ".js-datepicker-1" ).datepicker();
+            $( ".js-datepicker-2" ).datepicker();
+        });
+    </script>
     <style>
         @media print {
             .print_a {
@@ -25,21 +31,6 @@
 
 </head>
 <body>
-        <script>
-            $( function() {
-                $( ".js-datepicker-1" ).datepicker();
-                $( ".js-datepicker-2" ).datepicker();
-            });
-        </script>
-        <style>
-            @media print {
-                .print_a {
-                    overflow: visible !important;
-                }
-            }
-            thead { display: table-header-group; }
-            tr{page-break-inside: avoid !important;}
-        </style>
         <br>
         <div class="print_a">
             <div style="font-size: 1.5em" class="d-flex justify-content-center flex-nowrap"><b>PATRULINĖS APŽIŪROS AKTAS Nr.......</b></div>

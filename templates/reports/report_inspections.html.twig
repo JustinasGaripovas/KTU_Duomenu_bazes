@@ -40,20 +40,21 @@
             <table class="table table-sm thead-dark table-bordered">
                 <thead>
                 <tr>
-                    <th class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}</th>
-                    <th class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle"> {% trans %} Inspection Note {% endtrans %} </th>
-                    <th class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
-                    <th class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Note {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for inspection in report | default ('') %}
                     <tr {% if loop.index is odd %}class="color"{% endif %}>
                     <tr>
-                        <td class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
-                        <td class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
-                        <td class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
-                        <td class="d-flex flex-nowrap" style="text-align: center; vertical-align: middle">{% for job in inspection.getJob %}
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
+                        <td style="text-align: center; vertical-align: middle">
+                            {% for job in inspection.getJob %}
                                 {% if job.DoneJobDate != null %}
                                     {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}
                                     <br>

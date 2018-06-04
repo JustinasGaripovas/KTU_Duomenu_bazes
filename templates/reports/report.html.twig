@@ -29,32 +29,32 @@
             <table class="table table-sm thead-dark table-bordered">
                 <thead>
                 <tr>
-                    <th>{% trans %} JobId {% endtrans %}</th>
-                    <th>{% trans %} JobName  {% endtrans %}</th>
-                    <th>{% trans %} RoadSection {% endtrans %}</th>
-                    <th>{% trans %} RoadSectionBegin {% endtrans %}</th>
-                    <th>{% trans %} RoadSectionEnd {% endtrans %}</th>
-                    <th>{% trans %} Unit of {% endtrans %}</th>
-                    <th>{% trans %} Quantity {% endtrans %}</th>
-                    <th>{% trans %} username {% endtrans %}</th>
-                    <th>{% trans %} DoneJobDate {% endtrans %}</th>
-                    <th>{% trans %} Comments  {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} JobId {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} JobName  {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSection {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSectionBegin {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSectionEnd {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} Unit of {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} Quantity {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} username {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} DoneJobDate {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle">{% trans %} Comments  {% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for done_job in report | default ('') %}
                     <tr {% if loop.index is odd %}class="color"{% endif %}>
                     <tr>
-                        <td>{{ done_job.JobId }}</td>
-                        <td>{{ done_job.JobName }}</td>
-                        <td>{{ done_job.RoadSection }}</td>
-                        <td>{{ done_job.RoadSectionBegin }}</td>
-                        <td>{{ done_job.RoadSectionEnd }}</td>
-                        <td>{{ done_job.UnitOf }}</td>
-                        <td>{{ done_job.Quantity }}</td>
-                        <td>{{ done_job.Username }}</td>
-                        <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
-                        <td>{{ done_job.Note }}</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap">{{ done_job.JobId }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.JobName }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSection }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSectionBegin }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSectionEnd }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.UnitOf }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.Quantity }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.Username }}</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap;">{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.Note }}</td>
                     </tr>
                 {% else %}
                     <tr>

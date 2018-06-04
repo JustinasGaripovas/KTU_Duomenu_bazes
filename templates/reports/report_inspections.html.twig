@@ -44,7 +44,6 @@
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Note {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
-                    <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,8 +53,7 @@
                         <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
                         <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
                         <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
-                        <td style="text-align: center; vertical-align: middle; white-space: pre;">{% for job in inspection.getJob %}{% if job.DoneJobDate != null %}{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}<br>{% endif %}{% endfor %}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: pre;"> {% for job in inspection.getJob %}{% if job.DoneJobDate != null %}{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}<br>{% endif %}{% endfor %} </td>
                     </tr>
                 {% else %}
                     <tr>

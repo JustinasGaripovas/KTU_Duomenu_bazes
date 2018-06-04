@@ -53,7 +53,7 @@
                         <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
                         <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
                         <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
-                        <td style="text-align: center; vertical-align: middle"> {% for job in inspection.getJob %}{% if job.DoneJobDate != null %}{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d') : ''}}<br>{% endif %}{% endfor %} </td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap"> {% for job in inspection.getJob %}{% if job.DoneJobDate != null %}{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d') : ''}}<br>{% endif %}{% endfor %} </td>
                     </tr>
                 {% else %}
                     <tr>

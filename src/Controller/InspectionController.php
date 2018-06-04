@@ -62,17 +62,8 @@ class InspectionController extends Controller
     public function new(Request $request): Response
     {
         $inspection = new Inspection();
-        $job = new DoneJobs();
-        $job->setJobId('');
-        $job->setJobName('');
-        $job->setRoadSection('');
-        $job->setRoadSectionBegin('0');
-        $job->setRoadSectionEnd('0');
-        $job->setUsername('');
-        $job->setDate(new \DateTime("now"));
         $inspection -> setUsername($this->getUser()->getUserName());
         $inspection -> setDate(new \DateTime("now"));
-        $inspection->addJob($job);
         $form = $this->createForm(InspectionType::class, $inspection);
         $form->handleRequest($request);
 

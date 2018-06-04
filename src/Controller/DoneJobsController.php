@@ -64,7 +64,6 @@ class DoneJobsController extends Controller
     {
         $doneJob = new DoneJobs();
         $userName = $this->getUser()->getUserName();
-        //$userName= "darius.zvirblis";
         $recordTime = new \DateTime("now");
         $doneJob->setUsername($userName);
         $doneJob->setDate($recordTime);
@@ -155,7 +154,6 @@ class DoneJobsController extends Controller
         $inspection = $this->getDoctrine()->getRepository('App:Inspection')->find($id);
         $doneJob->setInspection($inspection);
         $userName = $this->getUser()->getUserName();
-        //$userName= "darius.zvirblis";
         $recordTime = new \DateTime("now");
         $doneJob->setUsername($userName);
         $doneJob->setDate($recordTime);

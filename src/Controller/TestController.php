@@ -32,6 +32,8 @@ class TestController extends Controller
 
         $this->get('mailer')->send($message);
 
+
+
     }
 
     /**
@@ -91,7 +93,7 @@ class TestController extends Controller
 
         }
 
-        return $this->render('test/admin.html.twig');
+        return $this->redirectToRoute('main');
     }
 
     /**
@@ -113,45 +115,45 @@ class TestController extends Controller
     function checkGroupEx($ad, $userdn, $groupdn) {
         $attributes = array('memberof');
         $result = ldap_read($ad, $userdn, '(objectclass=*)', $attributes);
-        if ($result === FALSE) { return FALSE; };
+        if ($result === FALSE) {
+            return FALSE;
+        };
         $entries = ldap_get_entries($ad, $result);
         if ($entries['count'] <= 0) {
-            var_dump($entries);
             return FALSE; };
-        if (empty($entries[0]['memberof'])) { return FALSE; } else {
+        if (empty($entries[0]['memberof'])) {
+            return FALSE;
+        } else {
             for ($i = 0; $i < $entries[0]['memberof']['count']; $i++) {
-                if ($this->getCN($entries[0]['memberof'][$i]) == $groupdn) { return TRUE; }
-                elseif ($this->checkGroupEx($ad, $entries[0]['memberof'][$i], $groupdn)) { return TRUE; };
+                if ($this->getCN($entries[0]['memberof'][$i]) == $groupdn) {
+                    return TRUE;
+                }
+                elseif ($this->checkGroupEx($ad, $entries[0]['memberof'][$i], $groupdn)) {
+                    return TRUE;
+                };
             };
         };
         return FALSE;
     }
-
 
     function getCN($dn) {
         preg_match('/[^,]*/', $dn, $matchs, PREG_OFFSET_CAPTURE, 3);
         return $matchs[0][0];
     }
 
-
     function getDN($ad, $samaccountname, $basedn) {
-
         $attributes = array('dn');
         //$attributes = array("displayname", "mail", "samaccountname");
         $result = ldap_search($ad, $basedn, "(sAMAccountName=$samaccountname)", $attributes);
         if ($result === FALSE) {
             return '';
         }
-
         $entries = ldap_get_entries($ad, $result);
-
         if ($entries['count']>0) {
             return $entries[0]['dn'];
         }
-
         else {
             return '';
         }
     }
-
 }

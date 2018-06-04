@@ -50,7 +50,7 @@ class MainController extends Controller
                 'error' => $error,
             ));
         } else {
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('admin');
         }
     }
     /**

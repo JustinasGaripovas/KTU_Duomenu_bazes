@@ -44,6 +44,7 @@
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Note {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,8 +60,10 @@
                                     {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}
                                     <br>
                                 {% endif %}
-                            {% endfor %} </td>
-                </tr>
+                            {% endfor %}
+                        </td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+                    </tr>
                 {% else %}
                     <tr>
                         <td colspan="5">{% trans %}no records found{% endtrans %}</td>

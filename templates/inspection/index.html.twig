@@ -22,7 +22,7 @@
         {% for inspection in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
             <tr>
-                <td style="text-align: center; vertical-align: middle">{{ inspection.RoadId }}</td>
+                <td style="white-space: nowrap; text-align: center; vertical-align: middle">{{ inspection.RoadId }} ({{ inspection.RoadSectionBegin }}; {{ inspection.RoadSectionEnd }})</td>
                 <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
                 <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
                 <td style="text-align: center; vertical-align: middle">
@@ -36,8 +36,7 @@
                         <i class="fa fa-plus-circle"></i> {% trans %} Add {% endtrans %}</a>
                 <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
                 <td style="text-align: center; vertical-align: middle">
-                    <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
-                    <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
+                    {% include 'menu_by_roles/edit_view_inspection.html.twig' %}
                 </td>
             </tr>
         {% else %}

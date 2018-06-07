@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+
 class TestController extends Controller
 {
 
@@ -31,8 +32,6 @@ class TestController extends Controller
             );
 
         $this->get('mailer')->send($message);
-
-
 
     }
 
@@ -73,24 +72,28 @@ class TestController extends Controller
             ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
            @ldap_bind($ad,'cn=testas testas,cn=Users,dc=KP,dc=local', 'ZXCvbn123++');
 
-           //$this->getDN($ad, 'testas.testas', 'cn=Users, dc=KP,dc=local');
-           // var_dump(ldap_search($ad,"DC=KP,DC=local",'(&(objectCategory=person)(samaccountname=*))',array('samaccountname')));
-           //LDAP recursive search
-
-            //var_dump($this->getDN($ad, $this->getUser()->getUserName(),'dc=KP,dc=local'));
-
-           //var_dump($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "ADMD.admins"));
-
-           $isMemberOfGroup = $this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins");
+           //$isMemberOfGroup = $this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins");
 
            //var_dump($isMemberOfGroup);
-
-           if ($isMemberOfGroup === true) {
-               $userName = $this->getUser()->getUserName();
+            $userName = $this->getUser()->getUserName();
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.worker") === true){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_WORKER')));
+            }
+            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.road_master") === true ){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ROAD_MASTER')));
+            }
+            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_master") === true ){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_SUPER_MASTER')));
+            }
+            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.unit_viewer") === true ){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_UNIT_VIEWER')));
+            }
+            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_viewer") === true ){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_SUPER_VIEWER')));
+            }
+            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins") === true) {
                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ADMIN')));
-
            }
-
         }
 
         return $this->redirectToRoute('main');
@@ -100,15 +103,8 @@ class TestController extends Controller
      * @Route("/admin/check", name="admin/check")
      *
      */
-    public function getAdminRole(AuthorizationCheckerInterface $authChecker) {
-        if (false === $authChecker->isGranted('ROLE_ADMIN')) {
-            var_dump("ne adminas");
-        }
-
-        else {
-
-            var_dump('adminas');
-        }
+    public function getAdminRole() {
+        return $this->render('edit_view_done_job.html.twig');
     }
 
 

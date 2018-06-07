@@ -15,11 +15,16 @@ class DoneJobsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('JobName')
+            ->add('JobNamee', null, array(
+                'mapped'=> false,
+            ))
+            ->add('JobName', HiddenType::class)
             ->add('JobId', HiddenType::class)
+            ->add('sectionId', HiddenType::class)
             ->add('RoadSection')
             ->add('RoadSectionBegin')
             ->add('RoadSectionEnd')
+            ->add('roadLevel', HiddenType::class)
             ->add('UnitOf')
             ->add('Quantity')
             ->add('Username', HiddenType::class, array(

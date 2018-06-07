@@ -33,6 +33,7 @@ class SearchController extends Controller
                 foreach ($foundEntities as $entity){
                     $results[] = [
                         'value' => $entity->getJobId()." ".$entity->getJobName(),
+                        'job_name' =>$entity->getJobName(),
                         'job_id' => $entity->getJobId(),
                         'unit_of' => $entity->getJobQuantity(),
                     ];
@@ -67,8 +68,10 @@ class SearchController extends Controller
             foreach ($foundEntities as $entity){
                 $results[] = [
                     'value' => $entity->getSectionId()." ".$entity->getSectionName(),
+                    'section_id' =>$entity->getSectionId(),
                     'section_begin' => $entity->getSectionBegin(),
-                    'section_end' => $entity->getSectionEnd()
+                    'section_end' => $entity->getSectionEnd(),
+                    'road_level' => $entity->getLevel()
                 ];
             }
         }

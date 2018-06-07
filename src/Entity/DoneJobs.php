@@ -29,6 +29,11 @@ class DoneJobs
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $SectionId;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $RoadSection;
 
     /**
@@ -80,6 +85,16 @@ class DoneJobs
      * @ORM\ManyToOne(targetEntity="App\Entity\Inspection", inversedBy="Job")
      */
     private $inspection;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $RoadLevel;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $SubUnitId;
 
 
     public function getId()
@@ -239,6 +254,42 @@ class DoneJobs
     public function setInspection(?Inspection $inspection): self
     {
         $this->inspection = $inspection;
+
+        return $this;
+    }
+
+    public function getRoadLevel(): ?int
+    {
+        return $this->RoadLevel;
+    }
+
+    public function setRoadLevel(?int $RoadLevel): self
+    {
+        $this->RoadLevel = $RoadLevel;
+
+        return $this;
+    }
+
+    public function getSectionId(): ?string
+    {
+        return $this->SectionId;
+    }
+
+    public function setSectionId(string $SectionId): self
+    {
+        $this->SectionId = $SectionId;
+
+        return $this;
+    }
+
+    public function getSubUnitId(): ?int
+    {
+        return $this->SubUnitId;
+    }
+
+    public function setSubUnitId(int $SubUnitId): self
+    {
+        $this->SubUnitId = $SubUnitId;
 
         return $this;
     }

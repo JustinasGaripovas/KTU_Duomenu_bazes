@@ -14,7 +14,7 @@ class MainController extends Controller
      * @Route("/", name="/")
      */
     public function rewriteDefaultPath() {
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('admin');
     }
     /**
      * @Route("/main", name="main")
@@ -72,14 +72,15 @@ class MainController extends Controller
             $ldapUser = new LdapUser();
             $ldapUser->setName($this->getUserNameFromSession());
             $ldapUser->setUnit($unit);
+            $ldapUser->setSubunit(47);
 
             $em -> persist($ldapUser);
             $em -> flush();
 
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('admin');
         }
         else {
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('admin');
         }
     }
     public function chechIfUserExistInDatabase($userName){

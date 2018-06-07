@@ -4,13 +4,14 @@
             $( "<div>" ).text( message ).prependTo( "#log" );
             $( "#log" ).scrollTop( 0 );
         }
-        $( "#inspection_RoadId" ).autocomplete({
+        $( "#inspection_RoadIdd" ).autocomplete({
             source: "{{ path('search/road') }}",
             minLength: 2,
             delay: 500,
             select: function( event, ui ) {
-                //  $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
-                //    $('#done_jobs_RoadSectionEnd').val(ui.item.section_end)
+                $('#inspection_RoadId').val(ui.item.section_id),
+                $('#inspection_RoadSectionBegin').val(ui.item.section_begin),
+                $('#inspection_RoadSectionEnd').val(ui.item.section_end)
             },
         });
         $( ".js-datepicker" ).datepicker();

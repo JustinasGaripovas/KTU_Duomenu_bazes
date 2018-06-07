@@ -6,6 +6,7 @@ use App\Entity\DoneJobs;
 use App\Entity\Inspection;
 use App\Form\DoneJobsType;
 use App\Repository\DoneJobsRepository;
+use App\Repository\LdapUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,51 +24,54 @@ class DoneJobsController extends Controller
     /**
      * @Route("/", name="done_jobs_index", methods="GET")
      */
-    public function index(DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
+    public function index(LdapUserRepository $ldapUserRepository ,DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        if (false === $authChecker->isGranted('ROLE_ADMIN')) {
-            $username = $this->getUser()->getUserName();
-            $em = $this->get('doctrine.orm.entity_manager');
+        $username = $this->getUser()->getUserName();
+        $em = $this->get('doctrine.orm.entity_manager');
+        $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+        $dql = '';
+        if(true === $authChecker->isGranted('ROLE_WORKER') ) {
             $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
-            $query = $em->createQuery($dql);
-
-            $paginator  = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                20/*limit per page*/
-            );
         }
-
-        else {
-
-            $em = $this->get('doctrine.orm.entity_manager');
+        elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+        }
+        elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+        }
+        elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+        }
+        elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
             $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
-            $query = $em->createQuery($dql);
-
-            $paginator  = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                20/*limit per page*/
-            );
+        }
+        elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
         }
 
-            return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
-
+        $query = $em->createQuery($dql);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            20/*limit per page*/
+        );
+        return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
     }
 
     /**
      * @Route("/new", name="done_jobs_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(LdapUserRepository $ldapUserRepository, Request $request): Response
     {
         $doneJob = new DoneJobs();
         $userName = $this->getUser()->getUserName();
+        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
         $recordTime = new \DateTime("now");
         $doneJob->setUsername($userName);
         $doneJob->setDate($recordTime);
         $doneJob->setDoneJobDate(new \DateTime("now"));
+        $doneJob->setSubUnitId($subUnitId);
         $form = $this->createForm(DoneJobsType::class, $doneJob);
         $form->handleRequest($request);
 
@@ -148,15 +152,17 @@ class DoneJobsController extends Controller
      * @Route("/add/{id}", name="done_jobs_add_job_to_inspection", methods="GET|POST")
      */
 
-    public function addJobToInspectionById(Request $request, $id): Response
+    public function addJobToInspectionById(LdapUserRepository $ldapUserRepository,Request $request, $id): Response
     {
         $doneJob = new DoneJobs();
         $inspection = $this->getDoctrine()->getRepository('App:Inspection')->find($id);
         $doneJob->setInspection($inspection);
         $userName = $this->getUser()->getUserName();
+        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
         $recordTime = new \DateTime("now");
         $doneJob->setUsername($userName);
         $doneJob->setDate($recordTime);
+        $doneJob->setSubUnitId($subUnitId);
         $doneJob->setDoneJobDate(new \DateTime("now"));
         $form = $this->createForm(DoneJobsType::class, $doneJob);
         $form->handleRequest($request);

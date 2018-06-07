@@ -21,12 +21,13 @@
                 $( "#log" ).scrollTop( 0 );
             }
             var job_id = '';
-            $( "#done_jobs_JobName" ).autocomplete({
+            $( "#done_jobs_JobNamee" ).autocomplete({
                 source: "{{ path('search') }}",
                 minLength: 2,
                 delay: 500,
                 select: function( event, ui ) {
                     $('#done_jobs_JobId').val(ui.item.job_id),
+                        $('#done_jobs_JobName').val(ui.item.job_name),
                         $('#done_jobs_UnitOf').val(ui.item.unit_of),
                         $('#done_jobs_UnitOfLabel').val(ui.item.unit_of)
                 }
@@ -36,8 +37,10 @@
                 minLength: 2,
                 delay: 500,
                 select: function( event, ui ) {
-                    $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
-                        $('#done_jobs_RoadSectionEnd').val(ui.item.section_end)
+                        $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
+                        $('#done_jobs_RoadSectionEnd').val(ui.item.section_end),
+                        $('#done_jobs_roadLevel').val(ui.item.road_level),
+                        $('#done_jobs_sectionId').val(ui.item.section_id)
                 },
             });
             $( ".js-datepicker" ).datepicker();

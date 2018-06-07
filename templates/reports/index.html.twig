@@ -23,36 +23,40 @@
         <hr>
 
         <div class="print_a">
-            <table class="table table-sm thead-dark table-bordered">
+            <table style="font-size: smaller; text-align: center; vertical-align: middle" class="table table-sm thead-dark table-bordered">
                 <thead>
                 <tr>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} JobId {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} JobName  {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSection {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSectionBegin {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} RoadSectionEnd {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} Unit of {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} Quantity {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} username {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} DoneJobDate {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle">{% trans %} Comments  {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Įrašo nr.</th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Data</th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2">Oro sąlygos (pildoma tik žiemą)</th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" rowspan="2">Darbų vieta (kelio Nr., km)</th>
+                    <th style="text-align: center; vertical-align: middle" colspan="3">Darbų</th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2"> {% trans %} Unit of {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">{% trans %} Quantity {% endtrans %}</th>
+                    <th style="width: 150px; text-align: center; vertical-align: middle" rowspan="2">Užpildžiusio asmens pavardė, parašas</th>
+                    <th style="font-size: smaller ;width: 200px; text-align: center; vertical-align: middle" rowspan="2">Techninę kontrolę atliekančių asmenų pastabos ir nurodymai <p style="font-size: x-small">(data, pareigos, parašas, pavardė)</p></th>
                 </tr>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle">Grupė</th>
+                    <th style="text-align: center; vertical-align: middle">Šifras</th>
+                    <th style="width:200px;text-align: center; vertical-align: middle">Aprašymas</th>
+                </tr>
+
                 </thead>
                 <tbody>
                 {% for done_job in report | default ('') %}
                     <tr {% if loop.index is odd %}class="color"{% endif %}>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.JobId }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.JobName }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSection }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSectionBegin }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.RoadSectionEnd }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.UnitOf }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.Quantity }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.Username }}</td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.Id }}</td>
                         <td style="text-align: center; vertical-align: middle; white-space: nowrap">{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
-                        <td style="text-align: center; vertical-align: middle">{{ done_job.Note }}</td>
-                    </tr>
+                        <td></td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.SectionId }} <br>({{ done_job.RoadSectionBegin }}-{{ done_job.RoadSectionEnd }} ) </td>
+                        <td style="text-align: center; vertical-align: middle"> </td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.JobId }} </td>
+                        <td style="font-size: small;text-align: center; vertical-align: middle">{{ done_job.JobName }}</td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.UnitOf }} </td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.Quantity }}</td>
+                        <td style="text-align: center; vertical-align: middle"></td>
+                        <td style="text-align: center; vertical-align: middle"></td>
                 {% else %}
                     <tr>
                         <td colspan="13">{% trans %}no records found{% endtrans %}</td>

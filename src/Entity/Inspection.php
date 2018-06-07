@@ -48,6 +48,21 @@ class Inspection
      */
     private $Job;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $RoadSectionBegin;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $RoadSectionEnd;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $SubUnitId;
+
     public function __construct()
     {
         $this->Job = new ArrayCollection();
@@ -145,6 +160,42 @@ class Inspection
                 $job->setInspection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoadSectionBegin(): ?string
+    {
+        return $this->RoadSectionBegin;
+    }
+
+    public function setRoadSectionBegin(string $RoadSectionBegin): self
+    {
+        $this->RoadSectionBegin = $RoadSectionBegin;
+
+        return $this;
+    }
+
+    public function getRoadSectionEnd(): ?string
+    {
+        return $this->RoadSectionEnd;
+    }
+
+    public function setRoadSectionEnd(string $RoadSectionEnd): self
+    {
+        $this->RoadSectionEnd = $RoadSectionEnd;
+
+        return $this;
+    }
+
+    public function getSubUnitId(): ?int
+    {
+        return $this->SubUnitId;
+    }
+
+    public function setSubUnitId(int $SubUnitId): self
+    {
+        $this->SubUnitId = $SubUnitId;
 
         return $this;
     }

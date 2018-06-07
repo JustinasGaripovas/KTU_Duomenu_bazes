@@ -38,6 +38,11 @@ class RoadSection
      */
     private $SectionEnd;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $level;
+
 
     public function getId()
     {
@@ -100,6 +105,18 @@ class RoadSection
     public function setSectionName(string $SectionName): self
     {
         $this->SectionName = $SectionName;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }

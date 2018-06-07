@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Inspection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,12 @@ class InspectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('RoadId')
+            ->add('RoadIdd', null, array(
+                'mapped' => false
+            ))
+            ->add('RoadId', HiddenType::class)
+            ->add('RoadSectionBegin')
+            ->add('RoadSectionEnd')
             ->add('Note')
             ->add('RepairDate', DateType::class, array(
                 'widget' => 'single_text',

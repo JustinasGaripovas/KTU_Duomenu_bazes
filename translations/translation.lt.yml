@@ -14,7 +14,7 @@ Road section end: Pabaiga
 Quantity: Kiekis
 Done job date: Atlikimo data
 Save: Įrašyti
-Unit of: Mato vienetas
+Unit of: Mato vnt.
 Date: Data
 back to list: Atgal
 Year: Metai
@@ -64,6 +64,9 @@ Inspection Date: Patikrinimo data
 Inspection report: Patikrinimų ataskaita
 UnitIdd: Regionas
 SubUnitId: Tarnyba
-
+Road level: Kelio lygis
+Job namee: Darbas
+Road idd: Kelio Nr.
+Sum report: Suminė ataskaita
 
 

@@ -30,23 +30,23 @@ class DoneJobsController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
         $dql = '';
-        if(true === $authChecker->isGranted('ROLE_WORKER') ) {
-            $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
+        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
         }
-        elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+        elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
+            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+        }
+        elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
             $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
         }
         elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
             $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
         }
-        elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+        elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
             $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
         }
-        elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
-            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+        elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
+            $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
         }
 
         $query = $em->createQuery($dql);

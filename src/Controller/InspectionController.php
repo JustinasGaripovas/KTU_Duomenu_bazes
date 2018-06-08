@@ -26,7 +26,6 @@ class InspectionController extends Controller
 
     public function index(LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        //
         $username = $this->getUser()->getUserName();
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
         $dql = '';

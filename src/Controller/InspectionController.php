@@ -46,7 +46,7 @@ class InspectionController extends Controller
             $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
         }
         elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
-            $dql = "SELECT i FROM App:DoneJobs i WHERE i.Username = '$username' ORDER BY i.Date DESC";
+            $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.Date DESC";
         }
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);

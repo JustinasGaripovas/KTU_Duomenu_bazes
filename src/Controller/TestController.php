@@ -79,19 +79,19 @@ class TestController extends Controller
             if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.worker") === true){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_WORKER')));
             }
-            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.road_master") === true ){
+            if($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.road_master") === true ){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ROAD_MASTER')));
             }
-            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_master") === true ){
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_master") === true ){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_SUPER_MASTER')));
             }
-            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.unit_viewer") === true ){
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.unit_viewer") === true ){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_UNIT_VIEWER')));
             }
-            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_viewer") === true ){
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.super_viewer") === true ){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_SUPER_VIEWER')));
             }
-            elseif ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins") === true) {
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins") === true) {
                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ADMIN')));
            }
         }

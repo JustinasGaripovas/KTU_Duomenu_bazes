@@ -72,8 +72,7 @@ class MainController extends Controller
             $ldapUser = new LdapUser();
             $ldapUser->setName($this->getUserNameFromSession());
             $ldapUser->setUnit($unit);
-            $ldapUser->setSubunit(47);
-
+            $ldapUser->setSubunit($this->getDoctrine()->getRepository('App:Subunit')->findOneBy(array('UnitId'=>47)));
             $em -> persist($ldapUser);
             $em -> flush();
 

@@ -27,7 +27,8 @@ class InspectionController extends Controller
 
     public function index(TestController $testController ,LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        if ($testController->checkIfUserHasSubunitId() != true) {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId()) {
             $this->addFlash(
                 'notice',
                 'Jūs nepasirinkęs kelių tarnybos!'
@@ -35,8 +36,6 @@ class InspectionController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
         else {
-
-            $username = $this->getUser()->getUserName();
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
             $dql = '';
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {

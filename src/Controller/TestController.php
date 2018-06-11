@@ -21,15 +21,16 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 class TestController extends Controller
 {
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct( LdapUserRepository $ldapUserRepository ,TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
+        $this->ldapUseRepository = $ldapUserRepository;
     }
 
 
     public function checkIfUserHasSubunitId() {
 
-        if (!LdapUserRepository::class->findUnitIdByUserName($this->getUser()->getUserName())) {
+        if (!$this->ldapUseRepository->findUnitIdByUserName($this->getUser()->getUserName())) {
 
             $this->addFlash(
                 'notice',

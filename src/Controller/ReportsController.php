@@ -335,10 +335,10 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         var_dump($rep);
                         $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep['RoadLevel']);
-                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getJobId());
-                        $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep->getJobName());
-                        $spreadsheet->getActiveSheet()->setCellValue('D' . $index, $rep->getUnitOf());
-                        $spreadsheet->getActiveSheet()->setCellValue('E' . $index, $rep->getSumOfQuantity());
+                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep['JobId']);
+                        $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep['JobName']);
+                        $spreadsheet->getActiveSheet()->setCellValue('D' . $index, $rep['UnitOf']);
+                        $spreadsheet->getActiveSheet()->setCellValue('E' . $index, $rep['SumOfQuantity']);
                         $spreadsheet->getActiveSheet()
                             ->getRowDimension($index)
                             ->setRowHeight(40);

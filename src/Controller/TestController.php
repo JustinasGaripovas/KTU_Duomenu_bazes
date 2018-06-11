@@ -144,9 +144,6 @@ class TestController extends Controller
 
            //var_dump($isMemberOfGroup);
             $userName = $this->getUser()->getUserName();
-            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.worker") === true){
-                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_WORKER')));
-            }
             if($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.road_master") === true ){
                 $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ROAD_MASTER')));
             }
@@ -161,7 +158,10 @@ class TestController extends Controller
             }
             if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.admins") === true) {
                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_ADMIN')));
-           }
+            }
+            if ($this->checkGroupEx($ad,  $this->getDN($ad, $this->getUser()->getUserName(), 'dc=KP,dc=local'), "DAIS.worker") === true){
+                $this->tokenStorage->setToken(new UsernamePasswordToken(new User($userName, null), null, 'main', array('ROLE_WORKER')));
+            }
         }
 
         return $this->redirectToRoute('main');

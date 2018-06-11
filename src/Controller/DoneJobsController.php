@@ -95,7 +95,7 @@ class DoneJobsController extends Controller
                 $em->flush();
 
                 $this->addFlash(
-                    'notice',
+                    'success',
                     'New record successfully added to database!'
                 );
 

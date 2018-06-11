@@ -131,7 +131,7 @@ class DoneJobsController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash(
-                'notice',
+                'success',
                 'Record updated successfully!'
             );
             //return $this->redirectToRoute('done_jobs_edit', ['id' => $doneJob->getId()]);
@@ -154,7 +154,7 @@ class DoneJobsController extends Controller
             $em->remove($doneJob);
             $em->flush();
             $this->addFlash(
-                'notice',
+                'warning',
                 'Record deleted successfully!'
             );
         }
@@ -188,7 +188,7 @@ class DoneJobsController extends Controller
             $em->flush();
 
             $this->addFlash(
-                'notice',
+                'success',
                 'New record successfully added to database!'
             );
 

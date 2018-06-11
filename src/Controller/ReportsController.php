@@ -333,7 +333,6 @@ class ReportsController extends Controller
                     $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' KELIŲ TARNYBA');
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
-                        var_dump($rep);
                         $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep['RoadLevel']);
                         $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep['JobId']);
                         $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep['JobName']);

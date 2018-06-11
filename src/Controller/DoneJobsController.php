@@ -24,8 +24,10 @@ class DoneJobsController extends Controller
     /**
      * @Route("/", name="done_jobs_index", methods="GET")
      */
-    public function index(LdapUserRepository $ldapUserRepository ,DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
+    public function index(TestController $testController, LdapUserRepository $ldapUserRepository ,DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
+        $testController->checkIfUserHasSubunitId();
+
         $username = $this->getUser()->getUserName();
         $em = $this->get('doctrine.orm.entity_manager');
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
@@ -63,8 +65,10 @@ class DoneJobsController extends Controller
     /**
      * @Route("/new", name="done_jobs_new", methods="GET|POST")
      */
-    public function new(LdapUserRepository $ldapUserRepository, Request $request): Response
+    public function new(TestController $testController, LdapUserRepository $ldapUserRepository, Request $request): Response
     {
+        $testController->checkIfUserHasSubunitId();
+
         $doneJob = new DoneJobs();
         $userName = $this->getUser()->getUserName();
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();

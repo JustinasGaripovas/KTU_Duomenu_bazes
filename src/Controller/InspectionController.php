@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\DoneJobs;
+use App\Controller\TestController;
 use App\Entity\Inspection;
 use App\Form\InspectionType;
 use App\Repository\InspectionRepository;
@@ -24,8 +25,10 @@ class InspectionController extends Controller
      * @Route("/", name="inspection_index", methods="GET")
      */
 
-    public function index(LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
+    public function index(TestController $testController ,LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
+        $testController->checkIfUserHasSubunitId();
+
         $username = $this->getUser()->getUserName();
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
         $dql = '';
@@ -63,8 +66,10 @@ class InspectionController extends Controller
      * @Route("/new", name="inspection_new", methods="GET|POST")
      */
 
-    public function new( LdapUserRepository $ldapUserRepository, Request $request): Response
+    public function new(TestController $testController, LdapUserRepository $ldapUserRepository, Request $request): Response
     {
+        $testController->checkIfUserHasSubunitId();
+
         $userName = $this->getUser()->getUserName();
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
         $inspection = new Inspection();

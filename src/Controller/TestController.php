@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\LdapUserRepository;
 use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,12 +17,27 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 
 
+
 class TestController extends Controller
 {
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
+    }
+
+
+    public function checkIfUserHasSubunitId() {
+
+        if (!LdapUserRepository::class->findUnitIdByUserName($this->getUser()->getUserName())) {
+
+            $this->addFlash(
+                'notice',
+                'Jūs neasate prisiskyręs kelių tarnybos! Prašome pasirinkti!'
+            );
+            $this->redirectToRoute('ldap_user_index');
+        }
+
     }
 
     /**

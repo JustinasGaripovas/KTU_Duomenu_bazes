@@ -268,7 +268,6 @@ class ReportsController extends Controller
 
     public function sumReportsByRoadLevel(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
-
         $userName = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
             $this->addFlash(
@@ -335,7 +334,7 @@ class ReportsController extends Controller
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         var_dump($rep);
-                        $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep->RoadLevel());
+                        $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep['RoadLevel']);
                         $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getJobId());
                         $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep->getJobName());
                         $spreadsheet->getActiveSheet()->setCellValue('D' . $index, $rep->getUnitOf());

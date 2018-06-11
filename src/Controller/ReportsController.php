@@ -330,7 +330,7 @@ class ReportsController extends Controller
                     $dateNow = new \DateTime('now');
                     $styleArray = ['font' => ['bold' => false]];
                     $spreadsheet->getActiveSheet()->setCellValue('A4', $dateNow->format('Y-m-d'));
-                    $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' KELIŲ TARNYBA');
+                    $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . strtoupper($subUnitName) . ' KELIŲ TARNYBA');
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep['RoadLevel']);

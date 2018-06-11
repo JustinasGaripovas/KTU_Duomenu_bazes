@@ -315,6 +315,69 @@ class ReportsController extends Controller
                         'file.pdf'
                     );
                 }
+                if ($form->get('GenerateXLS')->isClicked()) {
+                    $fileName = md5($this->getUser()->getUserName() . microtime());
+                    $reader = IOFactory::createReader('Xlsx');
+                    $spreadsheet = $reader->load('sum_tmpl_1.xlsx');
+// Set document properties
+                    $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                        ->setLastModifiedBy('VĮ Kelių priežiūra')
+                        ->setTitle('Suminė darbų ataskaita')
+                        ->setSubject('Suminė darbų ataskaita')
+                        ->setDescription('Suminė darbų ataskaita')
+                        ->setKeywords('Suminė darbų ataskaita')
+                        ->setCategory('Suminė darbų ataskaita');
+                    $index = 6;
+                    $dateNow = new \DateTime('now');
+                    $styleArray = ['font' => ['bold' => false]];
+                    $spreadsheet->getActiveSheet()->setCellValue('A4', $dateNow->format('Y-m-d'));
+                    $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' KELIŲ TARNYBA');
+                    foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A' . $index, $rep->getRoadLevel());
+                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getJobId());
+                        $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep->getJobName());
+                        $spreadsheet->getActiveSheet()->setCellValue('D' . $index, $rep->getUnitOf());
+                        $spreadsheet->getActiveSheet()->setCellValue('E' . $index, $rep->getSumOfQuantity());
+                        $spreadsheet->getActiveSheet()
+                            ->getRowDimension($index)
+                            ->setRowHeight(40);
+                        $spreadsheet->getActiveSheet()
+                            ->getColumnDimension('C')->setWidth(40);
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setWrapText(true);
+                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
+                        $index++;
+                    }
+                    $spreadsheet->getActiveSheet()->removeRow($index, 1);
+                    //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
+                    // Set page orientation and size
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
+// Rename worksheet
+                    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                    $writer->save('files/' . $fileName . '.xlsx');
+                    return $this->file(('files/' . $fileName . '.xlsx'));
+                }
 
                 return $this->render('reports/index_sum_level.html.twig', ['form' => $form->createView(), 'report' => $report]);
             } else {

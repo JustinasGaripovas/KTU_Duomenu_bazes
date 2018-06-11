@@ -326,7 +326,7 @@ class ReportsController extends Controller
                         ->setDescription('Suminė darbų ataskaita')
                         ->setKeywords('Suminė darbų ataskaita')
                         ->setCategory('Suminė darbų ataskaita');
-                    $index = 6;
+                    $index = 7;
                     $dateNow = new \DateTime('now');
                     $styleArray = ['font' => ['bold' => false]];
                     $spreadsheet->getActiveSheet()->setCellValue('A4', $dateNow->format('Y-m-d'));

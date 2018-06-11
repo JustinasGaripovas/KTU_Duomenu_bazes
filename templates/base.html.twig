@@ -34,7 +34,7 @@
         </nav>
     {% endblock %}
     <div class="container">
-        {% for type, label, messages in app.flashes %}
+        {% for type, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ type }}">
                     {{ message }}

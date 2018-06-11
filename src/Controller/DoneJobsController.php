@@ -96,7 +96,7 @@ class DoneJobsController extends Controller
 
                 $this->addFlash(
                     'success',
-                    'New record successfully added to database!'
+                    'Naujas įrašas sėkmingai sukurtas!'
                 );
 
                 return $this->redirectToRoute('done_jobs_index');
@@ -132,7 +132,7 @@ class DoneJobsController extends Controller
 
             $this->addFlash(
                 'success',
-                'Record updated successfully!'
+                'Įrašas sėkmingai atnaujintas!'
             );
             //return $this->redirectToRoute('done_jobs_edit', ['id' => $doneJob->getId()]);
             return $this->redirectToRoute('done_jobs_index');
@@ -155,7 +155,7 @@ class DoneJobsController extends Controller
             $em->flush();
             $this->addFlash(
                 'warning',
-                'Record deleted successfully!'
+                'Įrašas sėkmingai ištrintas!'
             );
         }
 
@@ -189,7 +189,7 @@ class DoneJobsController extends Controller
 
             $this->addFlash(
                 'success',
-                'New record successfully added to database!'
+                'Naujas įrašas sėkmingai sukurtas!'
             );
 
             return $this->redirectToRoute('inspection_index');

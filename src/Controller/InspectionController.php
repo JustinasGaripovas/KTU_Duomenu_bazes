@@ -28,7 +28,7 @@ class InspectionController extends Controller
     public function index(TestController $testController ,LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
         $username = $this->getUser()->getUserName();
-        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId()) {
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
                 'notice',
                 'Jūs nepasirinkęs kelių tarnybos!'

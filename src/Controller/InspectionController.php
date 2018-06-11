@@ -30,7 +30,7 @@ class InspectionController extends Controller
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
-                'warning',
+                'danger',
                 'Jūs nepasirinkęs kelių tarnybos!'
             );
             return $this->redirectToRoute('ldap_user_index');

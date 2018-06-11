@@ -31,14 +31,11 @@ class TestController extends Controller
     public function checkIfUserHasSubunitId() {
 
         if (!$this->ldapUseRepository->findUnitIdByUserName($this->getUser()->getUserName())) {
-
-            $this->addFlash(
-                'notice',
-                'Jūs neasate prisiskyręs kelių tarnybos! Prašome pasirinkti!'
-            );
-            $this->redirectToRoute('ldap_user_index');
+            return false;
         }
-
+        else {
+            return true;
+        }
     }
 
     /**

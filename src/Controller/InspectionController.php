@@ -27,29 +27,36 @@ class InspectionController extends Controller
 
     public function index(TestController $testController ,LdapUserRepository $ldapUserRepository, InspectionRepository $inspectionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        $testController->checkIfUserHasSubunitId();
+        if ($testController->checkIfUserHasSubunitId() != true) {
+            $this->addFlash(
+                'notice',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+        else {
 
-        $username = $this->getUser()->getUserName();
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
-        $dql = '';
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
-            $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
-            $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
-            $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-            $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
-        }
-        elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
-            $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.Date DESC";
-        }
+            $username = $this->getUser()->getUserName();
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $dql = '';
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+            }
+            elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
+                $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+            }
+            elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+            }
+            elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+            }
+            elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+            }
+            elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
+                $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.Date DESC";
+            }
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $paginator  = $this->get('knp_paginator');
@@ -59,8 +66,9 @@ class InspectionController extends Controller
                 20/*limit per page*/
             );
 
-        return $this->render('inspection/index.html.twig', ['pagination' => $pagination]);
-    }
+            return $this->render('inspection/index.html.twig', ['pagination' => $pagination]);
+        }
+        }
 
     /**
      * @Route("/new", name="inspection_new", methods="GET|POST")

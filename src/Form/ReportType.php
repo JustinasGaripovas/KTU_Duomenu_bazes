@@ -27,12 +27,17 @@ class ReportType extends AbstractType
             ))
             ->add('Preview', SubmitType::class,array(
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'd-inline-block btn btn-success'
                 ]
             ))
             ->add('GeneratePDF', SubmitType::class,array(
                 'attr' => [
-                    'class' => 'btn btn-success'
+                    'class' => 'd-inline-block btn btn-success'
+                ]
+            ))
+            ->add('GenerateXLS', SubmitType::class,array(
+                'attr' => [
+                    'class' => 'd-inline btn btn-success'
                 ]
             ))
         ;

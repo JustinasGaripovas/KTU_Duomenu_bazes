@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use PhpOffice\PhpSpreadsheet\Calculation\DateTime;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+
 
 
 class TestController extends Controller
@@ -24,14 +29,77 @@ class TestController extends Controller
      */
     public function index()
     {
-        $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('noreply@keliuprieziura.lt')
-            ->setTo('darius.zvirblis@keliuprieziura.lt')
-            ->setBody('test',
-                'text/html'
-            );
+        $fileName = md5($this->getUser()->getUserName() . microtime());
+        $reader = IOFactory::createReader('Xlsx');
+        $spreadsheet = $reader->load('job_tmpl_3.xlsx');
+// Set document properties
+        $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+            ->setLastModifiedBy('VĮ Kelių priežiūra')
+            ->setTitle('Atliktų darbų ataskaita')
+            ->setSubject('Atliktų darbų ataskaita')
+            ->setDescription('Atliktų darbų ataskaita')
+            ->setKeywords('Atliktų darbų ataskaita')
+            ->setCategory('Atliktų darbų ataskaita');
 
-        $this->get('mailer')->send($message);
+            $em = $this->get('doctrine.orm.entity_manager');
+            $dql = "SELECT i FROM App:DoneJobs i";
+            $query = $em->createQuery($dql);
+            $report = $query->execute();
+            $index = 3;
+            $styleArray = [  'font' => [ 'bold' => false ] ];
+            $styleArrayHeader = [  'font' => [ 'bold' => true ] ];
+            foreach ($report as $rep) {
+            $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
+            $spreadsheet->getActiveSheet()->setCellValue('F'.$index, $rep->getJobId());
+            $spreadsheet->getActiveSheet()->setCellValue('G'.$index, $rep->getJobName());
+            $spreadsheet->getActiveSheet()->setCellValue('H'.$index, $rep->getUnitOf());
+            $spreadsheet->getActiveSheet()->setCellValue('I'.$index, $rep->getQuantity());
+            $spreadsheet->getActiveSheet()->setCellValue('B'.$index, $rep->getDoneJobDate()->format('Y-m-d'));
+            $spreadsheet->getActiveSheet()
+                ->setCellValue('D'.$index, $rep->getSectionId().'('.$rep->getRoadSectionBegin().'-'.$rep->getRoadSectionEnd().')');
+                $spreadsheet->getActiveSheet()
+                    ->getRowDimension($index)
+                    ->setRowHeight(40);
+                $spreadsheet->getActiveSheet()
+                    ->getColumnDimension('G')->setWidth(40);
+                $spreadsheet->getActiveSheet()
+                    ->getStyle($index)
+                    ->getAlignment()
+                    ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $spreadsheet->getActiveSheet()
+                    ->getStyle($index)
+                    ->getAlignment()
+                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $spreadsheet->getActiveSheet()
+                    ->getStyle($index)
+                    ->getAlignment()
+                    ->setWrapText(true);
+                $spreadsheet->getActiveSheet()->getStyle('A'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('B'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('C'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('D'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('E'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('F'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('G'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('H'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('I'.$index)->applyFromArray($styleArray);
+                $spreadsheet->getActiveSheet()->getStyle('J'.$index)->applyFromArray($styleArray);
+                $index ++;
+            }
+            $spreadsheet->getActiveSheet()->removeRow($index,1);
+        //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
+            // Set page orientation and size
+        $spreadsheet->getActiveSheet()
+            ->getPageSetup()
+            ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+        $spreadsheet->getActiveSheet()
+            ->getPageSetup()
+            ->setPaperSize(PageSetup::PAPERSIZE_A4);
+
+// Rename worksheet
+
+
+        return $this->file($fileName.'.xlsx');
 
     }
 

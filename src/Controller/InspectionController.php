@@ -75,30 +75,36 @@ class InspectionController extends Controller
 
     public function new(TestController $testController, LdapUserRepository $ldapUserRepository, Request $request): Response
     {
-        $testController->checkIfUserHasSubunitId();
-
         $userName = $this->getUser()->getUserName();
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
-        $inspection = new Inspection();
-        $inspection -> setUsername($this->getUser()->getUserName());
-        $inspection -> setDate(new \DateTime("now"));
-        $inspection -> setSubUnitId($subUnitId);
-        $form = $this->createForm(InspectionType::class, $inspection);
-        $form->handleRequest($request);
+        if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
+            $inspection = new Inspection();
+            $inspection->setUsername($this->getUser()->getUserName());
+            $inspection->setDate(new \DateTime("now"));
+            $inspection->setSubUnitId($subUnitId);
+            $form = $this->createForm(InspectionType::class, $inspection);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($inspection);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($inspection);
+                $em->flush();
 
-            return $this->redirectToRoute('inspection_index');
+                return $this->redirectToRoute('inspection_index');
+            }
+
+            return $this->render('inspection/new.html.twig', [
+                'inspection' => $inspection,
+                'form' => $form->createView(),
+            ]);
         }
-
-        return $this->render('inspection/new.html.twig', [
-            'inspection' => $inspection,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

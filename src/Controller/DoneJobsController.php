@@ -26,40 +26,43 @@ class DoneJobsController extends Controller
      */
     public function index(TestController $testController, LdapUserRepository $ldapUserRepository ,DoneJobsRepository $doneJobsRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        $testController->checkIfUserHasSubunitId();
+        $userName = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
 
-        $username = $this->getUser()->getUserName();
-        $em = $this->get('doctrine.orm.entity_manager');
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
-        $dql = '';
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
-            $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
-            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
-            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
-        }
-        elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-            $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
-        }
-        elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
-            $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
-        }
+            $username = $this->getUser()->getUserName();
+            $em = $this->get('doctrine.orm.entity_manager');
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $dql = '';
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+            } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+            } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+            } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
+            }
 
-        //
-        $query = $em->createQuery($dql);
-        $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            20/*limit per page*/
-        );
-        return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
+            //
+            $query = $em->createQuery($dql);
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                20/*limit per page*/
+            );
+            return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
+        }
     }
 
     /**
@@ -67,36 +70,43 @@ class DoneJobsController extends Controller
      */
     public function new(TestController $testController, LdapUserRepository $ldapUserRepository, Request $request): Response
     {
-        $testController->checkIfUserHasSubunitId();
 
-        $doneJob = new DoneJobs();
         $userName = $this->getUser()->getUserName();
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
-        $recordTime = new \DateTime("now");
-        $doneJob->setUsername($userName);
-        $doneJob->setDate($recordTime);
-        $doneJob->setDoneJobDate(new \DateTime("now"));
-        $doneJob->setSubUnitId($subUnitId);
-        $form = $this->createForm(DoneJobsType::class, $doneJob);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($doneJob);
-            $em->flush();
-
+        if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
             $this->addFlash(
-                'notice',
-                'New record successfully added to database!'
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
             );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+            $doneJob = new DoneJobs();
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
+            $recordTime = new \DateTime("now");
+            $doneJob->setUsername($userName);
+            $doneJob->setDate($recordTime);
+            $doneJob->setDoneJobDate(new \DateTime("now"));
+            $doneJob->setSubUnitId($subUnitId);
+            $form = $this->createForm(DoneJobsType::class, $doneJob);
+            $form->handleRequest($request);
 
-            return $this->redirectToRoute('done_jobs_index');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($doneJob);
+                $em->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'New record successfully added to database!'
+                );
+
+                return $this->redirectToRoute('done_jobs_index');
+            }
+
+            return $this->render('done_jobs/new.html.twig', [
+                'done_job' => $doneJob,
+                'form' => $form->createView(),
+            ]);
         }
-
-        return $this->render('done_jobs/new.html.twig', [
-            'done_job' => $doneJob,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

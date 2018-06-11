@@ -40,9 +40,9 @@ security:
 
     access_control:
         # require ROLE_ADMIN for /admin*
-         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-         - { path: ^/, roles: ROLE_USER }
-         - { path: ^/admin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        # - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        # - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/admin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         #(memberOf=CN=ADMD.admins,OU=Administration Accounts,DC=DAIS,DC=local)
 
 

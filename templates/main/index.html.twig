@@ -20,6 +20,8 @@
             {% if is_granted('ROLE_ADMIN') %}
             <h1>{% trans %}Road Sections{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
+                <h1>{% trans %} Jobs {% endtrans %}</h1>
+                <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
             {% endif %}
             <h1>{% trans %}Reports{% endtrans %}</h1>
             <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>

@@ -31,10 +31,6 @@ class Job
      */
     private $JobQuantity;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $JobType;
 
     public function getId()
     {
@@ -77,15 +73,4 @@ class Job
         return $this;
     }
 
-    public function getJobType(): ?string
-    {
-        return $this->JobType;
-    }
-
-    public function setJobType(string $JobType): self
-    {
-        $this->JobType = $JobType;
-
-        return $this;
-    }
 }

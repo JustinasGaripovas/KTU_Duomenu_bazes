@@ -436,7 +436,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('job_tmpl_3.xlsx');
+                    $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
 // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -454,7 +454,7 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->setCellValue('H' . $index, $rep->getUnitOf());
                         $spreadsheet->getActiveSheet()->setCellValue('I' . $index, $rep->getQuantity());
                         $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'));
-                        $spreadsheet->getActiveSheet()->setCellValue('L' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
+                        $spreadsheet->getActiveSheet()->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
                         $spreadsheet->getActiveSheet()
@@ -484,8 +484,11 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->getStyle('H' . $index)->applyFromArray($styleArray);
                         $spreadsheet->getActiveSheet()->getStyle('I' . $index)->applyFromArray($styleArray);
                         $spreadsheet->getActiveSheet()->getStyle('J' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('K' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:K'.$index);
+
                     $spreadsheet->getActiveSheet()->removeRow($index, 1);
                     //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
                     // Set page orientation and size

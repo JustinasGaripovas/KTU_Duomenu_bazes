@@ -52,7 +52,7 @@ class DoneJobs
     private $UnitOf;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $Quantity;
 

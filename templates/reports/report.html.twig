@@ -47,7 +47,7 @@
                 <tbody style="font-size: small">
                 {% for done_job in report | default ('') %}
                 <tr {% if loop.index is odd %}class="color"{% endif %}>
-                    <td style="text-align: center; vertical-align: middle">{{ done_job.Id }}</td>
+                    <td style="text-align: center; vertical-align: middle"></td>
                     <td style="text-align: center; vertical-align: middle; white-space: nowrap">{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
                     <td></td>
                     <td style="text-align: center; vertical-align: middle"> {{ done_job.SectionId }} <br>({{ done_job.RoadSectionBegin }}-{{ done_job.RoadSectionEnd }} ) </td>

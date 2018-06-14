@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Restriction{% endblock %}
+
+{% block body %}
+    <h1>Restriction</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ restriction.id }}</td>
+            </tr>
+            <tr>
+                <th>RoadId</th>
+                <td>{{ restriction.RoadId }}</td>
+            </tr>
+            <tr>
+                <th>RoadName</th>
+                <td>{{ restriction.RoadName }}</td>
+            </tr>
+            <tr>
+                <th>SectionBegin</th>
+                <td>{{ restriction.SectionBegin }}</td>
+            </tr>
+            <tr>
+                <th>SectionEnd</th>
+                <td>{{ restriction.SectionEnd }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ restriction.Place }}</td>
+            </tr>
+            <tr>
+                <th>Jobs</th>
+                <td>{{ restriction.Jobs }}</td>
+            </tr>
+            <tr>
+                <th>Restrictions</th>
+                <td>{{ restriction.Restrictions }}</td>
+            </tr>
+            <tr>
+                <th>DateFrom</th>
+                <td>{{ restriction.DateFrom ? restriction.DateFrom|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateTo</th>
+                <td>{{ restriction.DateTo ? restriction.DateTo|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ restriction.Notes }}</td>
+            </tr>
+            <tr>
+                <th>Contractor</th>
+                <td>{{ restriction.Contractor }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('restriction_index') }}">back to list</a>
+
+    <a href="{{ path('restriction_edit', {'id': restriction.id}) }}">edit</a>
+
+    {{ include('restriction/_delete_form.html.twig') }}
+{% endblock %}

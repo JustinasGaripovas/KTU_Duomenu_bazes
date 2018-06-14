@@ -8,25 +8,25 @@
     <div class="container">
         <ul>
             <h1>{% trans %}Inspection {% endtrans %}</h1>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_index') }}">{% trans %} Inspections List {% endtrans %}</a>
-            <br>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_index') }}">{% trans %} Inspections List {% endtrans %}</a>
             <h1>{% trans %}Jobs{% endtrans %}</h1>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
-            <br>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
+            <h1>{% trans %} Restrictions {% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('restriction_index') }}">{% trans %}New Job {% endtrans %}</a>
             <h1>{% trans %}Ldap users{% endtrans %}</h1>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
             {% if is_granted('ROLE_ADMIN') %}
             <h1>{% trans %}Road Sections{% endtrans %}</h1>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
                 <h1>{% trans %} Jobs {% endtrans %}</h1>
-                <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
+                <a class="btn btn-success btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
             {% endif %}
             <h1>{% trans %}Reports{% endtrans %}</h1>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>
-            <a class="btn btn-outline-secondary btn-lg btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
         </ul>
     </div>
 {% endblock %}

@@ -70,5 +70,19 @@ Road idd: Kelio Nr.
 Sum report: Suminė ataskaita
 Generate x l s : XLS
 JobQuantity: Mato vnt.
+Place: Konkreti vieta
+Section begin: Darbų pradžia, km
+Section end: Darbų pabaiga, km
+Restrictions: Apribojimai
+Road name: Kelio pavadinimas
+Date from: Laikotarpis (nuo)
+Date to: Laikotarpis (iki)
+Notes: Pastabos
+Contractor: Darbų vykdytojas (įmonė, vardas, pavardė, tel. nr.)
+Status: Statusas
+New Restriction: Naujas apribojimas
+Restriction: Apribojimai
+RoadName: Kelio pavadinimas
+
 
 

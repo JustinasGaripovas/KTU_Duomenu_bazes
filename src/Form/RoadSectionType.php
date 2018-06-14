@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\RoadSection;
+use App\Entity\Subunit;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -16,7 +17,10 @@ class RoadSectionType extends AbstractType
     {
         $builder
             ->add('SectionId')
-            ->add('unitId')
+            ->add('unitId',EntityType::class, array(
+                'class' => Subunit::class,
+                'choice_label' => 'Name',
+            ))
             ->add('sectionName')
             ->add('sectionBegin')
             ->add('sectionEnd');

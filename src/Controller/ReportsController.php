@@ -333,35 +333,37 @@ class ReportsController extends Controller
                     $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . strtoupper($subUnitName) . ' KELIŲ TARNYBA');
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
-                        $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $rep['RoadLevel']);
-                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep['JobId']);
-                        $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $rep['JobName']);
-                        $spreadsheet->getActiveSheet()->setCellValue('D' . $index, $rep['UnitOf']);
-                        $spreadsheet->getActiveSheet()->setCellValue('E' . $index, $rep['SumOfQuantity']);
                         $spreadsheet->getActiveSheet()
-                            ->getRowDimension($index)
-                            ->setRowHeight(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getColumnDimension('C')->setWidth(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                            ->setCellValue('A' . $index, $rep['RoadLevel'])
+                            ->setCellValue('B' . $index, $rep['JobId'])
+                            ->setCellValue('C' . $index, $rep['JobName'])
+                            ->setCellValue('D' . $index, $rep['UnitOf'])
+                            ->setCellValue('E' . $index, $rep['SumOfQuantity']);
                         $spreadsheet->getActiveSheet()
                             ->getStyle($index)
                             ->getAlignment()
                             ->setWrapText(true);
-                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle('A' . $index)->applyFromArray($styleArray)
+                            ->getStyle('B' . $index)->applyFromArray($styleArray)
+                            ->getStyle('C' . $index)->applyFromArray($styleArray)
+                            ->getStyle('D' . $index)->applyFromArray($styleArray)
+                            ->getStyle('E' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
+                    $spreadsheet->getActiveSheet()
+                        ->getRowDimension($index)
+                        ->setRowHeight(40);
+                    $spreadsheet->getActiveSheet()
+                        ->getColumnDimension('C')->setWidth(40);
+                    $spreadsheet->getActiveSheet()
+                        ->getStyle($index)
+                        ->getAlignment()
+                        ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $spreadsheet->getActiveSheet()
+                        ->getStyle($index)
+                        ->getAlignment()
+                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $spreadsheet->getActiveSheet()->removeRow($index, 1);
                     //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
                     // Set page orientation and size

@@ -440,18 +440,16 @@ class ReportsController extends Controller
 // Set document properties
                     $index = 3;
                     foreach ($report as $rep) {
-                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
-                        $spreadsheet->getActiveSheet()->setCellValue('F' . $index, $rep->getJobId());
-                        $spreadsheet->getActiveSheet()->setCellValue('G' . $index, $rep->getJobName());
-                        $spreadsheet->getActiveSheet()->setCellValue('H' . $index, $rep->getUnitOf());
-                        $spreadsheet->getActiveSheet()->setCellValue('I' . $index, $rep->getQuantity());
-                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'));
-                        $spreadsheet->getActiveSheet()->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $spreadsheet->getActiveSheet()
+                            ->setCellValue('F' . $index, $rep->getJobId())
+                            ->setCellValue('G' . $index, $rep->getJobName())
+                            ->setCellValue('H' . $index, $rep->getUnitOf())
+                            ->setCellValue('I' . $index, $rep->getQuantity())
+                            ->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'))
+                            ->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()))
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->removeRow($index, 1);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

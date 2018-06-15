@@ -438,13 +438,6 @@ class ReportsController extends Controller
                     $reader = IOFactory::createReader('Xlsx');
                     $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
 // Set document properties
-                    $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
-                        ->setLastModifiedBy('VĮ Kelių priežiūra')
-                        ->setTitle('Atliktų darbų ataskaita')
-                        ->setSubject('Atliktų darbų ataskaita')
-                        ->setDescription('Atliktų darbų ataskaita')
-                        ->setKeywords('Atliktų darbų ataskaita')
-                        ->setCategory('Atliktų darbų ataskaita');
                     $index = 3;
                     $styleArray = ['font' => ['bold' => false]];
                     foreach ($report as $rep) {
@@ -457,23 +450,6 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        $spreadsheet->getActiveSheet()
-                            ->getRowDimension($index)
-                            ->setRowHeight(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getColumnDimension('G')->setWidth(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setWrapText(true);
                         $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
                         $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
                         $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
@@ -487,8 +463,6 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->getStyle('K' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:K'.$index);
-
                     $spreadsheet->getActiveSheet()->removeRow($index, 1);
                     //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
                     // Set page orientation and size

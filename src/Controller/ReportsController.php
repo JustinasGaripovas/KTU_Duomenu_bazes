@@ -438,7 +438,7 @@ class ReportsController extends Controller
                     $reader = IOFactory::createReader('Xlsx');
                     $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
 // Set document properties
-                    $index = 3;
+                    $index = 4;
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('F' . $index, $rep->getJobId())

@@ -439,7 +439,6 @@ class ReportsController extends Controller
                     $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
 // Set document properties
                     $index = 3;
-                    $styleArray = ['font' => ['bold' => false]];
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         $spreadsheet->getActiveSheet()->setCellValue('F' . $index, $rep->getJobId());
@@ -450,22 +449,9 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('F' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('G' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('H' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('I' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('J' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('K' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
                     $spreadsheet->getActiveSheet()->removeRow($index, 1);
-                    //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
-                    // Set page orientation and size
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

@@ -441,6 +441,7 @@ class ReportsController extends Controller
                     $index = 3;
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
+                            ->insertNewRowBefore($index, 1)
                             ->setCellValue('F' . $index, $rep->getJobId())
                             ->setCellValue('G' . $index, $rep->getJobName())
                             ->setCellValue('H' . $index, $rep->getUnitOf())

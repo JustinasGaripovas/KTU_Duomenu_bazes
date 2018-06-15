@@ -450,6 +450,7 @@ class ReportsController extends Controller
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
                         $index++;
                     }
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:K'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

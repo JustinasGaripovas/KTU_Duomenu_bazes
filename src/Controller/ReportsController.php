@@ -343,19 +343,18 @@ class ReportsController extends Controller
                             ->getStyle($index)
                             ->getAlignment()
                             ->setWrapText(true);
+                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
                         $spreadsheet->getActiveSheet()
-                            ->getStyle('A' . $index)->applyFromArray($styleArray)
-                            ->getStyle('B' . $index)->applyFromArray($styleArray)
-                            ->getStyle('C' . $index)->applyFromArray($styleArray)
-                            ->getStyle('D' . $index)->applyFromArray($styleArray)
-                            ->getStyle('E' . $index)->applyFromArray($styleArray);
+                            ->getRowDimension($index)
+                            ->setRowHeight(40);
+                        $spreadsheet->getActiveSheet()
+                            ->getColumnDimension('C')->setWidth(40);
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()
-                        ->getRowDimension($index)
-                        ->setRowHeight(40);
-                    $spreadsheet->getActiveSheet()
-                        ->getColumnDimension('C')->setWidth(40);
                     $spreadsheet->getActiveSheet()
                         ->getStyle($index)
                         ->getAlignment()

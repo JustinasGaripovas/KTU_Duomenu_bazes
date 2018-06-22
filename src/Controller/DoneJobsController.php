@@ -44,13 +44,13 @@ class DoneJobsController extends Controller
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.DoneJobDate DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.DoneJobDate DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.DoneJobDate DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.DoneJobDate DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
             }
 
             //

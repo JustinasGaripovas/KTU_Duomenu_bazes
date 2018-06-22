@@ -89,9 +89,7 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'));
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        $spreadsheet->getActiveSheet()
-                            ->getRowDimension($index)
-                            ->setRowHeight(40);
+
                         $spreadsheet->getActiveSheet()
                             ->getColumnDimension('G')->setWidth(40);
                         $spreadsheet->getActiveSheet()

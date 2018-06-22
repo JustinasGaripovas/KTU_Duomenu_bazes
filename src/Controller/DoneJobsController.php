@@ -43,9 +43,9 @@ class DoneJobsController extends Controller
                 $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
@@ -171,7 +171,19 @@ class DoneJobsController extends Controller
     {
         $doneJob = new DoneJobs();
         $inspection = $this->getDoctrine()->getRepository('App:Inspection')->find($id);
+        $roadSection = $inspection->getRoadId();
+        $roadSectionDetais = $this->getDoctrine()->getRepository('App:RoadSection')->findOneBy(['SectionId'=>$roadSection]);
+        $roadLevel = $roadSectionDetais->getLevel();
+        $roadSectionWithName = $roadSection .' '. $roadSectionDetais->getSectionName();
+        $roadSectionBegin = $inspection->getRoadSectionBegin();
+        $roadSectionEnd = $inspection->getRoadSectionEnd();
         $doneJob->setInspection($inspection);
+        $doneJob->setRoadSection($roadSectionWithName);
+        $doneJob->setRoadSectionBegin($roadSectionBegin);
+        $doneJob->setRoadSectionEnd($roadSectionEnd);
+        $doneJob->setSectionId($roadSection);
+        $doneJob->setRoadSection($roadSectionWithName);
+        $doneJob->setRoadLevel($roadLevel);
         $userName = $this->getUser()->getUserName();
         $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
         $recordTime = new \DateTime("now");

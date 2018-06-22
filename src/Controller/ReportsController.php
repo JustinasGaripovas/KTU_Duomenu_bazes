@@ -46,9 +46,9 @@ class ReportsController extends Controller
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
                 } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+                } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
@@ -162,9 +162,9 @@ class ReportsController extends Controller
 
                 if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+                } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId'AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
@@ -284,13 +284,13 @@ class ReportsController extends Controller
                 $dql = '';
 
                 if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf ORDER BY i.Date ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf ORDER BY i.Date ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf ORDER BY i.Date ASC";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf ORDER BY i.Date ASC";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
@@ -407,11 +407,11 @@ class ReportsController extends Controller
                 $dql = '';
                 if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
                 } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
-                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+                } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";

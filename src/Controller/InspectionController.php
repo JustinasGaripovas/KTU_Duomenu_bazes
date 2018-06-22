@@ -44,10 +44,10 @@ class InspectionController extends Controller
             elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
                 $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_KT_VIEWER')) {
+            elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_KT_MASTER')) {
+            elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
             }
             elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {

@@ -4,7 +4,7 @@
 
 {% elseif is_granted('ROLE_SUPER_VIEWER') %}
 
-{% elseif is_granted('ROLE_KT_VIEWER') %}
+{% elseif is_granted('ROLE_UNIT_VIEWER') %}
 
 {% elseif is_granted('ROLE_SUPER_MASTER') %}
     <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>

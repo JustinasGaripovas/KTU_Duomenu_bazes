@@ -426,6 +426,7 @@ class ReportsController extends Controller
 // Set document properties
                     $index = 6;
                     foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('B' . $index, $rep->getSubunit())
                             ->setCellValue('C' . $index, $rep->getRoadId())

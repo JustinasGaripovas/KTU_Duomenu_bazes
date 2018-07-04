@@ -447,7 +447,6 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()->setCellValue('M' . $index, $rep->getPayoutAmount());
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->setAutoFilter('A6:M'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

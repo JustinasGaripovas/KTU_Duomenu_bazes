@@ -286,9 +286,9 @@ class ReportsController extends Controller
                 if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {

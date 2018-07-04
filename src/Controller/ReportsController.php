@@ -422,7 +422,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('insured_event_tmpl.xlsx');
+                    $spreadsheet = $reader->load('insured_event_tmpl1.xlsx');
 // Set document properties
                     $index = 6;
                     foreach ($report as $rep) {
@@ -444,10 +444,6 @@ class ReportsController extends Controller
                             $spreadsheet->getActiveSheet()->setCellValue('L' . $index, '');
                         }
                         $spreadsheet->getActiveSheet()->setCellValue('M' . $index, $rep->getPayoutAmount());
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setWrapText(true);
                         $index++;
                     }
                     $spreadsheet->getActiveSheet()

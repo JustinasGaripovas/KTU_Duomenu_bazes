@@ -436,14 +436,14 @@ class ReportsController extends Controller
                             ->setCellValue('H' . $index, $rep->getEstimateToCompany())
                             ->setCellValue('I' . $index, $rep->getInsurensCompany())
                             ->setCellValue('J' . $index, $rep->getNumberOfDamage())
-                            ->setCellValue('K' . $index, $rep->getDamageData()-> format('Y-m-d'));
+                            ->setCellValue('K' . $index, $rep->getDamageData()-> format('Y-m-d'))
+                            ->setCellValue('M' . $index, $rep->getPayoutAmount());
                         if ($rep->getPayoutDate() != null) {
                             $spreadsheet->getActiveSheet()->setCellValue('L' . $index, $rep->getPayoutDate() -> format('Y-m-d'));
                         }
                         else {
                             $spreadsheet->getActiveSheet()->setCellValue('L' . $index, '');
                         }
-                        $spreadsheet->getActiveSheet()->setCellValue('M' . $index, $rep->getPayoutAmount());
                         $index++;
                     }
                     $spreadsheet->getActiveSheet()

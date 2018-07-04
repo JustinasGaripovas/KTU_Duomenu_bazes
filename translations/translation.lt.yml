@@ -84,6 +84,28 @@ New Restriction: Naujas apribojimas
 Restriction: Apribojimai
 RoadName: Kelio pavadinimas
 Report with filter: Bendra KT
+Insured Events: Draudiminiai įvykiai
+Insured Events Index: Draudiminių įvykių sąrašas
+Subunit: Tarnyba
+SectionBegin: Pradžia
+SectionEnd: Pabaiga
+DamagedStuff: Sugagintas kelio turtas
+Documents: Draudimui pateikti dokumentai
+EstimateToCompany: Draudimui pateikta suma, be PVM
+InsurensCompany: Draudimo bendrovė
+NumberOfDamage: Žalos Nr.
+DamageData: Įvykio data
+PayoutDate: Išmokos data
+PayoutAmount: Išmokos suma
+Damaged stuff: Sugagintas kelio turtas
+Estimate to company: Draudimui pateikta suma, be PVM
+Insurens company: Draudimo bendrovė
+Number of damage: Žalos Nr.
+Damage data: Įvykio data
+Payout date: Išmokos data
+Payout amount: Išmokos suma
+Road search: Kelio ruožas
+Edit InsuredEvent: Redaguoti
 
 
 

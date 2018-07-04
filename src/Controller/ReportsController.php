@@ -382,6 +382,95 @@ class ReportsController extends Controller
 
 
     /**
+     * @Route("/reports/insured/events", name="insured_events_report")
+     */
+
+    public function reportInsuredEvent(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+
+            $form = $this->createForm(ReportType::class);
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $from = $form->get('From')->getData();
+                $to = $form->get('To')->getData();
+                $username = $this->getUser()->getUserName();
+
+                $dql = '';
+
+                    $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
+
+                $em = $this->get('doctrine.orm.entity_manager');
+                $query = $em->createQuery($dql);
+                $report = $query->execute();
+
+                if ($form->get('GeneratePDF')->isClicked()) {
+                    $html = $this->renderView('reports/report.html.twig', ['report' => $report]);
+                    return new PdfResponse(
+                        $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                        'file.pdf'
+                    );
+                }
+                if ($form->get('GenerateXLS')->isClicked()) {
+                    $fileName = md5($this->getUser()->getUserName() . microtime());
+                    $reader = IOFactory::createReader('Xlsx');
+                    $spreadsheet = $reader->load('insured_event_tmpl.xlsx');
+// Set document properties
+                    $index = 6;
+                    foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('B' . $index, $rep->getSubunit())
+                            ->setCellValue('C' . $index, $rep->getRoadId())
+                            ->setCellValue('D' . $index, $rep->getRoadName())
+                            ->setCellValue('E' . $index, '(' . $rep->getSectionBegin(). ' - '. $rep->getSectionEnd() .')' )
+                            ->setCellValue('F' . $index, $rep->getDamagedStuff())
+                            ->setCellValue('G' . $index, $rep->getDocuments())
+                            ->setCellValue('H' . $index, $rep->getEstimateToCompany())
+                            ->setCellValue('I' . $index, $rep->getInsurensCompany())
+                            ->setCellValue('J' . $index, $rep->getNumberOfDamage())
+                            ->setCellValue('K' . $index, $rep->getDamageData()-> format('Y-m-d'));
+                        if ($rep->getPayoutDate() != null) {
+                            $spreadsheet->getActiveSheet()->setCellValue('L' . $index, $rep->getPayoutDate() -> format('Y-m-d'));
+                        }
+                        else {
+                            $spreadsheet->getActiveSheet()->setCellValue('L' . $index, '');
+                        }
+                        $spreadsheet->getActiveSheet()->setCellValue('M' . $index, $rep->getPayoutAmount());
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setWrapText(true);
+                        $index++;
+                    }
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
+// Rename worksheet
+                    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                    $writer->save('files/' . $fileName . '.xlsx');
+                    return $this->file(('files/' . $fileName . '.xlsx'));
+                }
+
+                return $this->render('reports/index_insured_event.html.twig', ['form' => $form->createView(), 'report' => $report]);
+            } else {
+                return $this->render('reports/index_insured_event.html.twig', ['form' => $form->createView(), ['report' => null]]);
+            }
+        }
+    }
+
+
+    /**
      * @Route("/reports/filter", name="reports_filter")
      */
 

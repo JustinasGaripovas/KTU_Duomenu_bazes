@@ -10,32 +10,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
-class InsuredEventType extends AbstractType
+class InsuredEventTypeEdit extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('Subunit')
-            ->add('RoadSearch', null, array(
-                'mapped' => false
-            ))
-            ->add('RoadId', HiddenType::class)
-            ->add('RoadName', HiddenType::class)
-            ->add('SectionBegin')
-            ->add('SectionEnd')
-            ->add('DamagedStuff')
-            ->add('Documents')
-            ->add('EstimateToCompany')
-            ->add('InsurensCompany')
-            ->add('NumberOfDamage')
-            ->add('DamageData',DateType::class, array(
+            ->add('PayoutDate',DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,
+                'required' => false,
                 'attr' => [
                     'class' => 'js-datepicker',
                     'autocomplete'=>'off'
-                ]
-            ));
+        ]
+    ))
+            ->add('PayoutAmount');
     }
 
     public function configureOptions(OptionsResolver $resolver)

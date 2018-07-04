@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\InsuredEvent;
 use App\Form\InsuredEventType;
+use App\Form\InsuredEventTypeEdit;
 use App\Repository\InsuredEventRepository;
 use App\Repository\LdapUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,7 +88,7 @@ class InsuredEventController extends Controller
      */
     public function edit(Request $request, InsuredEvent $insuredEvent): Response
     {
-        $form = $this->createForm(InsuredEventType::class, $insuredEvent);
+        $form = $this->createForm(InsuredEventTypeEdit::class, $insuredEvent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -575,7 +575,7 @@ class ReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
-                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateFrom >= '$from') ORDER BY r.DateFrom ASC";
+                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateFrom >= '$from' AND r.Dateto >= '$from') ORDER BY r.DateFrom ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);

@@ -22,6 +22,7 @@ class RestrictionType extends AbstractType
             ))
             ->add('RoadId', HiddenType::class)
             ->add('RoadName')
+            ->add('subunit')
             ->add('SectionBegin')
             ->add('SectionEnd')
             ->add('Place')

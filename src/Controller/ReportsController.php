@@ -551,6 +551,91 @@ class ReportsController extends Controller
         }
     }
 
+    /**
+     * @Route("/reports/restriction", name="reports_restrictions")
+     */
+
+    public function reportRestrictions(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+
+            $form = $this->createForm(ReportType::class);
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $from = $form->get('From')->getData();
+                $to = $form->get('To')->getData();
+                $username = $this->getUser()->getUserName();
+
+                $dql = '';
+                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateFrom >= '$from') ORDER BY r.DateFrom ASC";
+
+                $em = $this->get('doctrine.orm.entity_manager');
+                $query = $em->createQuery($dql);
+                $report = $query->execute();
+
+                if ($form->get('GeneratePDF')->isClicked()) {
+                    $html = $this->renderView('reports/report.html.twig', ['report' => $report]);
+                    return new PdfResponse(
+                        $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                        'file.pdf'
+                    );
+                }
+                if ($form->get('GenerateXLS')->isClicked()) {
+                    $fileName = md5($this->getUser()->getUserName() . microtime());
+                    $reader = IOFactory::createReader('Xlsx');
+                    $spreadsheet = $reader->load('restriction_tmpl_1.xlsx');
+// Set document properties
+                    $index = 4;
+                    $dateNow = new \DateTime('now');
+                    foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A' . $index,  $dateNow->format('Y-m-d'))
+                            ->setCellValue('B' . $index, $rep->getRoadId())
+                            ->setCellValue('C' . $index, $rep->getRoadName())
+                            ->setCellValue('D' . $index, $rep->getSectionBegin())
+                            ->setCellValue('E' . $index, $rep->getSectionEnd())
+                            ->setCellValue('F' . $index, $rep->getPlace())
+                            ->setCellValue('G' . $index, $rep->getJobs())
+                            ->setCellValue('H' . $index, $rep->getRestrictions())
+                            ->setCellValue('I' . $index, $rep->getDateFrom()->format('Y-m-d'))
+                            ->setCellValue('J' . $index, $rep->getDateTo()->format('Y-m-d'))
+                            ->setCellValue('K' . $index, $rep->getSubunit())
+                            ->setCellValue('L' . $index, $rep->getContractor())
+                            ->setCellValue('M' . $index, $rep->getNotes())
+                        ;
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setWrapText(true);
+                        $index++;
+                    }
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
+// Rename worksheet
+                    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                    $writer->save('files/' . $fileName . '.xlsx');
+                    return $this->file(('files/' . $fileName . '.xlsx'));
+                }
+
+                return $this->render('reports/index_restrictions.html.twig', ['form' => $form->createView(), 'report' => $report]);
+            } else {
+                return $this->render('reports/index_restrictions.html.twig', ['form' => $form->createView(), ['report' => null]]);
+            }
+        }
+    }
+
     public function getSubunitNameById($subUnitId){
 
         $em = $this->getDoctrine()->getRepository('App:Subunit');

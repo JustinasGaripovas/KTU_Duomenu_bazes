@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Restriction;
 use App\Form\RestrictionType;
+use App\Repository\LdapUserRepository;
 use App\Repository\RestrictionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +27,12 @@ class RestrictionController extends Controller
     /**
      * @Route("/new", name="restriction_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(LdapUserRepository $ldapUserRepository, Request $request): Response
     {
+        $username = $this->getUser()->getUserName();
+        $subUnitName = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
         $restriction = new Restriction();
+        $restriction->setSubunit($subUnitName);
         $form = $this->createForm(RestrictionType::class, $restriction);
         $form->handleRequest($request);
 
@@ -57,9 +61,12 @@ class RestrictionController extends Controller
     /**
      * @Route("/{id}/edit", name="restriction_edit", methods="GET|POST")
      */
-    public function edit(Request $request, Restriction $restriction): Response
+    public function edit(LdapUserRepository $ldapUserRepository, Request $request, Restriction $restriction): Response
     {
+        $username = $this->getUser()->getUserName();
+        $subUnitName = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
         $form = $this->createForm(RestrictionType::class, $restriction);
+        $form->get('subunit')->setData($subUnitName);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

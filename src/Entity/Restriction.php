@@ -78,6 +78,11 @@ class Restriction
      */
     private $Status;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Subunit;
+
 
     public function getId()
     {
@@ -225,6 +230,18 @@ class Restriction
     public function setStatus(?RestrictionStatus $Status): self
     {
         $this->Status = $Status;
+
+        return $this;
+    }
+
+    public function getSubunit(): ?string
+    {
+        return $this->Subunit;
+    }
+
+    public function setSubunit(string $Subunit): self
+    {
+        $this->Subunit = $Subunit;
 
         return $this;
     }

@@ -19,8 +19,9 @@
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Restrictions {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Date from {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Date to {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Subunit {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Notes {% endtrans %} </th>
-                <th style="text-align: center; vertical-align: middle">  {% trans %} Contractor {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Contractor {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} actions {% endtrans %} </th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td style="text-align: center; vertical-align: middle">{{ restriction.Restrictions }}</td>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.DateFrom ? restriction.DateFrom|date('Y-m-d') : '' }}</td>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.DateTo ? restriction.DateTo|date('Y-m-d') : '' }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.subunit }} </td>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.Notes }}</td>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.Contractor }}</td>
                 <td style="vertical-align: middle">

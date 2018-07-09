@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+
 
 /**
  * @Route("/restriction")
@@ -19,9 +21,37 @@ class RestrictionController extends Controller
     /**
      * @Route("/", name="restriction_index", methods="GET")
      */
-    public function index(RestrictionRepository $restrictionRepository): Response
+    public function index(LdapUserRepository $ldapUserRepository, RestrictionRepository $restrictionRepository, Request $request, AuthorizationCheckerInterface $authChecker): Response
     {
-        return $this->render('restriction/index.html.twig', ['restrictions' => $restrictionRepository->findAll()]);
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+        else {
+            $subUnit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
+            $dql = '';
+            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT r FROM App:Restriction r ORDER BY r.id DESC";
+            }
+            else {
+                $dql = "SELECT r FROM App:Restriction r WHERE r.Subunit = '$subUnit' ORDER BY r.id DESC";
+            }
+            }
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $query = $em->createQuery($dql);
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $query, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                1/*limit per page*/
+            );
+
+        return $this->render('restriction/index.html.twig', ['pagination' => $pagination]);
     }
 
     /**

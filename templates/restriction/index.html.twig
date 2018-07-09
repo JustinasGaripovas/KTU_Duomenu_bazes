@@ -26,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for restriction in restrictions %}
+        {% for restriction in pagination %}
             <tr>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.RoadId }}</td>
                 <td style="text-align: center; vertical-align: middle">{{ restriction.RoadName }}</td>
@@ -51,5 +51,8 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
 {% endblock %}

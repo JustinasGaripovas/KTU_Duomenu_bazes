@@ -591,7 +591,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('restriction_tmpl_1.xlsx');
+                    $spreadsheet = $reader->load('restriction_tmpl.xlsx');
 // Set document properties
                     $index = 4;
                     $dateNow = new \DateTime('now');
@@ -617,12 +617,6 @@ class ReportsController extends Controller
                             ->setWrapText(true);
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()
-                        ->getPageSetup()
-                        ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
-                    $spreadsheet->getActiveSheet()
-                        ->getPageSetup()
-                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
 // Rename worksheet
                     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                     $writer->save('files/' . $fileName . '.xlsx');

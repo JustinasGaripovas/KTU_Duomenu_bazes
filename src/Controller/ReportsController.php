@@ -8,11 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use Symfony\Component\Filesystem\Filesystem;
 
 
 class ReportsController extends Controller
@@ -284,17 +282,17 @@ class ReportsController extends Controller
                 $dql = '';
 
                 if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, SUM(i.Quantity) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.Username = '$username' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.Username = '$username' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 }
                 $query = $em->createQuery($dql);
                 $report = $query->execute();

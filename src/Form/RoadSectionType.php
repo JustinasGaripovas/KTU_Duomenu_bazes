@@ -67,8 +67,13 @@ class RoadSectionType extends AbstractType
             ))
             ->add('sectionName')
             ->add('sectionBegin')
-            ->add('sectionEnd');
-
+            ->add('sectionEnd')
+            ->add('level', ChoiceType::class, array(
+        'choices' => array(
+            'Magistralinis' => 1,
+            'Krašto' => 2,
+            'Rajoninis' => 3,
+        )));
     }
 
     public function configureOptions(OptionsResolver $resolver)

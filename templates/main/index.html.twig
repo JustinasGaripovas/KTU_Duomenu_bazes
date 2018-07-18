@@ -31,9 +31,7 @@
             <a class="btn btn-success btn-lg btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('insured_events_report') }}">{% trans %} Insured Events {% endtrans %}</a>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_restrictions') }}">{% trans %} Restriction {% endtrans %}</a>
-            {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter') }}">{% trans %} Report with filter {% endtrans %}</a>
-            {% endif %}
         </ul>
     </div>
 {% endblock %}

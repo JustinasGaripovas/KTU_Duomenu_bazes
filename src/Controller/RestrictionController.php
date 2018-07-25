@@ -37,6 +37,9 @@ class RestrictionController extends Controller
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
                 $dql = "SELECT r FROM App:Restriction r ORDER BY r.id DESC";
             }
+            elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                $dql = "SELECT r FROM App:Restriction r ORDER BY r.id DESC";
+            }
             else {
                 $dql = "SELECT r FROM App:Restriction r WHERE r.Subunit = '$subUnit' ORDER BY r.id DESC";
             }

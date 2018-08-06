@@ -67,7 +67,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('job_tmpl_3.xlsx');
+                    $spreadsheet = $reader->load('job_tmpl.xlsx');
 // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -79,41 +79,15 @@ class ReportsController extends Controller
                     $index = 3;
                     $styleArray = ['font' => ['bold' => false]];
                     foreach ($report as $rep) {
-                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
-                        $spreadsheet->getActiveSheet()->setCellValue('F' . $index, $rep->getJobId());
-                        $spreadsheet->getActiveSheet()->setCellValue('G' . $index, $rep->getJobName());
-                        $spreadsheet->getActiveSheet()->setCellValue('H' . $index, $rep->getUnitOf());
-                        $spreadsheet->getActiveSheet()->setCellValue('I' . $index, $rep->getQuantity());
-                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'));
                         $spreadsheet->getActiveSheet()
+                            ->setCellValue('F' . $index, $rep->getJobId())
+                            ->setCellValue('G' . $index, $rep->getJobName())
+                            ->setCellValue('H' . $index, $rep->getUnitOf())
+                            ->setCellValue('I' . $index, $rep->getQuantity())
+                            ->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'))
                             ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setWrapText(true);
-                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('F' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('G' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('H' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('I' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('J' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->removeRow($index, 1);
-                    //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
-                    // Set page orientation and size
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
@@ -188,7 +162,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('inspection_tmpl_1.xlsx');
+                    $spreadsheet = $reader->load('inspection_tmpl.xlsx');
 // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -200,41 +174,18 @@ class ReportsController extends Controller
                     $index = 6;
                     $dateNow = new \DateTime('now');
                     $styleArray = ['font' => ['bold' => false]];
-                    $spreadsheet->getActiveSheet()->setCellValue('A2', $dateNow->format('Y-m-d'));
-                    $spreadsheet->getActiveSheet()->setCellValue('A3', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' kelių tarnyba');
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A2', $dateNow->format('Y-m-d'))
+                        ->setCellValue('A3', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' kelių tarnyba');
                     foreach ($report as $rep) {
-                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
                         $spreadsheet->getActiveSheet()
-                            ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
+                            ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')')
+                            ->setCellValue('B' . $index, $rep->getNote());
                         foreach ($rep->getJob() as $job) {
                             $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $job->getDoneJobDate()->format('Y-m-d'));
                         }
-                        $spreadsheet->getActiveSheet()
-                            ->getRowDimension($index)
-                            ->setRowHeight(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getColumnDimension('B')->setWidth(40);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                        $spreadsheet->getActiveSheet()
-                            ->getStyle($index)
-                            ->getAlignment()
-                            ->setWrapText(true);
-                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
-                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->removeRow($index, 1);
-                    //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
-                    // Set page orientation and size
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);

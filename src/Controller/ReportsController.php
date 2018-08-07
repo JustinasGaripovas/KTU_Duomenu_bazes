@@ -466,7 +466,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('job_tmpl_filter_1.xlsx');
+                    $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
 // Set document properties
                     $index = 3;
                     foreach ($report as $rep) {

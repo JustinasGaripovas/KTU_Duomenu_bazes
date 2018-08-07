@@ -16,8 +16,33 @@
         });
         $( ".js-datepicker" ).datepicker();
     });
+
+    $(document).ready(function () {
+        $('#inspection_isAdditional').click(function () {
+            if(this.checked){
+                //document.getElementById('additional').style.display = "block"
+                $('#additional').slideDown(1000)
+            }
+            else {
+                //document.getElementById('additional').style.display = "none"
+                $('#additional').slideUp(1000)
+            }
+        })
+    })
+
 </script>
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.RoadIdd) }}
+    {{ form_row(form.RoadId) }}
+    {{ form_row(form.RoadSectionBegin) }}
+    {{ form_row(form.RoadSectionEnd) }}
+    {{ form_row(form.isAdditional) }}
+<div id="additional" style="display: none">
+    {{ form_row(form.roadCondition) }}
+    {{ form_row(form.waveSize) }}
+    {{ form_row(form.place) }}
+</div>
+    {{ form_row(form.Note) }}
+    {{ form_row(form.RepairDate) }}
 <button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
 {{ form_end(form) }}

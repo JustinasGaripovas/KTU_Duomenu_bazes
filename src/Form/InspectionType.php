@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Inspection;
+use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InspectionType extends AbstractType
@@ -20,6 +23,39 @@ class InspectionType extends AbstractType
             ->add('RoadId', HiddenType::class)
             ->add('RoadSectionBegin')
             ->add('RoadSectionEnd')
+            ->add('isAdditional', CheckboxType::class, array(
+                'required' => false
+            ))
+            ->add('roadCondition', ChoiceType::class, array(
+                'choices' => array(
+                    '      ' => Null,
+                    'Šlapia' => 'Šlapia',
+                    'Drėgna' => 'Drėgna',
+                    'Vietomis drėgna' => 'Vietomis drėgna',
+                    'Sausa' => 'Sausa',
+                    ),
+                'required'=>false,
+            ))
+            ->add('waveSize', ChoiceType::class,array(
+                'choices' => array(
+                    ''  => Null,
+                    '0' => 0,
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                    '8' => 8,
+                    '9' => 9,
+                    '10' => 10,
+                ),
+                'required'=>false,
+            ))
+            ->add('place', null, array(
+                'label' => 'Matavimo vieta (km.)'
+            ))
             ->add('Note')
             ->add('RepairDate', DateType::class, array(
                 'widget' => 'single_text',
@@ -27,7 +63,7 @@ class InspectionType extends AbstractType
                 'attr' => [
                     'class' => 'js-datepicker',
                     'autocomplete'=>'off'],
-                'required'=>false,
+                'required'=>true,
             ))
         ;
     }

@@ -63,6 +63,26 @@ class Inspection
      */
     private $SubUnitId;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $IsAdditional;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RoadCondition;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $WaveSize;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $Place;
+
     public function __construct()
     {
         $this->Job = new ArrayCollection();
@@ -196,6 +216,54 @@ class Inspection
     public function setSubUnitId(int $SubUnitId): self
     {
         $this->SubUnitId = $SubUnitId;
+
+        return $this;
+    }
+
+    public function getIsAdditional(): ?bool
+    {
+        return $this->IsAdditional;
+    }
+
+    public function setIsAdditional(bool $IsAdditional): self
+    {
+        $this->IsAdditional = $IsAdditional;
+
+        return $this;
+    }
+
+    public function getRoadCondition(): ?string
+    {
+        return $this->RoadCondition;
+    }
+
+    public function setRoadCondition(?string $RoadCondition): self
+    {
+        $this->RoadCondition = $RoadCondition;
+
+        return $this;
+    }
+
+    public function getWaveSize(): ?string
+    {
+        return $this->WaveSize;
+    }
+
+    public function setWaveSize(?string $WaveSize): self
+    {
+        $this->WaveSize = $WaveSize;
+
+        return $this;
+    }
+
+    public function getPlace(): ?string
+    {
+        return $this->Place;
+    }
+
+    public function setPlace(?string $Place): self
+    {
+        $this->Place = $Place;
 
         return $this;
     }

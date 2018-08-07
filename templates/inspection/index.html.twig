@@ -14,8 +14,8 @@
                 <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Tipas {% endtrans %} </th>
                 <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
-                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
             <tr {% if loop.index is odd %}class="color"{% endif %}>
             <tr>
                 <td style="white-space: nowrap; text-align: center; vertical-align: middle">{{ inspection.RoadId }} ({{ inspection.RoadSectionBegin }}; {{ inspection.RoadSectionEnd }})</td>
-                <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ inspection.Note }} {% if inspection. IsAdditional%} ( Kelio būklė: {{ inspection.RoadCondition }}; Bangos dydis: {{ inspection.WaveSize }} cm. Vieta: {{ inspection.place }} km. ) {% endif %}</td>
                 <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
                 <td style="text-align: center; vertical-align: middle">
                     {% for job in inspection.getJob %}
@@ -34,7 +34,8 @@
                     {% endfor %}
                     <a class="btn btn-success" href="{{ path('done_jobs_add_job_to_inspection', {'id': inspection.Id}) }}">
                         <i class="fa fa-plus-circle"></i> {% trans %} Add {% endtrans %}</a>
-                <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+            <td style="text-align: center; vertical-align: middle"> {% if inspection.IsAdditional %} <p style="background-color: #F5871F; font-size: inherit; padding: 1em; margin: auto" class="fa fa-road">Sustiprinta</p> {% else %} <p style="background-color: #6b9311; font-size: inherit; padding: 1em; margin: auto" class="fa fa-road"> Patrulinė </p> {% endif %}</td>
+            <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
                 <td style="text-align: center; vertical-align: middle">
                     {% include 'menu_by_roles/edit_view_inspection.html.twig' %}
                 </td>

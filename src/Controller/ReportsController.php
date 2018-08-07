@@ -466,21 +466,23 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('job_tmpl_filter.xlsx');
+                    $spreadsheet = $reader->load('job_tmpl_filter_1.xlsx');
 // Set document properties
-                    $index = 4;
+                    $index = 3;
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
+                            ->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'))
+                            ->setCellValue('C' . $index, $rep->getSectionId())
+                            ->setCellValue('D' . $index, $rep->getRoadSectionBegin())
+                            ->setCellValue('E' . $index, $rep->getRoadSectionEnd())
                             ->setCellValue('F' . $index, $rep->getJobId())
                             ->setCellValue('G' . $index, $rep->getJobName())
                             ->setCellValue('H' . $index, $rep->getUnitOf())
                             ->setCellValue('I' . $index, $rep->getQuantity())
-                            ->setCellValue('B' . $index, $rep->getDoneJobDate()->format('Y-m-d'))
-                            ->setCellValue('K' . $index, $this->getSubunitNameById($rep->getSubUnitId()))
-                            ->setCellValue('D' . $index, $rep->getSectionId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
+                            ->setCellValue('J' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:K'. $index);
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:J'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

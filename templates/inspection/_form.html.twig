@@ -21,12 +21,12 @@
         $('#inspection_isAdditional').click(function () {
             if(this.checked){
                 //document.getElementById('additional').style.display = "block"
-                $('#additional').slideDown(400),
+                $('#additional').slideDown(500),
                 $('#inspection_Note').val("Sustiprintos priežiūros žvyrkelis")
             }
             else {
                 //document.getElementById('additional').style.display = "none"
-                $('#additional').slideUp(400),
+                $('#additional').slideUp(200),
                     $('#inspection_Note').val("")
 
             }
@@ -43,7 +43,7 @@
 <div id="additional" style="display: none">
     {{ form_row(form.roadCondition) }}
     {{ form_row(form.waveSize) }}
-    {{ form_row(form.place) }}
+    {{ form_row(form.Place) }}
 </div>
     {{ form_row(form.Note) }}
     {{ form_row(form.RepairDate) }}

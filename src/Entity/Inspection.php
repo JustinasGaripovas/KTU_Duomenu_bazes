@@ -49,12 +49,12 @@ class Inspection
     private $Job;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
      */
     private $RoadSectionBegin;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float")
      */
     private $RoadSectionEnd;
 
@@ -82,6 +82,7 @@ class Inspection
      * @ORM\Column(type="float", nullable=true)
      */
     private $Place;
+
 
     public function __construct()
     {
@@ -256,15 +257,16 @@ class Inspection
         return $this;
     }
 
-    public function getPlace(): ?string
+    public function getPlace(): ?float
     {
         return $this->Place;
     }
 
-    public function setPlace(?string $Place): self
+    public function setPlace(?float $Place): self
     {
         $this->Place = $Place;
 
         return $this;
     }
+    
 }

@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Inspection;
-use phpDocumentor\Reflection\Types\Null_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -53,7 +52,7 @@ class InspectionType extends AbstractType
                 ),
                 'required'=>false,
             ))
-            ->add('place', null, array(
+            ->add('Place',null, array(
                 'label' => 'Matavimo vieta (km.)'
             ))
             ->add('Note')

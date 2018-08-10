@@ -2,12 +2,23 @@
 {% trans_default_domain 'translation' %}
 
 {% block body %}
+    <script>
+        $( function() {
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
 
     <a class="btn btn-success btn-block btn-lg" href="{{ path('done_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
     <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
     <hr>
+    <form class="form-inline">
+        <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('filter') }}" type="text" name="filter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite darbo šifrą" value="{{ app.request.get('filterJob') }}" type="text" name="filterJob">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite kelio numerį" value="{{ app.request.get('filterRoad') }}" type="text" name="filterRoad">
+        <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
+    </form>
     <div class="print_a">
-    <table class="table table-sm thead-dark">
+        <table class="table table-sm thead-dark">
         <thead>
             <tr>
                 <th>{% trans %} JobId {% endtrans %}</th>
@@ -24,6 +35,7 @@
             </tr>
         </thead>
         <tbody>
+
         {% for done_job in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
             <tr>

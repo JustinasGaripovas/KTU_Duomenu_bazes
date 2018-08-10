@@ -34,33 +34,31 @@ class DoneJobsController extends Controller
             );
             return $this->redirectToRoute('ldap_user_index');
         } else {
-
             $username = $this->getUser()->getUserName();
             $em = $this->get('doctrine.orm.entity_manager');
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $filter = $request->query->get('filter');
+            $filterByJobId = $request->query->get('filterJob');
+            $filterByRoadId = $request->query->get('filterRoad');
             $dql = '';
             if (true === $authChecker->isGranted('ROLE_ADMIN')) {
-                $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
-                $dql = "SELECT d FROM App:DoneJobs d ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%' ) ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.SubUnitId = '$subUnitId' ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE d.Username = '$username' ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             }
 
             //
             $query = $em->createQuery($dql);
             $paginator = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                20/*limit per page*/
-            );
+            $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
             return $this->render('done_jobs/index.html.twig', ['pagination' => $pagination]);
         }
     }

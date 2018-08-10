@@ -54,8 +54,6 @@ class DoneJobsController extends Controller
             } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             }
-
-            //
             $query = $em->createQuery($dql);
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));

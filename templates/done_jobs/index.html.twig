@@ -15,6 +15,25 @@
         <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('filter') }}" type="text" name="filter">
         <input style="margin: 5px" class="form-control" placeholder="Įveskite darbo šifrą" value="{{ app.request.get('filterJob') }}" type="text" name="filterJob">
         <input style="margin: 5px" class="form-control" placeholder="Įveskite kelio numerį" value="{{ app.request.get('filterRoad') }}" type="text" name="filterRoad">
+        <select style="margin: 5px" class="form-control" name="limit">
+            {% if  app.request.get('limit') == 20  %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>50</option>
+                <option>100</option>
+            {% elseif  app.request.get('limit')  == 50 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>100</option>
+            {% elseif app.request.get('limit') == 100 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>50</option>
+                {% else %}
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+            {% endif %}
+        </select>
         <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
     </form>
     <div class="print_a">

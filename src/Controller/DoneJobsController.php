@@ -48,9 +48,9 @@ class DoneJobsController extends Controller
             } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%' ) ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
+                $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             }

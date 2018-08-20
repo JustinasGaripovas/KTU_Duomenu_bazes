@@ -602,6 +602,7 @@ class ReportsController extends Controller
                         }
                         $index++;
                     }
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A1:I'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);

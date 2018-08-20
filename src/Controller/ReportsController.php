@@ -487,7 +487,7 @@ class ReportsController extends Controller
                             ->setCellValue('J' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->setAutoFilter('A3:J'. $index);
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A2:J'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);

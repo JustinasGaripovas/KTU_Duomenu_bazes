@@ -179,8 +179,13 @@ class ReportsController extends Controller
                         ->setCellValue('A3', 'VĮ "KELIŲ PRIEŽIŪRA" ' . $subUnitName . ' kelių tarnyba');
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
-                            ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')')
-                            ->setCellValue('B' . $index, $rep->getNote());
+                            ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
+                            if($rep->getIsAdditional() === true){
+                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() . ' Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
+                            }
+                            else {
+                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
+                            }
                         foreach ($rep->getJob() as $job) {
                             $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $job->getDoneJobDate()->format('Y-m-d'));
                         }

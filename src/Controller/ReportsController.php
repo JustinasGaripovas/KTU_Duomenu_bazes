@@ -566,7 +566,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('inspection_tmpl_filter.xlsx');
+                    $spreadsheet = $reader->load('inspection_tmpl_filter_1.xlsx');
 // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')

@@ -507,6 +507,125 @@ class ReportsController extends Controller
         }
     }
 
+
+
+    /**
+     * @Route("/reports/filter/inspection", name="reports_filter_inspection")
+     */
+
+    public function reportWithFilterInspection(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+
+            $form = $this->createForm(ReportType::class);
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $from = $form->get('From')->getData();
+                $to = $form->get('To')->getData();
+                $userName = $this->getUser()->getUserName();
+
+                $dql = '';
+
+
+                if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
+                } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId'AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
+                } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.Username = '$userName' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
+                }
+
+
+                $em = $this->get('doctrine.orm.entity_manager');
+                $query = $em->createQuery($dql);
+                $report = $query->execute();
+                $html = $this->renderView('reports/report_inspections_filter.html.twig', ['report' => $report]);
+
+                if ($form->get('GeneratePDF')->isClicked()) {
+                    return new PdfResponse(
+                        $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Landscape']),
+                        'file.pdf'
+                    );
+                }
+
+
+                if ($form->get('GenerateXLS')->isClicked()) {
+                    $fileName = md5($this->getUser()->getUserName() . microtime());
+                    $reader = IOFactory::createReader('Xlsx');
+                    $spreadsheet = $reader->load('inspection_tmpl_filter.xlsx');
+// Set document properties
+                    $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                        ->setLastModifiedBy('VĮ Kelių priežiūra')
+                        ->setTitle('Atliktų darbų ataskaita')
+                        ->setSubject('Atliktų darbų ataskaita')
+                        ->setDescription('Atliktų darbų ataskaita')
+                        ->setKeywords('Atliktų darbų ataskaita')
+                        ->setCategory('Atliktų darbų ataskaita');
+                    $index = 6;
+                    $dateNow = new \DateTime('now');
+                    $styleArray = ['font' => ['bold' => false]];
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A2', $dateNow->format('Y-m-d'));
+                    foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A' . $index, $rep->getRoadId())
+                            ->setCellValue('B' . $index, $rep->getRoadSectionBegin())
+                            ->setCellValue('C' . $index, $rep->getRoadSectionEnd())
+                            ->setCellValue('D' . $index, $rep->getNote());
+
+                        if($rep->getIsAdditional()===true){
+                            $spreadsheet->getActiveSheet()
+                                ->setCellValue('E' . $index, 'Papildoma');
+                        }
+                        else{
+                            $spreadsheet->getActiveSheet()
+                                ->setCellValue('E' . $index, 'Patrulinė');
+                        }
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('F' . $index, $rep->getRoadCondition())
+                            ->setCellValue('G' . $index, $rep->getWaveSize())
+                            ->setCellValue('H' . $index, $rep->getplace());
+                        foreach ($rep->getJob() as $job) {
+                            $spreadsheet->getActiveSheet()->setCellValue('I' . $index, $job->getDoneJobDate()->format('Y-m-d'));
+                        }
+                        $index++;
+                    }
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
+// Rename worksheet
+                    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                    $writer->save('files/' . $fileName . '.xlsx');
+                    return $this->file(('files/' . $fileName . '.xlsx'));
+                }
+
+
+                return $this->render('reports/index_inspections_filter.html.twig', ['form' => $form->createView(), 'report' => $report]);
+            } else {
+                return $this->render('reports/index_inspections_filter.html.twig', ['form' => $form->createView(), ['report' => null]]);
+            }
+        }
+    }
+
+
+
     /**
      * @Route("/reports/restriction", name="reports_restrictions")
      */

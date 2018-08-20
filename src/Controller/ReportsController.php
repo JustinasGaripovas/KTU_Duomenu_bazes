@@ -575,11 +575,9 @@ class ReportsController extends Controller
                         ->setDescription('Atliktų darbų ataskaita')
                         ->setKeywords('Atliktų darbų ataskaita')
                         ->setCategory('Atliktų darbų ataskaita');
-                    $index = 6;
+                    $index = 2;
                     $dateNow = new \DateTime('now');
                     $styleArray = ['font' => ['bold' => false]];
-                    $spreadsheet->getActiveSheet()
-                        ->setCellValue('A2', $dateNow->format('Y-m-d'));
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('A' . $index, $rep->getRoadId())

@@ -597,7 +597,8 @@ class ReportsController extends Controller
                             ->setCellValue('F' . $index, $rep->getRoadCondition())
                             ->setCellValue('G' . $index, $rep->getWaveSize())
                             ->setCellValue('H' . $index, $rep->getplace())
-                            ->setCellValue('I' . $index, $rep->getDate()->format('Y-m-d'));
+                            ->setCellValue('I' . $index, $rep->getDate()->format('Y-m-d'))
+                            ->setCellValue('J' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $index++;
                     }
                     $spreadsheet->getActiveSheet()->setAutoFilter('A1:I'. $index);

@@ -566,7 +566,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('inspection_tmpl_filter_1.xlsx');
+                    $spreadsheet = $reader->load('inspection_tmpl_filter_2.xlsx');
 // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -601,7 +601,7 @@ class ReportsController extends Controller
                             ->setCellValue('J' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $index++;
                     }
-                    $spreadsheet->getActiveSheet()->setAutoFilter('A1:I'. $index);
+                    $spreadsheet->getActiveSheet()->setAutoFilter('A1:J'. $index);
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);

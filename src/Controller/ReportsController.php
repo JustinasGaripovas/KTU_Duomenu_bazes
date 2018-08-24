@@ -596,10 +596,8 @@ class ReportsController extends Controller
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('F' . $index, $rep->getRoadCondition())
                             ->setCellValue('G' . $index, $rep->getWaveSize())
-                            ->setCellValue('H' . $index, $rep->getplace());
-                        foreach ($rep->getJob() as $job) {
-                            $spreadsheet->getActiveSheet()->setCellValue('I' . $index, $job->getDoneJobDate()->format('Y-m-d'));
-                        }
+                            ->setCellValue('H' . $index, $rep->getplace())
+                            ->setCellValue('I' . $index, $rep->getDate()->format('Y-m-d'));
                         $index++;
                     }
                     $spreadsheet->getActiveSheet()->setAutoFilter('A1:I'. $index);

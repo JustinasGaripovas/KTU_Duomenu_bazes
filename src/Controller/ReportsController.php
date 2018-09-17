@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
+use function Sodium\increment;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -597,7 +599,7 @@ class ReportsController extends Controller
                             ->setCellValue('F' . $index, $rep->getRoadCondition())
                             ->setCellValue('G' . $index, $rep->getWaveSize())
                             ->setCellValue('H' . $index, $rep->getplace())
-                            ->setCellValue('I' . $index, $rep->getDate()->format('Y-m-d'))
+                            ->setCellValue('I' . $index, $rep->getRepairDate()->format('Y-m-d'))
                             ->setCellValue('J' . $index, $this->getSubunitNameById($rep->getSubUnitId()));
                         $index++;
                     }
@@ -664,7 +666,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('restriction_tmpl.xlsx');
+                    $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
 // Set document properties
                     $index = 4;
                     $dateNow = new \DateTime('now');
@@ -703,6 +705,80 @@ class ReportsController extends Controller
         }
     }
 
+
+    /**
+     * @Route("/reports/wintermaintenance/LAKD", name="wintermaintenance_LAKD")
+     */
+
+    public function wintermaintenanceReportToLAKD (Request $request) {
+
+        $form = $this->createForm(LAKDReportType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $date = $form->get('Date')->getData();
+            $reportFor = $form->get('reportFor')->getData();
+            $dql = '';
+
+            $dql = "SELECT r FROM App:WinterMaintenance r WHERE (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor')";
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $query = $em->createQuery($dql);
+            $report = $query->execute();
+
+            if ($form->get('GenerateXLS')->isClicked()) {
+                $fileName = md5($this->getUser()->getUserName() . microtime());
+                $reader = IOFactory::createReader('Xlsx');
+                $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
+// Set document properties
+                $index = 6;
+
+                $dateNow = new \DateTime('now');
+
+                foreach ($report as $rep) {
+                    $highway = '';
+                    $local = '';
+                    $district = '';
+                    $weather = '';
+                    $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $this->getRegionBySubunitId($this->getRegionId($rep->getSubunit())));
+                    $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $this->getSubunitNameById($rep->getSubunit()));
+                    foreach ($rep->getRoadConditionHighway() as $item) {
+                       $highway = $highway . $item. ' ';
+                    }
+                    foreach ($rep->getRoadConditionLocal() as $item) {
+                        $local = $local . $item .' ';
+                    }
+                    foreach ($rep->getRoadConditionDistrict() as $item) {
+                        $district = $district . $item.' ';
+                    }
+                    $spreadsheet->getActiveSheet()->setCellValue('C'.$index,
+                        'Magistraliniai('.$highway.')'. 'Krašto(' . $local. ')'. 'Rajoniniai(' . $district. ')');
+                    foreach ($rep->getWeather() as $item) {
+                        $spreadsheet->getActiveSheet()->setCellValue('D'. $index, $weather = $weather . $item. ', ');
+                    }
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('E' . $index, $rep->getTrafficChanges())
+                        ->setCellValue('F' . $index, $rep->getBlockedRoads())
+                        ->setCellValue('G' . $index, $rep->getOtherEvents())
+                        ->setCellValue('H' . $index, $rep->getMechanism())
+                        ->setCellValue('I' . $index, $rep->getRoadConditionScore());
+                $index++;
+                }
+
+
+// Rename worksheet
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $writer->save('files/' . $fileName . '.xlsx');
+                return $this->file(('files/' . $fileName . '.xlsx'));
+            }
+
+            return $this->render('reports/index_LAKD.html.twig', ['form' => $form->createView(), 'winter_maintenances' => $report]);
+        } else {
+            return $this->render('reports/index_LAKD.html.twig', ['form' => $form->createView(), ['winter_maintenances' => null]]);
+        }
+    }
+
+
     public function getSubunitNameById($subUnitId){
 
         $em = $this->getDoctrine()->getRepository('App:Subunit');
@@ -710,6 +786,16 @@ class ReportsController extends Controller
 
     }
 
+    public function getRegionId($subUnitId){
+
+        $em = $this->getDoctrine()->getRepository('App:Subunit');
+        return $em->find($subUnitId)->getUnitId();
+    }
+
+    public function getRegionBySubunitId($unitId) {
+
+        $em2 = $this->getDoctrine()->getRepository('App:Unit');
+        return $em2->findOneBy(['UnitId' => $unitId])->getName();
+    }
+
 }
-
-

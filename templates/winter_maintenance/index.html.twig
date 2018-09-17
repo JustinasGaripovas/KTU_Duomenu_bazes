@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}Informacija LAKD{% endblock %}
+
+{% block body %}
+    <h1>Informacija LAKD</h1>
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('winter_maintenance_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+    <br>
+    <table class="table table-sm thead-dark table-bordered">
+        <thead>
+            <tr>
+                <th>{% trans%} Report for {% endtrans %}</th>
+                <th> {% trans %} Subunit {% endtrans %}</th>
+                <th> {% trans %} RoadCondition {% endtrans %}</th>
+                <th> {% trans %} Weather {% endtrans %}</th>
+                <th> {% trans %} TrafficChanges {% endtrans %}</th>
+                <th> {% trans %} BlockedRoads {% endtrans %}</th>
+                <th> {% trans %} OtherEvents {% endtrans %}</th>
+                <th> {% trans %} Mechanism {% endtrans %}</th>
+                <th> {% trans %} RoadConditionScore {% endtrans %}</th>
+                <th> {% trans %} actions {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winter_maintenance in winter_maintenances %}
+            <tr>
+                <td> {{ winter_maintenance.reportFor }}</td>
+                <td>{{ winter_maintenance.Subunit }}</td>
+                <td> {% for item in winter_maintenance.RoadConditionHighway %}
+                    {{ item }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for item in winter_maintenance.Weather %}
+                        {{ item }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ winter_maintenance.TrafficChanges }}
+                </td>
+                <td>{{ winter_maintenance.BlockedRoads }}</td>
+                <td>{{ winter_maintenance.OtherEvents }}</td>
+                <td>{{ winter_maintenance.Mechanism }}</td>
+                <td>
+                    {{ winter_maintenance.RoadConditionScore }}
+                    </td>
+                <td>
+                    <a href="{{ path('winter_maintenance_edit', {'id': winter_maintenance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

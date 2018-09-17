@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+            {{ include('/reports/form.html.twig') }}
+        <br>
+        <hr>
+
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Subunit</th>
+                        <th>RoadCondition</th>
+                        <th>Weather</th>
+                        <th>TrafficChanges</th>
+                        <th>BlockedRoads</th>
+                        <th>OtherEvents</th>
+                        <th>Mechanism</th>
+                        <th>RoadConditionScore</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for winter_maintenance in winter_maintenances | default('') %}
+                        <tr>
+                            <td>{{ winter_maintenance.Subunit }}</td>
+                            <td> {% for item in winter_maintenance.RoadConditionHighway %}
+                                    {{ item }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for item in winter_maintenance.Weather %}
+                                    {{ item }}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {{ winter_maintenance.TrafficChanges }}
+                            </td>
+                            <td>{{ winter_maintenance.BlockedRoads }}</td>
+                            <td>{{ winter_maintenance.OtherEvents }}</td>
+                            <td>{{ winter_maintenance.Mechanism }}</td>
+                            <td>
+                                {{ winter_maintenance.RoadConditionScore }}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            ________________________________________________________________________________________________
+        </div>
+    {% endblock %}

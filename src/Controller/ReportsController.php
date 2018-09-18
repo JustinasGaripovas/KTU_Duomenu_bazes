@@ -666,7 +666,7 @@ class ReportsController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
+                    $spreadsheet = $reader->load('restriction_tmpl_1.xlsx');
 // Set document properties
                     $index = 4;
                     $dateNow = new \DateTime('now');

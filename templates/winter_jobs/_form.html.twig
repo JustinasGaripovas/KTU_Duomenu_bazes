@@ -1,0 +1,131 @@
+<script>
+    $( function() {
+        function log( message ) {
+            $( "<div>" ).text( message ).prependTo( "#log" );
+            $( "#log" ).scrollTop( 0 );
+        }
+        $( "#winter_jobs_RoadSectionSearch" ).autocomplete({
+            source: "{{ path('search/road') }}",
+            minLength: 2,
+            delay: 500,
+            select: function( event, ui ) {
+                    $('#winter_jobs_RoadSection').val(ui.item.section_id),
+                    $('#winter_jobs_RoadName').val(ui.item.road_name),
+                    $('#winter_jobs_SectionBegin').val(ui.item.section_begin),
+                    $('#winter_jobs_SectionEnd').val(ui.item.section_end)
+            },
+        });
+        $( ".js-datepicker" ).datepicker();
+    });
+
+    $(document).ready(function () {
+        document.getElementById('winter_jobs_Salt').style.display = 'none'
+        document.getElementById('winter_jobs_Sand').style.display = 'none'
+        document.getElementById('winter_jobs_Mix').style.display = 'none'
+        document.getElementById('winter_jobs_Solution').style.display = 'none'
+        if (document.getElementById('winter_jobs_SaltChecked').checked == true){
+            document.getElementById('winter_jobs_Salt').style.display = 'inline'
+        }
+        if (document.getElementById('winter_jobs_SandChecked').checked == true){
+            document.getElementById('winter_jobs_Sand').style.display = 'inline'
+        }
+        if (document.getElementById('winter_jobs_MixChecked').checked == true){
+            document.getElementById('winter_jobs_Mix').style.display = 'inline'
+        }
+        if (document.getElementById('winter_jobs_SolutionChecked').checked == true){
+            document.getElementById('winter_jobs_Solution').style.display = 'inline'
+        }
+
+        $('#winter_jobs_SaltChecked').click(function () {
+            if (this.checked) {
+                document.getElementById('winter_jobs_Salt').style.display = 'inline'
+                //$('#salt').slideDown(500)
+            }
+            else {
+                document.getElementById('winter_jobs_Salt').style.display = 'none'
+                //$('#salt').slideUp(200)
+            }
+        })
+        $('#winter_jobs_SandChecked').click(function () {
+            if (this.checked) {
+                document.getElementById('winter_jobs_Sand').style.display = 'inline'
+                //$('#salt').slideDown(500)
+            }
+            else {
+                document.getElementById('winter_jobs_Sand').style.display = 'none'
+                //$('#salt').slideUp(200)
+            }
+        })
+        $('#winter_jobs_MixChecked').click(function () {
+            if (this.checked) {
+                document.getElementById('winter_jobs_Mix').style.display = 'inline'
+                //$('#salt').slideDown(500)
+            }
+            else {
+                document.getElementById('winter_jobs_Mix').style.display = 'none'
+                //$('#salt').slideUp(200)
+            }
+        })
+        $('#winter_jobs_SolutionChecked').click(function () {
+            if (this.checked) {
+                document.getElementById('winter_jobs_Solution').style.display = 'inline'
+                //$('#salt').slideDown(500)
+            }
+            else {
+                document.getElementById('winter_jobs_Solution').style.display = 'none'
+                //$('#salt').slideUp(200)
+            }
+        })
+    })
+</script>
+{{ form_start(form) }}
+<div class="form form-inline">
+    {{ form_row(form.TimeFrom) }} &nbsp;&nbsp;
+    {{ form_row(form.TimeTo) }}
+</div>
+<hr>
+<div class="row">
+    <div id="salt" class="col-sm">
+        {{ form_row(form.RoadSectionSearch) }}
+        {{ form_row(form.RoadSection) }}
+    </div>
+    <div id="salt" class="col-sm">
+    {{ form_row(form.SectionBegin) }}
+    </div>
+    <div id="salt" class="col-sm">
+    {{ form_row(form.SectionEnd) }}
+    </div>
+    </div>
+<hr>
+<div class="row">
+    <div id="salt" class="col-sm">
+        {{ form_row(form.Mechanism) }}
+    </div>
+    <div id="salt" class="col-sm">
+        {{ form_row(form.job) }}
+    </div>
+</div>
+<hr>
+<div class="form form-inline">
+    {{ form_row(form.SaltChecked) }}
+    {{ form_row(form.SandChecked) }}
+    {{ form_row(form.MixChecked) }}
+    {{ form_row(form.SolutionChecked) }}
+</div>
+<hr>
+<div class="row">
+    <div id="salt" class="col-sm">
+        {{ form_row(form.Salt) }}
+    </div>
+    <div id="sand" class="col-sm">
+        {{ form_row(form.Sand) }}
+    </div>
+    <div id="mix" class="col-sm">{{ form_row(form.Mix) }}
+    </div>
+    <div id="solution" class="col-sm">
+        {{ form_row(form.Solution) }}
+    </div>
+</div>
+<hr>
+<button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
+{{ form_end(form) }}

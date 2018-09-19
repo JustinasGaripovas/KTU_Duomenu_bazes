@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %} Naujas žiemos darbas {% endblock %}
+
+{% block body %}
+    <h3>Naujas žiemos darbas</h3>
+<hr>
+    {{ include('winter_jobs/_form.html.twig') }}
+
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('winter_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
+
+{% endblock %}

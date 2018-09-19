@@ -16,8 +16,10 @@
             <h1>{% trans %} Restrictions {% endtrans %}</h1>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('restriction_index') }}">{% trans %}New Job {% endtrans %}</a>
             <h1>{% trans %} Winter Maintenance {% endtrans %}</h1>
-            <a class="btn btn-success btn-lg btn-block" href="{{ path('winter_maintenance_new') }}">{% trans %} Winter Maintenance New {% endtrans %}</a>
-            <a class="btn btn-success btn-lg btn-block" href="{{ path('winter_maintenance_index') }}">{% trans %} Winter Maintenance List {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_new') }}">{% trans %} Winter Maintenance New {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_index') }}">{% trans %} Winter Maintenance List {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_new') }}">{% trans %} Winter Jobs New {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_index') }}">{% trans %} Winter Jobs List {% endtrans %}</a>
             <h1>{% trans %}Ldap users{% endtrans %}</h1>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
             {% if is_granted('ROLE_ADMIN') %}
@@ -36,7 +38,7 @@
             <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_restrictions') }}">{% trans %} Restriction {% endtrans %}</a>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter') }}">{% trans %} Report with filter {% endtrans %}</a>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter_inspection') }}">{% trans %} Bendra patrulinių {% endtrans %}</a>
-            <a class="btn btn-success btn-lg btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
         </ul>
     </div>
 {% endblock %}

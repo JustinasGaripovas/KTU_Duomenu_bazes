@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WinterJobs{% endblock %}
+
+{% block body %}
+    <h1>WinterJobs</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ winter_job.id }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Subunit</th>
+                <td>{{ winter_job.Subunit }}</td>
+            </tr>
+            <tr>
+                <th>Mechanism</th>
+                <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RoadSection</th>
+                <td>{{ winter_job.RoadSection }}</td>
+            </tr>
+            <tr>
+                <th>SectionBegin</th>
+                <td>{{ winter_job.SectionBegin }}</td>
+            </tr>
+            <tr>
+                <th>SectionEnd</th>
+                <td>{{ winter_job.SectionEnd }}</td>
+            </tr>
+            <tr>
+                <th>Salt</th>
+                <td>{{ winter_job.Salt }}</td>
+            </tr>
+            <tr>
+                <th>Sand</th>
+                <td>{{ winter_job.Sand }}</td>
+            </tr>
+            <tr>
+                <th>Mix</th>
+                <td>{{ winter_job.Mix }}</td>
+            </tr>
+            <tr>
+                <th>Solution</th>
+                <td>{{ winter_job.Solution }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('winter_jobs_index') }}">back to list</a>
+
+    <a href="{{ path('winter_jobs_edit', {'id': winter_job.id}) }}">edit</a>
+
+    {{ include('winter_jobs/_delete_form.html.twig') }}
+{% endblock %}

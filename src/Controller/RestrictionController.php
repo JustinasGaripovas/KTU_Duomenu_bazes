@@ -67,6 +67,7 @@ class RestrictionController extends Controller
         $restriction = new Restriction();
         $restriction->setSubunit($subUnitName);
         $form = $this->createForm(RestrictionType::class, $restriction);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

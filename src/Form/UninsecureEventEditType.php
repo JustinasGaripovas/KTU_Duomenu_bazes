@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 
-class InsuredEventType extends AbstractType
+class UninsecureEventEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -19,31 +19,11 @@ class InsuredEventType extends AbstractType
             ->add('RoadSearch', null, array(
                 'mapped' => false
             ))
-            ->add('RoadId', HiddenType::class,array(
-                'required' => true
-            ))
-            ->add('RoadName', HiddenType::class,array(
-                'required' => true
-            ))
-            ->add('SectionBegin', null, array(
-                'required' => true
-            ))
-            ->add('SectionEnd', null, array(
-                'required' => true
-            ))
-            ->add('DamagedStuff', null, array(
-                'required' => true
-            ))
-            ->add('Documents', null, array(
-                'required' => true
-            ))
-            ->add('EstimateToCompany', null, array(
-                'required' => true
-            ))
-            ->add('InsurensCompany', null, array(
-                'required' => true
-            ))
-            ->add('NumberOfDamage')
+            ->add('RoadId', HiddenType::class)
+            ->add('RoadName', HiddenType::class)
+            ->add('SectionBegin')
+            ->add('SectionEnd')
+            ->add('DamagedStuff')
             ->add('DamageData',DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,

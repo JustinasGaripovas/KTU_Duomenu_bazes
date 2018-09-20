@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../DAIS/.idea/DAIS.iml" filepath="$PROJECT_DIR$/../DAIS/.idea/DAIS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/DAIS.iml" filepath="$PROJECT_DIR$/.idea/DAIS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/dais.iml" filepath="$PROJECT_DIR$/.idea/dais.iml" />
     </modules>
   </component>
 </project>

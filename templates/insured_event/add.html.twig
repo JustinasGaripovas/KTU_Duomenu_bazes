@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}New InsuredEvent{% endblock %}
+{% block title %} {% trans %} Edit InsuredEvent {% endtrans %}{% endblock %}
 
 {% block body %}
 
@@ -27,11 +28,11 @@
         });
     </script>
 
-    <h1>Create new InsuredEvent</h1>
+    <h1> {% trans %} Edit InsuredEvent {% endtrans %} </h1>
 
+    {{ include('insured_event/_form.html.twig', {'button_label': 'Update'}) }}
 
+    <a class="btn btn-info btn-block btn-lg" href="{{ path('insured_event_index') }}">{% trans %}back to list {% endtrans %}</a>
 
-    {{ include('insured_event/_form.html.twig') }}
-
-    <a href="{{ path('insured_event_index') }}">back to list</a>
+    {{ include('insured_event/_delete_form.html.twig') }}
 {% endblock %}

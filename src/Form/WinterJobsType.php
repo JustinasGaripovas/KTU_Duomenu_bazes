@@ -24,6 +24,13 @@ class WinterJobsType extends AbstractType
             ->add('RoadSectionSearch')
             ->add('RoadSection', HiddenType::class)
             ->add('RoadName', HiddenType::class)
+            ->add('maintenanceLevel', ChoiceType::class, array(
+                'choices' => array(
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3
+                )
+            ))
             ->add('SectionBegin')
             ->add('SectionEnd')
             ->add('SaltChecked', CheckboxType::class, array(

@@ -116,6 +116,11 @@ class WinterJobs
      */
     private $CreatedBy;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $MaintenanceLevel;
+
     public function getId()
     {
         return $this->id;
@@ -357,6 +362,18 @@ class WinterJobs
     public function setCreatedBy(string $CreatedBy): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+    public function getMaintenanceLevel(): ?int
+    {
+        return $this->MaintenanceLevel;
+    }
+
+    public function setMaintenanceLevel(int $MaintenanceLevel): self
+    {
+        $this->MaintenanceLevel = $MaintenanceLevel;
 
         return $this;
     }

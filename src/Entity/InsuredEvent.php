@@ -82,7 +82,7 @@ class InsuredEvent
     private $PayoutAmount;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" : true})
      */
     private $isInsuredType;
 

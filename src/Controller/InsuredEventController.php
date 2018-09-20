@@ -8,8 +8,6 @@ use App\Form\InsuredEventTypeEdit;
 use App\Form\UninsecureEventEditType;
 use App\Repository\InsuredEventRepository;
 use App\Repository\LdapUserRepository;
-use Composer\Command\DumpAutoloadCommand;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,7 +109,7 @@ class InsuredEventController extends Controller
             return $this->redirectToRoute('uninsured_event_index');
         }
 
-        return $this->render('insured_event/new.html.twig', [
+        return $this->render('insured_event/newUninsured.html.twig', [
             'insured_event' => $insuredEvent,
             'form' => $form->createView(),
         ]);
@@ -122,8 +120,6 @@ class InsuredEventController extends Controller
      */
     public function new(LdapUserRepository $ldapUserRepository ,Request $request): Response
     {
-        dump("789");
-
         $userName = $this->getUser()->getUserName();
         $subUnitName = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getName();
         $insuredEvent = new InsuredEvent();
@@ -179,8 +175,6 @@ class InsuredEventController extends Controller
      */
     public function editUninsured(Request $request, InsuredEvent $insuredEvent): Response
     {
-        dump("WE");
-
         $form = $this->createForm(InsuredEventType::class, $insuredEvent);
         $form->handleRequest($request);
 
@@ -191,7 +185,7 @@ class InsuredEventController extends Controller
             return $this->redirectToRoute('uninsured_event_index');
         }
 
-        return $this->render('insured_event/edit.html.twig', [
+        return $this->render('insured_event/editUninsured.html.twig', [
             'insured_event' => $insuredEvent,
             'form' => $form->createView(),
         ]);

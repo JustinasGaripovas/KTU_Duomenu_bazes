@@ -43,7 +43,9 @@ class InsuredEventType extends AbstractType
             ->add('InsurensCompany', null, array(
                 'required' => true
             ))
-            ->add('NumberOfDamage')
+            ->add('NumberOfDamage', null, array(
+                'required' => true
+            ))
             ->add('DamageData',DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,

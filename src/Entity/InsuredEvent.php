@@ -47,32 +47,32 @@ class InsuredEvent
     private $DamagedStuff;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Documents;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $EstimateToCompany;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $InsurensCompany;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $NumberOfDamage;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $DamageData;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, nullable=true)
      */
     private $PayoutDate;
 
@@ -80,6 +80,11 @@ class InsuredEvent
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $PayoutAmount;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isInsuredType;
 
     public function getId()
     {
@@ -175,7 +180,7 @@ class InsuredEvent
         return $this->EstimateToCompany;
     }
 
-    public function setEstimateToCompany(float $EstimateToCompany): self
+    public function setEstimateToCompany(?float $EstimateToCompany): self
     {
         $this->EstimateToCompany = $EstimateToCompany;
 
@@ -241,4 +246,17 @@ class InsuredEvent
 
         return $this;
     }
+
+    public function getIsInsuredType(): ?bool
+    {
+        return $this->isInsuredType;
+    }
+
+    public function setIsInsuredType(bool $isInsuredType): self
+    {
+        $this->isInsuredType = $isInsuredType;
+
+        return $this;
+    }
+
 }

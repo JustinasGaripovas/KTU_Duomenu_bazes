@@ -5,29 +5,38 @@
 
 {% block body %}
 
+    {% if insured %}
     <h1> {% trans %}Insured Events {% endtrans %} </h1>
+    {% else %}
+    <h1> {% trans %}Uninsured Events{% endtrans %}</h1>
+    {% endif %}
 
+    {% if insured %}
     <a class="btn btn-success btn-block btn-lg" href="{{ path('insured_event_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    {% else %}
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('uninsured_event_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    {% endif %}
+
     <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
 
 
     <table class="table table-sm thead-dark table-bordered">
         <thead>
-            <tr>
-                <th style="vertical-align: middle; text-align: center">{% trans %}Subunit{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}RoadId {% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}SectionBegin{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}SectionEnd{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}DamagedStuff{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}Documents{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}EstimateToCompany{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}InsurensCompany{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}NumberOfDamage{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}DamageData{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}PayoutDate{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}PayoutAmount{% endtrans %}</th>
-                <th style="vertical-align: middle; text-align: center">{% trans %}actions{% endtrans %}</th>
-            </tr>
+        <tr>
+            <th style="vertical-align: middle; text-align: center">{% trans %}Subunit{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}RoadId {% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}SectionBegin{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}SectionEnd{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}DamagedStuff{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}Documents{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}EstimateToCompany{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}InsurensCompany{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}NumberOfDamage{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}DamageData{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}PayoutDate{% endtrans %}</th>
+            <th style="vertical-align: middle; text-align: center">{% trans %}PayoutAmount{% endtrans %}</th>
+            <th colspan="2" style="vertical-align: middle; text-align: center">{% trans %}actions{% endtrans %}</th>
+        </tr>
         </thead>
         <tbody>
         {% for insured_event in insured_events %}
@@ -50,9 +59,22 @@
                         <td>{{ insured_event.PayoutDate ? insured_event.PayoutDate|date('Y-m-d') : ''  }}</td>
                         <td>{{ insured_event.PayoutAmount }}</td>
                     {% endif %}
-                    <td>
-                        <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('insured_event_edit', {'id': insured_event.id}) }}"></a>
-                    </td>
+
+                        {% if insured_event.isInsuredType %}
+                            <td>
+                                <a class="fa fa-money btn btn-outline-success btn-lg btn-block" href="{{ path('insured_event_add', {'id': insured_event.id}) }}"></a>
+                            </td>
+                            <td>
+                                <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('insured_event_edit', {'id': insured_event.id}) }}"></a>
+                            </td>
+
+                        {% else %}
+                            <td>
+                               <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('uninsured_event_edit', {'id': insured_event.id}) }}"></a>
+                            </td>
+
+                        {% endif %}
+
                 </tr>
             {% else %}
                 <tr style="background-color: lightgreen">
@@ -73,9 +95,22 @@
                         <td>{{ insured_event.PayoutDate ? insured_event.PayoutDate|date('Y-m-d') : ''  }}</td>
                         <td>{{ insured_event.PayoutAmount }}</td>
                     {% endif %}
+
                     <td>
-                        <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('insured_event_edit', {'id': insured_event.id}) }}"></a>
+                        <a class="fa fa-plus btn btn-warning btn-lg btn-block" href="{{ path('insured_event_add', {'id': insured_event.id}) }}"></a>
                     </td>
+                    {% if insured_event.isInsuredType %}
+
+                        <td>
+                            <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('insured_event_edit', {'id': insured_event.id}) }}"></a>
+                        </td>
+
+                    {% else %}
+                        <td>
+                            <a class="fa fa-pencil btn btn-warning btn-lg btn-block" href="{{ path('uninsured_event_edit', {'id': insured_event.id}) }}"></a>
+                        </td>
+
+                    {% endif %}
                 </tr>
             {% endif %}
         {% else %}

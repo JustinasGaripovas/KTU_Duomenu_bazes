@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block body %}
+    <script>
+        $( function() {
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('done_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+    <hr>
+    <form class="form-inline">
+        <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('filter') }}" type="text" name="filter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite darbo šifrą" value="{{ app.request.get('filterJob') }}" type="text" name="filterJob">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite kelio numerį" value="{{ app.request.get('filterRoad') }}" type="text" name="filterRoad">
+        <select style="margin: 5px" class="form-control" name="limit">
+            {% if  app.request.get('limit') == 20  %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>50</option>
+                <option>100</option>
+            {% elseif  app.request.get('limit')  == 50 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>100</option>
+            {% elseif app.request.get('limit') == 100 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>50</option>
+                {% else %}
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+            {% endif %}
+        </select>
+        <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
+    </form>
+    <div class="print_a">
+        <table class="table table-sm thead-dark">
+        <thead>
+            <tr>
+                <th>{% trans %} JobId {% endtrans %}</th>
+                <th>{% trans %} JobName  {% endtrans %}</th>
+                <th>{% trans %} RoadSection {% endtrans %}</th>
+                <th>{% trans %} RoadSectionBegin {% endtrans %}</th>
+                <th>{% trans %} RoadSectionEnd {% endtrans %}</th>
+                <th>{% trans %} Unit of {% endtrans %}</th>
+                <th>{% trans %} Quantity {% endtrans %}</th>
+                <th>{% trans %} username {% endtrans %}</th>
+                <th>{% trans %} Date {% endtrans %}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'DoneJobDate'|trans, 'd.DoneJobDate') }} </th>
+                <th>{% trans %} Note  {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for done_job in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <tr>
+                <td>{{ done_job.JobId }}</td>
+                <td>{{ done_job.JobName }}</td>
+                <td>{{ done_job.RoadSection }}</td>
+                <td>{{ done_job.RoadSectionBegin }}</td>
+                <td>{{ done_job.RoadSectionEnd }}</td>
+                <td>{{ done_job.UnitOf }}</td>
+                <td>{{ done_job.Quantity }}</td>
+                <td>{{ done_job.Username }}</td>
+                <td>{{ done_job.Date ? done_job.Date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                <td>{{ done_job.Note }}</td>
+                <td>
+                {% include 'menu_by_roles/edit_view_done_job.html.twig' %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <hr>
+{% endblock %}

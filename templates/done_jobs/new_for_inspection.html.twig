@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block body %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('js/datepicker-lt.js') }}"></script>
+    <style>
+        .ui-autocomplete { height: 200px; overflow-y: scroll; overflow-x: hidden;}
+    </style>
+
+    <script>
+        $( function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            var job_id = '';
+            $( "#done_jobs_JobNamee" ).autocomplete({
+                source: "{{ path('search') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_JobId').val(ui.item.job_id),
+                        $('#done_jobs_JobName').val(ui.item.job_name),
+                        $('#done_jobs_UnitOf').val(ui.item.unit_of),
+                        $('#done_jobs_UnitOfLabel').val(ui.item.unit_of)
+                }
+            });
+            $( "#done_jobs_RoadSection" ).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
+                        $('#done_jobs_RoadSectionEnd').val(ui.item.section_end),
+                        $('#done_jobs_roadLevel').val(ui.item.road_level),
+                        $('#done_jobs_sectionId').val(ui.item.section_id)
+                },
+            });
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+    <div class="border" style="padding: 2em; margin: 1em">
+        <a class="btn btn-light btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
+        {{ include('done_jobs/_form.html.twig') }}
+    </div>
+    <br>
+{% endblock %}

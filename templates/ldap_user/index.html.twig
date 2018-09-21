@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}LdapUser index{% endblock %}
+
+{% block body %}
+    <h1>LdapUser index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th> {% trans %}Name {% endtrans %}</th>
+                <th>{% trans %}UnitIdd {% endtrans %}</th>
+                <th> {% trans %}SubUnitId {% endtrans %}</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ldap_user in ldap_users %}
+            <tr>
+                <td>{{ ldap_user.name }}</td>
+                <td>{{ ldap_user.Unit.unitId }}</td>
+                <td>{{ ldap_user.subunit.subunitId | default(' ') }}</td>
+                <td>
+                    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

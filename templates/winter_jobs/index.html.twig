@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}WinterJobs index{% endblock %}
+{% block body %}
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('winter_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans %} CreatedAt {% endtrans %}</th>
+                <th>{% trans %} Subunit {% endtrans %}</th>
+                <th>{% trans %} Mechanism {% endtrans %}</th>
+                <th>{% trans %} Job {% endtrans %}</th>
+                <th>{% trans %} RoadSection {% endtrans %}</th>
+                <th>{% trans %} SectionBegin {% endtrans %}</th>
+                <th>{% trans %} SectionEnd {% endtrans %}</th>
+                <th>{% trans %} Salt {% endtrans %}</th>
+                <th>{% trans %} Sand {% endtrans %}</th>
+                <th>{% trans %} Mix {% endtrans %}</th>
+                <th>{% trans %} Solution {% endtrans %}</th>
+                <th>{% trans %} actions {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winter_job in winter_jobs %}
+            <tr>
+                <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ winter_job.Subunit }}</td>
+                <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
+                <td>{{ winter_job.Job }}</td>
+                <td>{{ winter_job.RoadSection }}</td>
+                <td>{{ winter_job.SectionBegin }}</td>
+                <td>{{ winter_job.SectionEnd }}</td>
+                <td>{{ winter_job.Salt }}</td>
+                <td>{{ winter_job.Sand }}</td>
+                <td>{{ winter_job.Mix }}</td>
+                <td>{{ winter_job.Solution }}</td>
+                <td>
+                    <a href="{{ path('winter_jobs_edit', {'id': winter_job.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(winter_jobs) }}
+    </div>
+
+{% endblock %}

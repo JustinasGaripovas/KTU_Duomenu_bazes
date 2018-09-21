@@ -1,0 +1,4 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
+{{ form_end(form) }}

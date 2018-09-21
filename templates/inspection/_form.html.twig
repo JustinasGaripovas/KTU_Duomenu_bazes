@@ -1,0 +1,51 @@
+<script>
+    $( function() {
+        function log( message ) {
+            $( "<div>" ).text( message ).prependTo( "#log" );
+            $( "#log" ).scrollTop( 0 );
+        }
+        $( "#inspection_RoadIdd" ).autocomplete({
+            source: "{{ path('search/road') }}",
+            minLength: 2,
+            delay: 500,
+            select: function( event, ui ) {
+                $('#inspection_RoadId').val(ui.item.section_id),
+                $('#inspection_RoadSectionBegin').val(ui.item.section_begin),
+                $('#inspection_RoadSectionEnd').val(ui.item.section_end)
+            },
+        });
+        $( ".js-datepicker" ).datepicker();
+    });
+
+    $(document).ready(function () {
+        $('#inspection_isAdditional').click(function () {
+            if(this.checked){
+                //document.getElementById('additional').style.display = "block"
+                $('#additional').slideDown(500),
+                $('#inspection_Note').val("Sustiprintos priežiūros žvyrkelis")
+            }
+            else {
+                //document.getElementById('additional').style.display = "none"
+                $('#additional').slideUp(200),
+                    $('#inspection_Note').val("")
+
+            }
+        })
+    })
+
+</script>
+{{ form_start(form) }}
+    {{ form_row(form.RoadIdd) }}
+    {{ form_row(form.RoadId) }}
+    {{ form_row(form.RoadSectionBegin) }}
+    {{ form_row(form.RoadSectionEnd) }}
+    {{ form_row(form.isAdditional) }}
+<div id="additional" style="display: none">
+    {{ form_row(form.roadCondition) }}
+    {{ form_row(form.waveSize) }}
+    {{ form_row(form.Place) }}
+</div>
+    {{ form_row(form.Note) }}
+    {{ form_row(form.RepairDate) }}
+<button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
+{{ form_end(form) }}

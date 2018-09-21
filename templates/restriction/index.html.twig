@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %} {% trans %} Restriction {% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %} Restriction {% endtrans %}</h1>
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('restriction_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+
+    <table style="font-size: small; text-align: center; vertical-align: middle" class="table table-sm thead-dark table-bordered">
+        <thead>
+            <tr>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RoadName {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Section begin {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Section end {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Place {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Jobs {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Restrictions {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Date from {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Date to {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Subunit {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Notes {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Contractor {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} actions {% endtrans %} </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for restriction in pagination %}
+            <tr>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.RoadId }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.RoadName }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.SectionBegin }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.SectionEnd }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.Place }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.Jobs }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.Restrictions }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.DateFrom ? restriction.DateFrom|date('Y-m-d') : '' }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.DateTo ? restriction.DateTo|date('Y-m-d') : '' }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.subunit }} </td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.Notes }}</td>
+                <td style="text-align: center; vertical-align: middle">{{ restriction.Contractor }}</td>
+                <td style="vertical-align: middle">
+                    <a class="fa fa-pencil btn btn-secondary btn-lg btn-block" href="{{ path('restriction_edit', {'id': restriction.id}) }}"></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}

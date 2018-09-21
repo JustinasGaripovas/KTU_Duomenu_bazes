@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation'%}
+
+{% block title %}Naujas įrašas{% endblock %}
+
+{% block body %}
+    <h1>Naujas įrašas</h1>
+
+    {{ include('winter_maintenance/_form.html.twig') }}
+
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('winter_maintenance_index') }}">{% trans %}back to list{% endtrans %}</a>
+
+{% endblock %}

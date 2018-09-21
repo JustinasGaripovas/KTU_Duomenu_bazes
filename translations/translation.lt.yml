@@ -1,0 +1,149 @@
+Name: Vardas
+group: Grupė
+unit: Padalinys
+LdapUser users administration: Vartotojų administravimas
+UnitId: Padalinio nr.
+Username: Vartotojo vardas
+username: Vardas
+Password: Slaptažodis
+Sign in: Prisijungti
+Job name: Darbas
+Road section: Kelio ruožas
+Road section begin: Pradžia
+Road section end: Pabaiga
+Quantity: Kiekis
+Done job date: Atlikimo data
+Save: Įrašyti
+Unit of: Mato vnt.
+Date: Data
+back to list: Atgal
+Year: Metai
+Month: Mėnuo
+Day: Diena
+Hour: Valanda
+Minute: Minutė
+RoadSectionBegin: Pradžia
+RoadSectionEnd: Pabaiga
+RoadSection: Atkarpa
+JobName: Darbas
+JobId: Šifras
+DoneJobDate: Atlikta
+actions: Veiksmai
+New: Naujas įrašas
+Edit: Redaguoti
+Logout: Atsijungti
+New Job: Duomenų įvedimas
+Jobs list: Atliktų darbų sąrašas
+LdapUsers list: Vartotojų sąrašas
+Road Sections: Kelių ruožai
+Jobs: Darbai
+Ldap users: Ldap vartotojai
+Delete: Ištrinti
+Update: Atnaujinti
+Done Jobs report: Atliktų darbų ataskaita
+Reports: Ataskaitos
+Comments: Pastabos
+no records found: Duomenų bazėje įrašų nėra
+From: Nuo
+To: Iki
+Preview: Peržiūrėti
+Generate p d f : PDF
+Road id: Kelio Nr.
+Note: Pastabos
+Inspection Note: Pastebėtos kliūtys, pažaidos (aprašymas ir nurodymai jas pašalinti)
+Repair date : Patikrinimo diena
+Create new Inspection: Naujas patrulinės apžiūros įrašas
+Inspection: Patrulinės apžiūros
+New Inspection: Naujas įrašas
+Inspections List: Visos apžiūros
+RepairDate: Žymos apie įvykdymą
+RoadId: Kelio Nr.
+Related jobs: Darbai
+Add:  Pridėti
+Inspection Date: Patikrinimo data
+Inspection report: Patikrinimų ataskaita
+UnitIdd: Regionas
+SubUnitId: Tarnyba
+Road level: Kelio lygis
+Job namee: Darbas
+Road idd: Kelio Nr.
+Sum report: Suminė ataskaita
+Generate x l s : XLS
+JobQuantity: Mato vnt.
+Place: Konkreti vieta
+Section begin: Darbų pradžia, km
+Section end: Darbų pabaiga, km
+Restrictions: Apribojimai
+Road name: Kelio pavadinimas
+Date from: Laikotarpis (nuo)
+Date to: Laikotarpis (iki)
+Notes: Pastabos
+Contractor: Darbų vykdytojas (įmonė, vardas, pavardė, tel. nr.)
+Status: Statusas
+New Restriction: Naujas apribojimas
+Restriction: Apribojimai
+RoadName: Kelio pavadinimas
+Report with filter: Bendra KT
+Insured Events: Draudiminiai įvykiai
+Insured Events Index: Draudiminių įvykių sąrašas
+Subunit: Tarnyba
+SectionBegin: Pradžia
+SectionEnd: Pabaiga
+DamagedStuff: Sugagintas kelio turtas
+Documents: Draudimui pateikti dokumentai
+EstimateToCompany: Draudimui pateikta suma, be PVM
+InsurensCompany: Draudimo bendrovė
+NumberOfDamage: Žalos Nr.
+DamageData: Įvykio data
+PayoutDate: Išmokos data
+PayoutAmount: Išmokos suma
+Damaged stuff: Sugagintas kelio turtas
+Estimate to company: Draudimui pateikta suma, be PVM
+Insurens company: Draudimo bendrovė
+Number of damage: Žalos Nr.
+Damage data: Įvykio data
+Payout date: Išmokos data
+Payout amount: Išmokos suma
+Road search: Kelio ruožas
+Edit InsuredEvent: Redaguoti
+Level: Lygis
+Is additional: Sustiprinta priežiūra
+Road condition: Kelio būklė
+Wave size: Bangos dydis (cm.)
+Type: Tipas
+Report for: Pranešimo laikas
+Road condition highway: Kelių būklė magistraliniuose
+Weather: Oro sąlygos
+Traffic changes: Eismo pasikeitimai
+Blocked roads: Nepravažiuojami keliai
+Other events: Kiti įvykiai
+Road condition score: Kelių būklės vertinimas
+Road condition local: Kelių būklė krašto
+Road condition district: Kelių būklė rajoniniuose
+Mechanism: Mechanizmas
+Winter Maintenance New: Informacija LAKD (Naujas įrašas)
+Winter Maintenance List: Informacija LAKD (Sąrašas)
+Winter Maintenance: Žiemos priežiūra
+RoadCondition: Kelių būklė
+TrafficChanges: Eismo pokytis
+BlockedRoads: Nepravažiuojami keliai
+OtherEvents: Kiti įvykiai
+RoadConditionScore: Kelių būklė balais
+Time from: Laikas nuo
+Time to: Laikas iki
+Job: Atliekamas darbas
+Salt: Druska
+Sand: Smėlis
+Mix: Mišinys
+Solution: Tirpalas
+Road section search: Kelio ruožas
+Salt checked: Druska
+Sand checked: Smėlis
+Mix checked: Mišinys
+Solution checked: Tirpalas
+Winter Jobs New: Žiemos darbai (Įvedimas)
+Winter Jobs List: Žiemos darbų sąrašas
+CreatedAt: Įrašo data
+Maintenance level: Priežiūros lygis
+Uninsured Events Index: Nedraudiminių įvykių sąrašas
+Uninsured Events: Nedraudiminiai įvykiai

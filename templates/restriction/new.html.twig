@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}New Restriction{% endblock %}
+
+{% block body %}
+
+    <script>
+        $( function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            var job_id = '';
+            $( "#restriction_RoadIdd" ).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#restriction_SectionBegin').val(ui.item.section_begin),
+                        $('#restriction_SectionEnd').val(ui.item.section_end),
+                        $('#restriction_RoadId').val(ui.item.section_id),
+                        $('#restriction_RoadName').val(ui.item.road_name)
+                },
+            });
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
+    <h2> {% trans %} New Restriction {% endtrans %}</h2>
+    <hr>
+
+    {{ include('restriction/_form.html.twig') }}
+
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('restriction_index') }}">{% trans %}back to list{% endtrans %}</a>
+
+{% endblock %}

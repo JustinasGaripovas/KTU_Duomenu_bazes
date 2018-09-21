@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InsuredEvent{% endblock %}
+
+{% block body %}
+    <h1>InsuredEvent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ insured_event.id }}</td>
+            </tr>
+            <tr>
+                <th>Subunit</th>
+                <td>{{ insured_event.Subunit }}</td>
+            </tr>
+            <tr>
+                <th>RoadId</th>
+                <td>{{ insured_event.RoadId }}</td>
+            </tr>
+            <tr>
+                <th>RoadName</th>
+                <td>{{ insured_event.RoadName }}</td>
+            </tr>
+            <tr>
+                <th>SectionBegin</th>
+                <td>{{ insured_event.SectionBegin }}</td>
+            </tr>
+            <tr>
+                <th>SectionEnd</th>
+                <td>{{ insured_event.SectionEnd }}</td>
+            </tr>
+            <tr>
+                <th>DamagedStuff</th>
+                <td>{{ insured_event.DamagedStuff }}</td>
+            </tr>
+            <tr>
+                <th>Documents</th>
+                <td>{{ insured_event.Documents }}</td>
+            </tr>
+            <tr>
+                <th>EstimateToCompany</th>
+                <td>{{ insured_event.EstimateToCompany }}</td>
+            </tr>
+            <tr>
+                <th>InsurensCompany</th>
+                <td>{{ insured_event.InsurensCompany }}</td>
+            </tr>
+            <tr>
+                <th>NumberOfDamage</th>
+                <td>{{ insured_event.NumberOfDamage }}</td>
+            </tr>
+            <tr>
+                <th>DamageData</th>
+                <td>{{ insured_event.DamageData }}</td>
+            </tr>
+            <tr>
+                <th>PayoutDate</th>
+                <td>{{ insured_event.PayoutDate }}</td>
+            </tr>
+            <tr>
+                <th>PayoutAmount</th>
+                <td>{{ insured_event.PayoutAmount }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('insured_event_index') }}">back to list</a>
+
+    <a href="{{ path('insured_event_edit', {'id': insured_event.id}) }}">edit</a>
+
+    {{ include('insured_event/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+            {{ include('/reports/form.html.twig') }}
+        <br>
+        <hr>
+
+        <div class="print_a">
+            <table style="font-size: smaller; text-align: center; vertical-align: middle" class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Įrašo nr.</th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Data</th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2">Oro sąlygos (pildoma tik žiemą)</th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" rowspan="2">Darbų vieta (kelio Nr., km)</th>
+                    <th style="text-align: center; vertical-align: middle" colspan="3">Darbų</th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2"> {% trans %} Unit of {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">{% trans %} Quantity {% endtrans %}</th>
+                    <th style="width: 150px; text-align: center; vertical-align: middle" rowspan="2">Užpildžiusio asmens pavardė, parašas</th>
+                </tr>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle">Grupė</th>
+                    <th style="text-align: center; vertical-align: middle">Šifras</th>
+                    <th style="width:200px;text-align: center; vertical-align: middle">Aprašymas</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {% for done_job in report | default ('') %}
+                    <tr {% if loop.index is odd %}class="color"{% endif %}>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.Id }}</td>
+                        <td style="text-align: center; vertical-align: middle; white-space: nowrap">{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                        <td></td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.SectionId }} <br>({{ done_job.RoadSectionBegin }}-{{ done_job.RoadSectionEnd }} ) </td>
+                        <td style="text-align: center; vertical-align: middle"> </td>
+                        <td style="text-align: center; vertical-align: middle">{{ done_job.JobId }} </td>
+                        <td style="font-size: small;text-align: center; vertical-align: middle">{{ done_job.JobName }}</td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.UnitOf }} </td>
+                        <td style="text-align: center; vertical-align: middle"> {{ done_job.Quantity }}</td>
+                        <td style="text-align: center; vertical-align: middle"></td>
+                {% else %}
+                    <tr>
+                        <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            ________________________________________________________________________________________________
+        </div>
+    {% endblock %}

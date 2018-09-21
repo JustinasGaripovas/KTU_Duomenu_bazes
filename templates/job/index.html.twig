@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+
+{% block title %}Job index{% endblock %}
+
+{% block body %}
+    <h1> {% trans %}Jobs {% endtrans %}</h1>
+
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('job_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %} JobId{% endtrans %}</th>
+                <th> {% trans %} JobName{% endtrans %}</th>
+                <th> {% trans %} JobQuantity{% endtrans %}</th>
+                <th> {% trans %} actions {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.JobId }}</td>
+                <td>{{ job.JobName }}</td>
+                <td>{{ job.JobQuantity }}</td>
+                <td>
+                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
+                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

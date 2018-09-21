@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block top_menu %}
+{% endblock %}
+{% block body %}
+        <style>
+            :root {
+                --input-padding-x: .75rem;
+                --input-padding-y: .75rem;
+            }
+
+            html,
+            body {
+                height: 100%;
+            }
+
+            body {
+                display: -ms-flexbox;
+                display: -webkit-box;
+                display: flex;
+                -ms-flex-align: center;
+                -ms-flex-pack: center;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
+
+            .form-signin {
+                width: 100%;
+                max-width: 420px;
+                padding: 50px;
+                margin: 0 auto;
+                border: 2px solid white;
+                border-radius: .25rem;
+            }
+
+
+        </style>
+
+    <form action="{{ path('login') }}" method="post" class="form-signin" >
+        <div class="text-center">
+            <img style="max-height: 70%; max-width: 70%" src="{{ asset('/images/logo.png') }}"/>
+            <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
+            <h1 class="h3 font-weight-normal"> DARBŲ APSKAITOS INFORMACINĖ SISTEMA </h1>
+            <hr style="border: 0; height: 2px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0))">
+        </div>
+
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="form-label-group">
+            <input type="text" id="username" name="_username" class="form-control" placeholder="{% trans %}Username{% endtrans %}" value="{{ last_username }}" required autofocus>
+        </div>
+        <br>
+        <div class="form-label-group">
+            <input type="password" id="password" class="form-control" placeholder="{% trans %}Password{% endtrans %}" name="_password" required>
+        </div>
+        <br>
+        <button class="btn btn-lg btn-success btn-block" type="submit">{% trans %} Sign in {% endtrans %}</button>
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2018</p>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+            {{ include('/reports/form.html.twig') }}
+        <br>
+        <hr>
+
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}, km</th>
+                    <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"> Kontroliuojančių asmenų pastabos, data </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for inspection in report | default ('') %}
+                    <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    <tr>
+                        <td style="white-space: nowrap;text-align: center; vertical-align: middle">{{ inspection.RoadId }} ({{ inspection.RoadSectionBegin }}; {{ inspection.RoadSectionEnd }})</td>
+                        <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
+                    <td style="text-align: center; vertical-align: middle">
+                        {% for job in inspection.getJob %}
+                            {% if job.DoneJobDate != null %}
+                        {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td style="text-align: center; vertical-align: middle; white-space: nowrap"> </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            ________________________________________________________________________________________________
+        </div>
+    {% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WinterMaintenance{% endblock %}
+
+{% block body %}
+    <h1>WinterMaintenance</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ winter_maintenance.id }}</td>
+            </tr>
+            <tr>
+                <th>Subunit</th>
+                <td>{{ winter_maintenance.Subunit }}</td>
+            </tr>
+            <tr>
+                <th>RoadCondition</th>
+                <td>{{ winter_maintenance.RoadCondition }}</td>
+            </tr>
+            <tr>
+                <th>Weather</th>
+                <td>{{ winter_maintenance.Weather }}</td>
+            </tr>
+            <tr>
+                <th>TrafficChanges</th>
+                <td>{{ winter_maintenance.TrafficChanges }}</td>
+            </tr>
+            <tr>
+                <th>BlockedRoads</th>
+                <td>{{ winter_maintenance.BlockedRoads }}</td>
+            </tr>
+            <tr>
+                <th>OtherEvents</th>
+                <td>{{ winter_maintenance.OtherEvents }}</td>
+            </tr>
+            <tr>
+                <th>Mechanism</th>
+                <td>{{ winter_maintenance.Mechanism }}</td>
+            </tr>
+            <tr>
+                <th>Job</th>
+                <td>{{ winter_maintenance.Job }}</td>
+            </tr>
+            <tr>
+                <th>RoadConditionScore</th>
+                <td>{{ winter_maintenance.RoadConditionScore }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('winter_maintenance_index') }}">back to list</a>
+
+    <a href="{{ path('winter_maintenance_edit', {'id': winter_maintenance.id}) }}">edit</a>
+
+    {{ include('winter_maintenance/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+            {{ include('/reports/form.html.twig') }}
+        <br>
+        <hr>
+
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}Subunit{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}RoadId {% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}SectionBegin{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}SectionEnd{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}DamagedStuff{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}Documents{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}EstimateToCompany{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}InsurensCompany{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}NumberOfDamage{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}DamageData{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}PayoutDate{% endtrans %}</th>
+                    <th style="vertical-align: middle; text-align: center">{% trans %}PayoutAmount{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for insured_event in report | default ('') %}
+                    {% if insured_event.PayoutDate == "" %}
+                        <tr style="vertical-align: middle; text-align: center;background-color: rgba(255,181,19,0.7)">
+                            <td>{{ insured_event.Subunit }}</td>
+                            <td>{{ insured_event.RoadId }}</td>
+                            <td>{{ insured_event.SectionBegin }}</td>
+                            <td>{{ insured_event.SectionEnd }}</td>
+                            <td>{{ insured_event.DamagedStuff }}</td>
+                            <td>{{ insured_event.Documents }}</td>
+                            <td>{{ insured_event.EstimateToCompany }}</td>
+                            <td>{{ insured_event.InsurensCompany }}</td>
+                            <td>{{ insured_event.NumberOfDamage }}</td>
+                            <td>{{ insured_event.DamageData | date('Y-m-d') }}</td>
+                            {% if insured_event.PayoutDate == "" %}
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td>{{ insured_event.PayoutDate ? insured_event.PayoutDate|date('Y-m-d') : ''  }}</td>
+                                <td>{{ insured_event.PayoutAmount }}</td>
+                            {% endif %}
+                        </tr>
+                    {% else %}
+                        <tr style="background-color: lightgreen">
+                            <td>{{ insured_event.Subunit }}</td>
+                            <td>{{ insured_event.RoadId }}</td>
+                            <td>{{ insured_event.SectionBegin }}</td>
+                            <td>{{ insured_event.SectionEnd }}</td>
+                            <td>{{ insured_event.DamagedStuff }}</td>
+                            <td>{{ insured_event.Documents }}</td>
+                            <td>{{ insured_event.EstimateToCompany }}</td>
+                            <td>{{ insured_event.InsurensCompany }}</td>
+                            <td>{{ insured_event.NumberOfDamage }}</td>
+                            <td>{{ insured_event.DamageData | date('Y-m-d') }}</td>
+                            {% if insured_event.PayoutDate == "" %}
+                                <td></td>
+                                <td></td>
+                            {% else %}
+                                <td>{{ insured_event.PayoutDate ? insured_event.PayoutDate|date('Y-m-d') : ''  }}</td>
+                                <td>{{ insured_event.PayoutAmount }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="15">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}

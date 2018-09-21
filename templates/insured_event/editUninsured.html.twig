@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %} {% trans %} Uninsured Event {% endtrans %}{% endblock %}
+
+{% block body %}
+
+    <script>
+        $( function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            var job_id = '';
+
+            $( "#insured_event_RoadSearch" ).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#insured_event_SectionBegin').val(ui.item.section_begin),
+                        $('#insured_event_SectionEnd').val(ui.item.section_end),
+                        $('#insured_event_RoadId').val(ui.item.section_id),
+                        $('#insured_event_RoadName').val(ui.item.road_name)
+                },
+            });
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
+    <h1> {% trans %} Edit Event {% endtrans %} </h1>
+
+    {{ include('insured_event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-info btn-block btn-lg" href="{{ path('insured_event_index') }}">{% trans %}back to list {% endtrans %}</a>
+
+    {{ include('insured_event/_delete_form.html.twig') }}
+{% endblock %}

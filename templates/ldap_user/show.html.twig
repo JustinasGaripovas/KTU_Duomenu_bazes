@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LdapUser users administration{% endblock %}
+
+{% block body %}
+    <h1>LdapUser</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ldap_user.id }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %} Name {% endtrans %}</th>
+                <td>{{ ldap_user.name }}</td>
+            </tr>
+            <tr>
+                <th>UnitId</th>
+                <td>{{ ldap_user.Unit.unitId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ldap_user_index') }}">back to list</a>
+
+    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">edit</a>
+
+    {{ include('ldap_user/_delete_form.html.twig') }}
+{% endblock %}

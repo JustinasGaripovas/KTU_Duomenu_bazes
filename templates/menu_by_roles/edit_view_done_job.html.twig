@@ -1,0 +1,16 @@
+{% if is_granted('ROLE_ADMIN') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+<a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+{% elseif is_granted('ROLE_SUPER_VIEWER') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+{% elseif is_granted('ROLE_UNIT_VIEWER') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+{% elseif is_granted('ROLE_SUPER_MASTER') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+<a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+{% elseif is_granted('ROLE_ROAD_MASTER') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+<a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+{% elseif is_granted('ROLE_WORKER') %}
+<a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
+{% endif %}

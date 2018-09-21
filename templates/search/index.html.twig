@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>jQuery UI Autocomplete - Remote datasource</title>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/resources/demos/style.css">
+        <style>
+            .ui-autocomplete-loading {
+                background: white url({{ asset('images/loading.gif') }}) right center no-repeat;
+                background-size: 2px 2px;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $( function() {
+                function log( message ) {
+                    $( "<div>" ).text( message ).prependTo( "#log" );
+                    $( "#log" ).scrollTop( 0 );
+                }
+
+                $( "#birds" ).autocomplete({
+                    source: "{{ path('search') }}",
+                    minLength: 3,
+                    delay: 500,
+                    select: function( event, ui ) {
+                        console.log(event);
+                    }
+                });
+
+                $("#button1").click(function(){
+                    alert($('#birds').val());
+                });
+            });
+        </script>
+    </head>
+    <body>
+
+    <div class="ui-widget">
+        <label for="birds">Birds: </label>
+        <input id="birds">
+    </div>
+
+    <input id="button1" type="button" name="test" value="test">
+
+
+
+
+    </body>
+    </html>
+{% endblock %}

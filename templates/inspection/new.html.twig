@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}New Inspection{% endblock %}
+
+{% block body %}
+
+    <h1>{% trans %}Create new Inspection{% endtrans %}</h1>
+
+    {{ include('inspection/_form.html.twig') }}
+
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('inspection_index') }}">{% trans %}back to list{% endtrans %}</a>
+{% endblock %}

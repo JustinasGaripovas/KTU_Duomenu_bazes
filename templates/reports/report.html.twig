@@ -1,0 +1,70 @@
+{% trans_default_domain 'translation' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <script src="{{ asset('css/style.css') }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        @media print {
+            .print_a {
+                overflow: visible !important;
+            }
+        }
+        thead { display: table-header-group; }
+        tr{page-break-inside: avoid !important;}
+    </style>
+</head>
+        <div class="print_a">
+            <table style="text-align: center; vertical-align: middle" class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Įrašo nr.</th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">Data</th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2">Oro sąlygos (pildoma tik žiemą)</th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" rowspan="2">Darbų vieta (kelio Nr., km)</th>
+                    <th style="text-align: center; vertical-align: middle" colspan="3"><br>Darbų<br></th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" rowspan="2"> {% trans %} Unit of {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle" rowspan="2">{% trans %} Quantity {% endtrans %}</th>
+                    <th style="width: 150px; text-align: center; vertical-align: middle" rowspan="2">Užpildžiusio asmens pavardė, parašas</th>
+                    <th style="font-size: smaller ;width: 200px; text-align: center; vertical-align: middle" rowspan="2">Techninę kontrolę atliekančių asmenų pastabos ir nurodymai <p style="font-size: x-small">(data, pareigos, parašas, pavardė)</p></th>
+                </tr>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle">Grupė</th>
+                    <th style="text-align: center; vertical-align: middle">Šifras</th>
+                    <th style="width:200px;text-align: center; vertical-align: middle">Aprašymas</th>
+                </tr>
+
+                </thead>
+                <tbody style="font-size: small">
+                {% for done_job in report | default ('') %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                    <td style="text-align: center; vertical-align: middle"></td>
+                    <td style="text-align: center; vertical-align: middle; white-space: nowrap">{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                    <td></td>
+                    <td style="text-align: center; vertical-align: middle"> {{ done_job.SectionId }} <br>({{ done_job.RoadSectionBegin }}-{{ done_job.RoadSectionEnd }} ) </td>
+                    <td style="text-align: center; vertical-align: middle"> </td>
+                    <td style="text-align: center; vertical-align: middle">{{ done_job.JobId }} </td>
+                    <td style="font-size: small;text-align: center; vertical-align: middle">{{ done_job.JobName }}</td>
+                    <td style="text-align: center; vertical-align: middle"> {{ done_job.UnitOf }} </td>
+                    <td style="text-align: center; vertical-align: middle"> {{ done_job.Quantity }}</td>
+                    <td style="text-align: center; vertical-align: middle"></td>
+                    <td style="text-align: center; vertical-align: middle"></td>
+                {% else %}
+                    <tr>
+                        <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            ________________________________________________________________________________________________________________
+        </div>

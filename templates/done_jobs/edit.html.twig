@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %} {{ done_job.jobId }}{% endblock %}
+
+{% block body %}
+    <h2>{{ done_job.jobId }}</h2>
+
+    <script>
+        $( function() {
+            function log( message ) {
+                $( "<div>" ).text( message ).prependTo( "#log" );
+                $( "#log" ).scrollTop( 0 );
+            }
+            var job_id = '';
+            $( "#done_jobs_JobNamee" ).autocomplete({
+                source: "{{ path('search') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_JobId').val(ui.item.job_id),
+                        $('#done_jobs_JobName').val(ui.item.job_name),
+                        $('#done_jobs_UnitOf').val(ui.item.unit_of),
+                        $('#done_jobs_UnitOfLabel').val(ui.item.unit_of)
+                }
+            });
+            $( "#done_jobs_RoadSection" ).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#done_jobs_RoadSectionBegin').val(ui.item.section_begin),
+                        $('#done_jobs_RoadSectionEnd').val(ui.item.section_end),
+                        $('#done_jobs_roadLevel').val(ui.item.road_level),
+                        $('#done_jobs_sectionId').val(ui.item.section_id)
+                },
+            });
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
+    {{ include('done_jobs/_form.html.twig', {'button_label': 'Update'|trans }) }}
+    {{ include('done_jobs/_delete_form.html.twig') }}
+    <a class="btn btn-info btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
+{% endblock %}

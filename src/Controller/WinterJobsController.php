@@ -8,6 +8,7 @@ use App\Form\WinterJobsType;
 use App\Repository\ChoicesRepository;
 use App\Repository\LdapUserRepository;
 use App\Repository\MechanismRepository;
+use App\Repository\RoadSectionRepository;
 use App\Repository\WinterJobsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +36,7 @@ class WinterJobsController extends Controller
     /**
      * @Route("/new", name="winter_jobs_new", methods="GET|POST")
      */
-    public function new(ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository,Request $request): Response
+    public function new(ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository, RoadSectionRepository $roadSectionRepository,Request $request): Response
     {
         $username = $this->getUser()->getUserName();
         $subunitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
@@ -61,42 +62,30 @@ class WinterJobsController extends Controller
         $winterJob->setCreatedBy($this->getUser()->getUserName());
         $winterJob->setCreatedAt(new \DateTime("now"));
 
-        $roadSec = new RoadSection();
-        $roadSec->setLevel(0);
-        $roadSec->setSectionBegin(-1);
-        $roadSec->setSectionEnd(-1);
-        $roadSec->setSectionName("TEST");
-
-        $winterJob->addRoadSection($roadSec);
+        foreach ($winterJob->getRoadSections() as $rs)
+        {
+            $originalRS = $rs;
+        }
 
 
         $form = $this->createForm(WinterJobsType::class, $winterJob, ['mechanism_choices' => $choicesArray, 'jobs_choices' => $choiceArrayForJobs ]);
         $form->handleRequest($request);
 
-        dump($form->createView());
-
 
         if ($form->isSubmitted()) {
-            dump($winterJob);
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($winterJob->getRoadSections() as $rs)
+            {
+                if (in_array($rs,$winterJob->getRoadSections()) === false) {
+                    $em->remove($rs);
+                }
+            }
+
             dump($winterJob->getRoadSections());
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($winterJob);
             $em->flush();
-        }
-
-        return $this->render('winter_jobs/new.html.twig', [
-            'winter_job' => $winterJob,
-            'form' => $form->createView(),
-        ]);
-
-        die;
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($winterJob);
-            $em->flush();
-            return $this->redirectToRoute('winter_jobs_index');
         }
 
         return $this->render('winter_jobs/new.html.twig', [

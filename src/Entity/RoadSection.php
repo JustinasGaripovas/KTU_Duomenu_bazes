@@ -43,6 +43,10 @@ class RoadSection
      */
     private $level;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RoadSectionSearch;
 
     public function getId()
     {
@@ -117,6 +121,18 @@ class RoadSection
     public function setLevel(int $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getRoadSectionSearch(): ?string
+    {
+        return $this->RoadSectionSearch;
+    }
+
+    public function setRoadSectionSearch(?string $RoadSectionSearch): self
+    {
+        $this->RoadSectionSearch = $RoadSectionSearch;
 
         return $this;
     }

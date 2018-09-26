@@ -179,7 +179,6 @@ class InsuredEventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $insuredEvent->setIsInsuredType(true);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('uninsured_event_index');

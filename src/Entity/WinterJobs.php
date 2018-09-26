@@ -34,21 +34,6 @@ class WinterJobs
     private $Mechanism;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $RoadSection;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $SectionBegin;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $SectionEnd;
-
-    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $Salt;
@@ -84,16 +69,6 @@ class WinterJobs
     private $Job;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $RoadName;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $RoadSectionSearch;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $SaltChecked;
@@ -119,11 +94,6 @@ class WinterJobs
     private $CreatedBy;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $MaintenanceLevel;
-
-    /**
      * @ORM\Column(type="array")
      */
     private $RoadSections = [];
@@ -132,6 +102,16 @@ class WinterJobs
     {
         $this->RoadSections[] = $additionalSection;
         return $this->RoadSections;
+    }
+
+    public function getRoadSectionsStringArray()
+    {
+        $str = array();
+        foreach ($this->RoadSections as $road)
+        {
+            $str[] = $road->getSectionId() . " ( ". $road->getSectionBegin() . "km -> " . $road->getSectionEnd() . "km )";
+        }
+        return $str;
     }
 
     public function getRoadSections(): ?array
@@ -183,42 +163,6 @@ class WinterJobs
     public function setMechanism(string $Mechanism): self
     {
         $this->Mechanism = $Mechanism;
-
-        return $this;
-    }
-
-    public function getRoadSection(): ?string
-    {
-        return $this->RoadSection;
-    }
-
-    public function setRoadSection(string $RoadSection): self
-    {
-        $this->RoadSection = $RoadSection;
-
-        return $this;
-    }
-
-    public function getSectionBegin(): ?float
-    {
-        return $this->SectionBegin;
-    }
-
-    public function setSectionBegin(float $SectionBegin): self
-    {
-        $this->SectionBegin = $SectionBegin;
-
-        return $this;
-    }
-
-    public function getSectionEnd(): ?float
-    {
-        return $this->SectionEnd;
-    }
-
-    public function setSectionEnd(float $SectionEnd): self
-    {
-        $this->SectionEnd = $SectionEnd;
 
         return $this;
     }
@@ -307,23 +251,6 @@ class WinterJobs
         return $this;
     }
 
-    public function getRoadName(): ?string
-    {
-        return $this->RoadName;
-    }
-
-    public function setRoadName(string $RoadName): self
-    {
-        $this->RoadName = $RoadName;
-
-        return $this;
-    }
-
-    public function getRoadSectionSearch(): ?string
-    {
-        return $this->RoadSectionSearch;
-    }
-
     public function setRoadSectionSearch(string $RoadSectionSearch): self
     {
         $this->RoadSectionSearch = $RoadSectionSearch;
@@ -387,18 +314,6 @@ class WinterJobs
     public function setCreatedBy(string $CreatedBy): self
     {
         $this->CreatedBy = $CreatedBy;
-
-        return $this;
-    }
-
-    public function getMaintenanceLevel(): ?int
-    {
-        return $this->MaintenanceLevel;
-    }
-
-    public function setMaintenanceLevel(int $MaintenanceLevel): self
-    {
-        $this->MaintenanceLevel = $MaintenanceLevel;
 
         return $this;
     }

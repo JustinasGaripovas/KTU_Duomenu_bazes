@@ -86,6 +86,16 @@ class InsuredEvent
      */
     private $isInsuredType;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RoadSearch;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RoadSectionSearch;
+
     public function getId()
     {
         return $this->id;
@@ -255,6 +265,30 @@ class InsuredEvent
     public function setIsInsuredType(bool $isInsuredType): self
     {
         $this->isInsuredType = $isInsuredType;
+
+        return $this;
+    }
+
+    public function getRoadSearch(): ?string
+    {
+        return $this->RoadSearch;
+    }
+
+    public function setRoadSearch(?string $RoadSearch): self
+    {
+        $this->RoadSearch = $RoadSearch;
+
+        return $this;
+    }
+
+    public function getRoadSectionSearch(): ?string
+    {
+        return $this->RoadSectionSearch;
+    }
+
+    public function setRoadSectionSearch(?string $RoadSectionSearch): self
+    {
+        $this->RoadSectionSearch = $RoadSectionSearch;
 
         return $this;
     }

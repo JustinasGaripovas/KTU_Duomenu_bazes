@@ -13,8 +13,6 @@
                 <th>{% trans %} Mechanism {% endtrans %}</th>
                 <th>{% trans %} Job {% endtrans %}</th>
                 <th>{% trans %} RoadSection {% endtrans %}</th>
-                <th>{% trans %} SectionBegin {% endtrans %}</th>
-                <th>{% trans %} SectionEnd {% endtrans %}</th>
                 <th>{% trans %} Salt {% endtrans %}</th>
                 <th>{% trans %} Sand {% endtrans %}</th>
                 <th>{% trans %} Mix {% endtrans %}</th>
@@ -29,9 +27,7 @@
                 <td>{{ winter_job.Subunit }}</td>
                 <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
                 <td>{{ winter_job.Job }}</td>
-                <td>{{ winter_job.RoadSection }}</td>
-                <td>{{ winter_job.SectionBegin }}</td>
-                <td>{{ winter_job.SectionEnd }}</td>
+                <td>{{ winter_job.getRoadSectionsStringArray| join('\n')| nl2br }}</td>
                 <td>{{ winter_job.Salt }}</td>
                 <td>{{ winter_job.Sand }}</td>
                 <td>{{ winter_job.Mix }}</td>

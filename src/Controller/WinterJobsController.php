@@ -82,10 +82,11 @@ class WinterJobsController extends Controller
                 }
             }
 
-            dump($winterJob->getRoadSections());
-
             $em->persist($winterJob);
             $em->flush();
+
+            return $this->redirectToRoute('winter_jobs_index');
+
         }
 
         return $this->render('winter_jobs/new.html.twig', [
@@ -131,9 +132,19 @@ class WinterJobsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('winter_jobs_edit', ['id' => $winterJob->getId()]);
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($winterJob->getRoadSections() as $rs)
+            {
+                if (in_array($rs,$winterJob->getRoadSections()) === false) {
+                    $em->remove($rs);
+                }
+            }
+
+            $em->flush();
+
+            return $this->redirectToRoute('winter_jobs_index');
         }
 
         return $this->render('winter_jobs/edit.html.twig', [

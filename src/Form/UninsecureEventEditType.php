@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\InsuredEvent;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,9 +17,7 @@ class UninsecureEventEditType extends AbstractType
     {
         $builder
             ->add('Subunit')
-            ->add('RoadSearch', null, array(
-                'mapped' => false
-            ))
+            ->add('RoadSectionSearch', null)
             ->add('RoadId', HiddenType::class)
             ->add('RoadName', HiddenType::class)
             ->add('SectionBegin')
@@ -31,7 +30,29 @@ class UninsecureEventEditType extends AbstractType
                     'class' => 'js-datepicker',
                     'autocomplete'=>'off'
                 ]
+            ))
+            ->add('IsInsuredType',ChoiceType::class, array(
+                'required' => true,
+                'expanded' => true,
+                'choices' => array(
+                    'Draudiminis' => 1,
+                    'Nedraudiminis' => 0,
+                ),
+                'label' => 'Ar tai draudiminis įvykis',
+            ))
+            ->add('Documents', null)
+            ->add('EstimateToCompany', null)
+            ->add('InsurensCompany', null)
+            ->add('NumberOfDamage', null)
+            ->add('DamageData', DateType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'js-datepicker',
+                    'autocomplete' => 'off'
+                ]
             ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

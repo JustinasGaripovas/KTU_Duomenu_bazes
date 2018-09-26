@@ -4,26 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php" line="89" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/InsuredEventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/InsuredEventController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/InsuredEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/InsuredEvent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/RoadSection.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RoadSection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/WinterJobs.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/WinterJobs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/InsuredEventType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/InsuredEventType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RoadSectionForWinterType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RoadSectionForWinterType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/UninsecureEventEditType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/UninsecureEventEditType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/WinterJobsType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobsType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/insured_event/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/insured_event/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/insured_event/editUninsured.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/insured_event/editUninsured.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/insured_event/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/insured_event/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/insured_event/newUninsured.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/insured_event/newUninsured.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/new.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +144,7 @@
           <entry key="js" value="4" />
           <entry key="json" value="2" />
           <entry key="md" value="1" />
-          <entry key="php" value="40" />
+          <entry key="php" value="41" />
           <entry key="rnc" value="1" />
           <entry key="twig" value="36" />
           <entry key="yml" value="2" />
@@ -176,7 +157,7 @@
           <entry key="JSON" value="2" />
           <entry key="JavaScript" value="4" />
           <entry key="Markdown" value="1" />
-          <entry key="PHP" value="40" />
+          <entry key="PHP" value="41" />
           <entry key="RNG Compact" value="1" />
           <entry key="Twig" value="36" />
           <entry key="YAML" value="2" />
@@ -186,11 +167,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="70" column="115" selection-start-line="70" selection-start-column="115" selection-end-line="70" selection-end-column="115" />
+            <state relative-caret-position="367">
+              <caret line="81" column="17" lean-forward="true" selection-start-line="81" selection-start-column="17" selection-end-line="81" selection-end-column="17" />
               <folding>
                 <element signature="e#5670#5698#0#PHP" expanded="true" />
               </folding>
@@ -198,15 +179,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="275">
-              <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+              <caret line="83" selection-start-line="83" selection-end-line="83" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="49" column="53" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -252,15 +242,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
               <caret line="34" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/insured_event/editUninsured.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="48" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -673,7 +654,7 @@
       <workItem from="1537865074589" duration="599000" />
       <workItem from="1537881286265" duration="17000" />
       <workItem from="1537905854621" duration="18000" />
-      <workItem from="1537945926292" duration="6458000" />
+      <workItem from="1537945926292" duration="6717000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -686,7 +667,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64924000" />
+    <option name="totallyTimeSpent" value="65183000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -701,7 +682,7 @@
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08899945" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23383084" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -719,7 +700,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Database" order="3" visible="true" weight="0.18463239" />
+      <window_info anchor="right" id="Database" order="3" visible="true" weight="0.18463239" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,13 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="49" column="53" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="53" />
         </state>
       </provider>
     </entry>
@@ -995,16 +969,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="70" column="115" selection-start-line="70" selection-start-column="115" selection-end-line="70" selection-end-column="115" />
-          <folding>
-            <element signature="e#5670#5698#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/insured_event/newUninsured.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1053,10 +1017,27 @@
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
-          <caret line="83" lean-forward="true" selection-start-line="83" selection-end-line="83" />
+          <caret line="83" selection-start-line="83" selection-end-line="83" />
           <folding>
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="49" column="53" selection-start-line="49" selection-start-column="53" selection-end-line="49" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="81" column="17" lean-forward="true" selection-start-line="81" selection-start-column="17" selection-end-line="81" selection-end-column="17" />
+          <folding>
+            <element signature="e#5670#5698#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

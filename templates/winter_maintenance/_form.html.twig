@@ -1,4 +1,147 @@
+<script>
+    $(document).ready(function () {
+        $('#winter_maintenance_M1').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-highway').style.display = "block"
+               // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-highway').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_M2').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-highway2').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-highway2').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_M3').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-highway3').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-highway3').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_K1').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-local').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-local').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_K2').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-local2').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-local2').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_K3').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-local3').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-local3').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_R1').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-district').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-district').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_R2').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-district2').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-district2').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+        $('#winter_maintenance_R3').click(function () {
+            if(this.checked){
+                document.getElementById('salt road-condition-district3').style.display = "block"
+                // $('#road-condition-highway').slideDown(500)
+            }
+            else {
+                document.getElementById('salt road-condition-district3').style.display = "none"
+                //$('#road-condition-highway').slideUp(200)
+            }
+        })
+    })
+
+</script>
+
 {{ form_start(form) }}
+<div class="row">
+    {{ form_row(form.M1) }}
+    {{ form_row(form.M2) }}
+    {{ form_row(form.M3) }}
+    {{ form_row(form.K1) }}
+    {{ form_row(form.K2) }}
+    {{ form_row(form.K3) }}
+    {{ form_row(form.R1) }}
+    {{ form_row(form.R2) }}
+    {{ form_row(form.R3) }}
+</div>
+<div class="row" style="background: whitesmoke">
+    <div id="salt road-condition-highway" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionHighway) }}
+    </div>
+    <div id="salt road-condition-highway2" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionHighway2) }}
+    </div>
+    <div id="salt road-condition-highway3" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionHighway3) }}
+    </div>
+</div>
+
+<div class="row" style="background: floralwhite">
+    <div id="salt road-condition-local" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionLocal) }}
+    </div>
+    <div id="salt road-condition-local2" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionLocal2) }}
+    </div>
+    <div id="salt road-condition-local3" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionLocal3) }}
+    </div>
+</div>
+
+<div class="row" style="background: whitesmoke">
+    <div id="salt road-condition-district" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionDistrict) }}
+    </div>
+    <div id="salt road-condition-district2" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionDistrict2) }}
+    </div>
+    <div id="salt road-condition-district3" style="display: none" class="col-sm">
+        {{ form_row(form.RoadConditionDistrict3) }}
+    </div>
+</div>
+
     {{ form_widget(form) }}
     <button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>
 {{ form_end(form) }}

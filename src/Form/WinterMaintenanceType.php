@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\WinterMaintenance;
 use App\Repository\ChoicesRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,16 +37,68 @@ class WinterMaintenanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('M1', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('M2', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('M3', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('K1', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('K2', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('K3', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('R1', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('R2', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
+            ->add('R3', CheckboxType::class, array(
+                'mapped' =>false,
+                'required' => false
+            ))
             ->add('reportFor', ChoiceType::class, array(
                 'choices' => array(
-                    '6:00' => '6:00',
-                    '9:00' => '9:00',
-                    '13:00' => '13:00',
-                    '16:00' => '16:00'
+                    '6:00 - 5:45' => '6:00',
+                    '9:00 - 8:45' => '9:00',
+                    '13:00 - 12:45' => '13:00',
+                    '16:00 - 15:45' => '16:00'
                 )
             ))
             ->add('Subunit', HiddenType::class)
             ->add('RoadConditionHighway', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
+            ->add('RoadConditionHighway2', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
+            ->add('RoadConditionHighway3', ChoiceType::class, array(
                 'choices' => $this->createArrayWithArrayKeys(1),
                 'multiple' => true,
                 'expanded' => true,
@@ -61,7 +114,39 @@ class WinterMaintenanceType extends AbstractType
                     'class' => 'form-inline',
                 ]
             ))
+            ->add('RoadConditionLocal2', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
+            ->add('RoadConditionLocal3', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
             ->add('RoadConditionDistrict', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
+            ->add('RoadConditionDistrict2', ChoiceType::class, array(
+                'choices' => $this->createArrayWithArrayKeys(1),
+                'multiple' => true,
+                'expanded' => true,
+                'attr' => [
+                    'class' => 'form-inline',
+                ]
+            ))
+            ->add('RoadConditionDistrict3', ChoiceType::class, array(
                 'choices' => $this->createArrayWithArrayKeys(1),
                 'multiple' => true,
                 'expanded' => true,

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WinterJobRoads index{% endblock %}
+
+{% block body %}
+    <h1>WinterJobRoads index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>SectionId</th>
+                <th>SectionName</th>
+                <th>SectionBegin</th>
+                <th>SectionEnd</th>
+                <th>FullSectionName</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winter_job_road in winter_job_roads %}
+            <tr>
+                <td>{{ winter_job_road.id }}</td>
+                <td>{{ winter_job_road.SectionId }}</td>
+                <td>{{ winter_job_road.SectionName }}</td>
+                <td>{{ winter_job_road.SectionBegin }}</td>
+                <td>{{ winter_job_road.SectionEnd }}</td>
+                <td>{{ winter_job_road.FullSectionName }}</td>
+                <td>
+                    <a href="{{ path('winter_job_roads_show', {'id': winter_job_road.id}) }}">show</a>
+                    <a href="{{ path('winter_job_roads_edit', {'id': winter_job_road.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('winter_job_roads_new') }}">Create new</a>
+{% endblock %}

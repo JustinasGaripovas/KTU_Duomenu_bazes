@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for winter_job in winter_jobs %}
+        {% for winter_job in winter_jobs | default ('') %}
             <tr>
                 <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ winter_job.Subunit }}</td>

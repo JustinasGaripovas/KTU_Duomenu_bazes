@@ -81,6 +81,36 @@ class WinterMaintenance
      */
     private $ReportFor;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionHighway2;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionHighway3;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionLocal2;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionLocal3;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionDistrict2;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $RoadConditionDistrict3;
+
 
     public function getId()
     {
@@ -228,6 +258,78 @@ class WinterMaintenance
     public function setReportFor(string $ReportFor): self
     {
         $this->ReportFor = $ReportFor;
+
+        return $this;
+    }
+
+    public function getRoadConditionHighway2(): ?array
+    {
+        return $this->RoadConditionHighway2;
+    }
+
+    public function setRoadConditionHighway2(?array $RoadConditionHighway2): self
+    {
+        $this->RoadConditionHighway2 = $RoadConditionHighway2;
+
+        return $this;
+    }
+
+    public function getRoadConditionHighway3(): ?array
+    {
+        return $this->RoadConditionHighway3;
+    }
+
+    public function setRoadConditionHighway3(?array $RoadConditionHighway3): self
+    {
+        $this->RoadConditionHighway3 = $RoadConditionHighway3;
+
+        return $this;
+    }
+
+    public function getRoadConditionLocal2(): ?array
+    {
+        return $this->RoadConditionLocal2;
+    }
+
+    public function setRoadConditionLocal2(?array $RoadConditionLocal2): self
+    {
+        $this->RoadConditionLocal2 = $RoadConditionLocal2;
+
+        return $this;
+    }
+
+    public function getRoadConditionLocal3(): ?array
+    {
+        return $this->RoadConditionLocal3;
+    }
+
+    public function setRoadConditionLocal3(?array $RoadConditionLocal3): self
+    {
+        $this->RoadConditionLocal3 = $RoadConditionLocal3;
+
+        return $this;
+    }
+
+    public function getRoadConditionDistrict2(): ?array
+    {
+        return $this->RoadConditionDistrict2;
+    }
+
+    public function setRoadConditionDistrict2(?array $RoadConditionDistrict2): self
+    {
+        $this->RoadConditionDistrict2 = $RoadConditionDistrict2;
+
+        return $this;
+    }
+
+    public function getRoadConditionDistrict3(): ?array
+    {
+        return $this->RoadConditionDistrict3;
+    }
+
+    public function setRoadConditionDistrict3(?array $RoadConditionDistrict3): self
+    {
+        $this->RoadConditionDistrict3 = $RoadConditionDistrict3;
 
         return $this;
     }

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WinterJobRoads{% endblock %}
+
+{% block body %}
+    <h1>WinterJobRoads</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ winter_job_road.id }}</td>
+            </tr>
+            <tr>
+                <th>SectionId</th>
+                <td>{{ winter_job_road.SectionId }}</td>
+            </tr>
+            <tr>
+                <th>SectionName</th>
+                <td>{{ winter_job_road.SectionName }}</td>
+            </tr>
+            <tr>
+                <th>SectionBegin</th>
+                <td>{{ winter_job_road.SectionBegin }}</td>
+            </tr>
+            <tr>
+                <th>SectionEnd</th>
+                <td>{{ winter_job_road.SectionEnd }}</td>
+            </tr>
+            <tr>
+                <th>FullSectionName</th>
+                <td>{{ winter_job_road.FullSectionName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('winter_job_roads_index') }}">back to list</a>
+
+    <a href="{{ path('winter_job_roads_edit', {'id': winter_job_road.id}) }}">edit</a>
+
+    {{ include('winter_job_roads/_delete_form.html.twig') }}
+{% endblock %}

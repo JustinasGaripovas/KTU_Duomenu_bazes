@@ -729,7 +729,7 @@ class ReportsController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('ziemos_ataskaita_LAKD_1.xlsx');
+                $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
 // Set document properties
                 $index = 6;
 
@@ -738,6 +738,7 @@ class ReportsController extends Controller
                 foreach ($report as $rep) {
 
                     $weather = '';
+                    $spreadsheet->getActiveSheet()->setCellValue('H1', 'Data: '. $dateNow->format('Y-m-d').' '. 'Laikas: ' . $rep->getReportFor().' val.' );
                     $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $this->getRegionBySubunitId($rep->getSubunit()));
                     $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $this->getSubunitNameById($rep->getSubunit()));
                     $highway = join(',', $rep->getRoadConditionHighway());

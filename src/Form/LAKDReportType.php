@@ -22,10 +22,10 @@ class LAKDReportType extends AbstractType
             ))
             ->add('reportFor', ChoiceType::class, array(
                 'choices' => array(
-                    '6:00' => '6:00',
-                    '9:00' => '9:00',
-                    '13:00' => '13:00',
-                    '16:00' => '16:00'
+                    '5:45' => '5:45',
+                    '8:45' => '8:45',
+                    '12:45' => '12:45',
+                    '15:45' => '15:45'
                 )
             ))
             ->add('Preview', SubmitType::class,array(

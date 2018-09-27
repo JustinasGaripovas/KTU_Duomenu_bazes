@@ -112,15 +112,21 @@ Road condition: Kelio būklė
 Wave size: Bangos dydis (cm.)
 Type: Tipas
 Report for: Pranešimo laikas
-Road condition highway: Kelių būklė magistraliniuose
+Road condition highway: Kelių būklė magistraliniuose (M1)
+Road condition highway2: Kelių būklė magistraliniuose (M2)
+Road condition highway3: Kelių būklė magistraliniuose (M3)
 Weather: Oro sąlygos
 Traffic changes: Eismo pasikeitimai
-Blocked roads: Nepravažiuojami keliai
+Blocked roads: Nepravažiuojami keliai (Kelio nr. ir km.)
 Other events: Kiti įvykiai
 Road condition score: Kelių būklės vertinimas
-Road condition local: Kelių būklė krašto
-Road condition district: Kelių būklė rajoniniuose
-Mechanism: Mechanizmas
+Road condition local: Kelių būklė krašto (K1)
+Road condition local2: Kelių būklė krašto (K2)
+Road condition local3: Kelių būklė krašto (K3)
+Road condition district: Kelių būklė rajoniniuose (R1)
+Road condition district2: Kelių būklė rajoniniuose (R2)
+Road condition district3: Kelių būklė rajoniniuose (R3)
+Mechanism: Mechanizmų kiekies (darbas)
 Winter Maintenance New: Informacija LAKD (Naujas įrašas)
 Winter Maintenance List: Informacija LAKD (Sąrašas)
 Winter Maintenance: Žiemos priežiūra

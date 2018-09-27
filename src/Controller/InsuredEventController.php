@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\InsuredEvent;
 use App\Form\InsuredEventType;
 use App\Form\InsuredEventTypeEdit;
-use App\Form\UninsecureEventEditType;
 use App\Repository\InsuredEventRepository;
 use App\Repository\LdapUserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -92,7 +91,7 @@ class InsuredEventController extends Controller
         $subUnitName = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getName();
         $insuredEvent = new InsuredEvent();
         $insuredEvent->setSubunit($subUnitName);
-        $form = $this->createForm(UninsecureEventEditType::class, $insuredEvent);
+        $form = $this->createForm(InsuredEventType::class, $insuredEvent);
 
 
         $form->handleRequest($request);
@@ -100,8 +99,6 @@ class InsuredEventController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-
-            $insuredEvent->setIsInsuredType(0);
 
             $em->persist($insuredEvent);
             $em->flush();
@@ -129,7 +126,6 @@ class InsuredEventController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $insuredEvent->setIsInsuredType(1);
             $em->persist($insuredEvent);
             $em->flush();
 

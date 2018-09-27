@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,26 +32,6 @@ class WinterJobs
     private $Mechanism;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $Salt;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $Sand;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $Mix;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $Solution;
-
-    /**
      * @ORM\Column(type="time")
      */
     private $TimeFrom;
@@ -68,25 +46,6 @@ class WinterJobs
      */
     private $Job;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $SaltChecked;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $SandChecked;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $MixChecked;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $SolutionChecked;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -95,6 +54,7 @@ class WinterJobs
 
     /**
      * @ORM\Column(type="array")
+     * cascade={"persist"}
      */
     private $RoadSections = [];
 
@@ -107,9 +67,63 @@ class WinterJobs
     public function getRoadSectionsStringArray()
     {
         $str = array();
+
+
         foreach ($this->RoadSections as $road)
         {
             $str[] = $road->getSectionId() . " ( ". $road->getSectionBegin() . "km -> " . $road->getSectionEnd() . "km )";
+        }
+        return $str;
+    }
+
+    public function getRoadSectionsSalt()
+    {
+        $str = array();
+        foreach ($this->RoadSections as $road )
+        {
+            if($road->getSaltValue()  === null)
+            {
+                $str[] = " ";
+
+            }else{
+                $str[] = $road->getSaltValue();
+
+            }
+        }
+
+        return $str;
+    }
+
+    public function getRoadSectionsSand()
+    {
+        $str = array();
+        foreach ($this->RoadSections as $road)
+        {
+            if($road->getSandValue() === null)
+            {
+                $str[] = " ";
+
+            }else{
+                $str[] = $road->getSandValue();
+
+            }
+        }
+        return $str;
+    }
+
+    public function getRoadSectionsSolution()
+    {
+        $str = array();
+        foreach ($this->RoadSections as $road)
+        {
+            if($road->getSolutionValue() === null)
+            {
+                $str[] = " ";
+
+            }else{
+                $str[] = $road->getSolutionValue();
+
+            }
         }
         return $str;
     }
@@ -119,8 +133,17 @@ class WinterJobs
         return $this->RoadSections;
     }
 
+    public function getRoadSectionsIndex($index)
+    {
+        return $this->RoadSections[$index];
+    }
+
     public function setRoadSections(array $RoadSections): self
     {
+        if (!empty($RoadSections) && $RoadSections === $this->RoadSections) {
+            reset($RoadSections);
+            $RoadSections[key($RoadSections)] = clone current($RoadSections);
+        }
         $this->RoadSections = $RoadSections;
 
         return $this;
@@ -167,54 +190,6 @@ class WinterJobs
         return $this;
     }
 
-    public function getSalt(): ?float
-    {
-        return $this->Salt;
-    }
-
-    public function setSalt(?float $Salt): self
-    {
-        $this->Salt = $Salt;
-
-        return $this;
-    }
-
-    public function getSand(): ?float
-    {
-        return $this->Sand;
-    }
-
-    public function setSand(?float $Sand): self
-    {
-        $this->Sand = $Sand;
-
-        return $this;
-    }
-
-    public function getMix(): ?float
-    {
-        return $this->Mix;
-    }
-
-    public function setMix(?float $Mix): self
-    {
-        $this->Mix = $Mix;
-
-        return $this;
-    }
-
-    public function getSolution(): ?float
-    {
-        return $this->Solution;
-    }
-
-    public function setSolution(?float $Solution): self
-    {
-        $this->Solution = $Solution;
-
-        return $this;
-    }
-
     public function getTimeFrom(): ?\DateTimeInterface
     {
         return $this->TimeFrom;
@@ -254,54 +229,6 @@ class WinterJobs
     public function setRoadSectionSearch(string $RoadSectionSearch): self
     {
         $this->RoadSectionSearch = $RoadSectionSearch;
-
-        return $this;
-    }
-
-    public function getSaltChecked(): ?bool
-    {
-        return $this->SaltChecked;
-    }
-
-    public function setSaltChecked(?bool $SaltChecked): self
-    {
-        $this->SaltChecked = $SaltChecked;
-
-        return $this;
-    }
-
-    public function getSandChecked(): ?bool
-    {
-        return $this->SandChecked;
-    }
-
-    public function setSandChecked(?bool $SandChecked): self
-    {
-        $this->SandChecked = $SandChecked;
-
-        return $this;
-    }
-
-    public function getMixChecked(): ?bool
-    {
-        return $this->MixChecked;
-    }
-
-    public function setMixChecked(?bool $MixChecked): self
-    {
-        $this->MixChecked = $MixChecked;
-
-        return $this;
-    }
-
-    public function getSolutionChecked(): ?bool
-    {
-        return $this->SolutionChecked;
-    }
-
-    public function setSolutionChecked(bool $SolutionChecked): self
-    {
-        $this->SolutionChecked = $SolutionChecked;
 
         return $this;
     }

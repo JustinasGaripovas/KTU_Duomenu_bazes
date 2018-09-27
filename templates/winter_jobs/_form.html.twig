@@ -58,11 +58,12 @@
         // create the panel
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
-            '<div class="panel col-3">' +
+            '<div class="panel col-sm-6 col-md-3">' +
                 '<div class="panel-heading text-center">' +
                     '<strong>New Road</strong>' +
                 '</div>' +
             '</div>');
+
         // create the panel-body and append the form to it
         var $panelBody = $('<div class="panel-body" style="margin-bottom: 32px;"></div>').append(newForm);
         // append the body to the panel
@@ -75,32 +76,6 @@
 
         refreshAutocorrect();
 
-    }
-
-    function refreshAutocorrect() {
-        $('#road_section_list').find('.panel').each(function () {
-
-            var sectionSearch = $(this).find('[id*=_RoadSectionSearch]').attr('id');
-
-            var sectionId = $(this).find('[id*=_SectionId]').attr('id');
-            var sectionName = $(this).find('[id*=_SectionName]').attr('id');
-            var sectionBegin = $(this).find('[id*=_SectionBegin]').attr('id');
-            var sectionEnd = $(this).find('[id*=_SectionEnd]').attr('id');
-
-
-            $('#'+sectionSearch).autocomplete({
-                source: "{{ path('search/road') }}",
-                minLength: 2,
-                delay: 500,
-                select: function( event, ui ) {
-                    $('#'+sectionId).val(ui.item.section_id),
-                        $('#'+sectionName).val(ui.item.road_name),
-                        $('#'+sectionBegin).val(ui.item.section_begin),
-                        $('#'+sectionEnd).val(ui.item.section_end)
-                },
-            });
-            $( ".js-datepicker" ).datepicker();
-        });
     }
 
     /**
@@ -125,83 +100,127 @@
         });
         // append the footer to the panel
         $panel.append($panelFooter);
+    }
 
+    function refreshAutocorrect() {
+        $('#road_section_list').find('.panel').each(function () {
+
+            var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
+            var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
+            var Sand =              $(this).find('[id*=_SandValue]').attr('id');
+            var SandChecked =       $(this).find('[id*=_SandChecked]').attr('id');
+            var Solution =          $(this).find('[id*=_SolutionValue]').attr('id');
+            var SolutionChecked =   $(this).find('[id*=_SolutionChecked]').attr('id');
+
+            var sectionSearch =     $(this).find('[id*=_RoadSectionSearch]').attr('id');
+            var sectionId =         $(this).find('[id*=_SectionId]').attr('id');
+            var sectionName =       $(this).find('[id*=_SectionName]').attr('id');
+            var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
+            var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
+
+            if($('#'+SaltChecked).prop('checked'))
+            {
+                $('#'+Salt).css('display', 'inline');
+                $('label[for='+Salt+']').css('display', 'inline');
+            }else{
+                $('#'+Salt).css('display', 'none');
+                $('label[for='+Salt+']').css('display', 'none');
+            }
+
+            if($('#'+SandChecked).prop('checked'))
+            {
+                $('#'+Sand).css('display', 'inline');
+                $('label[for='+Sand+']').css('display', 'inline');
+            }else{
+                $('#'+Sand).css('display', 'none');
+                $('label[for='+Sand+']').css('display', 'none');
+            }
+
+            if($('#'+SolutionChecked).prop('checked'))
+            {
+                $('#'+Solution).css('display', 'inline');
+                $('label[for='+Solution+']').css('display', 'inline');
+            }else{
+                $('#'+Solution).css('display', 'none');
+                $('label[for='+Solution+']').css('display', 'none');
+            }
+
+            $('#' + SaltChecked).click(function () {
+
+                if ($('#' + SaltChecked).prop('checked')) {
+                    $('#'+Salt).css('display', 'inline');
+                    $('label[for='+Salt+']').css('display', 'inline');
+                }
+                else {
+                    $('#'+Salt).val("");
+                    $('#'+Salt).css('display', 'none');
+                    $('label[for='+Salt+']').css('display', 'none');
+                }
+            });
+            $('#' + SandChecked).click(function () {
+                if ($('#' + SandChecked).prop('checked')) {
+                    $('#'+Sand).css('display', 'inline');
+                    $('label[for='+Sand+']').css('display', 'inline');
+                }else{
+                    $('#'+Sand).val("");
+                    $('#'+Sand).css('display', 'none');
+                    $('label[for='+Sand+']').css('display', 'none');
+                }
+            });
+            $('#' + SolutionChecked).click(function () {
+                if ($('#' + SolutionChecked).prop('checked')) {
+                    $('#'+Solution).css('display', 'inline');
+                    $('label[for='+Solution+']').css('display', 'inline');
+                }else{
+                    $('#'+Solution).val("");
+                    $('#'+Solution).css('display', 'none');
+                    $('label[for='+Solution+']').css('display', 'none');
+                }
+            });
+
+            $('#'+sectionSearch).autocomplete({
+                source: "{{ path('search/road') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#'+sectionId).val(ui.item.section_id),
+                        $('#'+sectionName).val(ui.item.road_name),
+                        $('#'+sectionBegin).val(ui.item.section_begin),
+                        $('#'+sectionEnd).val(ui.item.section_end)
+                },
+            });
+            $( ".js-datepicker" ).datepicker();
+        });
     }
 
 </script>
 
-<script>
-
-    $(document).ready(function () {
-        document.getElementById('winter_jobs_Salt').style.display = 'none'
-        document.getElementById('winter_jobs_Sand').style.display = 'none'
-        document.getElementById('winter_jobs_Mix').style.display = 'none'
-        document.getElementById('winter_jobs_Solution').style.display = 'none'
-        if (document.getElementById('winter_jobs_SaltChecked').checked == true){
-            document.getElementById('winter_jobs_Salt').style.display = 'inline'
-        }
-        if (document.getElementById('winter_jobs_SandChecked').checked == true){
-            document.getElementById('winter_jobs_Sand').style.display = 'inline'
-        }
-        if (document.getElementById('winter_jobs_MixChecked').checked == true){
-            document.getElementById('winter_jobs_Mix').style.display = 'inline'
-        }
-        if (document.getElementById('winter_jobs_SolutionChecked').checked == true){
-            document.getElementById('winter_jobs_Solution').style.display = 'inline'
-        }
-
-        $('#winter_jobs_SaltChecked').click(function () {
-            if (this.checked) {
-                document.getElementById('winter_jobs_Salt').style.display = 'inline'
-                //$('#salt').slideDown(500)
-            }
-            else {
-                document.getElementById('winter_jobs_Salt').style.display = 'none'
-                //$('#salt').slideUp(200)
-            }
-        })
-        $('#winter_jobs_SandChecked').click(function () {
-            if (this.checked) {
-                document.getElementById('winter_jobs_Sand').style.display = 'inline'
-                //$('#salt').slideDown(500)
-            }
-            else {
-                document.getElementById('winter_jobs_Sand').style.display = 'none'
-                //$('#salt').slideUp(200)
-            }
-        })
-        $('#winter_jobs_MixChecked').click(function () {
-            if (this.checked) {
-                document.getElementById('winter_jobs_Mix').style.display = 'inline'
-                //$('#salt').slideDown(500)
-            }
-            else {
-                document.getElementById('winter_jobs_Mix').style.display = 'none'
-                //$('#salt').slideUp(200)
-            }
-        })
-        $('#winter_jobs_SolutionChecked').click(function () {
-            if (this.checked) {
-                document.getElementById('winter_jobs_Solution').style.display = 'inline'
-                //$('#salt').slideDown(500)
-            }
-            else {
-                document.getElementById('winter_jobs_Solution').style.display = 'none'
-                //$('#salt').slideUp(200)
-            }
-        })
-    })
-</script>
-
 {{ form_start(form) }}
-<div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row" style="  align-items:center;">
+<div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row" style="align-items: top;">
     {% for row in form.RoadSections %}
-        <div class="panel col-3">
+        <div class="panel col-sm-6 col-md-3" style="vertical-align: top;">
             <div class="panel-heading text-center">
                 <strong>Road</strong>
             </div>
             <div class="panel-body">
-                {{ form_row(row) }}
+                {{  form_row(row.RoadSectionSearch) }}
+
+                {{ form_row(row.SectionId) }}
+                {{ form_row(row.SectionName) }}
+                {{ form_row(row.SectionBegin) }}
+                {{ form_row(row.SectionEnd) }}
+                {{ form_row(row.level) }}
+
+                <div class="row">
+                    <div class="col-4">{{ form_row(row.SaltChecked) }}</div>
+                    <div class="col-4">{{ form_row(row.SandChecked) }}</div>
+                    <div class="col-4">{{ form_row(row.SolutionChecked) }}</div>
+                </div>
+
+                {{ form_row(row.SaltValue) }}
+                {{ form_row(row.SandValue) }}
+                {{ form_row(row.SolutionValue) }}
+
             </div>
         </div>
     {% endfor %}
@@ -218,27 +237,6 @@
     </div>
     <div id="salt" class="col-sm">
         {{ form_row(form.job) }}
-    </div>
-</div>
-<hr>
-<div class="form form-inline">
-    {{ form_row(form.SaltChecked) }}
-    {{ form_row(form.SandChecked) }}
-    {{ form_row(form.MixChecked) }}
-    {{ form_row(form.SolutionChecked) }}
-</div>
-<hr>
-<div class="row">
-    <div id="salt" class="col-sm">
-        {{ form_row(form.Salt) }}
-    </div>
-    <div id="sand" class="col-sm">
-        {{ form_row(form.Sand) }}
-    </div>
-    <div id="mix" class="col-sm">{{ form_row(form.Mix) }}
-    </div>
-    <div id="solution" class="col-sm">
-        {{ form_row(form.Solution) }}
     </div>
 </div>
 

@@ -4,28 +4,6 @@
 
 {% block body %}
 
-    <script>
-        $( function() {
-            function log( message ) {
-                $( "<div>" ).text( message ).prependTo( "#log" );
-                $( "#log" ).scrollTop( 0 );
-            }
-            var job_id = '';
-
-            $( "#insured_event_RoadSectionSearch" ).autocomplete({
-                source: "{{ path('search/road') }}",
-                minLength: 2,
-                delay: 500,
-                select: function( event, ui ) {
-                    $('#insured_event_SectionBegin').val(ui.item.section_begin),
-                        $('#insured_event_SectionEnd').val(ui.item.section_end),
-                        $('#insured_event_RoadId').val(ui.item.section_id),
-                        $('#insured_event_RoadName').val(ui.item.road_name)
-                },
-            });
-            $( ".js-datepicker" ).datepicker();
-        });
-    </script>
 
     <h1>Create new InsuredEvent</h1>
 

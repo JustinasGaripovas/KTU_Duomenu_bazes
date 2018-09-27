@@ -1,3 +1,85 @@
+
+<script>
+
+    $(function() {
+
+        if($("#insured_event_IsInsuredType_0" ).prop('checked'))
+        {
+            showRemaining(true)
+
+        }
+        if($("#insured_event_IsInsuredType_1" ).prop('checked'))
+        {
+            showRemaining(false);
+
+        }
+
+        $( "#insured_event_IsInsuredType_0" ).click(function (e) {
+            showRemaining(true);
+
+        });
+
+        $( "#insured_event_IsInsuredType_1" ).click(function (e) {
+            showRemaining(false);
+
+
+        });
+    });
+
+    function showRemaining($val) {
+
+        if($val == true)
+        {
+            $("#insured_event_Documents").css('display', 'inline');
+            $("#insured_event_EstimateToCompany").css('display', 'inline');
+            $("#insured_event_InsurensCompany").css('display', 'inline');
+            $("#insured_event_NumberOfDamage").css('display', 'inline');
+
+            $('label[for=insured_event_Documents]').css('display', 'inline');
+            $('label[for=insured_event_EstimateToCompany]').css('display', 'inline');
+            $('label[for=insured_event_InsurensCompany]').css('display', 'inline');
+            $('label[for=insured_event_NumberOfDamage]').css('display', 'inline');
+
+        }else{
+            $("#insured_event_Documents").css('display', 'none');
+            $("#insured_event_EstimateToCompany").css('display', 'none');
+            $("#insured_event_InsurensCompany").css('display', 'none');
+            $("#insured_event_NumberOfDamage").css('display', 'none');
+            $("#insured_event_Documents").val("");
+            $("#insured_event_EstimateToCompany").val("");
+            $("#insured_event_InsurensCompany").val("");
+            $("#insured_event_NumberOfDamage").val("");
+            $('label[for=insured_event_Documents]').css('display', 'none');
+            $('label[for=insured_event_EstimateToCompany]').css('display', 'none');
+            $('label[for=insured_event_InsurensCompany]').css('display', 'none');
+            $('label[for=insured_event_NumberOfDamage]').css('display', 'none');
+
+        }
+    }
+</script>
+
+<script>
+    $( function() {
+        function log( message ) {
+            $( "<div>" ).text( message ).prependTo( "#log" );
+            $( "#log" ).scrollTop( 0 );
+        }
+
+        $( "#insured_event_RoadSectionSearch" ).autocomplete({
+            source: "{{ path('search/road') }}",
+            minLength: 2,
+            delay: 500,
+            select: function( event, ui ) {
+                $('#insured_event_SectionBegin').val(ui.item.section_begin),
+                    $('#insured_event_SectionEnd').val(ui.item.section_end),
+                    $('#insured_event_RoadId').val(ui.item.section_id),
+                    $('#insured_event_RoadName').val(ui.item.road_name)
+            },
+        });
+        $( ".js-datepicker" ).datepicker();
+    });
+</script>
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
 <button class="btn btn-success btn-block btn-lg">{{ button_label|default('Save')|trans({}, 'translation') }} </button>

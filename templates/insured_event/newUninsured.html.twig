@@ -1,35 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New InsuredEvent{% endblock %}
+{% block title %}New UninsuredEvent{% endblock %}
 
 {% block body %}
 
-    <script>
-        $( function() {
-            function log( message ) {
-                $( "<div>" ).text( message ).prependTo( "#log" );
-                $( "#log" ).scrollTop( 0 );
-            }
-            var job_id = '';
-
-            $( "#uninsecure_event_edit_RoadSectionSearch" ).autocomplete({
-                source: "{{ path('search/road') }}",
-                minLength: 2,
-                delay: 500,
-                select: function( event, ui ) {
-                    $('#uninsecure_event_edit_SectionBegin').val(ui.item.section_begin),
-                        $('#uninsecure_event_edit_SectionEnd').val(ui.item.section_end),
-                        $('#uninsecure_event_edit_RoadId').val(ui.item.section_id),
-                        $('#uninsecure_event_edit_RoadName').val(ui.item.road_name)
-                },
-            });
-            $( ".js-datepicker" ).datepicker();
-        });
-    </script>
-
-    <h1>Create new InsuredEvent</h1>
 
 
+    <h1>Create new UninsuredEvent</h1>
 
     {{ include('insured_event/_form.html.twig') }}
 

@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\RoadSection;
+use App\Entity\WinterJobRoadSection;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RoadSectionForWinterType extends AbstractType
+class WinterJobsRoadSectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,13 +27,31 @@ class RoadSectionForWinterType extends AbstractType
                     '3' => 3
                 )
             ))
+            ->add('SaltChecked', CheckboxType::class, array(
+                'required' => false,
+            ))
+            ->add('SandChecked', CheckboxType::class, array(
+                'required' => false,
+            ))
+            ->add('SolutionChecked', CheckboxType::class, array(
+                'required' => false,
+            ))
+            ->add('SaltValue',null,array(
+                'required' => false,
+            ))
+            ->add('SandValue',null,array(
+                'required' => false,
+            ))
+            ->add('SolutionValue',null,array(
+                'required' => false,
+            ))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => RoadSection::class,
+            'data_class' => WinterJobRoadSection::class,
         ]);
     }
 }

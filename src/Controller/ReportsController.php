@@ -729,30 +729,32 @@ class ReportsController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
+                $spreadsheet = $reader->load('ziemos_ataskaita_LAKD_1.xlsx');
 // Set document properties
                 $index = 6;
 
                 $dateNow = new \DateTime('now');
 
                 foreach ($report as $rep) {
-                    $highway = '';
-                    $local = '';
-                    $district = '';
+
                     $weather = '';
-                    $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $this->getRegionBySubunitId($this->getRegionId($rep->getSubunit())));
+                    $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $this->getRegionBySubunitId($rep->getSubunit()));
                     $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $this->getSubunitNameById($rep->getSubunit()));
-                    foreach ($rep->getRoadConditionHighway() as $item) {
-                       $highway = $highway . $item. ' ';
-                    }
-                    foreach ($rep->getRoadConditionLocal() as $item) {
-                        $local = $local . $item .' ';
-                    }
-                    foreach ($rep->getRoadConditionDistrict() as $item) {
-                        $district = $district . $item.' ';
-                    }
+                    $highway = join(',', $rep->getRoadConditionHighway());
+                    $highway2 = join(',', $rep->getRoadConditionHighway2());
+                    $highway3 = join(',', $rep->getRoadConditionHighway3());
+                    $local = join(',', $rep->getRoadConditionLocal());
+                    $local2 = join(',', $rep->getRoadConditionLocal2());
+                    $local3 = join(',', $rep->getRoadConditionLocal3());
+                    $district = join(',', $rep->getRoadConditionDistrict());
+                    $district2 = join(',', $rep->getRoadConditionDistrict2());
+                    $district3 = join(',', $rep->getRoadConditionDistrict3());
+
                     $spreadsheet->getActiveSheet()->setCellValue('C'.$index,
-                        'Magistraliniai('.$highway.')'. 'Krašto(' . $local. ')'. 'Rajoniniai(' . $district. ')');
+                        'M1('.$highway.')'. 'M2('.$highway2.')'.'M3('.$highway3.')'.
+                        'K1(' . $local. ')'. 'K2(' . $local2. ')'. 'K3(' . $local3. ')'.
+                        'R1(' . $district. ')' . 'R2(' . $district2. ')'. 'R3(' . $district3. ')'
+                    );
                     foreach ($rep->getWeather() as $item) {
                         $spreadsheet->getActiveSheet()->setCellValue('D'. $index, $weather = $weather . $item. ', ');
                     }
@@ -792,10 +794,10 @@ class ReportsController extends Controller
         return $em->find($subUnitId)->getUnitId();
     }
 
-    public function getRegionBySubunitId($unitId) {
+    public function getRegionBySubunitId($SubunitId) {
 
-        $em2 = $this->getDoctrine()->getRepository('App:Unit');
-        return $em2->findOneBy(['UnitId' => $unitId])->getName();
+        $em2 = $this->getDoctrine()->getRepository('App:Region');
+        return $em2->findOneBy(['SubunitId' => $SubunitId])->getRegionName();
     }
 
 }

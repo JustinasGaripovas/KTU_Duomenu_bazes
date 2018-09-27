@@ -120,7 +120,6 @@ class WinterJobsController extends Controller
         if ($form->isSubmitted()) {
 
             $items = $winterJob->getRoadSections();
-            $items[0] = clone $items[0];
             $winterJob->setRoadSections($items);
 
             $this->getDoctrine()->getManager()->flush();

@@ -1,5 +1,8 @@
 
 <script>
+
+    var takenIds;
+
     // this variable is the list in the dom, it's initiliazed when the document is ready
     var $collectionHolder;
     // the link which we click on to add new items
@@ -8,25 +11,29 @@
     $(document).ready(function () {
         // get the collectionHolder, initilize the var by getting the list;
         $collectionHolder = $('#road_section_list');
-        // append the add new item link to the collectionHolder
+
         $collectionHolder.append($addNewItem);
-        // add an index property to the collectionHolder which helps track the count of forms we have in the list
-        $collectionHolder.data('index', $collectionHolder.find('.panel').length);
-        // finds all the panels in the list and foreach one of them we add a remove button to it
-        // add remove button to existing items
+
+        if($collectionHolder.find('.panel').length == 0)
+        {
+            $collectionHolder.data('index', 0);
+        }else {
+            var $string = $collectionHolder.find('.panel').last().find('[id*=winter_jobs_RoadSections_]').attr('id');
+            $string = $string.replace('winter_jobs_RoadSections_', '');
+            $string = $string.replace('_RoadSectionSearch', '');
+            console.log(($string));
+            $collectionHolder.data('index', parseInt($string) + 1);
+        }
+
+
 
         $collectionHolder.find('.panel').each(function (){
 
-            // $(this) means the current panel that we are at
-            // which means we pass the panel to the addRemoveButton function
-            // inside the function we create a footer and remove link and append them to the panel
-            // more informations in the function inside
             addRemoveButton($(this));
-
         });
 
-        refreshAutocorrect();
 
+        refreshAutocorrect();
 
         // handle the click event for addNewItem
         $addNewItem.click(function (e) {
@@ -36,7 +43,6 @@
             // create a new form and append it to the collectionHolder
             // and by form we mean a new panel which contains the form
             addNewForm();
-
         })
     });
     /*
@@ -51,24 +57,25 @@
         var index = $collectionHolder.data('index');
         // create the form
         var newForm = prototype;
-        // replace the __name__ string in the html using a regular expression with the index value
+
         newForm = newForm.replace(/__name__/g, index);
-        // incrementing the index data and setting it again to the collectionHolder
         $collectionHolder.data('index', index+1);
+
+        // replace the __name__ string in the html using a regular expression with the index value
+        // incrementing the index data and setting it again to the collectionHolder
         // create the panel
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
-            '<div class="panel col-sm-6 col-md-3">' +
+            '<div class="panel col-3">' +
                 '<div class="panel-heading text-center">' +
                     '<strong>New Road</strong>' +
                 '</div>' +
             '</div>');
-
         // create the panel-body and append the form to it
         var $panelBody = $('<div class="panel-body" style="margin-bottom: 32px;"></div>').append(newForm);
-        // append the body to the panel
+
         $panel.append($panelBody);
-        // append the removebutton to the new panel
+
         addRemoveButton($panel);
         // append the panel to the addNewItem
         // we are doing it this way to that the link is always at the bottom of the collectionHolder
@@ -103,7 +110,9 @@
     }
 
     function refreshAutocorrect() {
-        $('#road_section_list').find('.panel').each(function () {
+
+
+            $('#road_section_list').find('.panel').each(function () {
 
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
@@ -118,63 +127,67 @@
             var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
             var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
 
+            var saltLabel = $(this).find('label[for*=_SaltValue]');
+            var sandLabel = $(this).find('label[for*=_SandValue]');
+            var solutionLabel = $(this).find('label[for*=_SolutionValue]');
+
             if($('#'+SaltChecked).prop('checked'))
             {
                 $('#'+Salt).css('display', 'inline');
-                $('label[for='+Salt+']').css('display', 'inline');
+                saltLabel.css('display', 'inline');
             }else{
                 $('#'+Salt).css('display', 'none');
-                $('label[for='+Salt+']').css('display', 'none');
+                saltLabel.css('display', 'none');
             }
 
             if($('#'+SandChecked).prop('checked'))
             {
                 $('#'+Sand).css('display', 'inline');
-                $('label[for='+Sand+']').css('display', 'inline');
+                sandLabel.css('display', 'inline');
             }else{
                 $('#'+Sand).css('display', 'none');
-                $('label[for='+Sand+']').css('display', 'none');
+                sandLabel.css('display', 'none');
             }
 
             if($('#'+SolutionChecked).prop('checked'))
             {
                 $('#'+Solution).css('display', 'inline');
-                $('label[for='+Solution+']').css('display', 'inline');
+                solutionLabel.css('display', 'inline');
             }else{
                 $('#'+Solution).css('display', 'none');
-                $('label[for='+Solution+']').css('display', 'none');
+                solutionLabel.css('display', 'none');
             }
 
             $('#' + SaltChecked).click(function () {
 
                 if ($('#' + SaltChecked).prop('checked')) {
                     $('#'+Salt).css('display', 'inline');
-                    $('label[for='+Salt+']').css('display', 'inline');
+                    saltLabel.css('display', 'inline');
                 }
                 else {
                     $('#'+Salt).val("");
                     $('#'+Salt).css('display', 'none');
-                    $('label[for='+Salt+']').css('display', 'none');
+                    saltLabel.css('display', 'none');
                 }
             });
             $('#' + SandChecked).click(function () {
                 if ($('#' + SandChecked).prop('checked')) {
                     $('#'+Sand).css('display', 'inline');
-                    $('label[for='+Sand+']').css('display', 'inline');
+                    sandLabel.css('display', 'inline');
                 }else{
                     $('#'+Sand).val("");
                     $('#'+Sand).css('display', 'none');
-                    $('label[for='+Sand+']').css('display', 'none');
+                    sandLabel.css('display', 'none');
                 }
             });
             $('#' + SolutionChecked).click(function () {
                 if ($('#' + SolutionChecked).prop('checked')) {
                     $('#'+Solution).css('display', 'inline');
-                    $('label[for='+Solution+']').css('display', 'inline');
+                    solutionLabel.css('display', 'inline');
                 }else{
                     $('#'+Solution).val("");
                     $('#'+Solution).css('display', 'none');
-                    $('label[for='+Solution+']').css('display', 'none');
+                    solutionLabel.css('display', 'none');
                 }
             });
 
@@ -190,7 +203,7 @@
                 },
             });
             $( ".js-datepicker" ).datepicker();
-        });
+            });
     }
 
 </script>
@@ -210,13 +223,9 @@
                 {{ form_row(row.SectionBegin) }}
                 {{ form_row(row.SectionEnd) }}
                 {{ form_row(row.level) }}
-
-                <div class="row">
-                    <div class="col-4">{{ form_row(row.SaltChecked) }}</div>
-                    <div class="col-4">{{ form_row(row.SandChecked) }}</div>
-                    <div class="col-4">{{ form_row(row.SolutionChecked) }}</div>
-                </div>
-
+                {{ form_row(row.SaltChecked) }}
+                {{ form_row(row.SandChecked) }}
+                {{ form_row(row.SolutionChecked) }}
                 {{ form_row(row.SaltValue) }}
                 {{ form_row(row.SandValue) }}
                 {{ form_row(row.SolutionValue) }}

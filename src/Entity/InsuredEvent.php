@@ -84,7 +84,7 @@ class InsuredEvent
     /**
      * @ORM\Column(type="boolean", options={"default" : true})
      */
-    private $isInsuredType;
+    private $isInsuredType = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)

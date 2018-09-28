@@ -40,9 +40,20 @@
                     {% for winter_maintenance in winter_maintenances | default('') %}
                         <tr>
                             <td>{{ winter_maintenance.Subunit }}</td>
-                            <td> {% for item in winter_maintenance.RoadConditionHighway %}
-                                    {{ item }}
-                                {% endfor %}
+                            <td>
+
+                                M1 - {{ winter_maintenance.RoadConditionHighway | join(', ') }},
+                                M2 - {{ winter_maintenance.RoadConditionHighway2 | join(', ') }},
+                                M3 - {{ winter_maintenance.RoadConditionHighway3 | join(', ') }},
+
+                                K1 - {{ winter_maintenance.RoadConditionLocal | join(', ') }},
+                                K2 - {{ winter_maintenance.RoadConditionLocal2 | join(', ') }},
+                                K3 - {{ winter_maintenance.RoadConditionLocal3 | join(', ') }},
+
+                                R1 - {{ winter_maintenance.RoadConditionDistrict | join(', ') }},
+                                R2 - {{ winter_maintenance.RoadConditionDistrict2 | join(', ') }},
+                                R3 - {{ winter_maintenance.RoadConditionDistrict3 | join(', ') }},
+
                             </td>
                             <td>
                                 {% for item in winter_maintenance.Weather %}

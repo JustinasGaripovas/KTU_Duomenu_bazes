@@ -75,10 +75,10 @@ class WinterMaintenanceType extends AbstractType
             ))
             ->add('reportFor', ChoiceType::class, array(
                 'choices' => array(
-                    '6:00 - 5:45' => '6:00',
-                    '9:00 - 8:45' => '9:00',
-                    '13:00 - 12:45' => '13:00',
-                    '16:00 - 15:45' => '16:00'
+                    '5:45' => '5:45',
+                    '8:45' => '8:45',
+                    '12:45' => '12:45',
+                    '15:45' => '15:45'
                 )
             ))
             ->add('Subunit', HiddenType::class)

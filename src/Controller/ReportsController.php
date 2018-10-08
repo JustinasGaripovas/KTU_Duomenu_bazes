@@ -19,6 +19,8 @@ use Symfony\Component\Validator\Constraints\Count;
 
 class ReportsController extends Controller
 {
+    //    USAGE
+    //    $this->getDaysVehicles(DATE YOU WANT TO CHECK FROM | \DateTime() ,$Subunit);
     private function getDaysVehicles($searchedDay, $subunit)
     {
         $em = $this->get('doctrine.orm.entity_manager');
@@ -48,7 +50,9 @@ class ReportsController extends Controller
 
         return $result;
     }
-
+    
+    //    USAGE
+    //    $this->getDaysMaterials(DATE YOU WANT TO CHECK FROM | \DateTime() ,$Subunit);
     private function getDaysMaterials($searchedDay, $subunit)
     {
         $em = $this->get('doctrine.orm.entity_manager');
@@ -78,9 +82,6 @@ class ReportsController extends Controller
      */
     public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
-
-        $this->getDaysMaterials(new \DateTime(),1);
-
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(

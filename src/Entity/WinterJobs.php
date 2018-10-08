@@ -58,6 +58,11 @@ class WinterJobs
      */
     private $RoadSections = [];
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $Date;
+
     public function addRoadSection($additionalSection)
     {
         $this->RoadSections[] = $additionalSection;
@@ -243,5 +248,21 @@ class WinterJobs
         $this->CreatedBy = $CreatedBy;
 
         return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->Date;
+    }
+
+    public function setDate(?\DateTimeInterface $Date): self
+    {
+        $this->Date = $Date;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->getMechanism();
     }
 }

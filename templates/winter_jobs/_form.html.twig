@@ -9,6 +9,11 @@
     var $addNewItem = $('<div class="col-3 text-center"><a style=" display: inline-block;vertical-align: middle;float: none;" href="#" class="btn btn-info">Add new item</a></div>');
     // when the page is loaded and ready
     $(document).ready(function () {
+
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
         // get the collectionHolder, initilize the var by getting the list;
         $collectionHolder = $('#road_section_list');
 
@@ -202,7 +207,7 @@
                         $('#'+sectionEnd).val(ui.item.section_end)
                 },
             });
-            $( ".js-datepicker" ).datepicker();
+
             });
     }
 
@@ -235,9 +240,19 @@
     {% endfor %}
 </div>
 
-<div class="form form-inline">
-    {{ form_row(form.TimeFrom) }} &nbsp;&nbsp;
-    {{ form_row(form.TimeTo) }}
+<hr>
+<br>
+
+<div class="row" style="-webkit-align-items: center;">
+    <div class="col-sm-3">
+        {{ form_row(form.Date) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.TimeFrom) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.TimeTo) }}
+    </div>
 </div>
 <hr>
 <div class="row">

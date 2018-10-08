@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\WinterJobs;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
@@ -13,16 +14,73 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
+use Symfony\Component\Validator\Constraints\Count;
 
 
 class ReportsController extends Controller
 {
+    private function getDaysVehicles($searchedDay, $subunit)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $dayBeforeSearched = new \DateTime($searchedDay->format('Y-m-d'));
+        $dayBeforeSearched = $dayBeforeSearched->modify('-1 day');
+        $dayBeforeSearched = $dayBeforeSearched->format('Y-m-d');
+
+        $searchedDay = $searchedDay->format('Y-m-d');
+
+        $vehicles = array("Kiti" => "","Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
+        $result = array();
+
+        foreach($vehicles as $x => $x_value) {
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date = '$searchedDay' OR w.Date = '$dayBeforeSearched')";
+            $result[$x] = $em->createQuery($dql)->getResult();
+        }
+
+        foreach($result as $x => $x_value) {
+            $result[$x] = count(array_unique($x_value));
+
+            if($x != "Kiti")
+            {
+                $result["Kiti"] -= $result[$x];
+            }
+        }
+
+        return $result;
+    }
+
+    private function getDaysMaterials($searchedDay, $subunit)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $dayBeforeSearched = new \DateTime($searchedDay->format('Y-m-d'));
+        $dayBeforeSearched = $dayBeforeSearched->modify('-1 day');
+        $dayBeforeSearched = $dayBeforeSearched->format('Y-m-d');
+
+        $searchedDay = $searchedDay->format('Y-m-d');
+
+        $materials = array("Salt" => 0,"Sand"=> 0, "Solution"=> 0);
+
+        $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date = '$searchedDay' OR w.Date = '$dayBeforeSearched')";
+        $winterJobs = $em->createQuery($dql)->execute();
+
+        foreach($winterJobs as $x) {
+            $materials["Salt"] += array_sum($x->getRoadSectionsSalt());
+            $materials["Sand"] += array_sum( $x->getRoadSectionsSand());
+            $materials["Solution"] += array_sum($x->getRoadSectionsSolution());
+        }
+
+        return $materials;
+    }
+
     /**
      * @Route("/reports", name="reports")
      */
-
     public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
+
+        $this->getDaysMaterials(new \DateTime(),1);
+
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(

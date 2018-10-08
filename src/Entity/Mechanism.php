@@ -31,6 +31,11 @@ class Mechanism
      */
     private $Subunit;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $TypeId;
+
     public function getId()
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Mechanism
     public function setSubunit(int $Subunit): self
     {
         $this->Subunit = $Subunit;
+
+        return $this;
+    }
+
+    public function getTypeId(): ?int
+    {
+        return $this->TypeId;
+    }
+
+    public function setTypeId(int $TypeId): self
+    {
+        $this->TypeId = $TypeId;
 
         return $this;
     }

@@ -69,9 +69,8 @@ class ReportsController extends Controller
         $materials = array("Salt" => 0,"Sand"=> 0, "Solution"=> 0);
 
         $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date = '$searchedDay' OR w.Date = '$dayBeforeSearched')";
-        $winterJobs = $em->createQuery($dql)->execute();
 
-        foreach($winterJobs as $x) {
+        foreach($em->createQuery($dql)->execute() as $x) {
             $materials["Salt"] += array_sum($x->getRoadSectionsSalt());
             $materials["Sand"] += array_sum( $x->getRoadSectionsSand());
             $materials["Solution"] += array_sum($x->getRoadSectionsSolution());

@@ -1,3 +1,4 @@
+{% trans_default_domain 'translation' %}
 
 <script>
 
@@ -71,7 +72,7 @@
         var $panel = $('' +
             '<div class="panel col-3">' +
                 '<div class="panel-heading text-center">' +
-                    '<strong>New Road</strong>' +
+                    '<strong>{% trans %} New Road {% endtrans %}</strong>' +
                 '</div>' +
             '</div>');
         // create the panel-body and append the form to it
@@ -94,7 +95,7 @@
      */
     function addRemoveButton ($panel) {
         // create remove button
-        var $removeButton = $('<a href="#" class="btn btn-danger col-12">Remove</a>');
+        var $removeButton = $('<a href="#" class="btn btn-danger col-12">{% trans %}Remove {% endtrans %}</a>');
         // appending the removebutton to the panel footer
         var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
         // handle the click event of the remove button
@@ -238,7 +239,7 @@
 </div>
 
 <br>
-<a id="button_to_add_new_road" class="container-fluid btn btn-lg btn-info" href="#">Add new item</a>
+<a id="button_to_add_new_road" class="container-fluid btn btn-lg btn-info" href="#">{% trans %}Add new item{% endtrans %}</a>
 <hr>
 <br>
 

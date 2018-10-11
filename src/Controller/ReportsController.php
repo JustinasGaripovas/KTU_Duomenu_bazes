@@ -51,7 +51,7 @@ class ReportsController extends Controller
             $subunitRoadsFinal = array();
             $subunitRoads = array();
 
-            //Einame pro
+            //Einame pro WinterJobs
             foreach ($winterRoadSectionArray as $roadArray) {
 
                 //Gauname visus WinterJobs Kelius(RoadSections array) ir einame pro juos
@@ -71,6 +71,56 @@ class ReportsController extends Controller
             //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
             $result[$subunitId] = $subunitRoads;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @param $subunit
+     * @return array SVARBU Idedame visa subunit ne tik SubunitId
+     *  $this->getDaysMaterialsForSubunit(new \DateTime(),new \DateTime("-100 days"),$ldapUserRepository->findUnitIdByUserName($username)->getSubunit());
+
+     */
+    private function getDaysMaterialsForSubunit($start,$end,$subunit)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+        $start = $start->format('Y-m-d');
+        $end = $end->format('Y-m-d');
+
+        $result = array();
+
+        $subunitId = $subunit->getSubunitId();
+
+        //Gauname visus WinterJobs PAGAL KT ID ir datas
+        $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+        $winterRoadSectionArray = $em->createQuery($dql2)->execute();
+
+        $subunitRoads = array();
+
+        //Einame pro WinterJobs
+        foreach ($winterRoadSectionArray as $roadArray) {
+
+            //Gauname visus WinterJobs Kelius(RoadSections array) ir einame pro juos
+            foreach ($roadArray["RoadSections"] as $winterJobRoad) {
+                //Jeigu kelio su winterJobRoad->getSectionId()(Kelio id) KEY nera ji sukuriame
+                //Jeigu jis yra jau sukurtas(jei toks kelias jau buvo priestai) prie to KEY pridedame naujo kelio reiksmes
+                if (!isset($subunitRoads[$winterJobRoad->getSectionId()])) {
+                    $subunitRoads[$winterJobRoad->getSectionId()] = new MaterialReportObject($subunit->getName(), $subunit, $winterJobRoad->getSectionId(), $winterJobRoad->getSaltValue(), $winterJobRoad->getSandValue(), $winterJobRoad->getSolutionValue());
+                } else {
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSalt($winterJobRoad->getSaltValue());
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSand($winterJobRoad->getSandValue());
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSolution($winterJobRoad->getSolutionValue());
+                }
+            }
+        }
+
+        //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
+        $result[$subunitId] = $subunitRoads;
+
         return $result;
     }
 

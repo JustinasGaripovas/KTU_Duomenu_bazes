@@ -32,10 +32,12 @@ class WinterMaintenanceController extends Controller
     public function new(ChoicesRepository $choicesRepository,RoadSectionRepository $roadSectionRepository, Request $request, LdapUserRepository $ldapUserRepository): Response
     {
         $userName = $this->getUser()->getUserName();
+        $em = $this->getDoctrine()->getRepository('App:Subunit');
         $unitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
+        $subUnitId = $em->findOneBy(['id' => $unitId])->getSubunitId();
         $winterMaintenance = new WinterMaintenance();
         $winterMaintenance->setCreatedAt(new \DateTime("now"));
-        $winterMaintenance->setSubunit($unitId);
+        $winterMaintenance->setSubunit($subUnitId);
         $form = $this->createForm(WinterMaintenanceType::class, $winterMaintenance);
         $form->handleRequest($request);
 

@@ -174,7 +174,38 @@ class WinterReportController extends Controller
         }
     }
 
+    /**
+     * @Route("/winter/report/mechanism", name="winter_report_mechanism")
+     */
 
+    public function winterMaintenanceReportMechanism (LdapUserRepository $ldapUserRepository, Request $request) {
+
+        $form = $this->createForm(WinterJobsReportType::class);
+        $form->handleRequest($request);
+        $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $from = $form->get('From')->getData();
+            $to = $form->get('To')->getData();
+            $report = 0;
+            if ($form->get('GenerateXLS')->isClicked()) {
+                $fileName = md5($this->getUser()->getUserName() . microtime());
+                $reader = IOFactory::createReader('Xlsx');
+                //$spreadsheet = $reader->load('materials.xlsx');
+                $index = 3;
+/*                foreach ($report as $rep) {
+                }*/
+
+                /*$writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $writer->save('files/' . $fileName . '.xlsx');
+                return $this->file(('files/' . $fileName . '.xlsx'));*/
+            }
+// Rename worksheet
+
+            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), 'winter_material_report' => $report]);
+        } else {
+            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), ['winter_material_report' => null]]);
+        }
+    }
 
     /**
      * @param $start -> Pradine data nuo kada ieskosim

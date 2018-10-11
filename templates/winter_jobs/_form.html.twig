@@ -6,7 +6,6 @@
     // this variable is the list in the dom, it's initiliazed when the document is ready
     var $collectionHolder;
     // the link which we click on to add new items
-    var $addNewItem = $('<div class="col-3 text-center"><a style=" display: inline-block;vertical-align: middle;float: none;" href="#" class="btn btn-info">Add new item</a></div>');
     // when the page is loaded and ready
     $(document).ready(function () {
 
@@ -17,7 +16,6 @@
         // get the collectionHolder, initilize the var by getting the list;
         $collectionHolder = $('#road_section_list');
 
-        $collectionHolder.append($addNewItem);
 
         if($collectionHolder.find('.panel').length == 0)
         {
@@ -41,7 +39,7 @@
         refreshAutocorrect();
 
         // handle the click event for addNewItem
-        $addNewItem.click(function (e) {
+        $('#button_to_add_new_road').click(function (e) {
             // preventDefault() is your  homework if you don't know what it is
             // also look up preventPropagation both are usefull
             e.preventDefault();
@@ -72,9 +70,9 @@
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
             '<div class="panel col-3">' +
-                '<div class="panel-heading text-center">' +
-                    '<strong>New Road</strong>' +
-                '</div>' +
+            '<div class="panel-heading text-center">' +
+            '<strong>New Road</strong>' +
+            '</div>' +
             '</div>');
         // create the panel-body and append the form to it
         var $panelBody = $('<div class="panel-body" style="margin-bottom: 32px;"></div>').append(newForm);
@@ -84,7 +82,7 @@
         addRemoveButton($panel);
         // append the panel to the addNewItem
         // we are doing it this way to that the link is always at the bottom of the collectionHolder
-        $addNewItem.before($panel);
+        $collectionHolder.append($panel);
 
         refreshAutocorrect();
 
@@ -117,7 +115,7 @@
     function refreshAutocorrect() {
 
 
-            $('#road_section_list').find('.panel').each(function () {
+        $('#road_section_list').find('.panel').each(function () {
 
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
@@ -208,11 +206,10 @@
                 },
             });
 
-            });
+        });
     }
 
 </script>
-
 {{ form_start(form) }}
 <div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row" style="align-items: top;">
     {% for row in form.RoadSections %}
@@ -239,6 +236,11 @@
         </div>
     {% endfor %}
 </div>
+
+<br>
+
+<a id="button_to_add_new_road" class="container-fluid btn btn-lg btn-info" href="#">Add new item</a>
+
 
 <hr>
 <br>

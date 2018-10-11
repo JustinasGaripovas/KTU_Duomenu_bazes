@@ -28,7 +28,7 @@ class WinterJobsController extends Controller
         $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 5));
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
         return $this->render('winter_jobs/index.html.twig', ['winter_jobs' => $pagination]);
     }
 

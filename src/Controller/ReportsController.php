@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Subunit;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
@@ -51,7 +52,7 @@ class ReportsController extends Controller
             $subunitRoadsFinal = array();
             $subunitRoads = array();
 
-            //Einame pro
+            //Einame pro WinterJobs
             foreach ($winterRoadSectionArray as $roadArray) {
 
                 //Gauname visus WinterJobs Kelius(RoadSections array) ir einame pro juos
@@ -71,6 +72,56 @@ class ReportsController extends Controller
             //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
             $result[$subunitId] = $subunitRoads;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @param $subunit
+     * @return array SVARBU Idedame visa subunit ne tik SubunitId
+     *  $this->getDaysMaterialsForSubunit(new \DateTime(),new \DateTime("-100 days"),$ldapUserRepository->findUnitIdByUserName($username)->getSubunit());
+
+     */
+    private function getDaysMaterialsForSubunit($start,$end,$subunit)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+        $start = $start->format('Y-m-d');
+        $end = $end->format('Y-m-d');
+
+        $result = array();
+
+        $subunitId = $subunit->getSubunitId();
+
+        //Gauname visus WinterJobs PAGAL KT ID ir datas
+        $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+        $winterRoadSectionArray = $em->createQuery($dql2)->execute();
+
+        $subunitRoads = array();
+
+        //Einame pro WinterJobs
+        foreach ($winterRoadSectionArray as $roadArray) {
+
+            //Gauname visus WinterJobs Kelius(RoadSections array) ir einame pro juos
+            foreach ($roadArray["RoadSections"] as $winterJobRoad) {
+                //Jeigu kelio su winterJobRoad->getSectionId()(Kelio id) KEY nera ji sukuriame
+                //Jeigu jis yra jau sukurtas(jei toks kelias jau buvo priestai) prie to KEY pridedame naujo kelio reiksmes
+                if (!isset($subunitRoads[$winterJobRoad->getSectionId()])) {
+                    $subunitRoads[$winterJobRoad->getSectionId()] = new MaterialReportObject($subunit->getName(), $subunit, $winterJobRoad->getSectionId(), $winterJobRoad->getSaltValue(), $winterJobRoad->getSandValue(), $winterJobRoad->getSolutionValue());
+                } else {
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSalt($winterJobRoad->getSaltValue());
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSand($winterJobRoad->getSandValue());
+                    $subunitRoads[$winterJobRoad->getSectionId()]->addSolution($winterJobRoad->getSolutionValue());
+                }
+            }
+        }
+
+        //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
+        $result[$subunitId] = $subunitRoads;
+
         return $result;
     }
 
@@ -90,6 +141,7 @@ class ReportsController extends Controller
 
             $form = $this->createForm(ReportType::class);
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->html = '';
@@ -238,12 +290,12 @@ class ReportsController extends Controller
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                            if($rep->getIsAdditional() === true){
-                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
-                            }
-                            else {
-                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
-                            }
+                        if($rep->getIsAdditional() === true){
+                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
+                        }
+                        else {
+                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
+                        }
                         foreach ($rep->getJob() as $job) {
                             $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $job->getDoneJobDate()->format('Y-m-d'));
                         }
@@ -418,7 +470,7 @@ class ReportsController extends Controller
 
                 $dql = '';
 
-                    $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -706,7 +758,7 @@ class ReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
-                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
+                $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -820,7 +872,7 @@ class ReportsController extends Controller
                         ->setCellValue('G' . $index, $rep->getOtherEvents())
                         ->setCellValue('H' . $index, $rep->getMechanism())
                         ->setCellValue('I' . $index, $rep->getRoadConditionScore());
-                $index++;
+                    $index++;
                 }
 
 // Rename worksheet

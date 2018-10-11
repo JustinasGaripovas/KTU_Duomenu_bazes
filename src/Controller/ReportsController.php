@@ -45,7 +45,7 @@ class ReportsController extends Controller
             $subunitId = $subunit->getSubunitId();
 
             //Gauname visus WinterJobs PAGAL KT ID ir datas
-            $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date <'$start' AND w.Date >= '$end')";
+            $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
             $winterRoadSectionArray = $em->createQuery($dql2)->execute();
 
             $subunitRoadsFinal = array();
@@ -68,11 +68,10 @@ class ReportsController extends Controller
                 }
             }
 
-
             //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
             $result[$subunitId] = $subunitRoads;
         }
-
+        dump($result);
         return $result;
     }
 
@@ -81,6 +80,7 @@ class ReportsController extends Controller
      */
     public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
+        $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'));
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(

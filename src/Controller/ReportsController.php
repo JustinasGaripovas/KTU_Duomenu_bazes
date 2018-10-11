@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Subunit;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
@@ -141,7 +140,6 @@ class ReportsController extends Controller
 
             $form = $this->createForm(ReportType::class);
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
-
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->html = '';
@@ -290,12 +288,12 @@ class ReportsController extends Controller
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                        if($rep->getIsAdditional() === true){
-                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
-                        }
-                        else {
-                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
-                        }
+                            if($rep->getIsAdditional() === true){
+                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
+                            }
+                            else {
+                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
+                            }
                         foreach ($rep->getJob() as $job) {
                             $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $job->getDoneJobDate()->format('Y-m-d'));
                         }
@@ -470,7 +468,7 @@ class ReportsController extends Controller
 
                 $dql = '';
 
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
+                    $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -758,7 +756,7 @@ class ReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
-                $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
+                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -872,7 +870,7 @@ class ReportsController extends Controller
                         ->setCellValue('G' . $index, $rep->getOtherEvents())
                         ->setCellValue('H' . $index, $rep->getMechanism())
                         ->setCellValue('I' . $index, $rep->getRoadConditionScore());
-                    $index++;
+                $index++;
                 }
 
 // Rename worksheet

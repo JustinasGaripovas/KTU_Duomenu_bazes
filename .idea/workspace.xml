@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReportsController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,7 +44,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="35" />
-          <entry key="php" value="2329" />
+          <entry key="php" value="2345" />
           <entry key="twig" value="614" />
           <entry key="yml" value="26" />
         </counts>
@@ -53,7 +52,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="35" />
-          <entry key="PHP" value="2329" />
+          <entry key="PHP" value="2345" />
           <entry key="Twig" value="614" />
           <entry key="YAML" value="26" />
         </counts>
@@ -62,7 +61,8 @@
         <counts>
           <entry key="git.branch.checkout.local" value="1" />
           <entry key="git.branch.checkout.remote" value="1" />
-          <entry key="git.branch.merge" value="6" />
+          <entry key="git.branch.compare" value="2" />
+          <entry key="git.branch.merge" value="7" />
         </counts>
       </usages-collector>
     </session>
@@ -148,10 +148,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="105" column="39" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
+            <state relative-caret-position="432">
+              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
               <folding>
-                <element signature="e#34#57#0#PHP" expanded="true" />
+                <element signature="e#34#62#0#PHP" expanded="true" />
                 <element signature="e#50190#50203#1#PHP" expanded="true" />
               </folding>
             </state>
@@ -465,7 +465,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2283" />
+    <option name="x" value="2190" />
     <option name="width" value="1186" />
     <option name="height" value="760" />
   </component>
@@ -622,7 +622,7 @@
       <workItem from="1539019395828" duration="9431000" />
       <workItem from="1539029526823" duration="1030000" />
       <workItem from="1539073025882" duration="753000" />
-      <workItem from="1539281136471" duration="2531000" />
+      <workItem from="1539281136471" duration="3307000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -649,7 +649,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65347000" />
+    <option name="totallyTimeSpent" value="66123000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1015,10 +1015,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="105" column="39" selection-start-line="105" selection-start-column="39" selection-end-line="105" selection-end-column="39" />
+        <state relative-caret-position="432">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
           <folding>
-            <element signature="e#34#57#0#PHP" expanded="true" />
+            <element signature="e#34#62#0#PHP" expanded="true" />
             <element signature="e#50190#50203#1#PHP" expanded="true" />
           </folding>
         </state>

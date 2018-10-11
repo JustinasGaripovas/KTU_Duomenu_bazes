@@ -28,21 +28,24 @@
             <table class="table table-sm thead-dark table-bordered">
                 <thead>
                 <tr>
-                    <th style="text-align: center; vertical-align: middle"> {% trans %} Subunit {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Tarnyba {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Autogreideris {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Traktorius {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Sunkvežimis {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Kiti {% endtrans %}</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                {% for material in winter_material_report | default('') %}
-                <tr>
-                    {% if material is empty  %}
-                        {% else %}
-                    {% for item in material %}
+                {% set counter = 0 %}
+                {% for mechanism in winter_mechanism_report | default('') %}
                     <tr>
-                        <td>{{ item.Name }}</td>
-
-                      {% endfor %}
-                            </tr>
-                    {% endif %}
+                        <td>{{ array_keys[counter] }}</td>
+                        <td>{{ mechanism['Autogreideris'] }}</td>
+                        <td>{{ mechanism['Traktorius'] }}</td>
+                        <td>{{ mechanism['Sunkvežimis'] }}</td>
+                        <td>{{ mechanism['Kiti'] }}</td>
+                        {% set counter = counter + 1%}
                 </tr>
                 {% endfor %}
                 </tbody>

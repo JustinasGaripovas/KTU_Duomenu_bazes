@@ -186,24 +186,34 @@ class WinterReportController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
-            $report = 0;
+            $report = $this->getDaysMechanism($from, $to);
+            $arrayKeys = array_keys($report);
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                //$spreadsheet = $reader->load('materials.xlsx');
+                $spreadsheet = $reader->load('materials.xlsx');
                 $index = 3;
-/*                foreach ($report as $rep) {
-                }*/
+                $keyIndex = 0;
+                foreach ($report as $rep) {
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A'. $index, $arrayKeys[$keyIndex])
+                        ->setCellValue('B' . $index, $rep['Autogreideris'])
+                        ->setCellValue('C' . $index, $rep['Traktorius'])
+                        ->setCellValue('D' . $index, $rep['Sunkvežimis'])
+                        ->setCellValue('E' . $index, $rep['Kiti']);
+                    $index ++;
+                    $keyIndex++;
+                }
 
-                /*$writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                 $writer->save('files/' . $fileName . '.xlsx');
-                return $this->file(('files/' . $fileName . '.xlsx'));*/
+                return $this->file(('files/' . $fileName . '.xlsx'));
             }
 // Rename worksheet
 
-            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), 'winter_material_report' => $report]);
+            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), 'winter_mechanism_report' => $report, 'array_keys' => $arrayKeys]);
         } else {
-            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), ['winter_material_report' => null]]);
+            return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), ['winter_mechanism_report' => null]]);
         }
     }
 
@@ -309,6 +319,54 @@ class WinterReportController extends Controller
 
         //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
         $result[$subunitId] = $subunitRoads;
+
+        return $result;
+    }
+
+
+    /**
+     * @param $start
+     * @param $end
+     * @return array
+     * $this->getDaysMechanism(new \DateTime(), new \DateTime("-100 days"));
+     */
+    private function getDaysMechanism($start,$end)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+       // $start = $start->format('Y-m-d');
+        // $end = $end->format('Y-m-d');
+
+        //Surasome kokius mechanizmus norime surasti, visi mechanizmai kurie nebus cia surasyti atsidurs "Kiti" value
+        $mechanisms = array("Kiti" => "","Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
+        $mechanismSum = array();
+        $result = array();
+
+        //Gauname visus KT
+        $dql = "SELECT w.SubunitId FROM App:Subunit w ORDER BY w.SubunitId";
+        $subunits = $em->createQuery($dql)->getArrayResult();
+
+        //einame pro visus KT
+        foreach ($subunits as $subunit) {
+            //Kadangi is Query imam tik SubunitId delto reikia patikslinti su ["SubunitId"]
+            $subunit = $subunit["SubunitId"];
+
+            //Einamepro mechanizmus auksciau isvardintus
+            foreach ($mechanisms as $x => $x_value) {
+                //einame pro visus winter darbus, kur duomenys atrenkami pagal data, kt, winterJob mechanizmu vardus kurie yra panasus i mechanisms array values
+                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
+                $mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
+
+                // $mechanisms["Kiti"] pasiima visas reiksmes, delto turime minusuoti reiksmes kurios yra $mechanisms array
+                if($x != "Kiti") {
+                    $mechanismSum["Kiti"] -= $mechanismSum[$x];
+                }
+
+            }
+
+            $result[$subunit] = $mechanismSum;
+        }
 
         return $result;
     }

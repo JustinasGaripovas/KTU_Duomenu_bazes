@@ -71,7 +71,6 @@ class ReportsController extends Controller
             //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
             $result[$subunitId] = $subunitRoads;
         }
-        dump($result);
         return $result;
     }
 
@@ -80,7 +79,6 @@ class ReportsController extends Controller
      */
     public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
-        $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'));
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(

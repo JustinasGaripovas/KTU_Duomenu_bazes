@@ -766,7 +766,6 @@ class ReportsController extends Controller
         }
     }
 
-
     /**
      * @Route("/reports/wintermaintenance/LAKD", name="wintermaintenance_LAKD")
      */
@@ -801,7 +800,7 @@ class ReportsController extends Controller
                     $weather = '';
                     $spreadsheet->getActiveSheet()->setCellValue('H1', 'Data: '. $dateNow->format('Y-m-d').' '. 'Laikas: ' . $rep->getReportFor().' val.' );
                     $spreadsheet->getActiveSheet()->setCellValue('A' . $index, $this->getRegionBySubunitId($rep->getSubunit()));
-                    $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $this->getSubunitNameById($rep->getSubunit()));
+                    $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $this->getSubunitName($rep->getSubunit()));
                     $highway = join(',', $rep->getRoadConditionHighway());
                     $highway2 = join(',', $rep->getRoadConditionHighway2());
                     $highway3 = join(',', $rep->getRoadConditionHighway3());
@@ -829,7 +828,6 @@ class ReportsController extends Controller
                 $index++;
                 }
 
-
 // Rename worksheet
                 $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                 $writer->save('files/' . $fileName . '.xlsx');
@@ -847,7 +845,12 @@ class ReportsController extends Controller
 
         $em = $this->getDoctrine()->getRepository('App:Subunit');
         return $em->find($subUnitId)->getName();
+    }
 
+    public function getSubunitName($subUnitId){
+
+        $em = $this->getDoctrine()->getRepository('App:Subunit');
+        return $em->findOneBy(['SubunitId'=> $subUnitId])->getName();
     }
 
     public function getRegionId($subUnitId){
@@ -861,5 +864,4 @@ class ReportsController extends Controller
         $em2 = $this->getDoctrine()->getRepository('App:Region');
         return $em2->findOneBy(['SubunitId' => $SubunitId])->getRegionName();
     }
-
 }

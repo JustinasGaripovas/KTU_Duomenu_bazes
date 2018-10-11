@@ -10,6 +10,7 @@
             <tr>
                 <th>{% trans %} CreatedAt {% endtrans %}</th>
                 <th>{% trans %} Subunit {% endtrans %}</th>
+                <th>{% trans %} Date {% endtrans %}</th>
                 <th>{% trans %} Mechanism {% endtrans %}</th>
                 <th>{% trans %} Job {% endtrans %}</th>
                 <th>{% trans %} RoadSection {% endtrans %}</th>
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ winter_job.Subunit }}</td>
+                <td>{{ winter_job.Date ? winter_job.Date|date('Y-m-d') : ''}}</td>
                 <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
                 <td>{{ winter_job.Job }}</td>
                 <td>{{ winter_job.getRoadSectionsStringArray| join('\n')| nl2br }}</td>

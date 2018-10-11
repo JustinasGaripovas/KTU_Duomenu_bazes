@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\WinterJobs;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
-use function Sodium\increment;
+use App\Utils\MaterialReportObject;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,69 +13,67 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
-use Symfony\Component\Validator\Constraints\Count;
+
 
 
 class ReportsController extends Controller
 {
+    /**
+     * @param $start -> Pradine data nuo kada ieskosim
+     * @param $end -> Galutine data nuo kada ieskosim
+     * @return array -> Grazinamas visu subunit array
+     *         $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
 
-    //    USAGE
-    //    $this->getDaysVehicles(DATE YOU WANT TO CHECK FROM | \DateTime() ,$Subunit);
-
-    private function getDaysVehicles($searchedDay, $subunit)
+     */
+    private function getDaysMaterials($start,$end)
     {
         $em = $this->get('doctrine.orm.entity_manager');
 
-        $dayBeforeSearched = new \DateTime($searchedDay->format('Y-m-d'));
-        $dayBeforeSearched = $dayBeforeSearched->modify('-1 day');
-        $dayBeforeSearched = $dayBeforeSearched->format('Y-m-d');
+        //Suformatuojam data kad galetume ja naudoti DQL
+        $start = $start->format('Y-m-d');
+        $end = $end->format('Y-m-d');
 
-        $searchedDay = $searchedDay->format('Y-m-d');
-
-        $vehicles = array("Kiti" => "","Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
         $result = array();
 
-        foreach($vehicles as $x => $x_value) {
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date = '$searchedDay' OR w.Date = '$dayBeforeSearched')";
-            $result[$x] = $em->createQuery($dql)->getResult();
-        }
+        //Gauname visus KT ID kad galetume padaryti ataskaita visiems KT
+        $dql = "SELECT w FROM App:Subunit w ORDER BY w.SubunitId ";
+        $subunits = $em->createQuery($dql)->execute();
 
-        foreach($result as $x => $x_value) {
-            $result[$x] = count(array_unique($x_value));
+        //einame pro visus KT
+        foreach ($subunits as $subunit) {
 
-            if($x != "Kiti")
-            {
-                $result["Kiti"] -= $result[$x];
+            $subunitId = $subunit->getSubunitId();
+
+            //Gauname visus WinterJobs PAGAL KT ID ir datas
+            $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date <'$start' AND w.Date >= '$end')";
+            $winterRoadSectionArray = $em->createQuery($dql2)->execute();
+
+            $subunitRoadsFinal = array();
+            $subunitRoads = array();
+
+            //Einame pro
+            foreach ($winterRoadSectionArray as $roadArray) {
+
+                //Gauname visus WinterJobs Kelius(RoadSections array) ir einame pro juos
+                foreach ($roadArray["RoadSections"] as $winterJobRoad) {
+                    //Jeigu kelio su winterJobRoad->getSectionId()(Kelio id) KEY nera ji sukuriame
+                    //Jeigu jis yra jau sukurtas(jei toks kelias jau buvo priestai) prie to KEY pridedame naujo kelio reiksmes
+                    if (!isset($subunitRoads[$winterJobRoad->getSectionId()])) {
+                        $subunitRoads[$winterJobRoad->getSectionId()] = new MaterialReportObject($subunit->getName(), $subunitId, $winterJobRoad->getSectionId(), $winterJobRoad->getSaltValue(), $winterJobRoad->getSandValue(), $winterJobRoad->getSolutionValue());
+                    } else {
+                        $subunitRoads[$winterJobRoad->getSectionId()]->addSalt($winterJobRoad->getSaltValue());
+                        $subunitRoads[$winterJobRoad->getSectionId()]->addSand($winterJobRoad->getSandValue());
+                        $subunitRoads[$winterJobRoad->getSectionId()]->addSolution($winterJobRoad->getSolutionValue());
+                    }
+                }
             }
+
+
+            //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
+            $result[$subunitId] = $subunitRoads;
         }
 
         return $result;
-    }
-
-    //    USAGE
-    //    $this->getDaysMaterials(DATE YOU WANT TO CHECK FROM | \DateTime() ,$Subunit);
-
-    private function getDaysMaterials($searchedDay, $subunit)
-    {
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $dayBeforeSearched = new \DateTime($searchedDay->format('Y-m-d'));
-        $dayBeforeSearched = $dayBeforeSearched->modify('-1 day');
-        $dayBeforeSearched = $dayBeforeSearched->format('Y-m-d');
-
-        $searchedDay = $searchedDay->format('Y-m-d');
-
-        $materials = array("Salt" => 0,"Sand"=> 0, "Solution"=> 0);
-
-        $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date = '$searchedDay' OR w.Date = '$dayBeforeSearched')";
-
-        foreach($em->createQuery($dql)->execute() as $x) {
-            $materials["Salt"] += array_sum($x->getRoadSectionsSalt());
-            $materials["Sand"] += array_sum( $x->getRoadSectionsSand());
-            $materials["Solution"] += array_sum($x->getRoadSectionsSolution());
-        }
-
-        return $materials;
     }
 
     /**

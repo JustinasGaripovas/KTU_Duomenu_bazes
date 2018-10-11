@@ -1,4 +1,3 @@
-{% trans_default_domain 'translation' %}
 
 <script>
 
@@ -71,9 +70,9 @@
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
             '<div class="panel col-3">' +
-            '<div class="panel-heading text-center">' +
-            '<strong>{% trans %}New Road{% endtrans %}</strong>' +
-            '</div>' +
+                '<div class="panel-heading text-center">' +
+                    '<strong>New Road</strong>' +
+                '</div>' +
             '</div>');
         // create the panel-body and append the form to it
         var $panelBody = $('<div class="panel-body" style="margin-bottom: 32px;"></div>').append(newForm);
@@ -95,7 +94,7 @@
      */
     function addRemoveButton ($panel) {
         // create remove button
-        var $removeButton = $('<a href="#" class="btn btn-danger col-12">{% trans %}Remove {% endtrans %}</a>');
+        var $removeButton = $('<a href="#" class="btn btn-danger col-12">Remove</a>');
         // appending the removebutton to the panel footer
         var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
         // handle the click event of the remove button
@@ -116,7 +115,7 @@
     function refreshAutocorrect() {
 
 
-        $('#road_section_list').find('.panel').each(function () {
+            $('#road_section_list').find('.panel').each(function () {
 
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
@@ -207,7 +206,7 @@
                 },
             });
 
-        });
+            });
     }
 
 </script>
@@ -219,8 +218,8 @@
                 <strong>Road</strong>
             </div>
             <div class="panel-body">
-                {{  form_row(row.RoadSectionSearch) }}
 
+                {{  form_row(row.RoadSectionSearch) }}
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}
                 {{ form_row(row.SectionBegin) }}
@@ -239,10 +238,7 @@
 </div>
 
 <br>
-
-<a id="button_to_add_new_road" class="container-fluid btn btn-lg btn-info" href="#">{% trans  %}Add new item{% endtrans %}</a>
-
-
+<a id="button_to_add_new_road" class="container-fluid btn btn-lg btn-info" href="#">Add new item</a>
 <hr>
 <br>
 

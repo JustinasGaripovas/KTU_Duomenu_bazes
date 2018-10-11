@@ -19,26 +19,9 @@ class DoneJobsRepository extends ServiceEntityRepository
         parent::__construct($registry, DoneJobs::class);
     }
 
-//    /**
-//     * @return DoneJobs[] Returns an array of DoneJobs objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
   /**
     * @return DoneJobs[] Returns an array of DoneJobs objects by username
    */
-
     public function findAllByUserName($value): ?DoneJobs
     {
         return $this->createQueryBuilder('d')

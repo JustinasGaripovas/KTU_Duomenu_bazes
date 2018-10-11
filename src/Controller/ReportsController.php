@@ -18,6 +18,55 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 class ReportsController extends Controller
 {
+
+    /**
+     * @param $start
+     * @param $end
+     * @return array
+     * $this->getDaysMechanism(new \DateTime(), new \DateTime("-100 days"));
+     */
+    private function getDaysMechanism($start,$end)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+        $start = $start->format('Y-m-d');
+        $end = $end->format('Y-m-d');
+
+        //Surasome kokius mechanizmus norime surasti, visi mechanizmai kurie nebus cia surasyti atsidurs "Kiti" value
+        $mechanisms = array("Kiti" => "","Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
+        $mechanismSum = array();
+        $result = array();
+
+        //Gauname visus KT
+        $dql = "SELECT w.SubunitId FROM App:Subunit w ORDER BY w.SubunitId";
+        $subunits = $em->createQuery($dql)->getArrayResult();
+
+        //einame pro visus KT
+        foreach ($subunits as $subunit) {
+            //Kadangi is Query imam tik SubunitId delto reikia patikslinti su ["SubunitId"]
+            $subunit = $subunit["SubunitId"];
+
+            //Einamepro mechanizmus auksciau isvardintus
+            foreach ($mechanisms as $x => $x_value) {
+                //einame pro visus winter darbus, kur duomenys atrenkami pagal data, kt, winterJob mechanizmu vardus kurie yra panasus i mechanisms array values
+                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
+                $mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
+
+                // $mechanisms["Kiti"] pasiima visas reiksmes, delto turime minusuoti reiksmes kurios yra $mechanisms array
+                if($x != "Kiti") {
+                    $mechanismSum["Kiti"] -= $mechanismSum[$x];
+                }
+
+            }
+
+            $result[$subunit] = $mechanismSum;
+        }
+
+        return $result;
+    }
+
+
     /**
      * @param $start -> Pradine data nuo kada ieskosim
      * @param $end -> Galutine data nuo kada ieskosim

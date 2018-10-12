@@ -19,9 +19,9 @@ class RoadSectionForWinterJobsRepository extends ServiceEntityRepository
         parent::__construct($registry, RoadSectionForWinterJobs::class);
     }
 
-//    /**
-//     * @return RoadSectionForWinterJobs[] Returns an array of RoadSectionForWinterJobs objects
-//     */
+//   /**
+//   * @return RoadSectionForWinterJobs[] Returns an array of RoadSectionForWinterJobs objects
+//   */
     /*
     public function findByExampleField($value)
     {

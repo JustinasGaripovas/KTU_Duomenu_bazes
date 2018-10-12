@@ -737,12 +737,27 @@ class ReportsController extends Controller
 
             $array = array();
             //Gauname visus KT
-            foreach ($em->createQuery($dql)->execute() as $subunit)
+
+            $subunitArray = $em->createQuery($dql)->execute();
+
+            unset($subunitArray[count($subunitArray)-1]);
+
+            foreach ($subunitArray as $subunit)
             {
                 //Sukuriame WInterMaintanence obijekta, kad galetume sujunti array su report array
                 $obj = new WinterMaintenance();
                 $obj->setSubunit($subunit->getSubunitId());
                 $obj->setRoadConditionHighway(array());
+                $obj->setRoadConditionHighway2(array());
+                $obj->setRoadConditionHighway3(array());
+                $obj->setRoadConditionDistrict(array());
+                $obj->setRoadConditionDistrict2(array());
+                $obj->setRoadConditionDistrict3(array());
+                $obj->setRoadConditionLocal(array());
+                $obj->setRoadConditionLocal2(array());
+                $obj->setRoadConditionLocal3(array());
+                $obj->setWeather(array());
+
                 $array[] = $obj;
             }
 

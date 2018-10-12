@@ -339,8 +339,8 @@ class WinterReportController extends Controller
         // $end = $end->format('Y-m-d');
 
         //Surasome kokius mechanizmus norime surasti, visi mechanizmai kurie nebus cia surasyti atsidurs "Kiti" value
-        $mechanisms = array("Kiti" => "","Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
-        $mechanismSum = array();
+        $mechanisms = array("Kiti"=>0,"Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
+        $mechanismSum = array("Sunkvežimis"=>0, "Autogreideris"=>0,"Traktorius"=>0);
         $result = array();
 
         //Gauname visus KT
@@ -351,18 +351,26 @@ class WinterReportController extends Controller
         foreach ($subunits as $subunit) {
             //Kadangi is Query imam tik SubunitId delto reikia patikslinti su ["SubunitId"]
             $subunitId = $subunit["SubunitId"];
+            $mechanisms["Kiti"] = 0;
+            $mechanismSum = array("Sunkvežimis"=>0, "Autogreideris"=>0,"Traktorius"=>0);
+
             //Einamepro mechanizmus auksciau isvardintus
-            foreach ($mechanisms as $x => $x_value) {
-                //einame pro visus winter darbus, kur duomenys atrenkami pagal data, kt, winterJob mechanizmu vardus kurie yra panasus i mechanisms array values
-                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
-                $mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
 
-                // $mechanisms["Kiti"] pasiima visas reiksmes, delto turime minusuoti reiksmes kurios yra $mechanisms array
-                if($x != "Kiti") {
-                    $mechanismSum["Kiti"] -= $mechanismSum[$x];
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+            //$mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
+
+            $winterJobArray = $em->createQuery($dql)->getResult();
+
+            foreach ($winterJobArray as $winterJob) {
+                foreach ($mechanisms as $x => $x_value) {
+                    if (strpos($winterJob->getMechanism(), $x_value) || $winterJob->getMechanism()==$x_value && $x!="Kiti") {
+                        $mechanismSum[$x]++;
+                    }
                 }
-
             }
+
+            $mechanismSum["Kiti"] = count($winterJobArray)- array_sum($mechanismSum);
+
 
             $result[$subunit["Name"]] = $mechanismSum;
         }

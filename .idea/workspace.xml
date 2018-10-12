@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/DAIS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DAIS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/WinterReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterReportController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,7 +45,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="35" />
-          <entry key="php" value="4371" />
+          <entry key="php" value="4687" />
           <entry key="twig" value="639" />
           <entry key="yml" value="26" />
         </counts>
@@ -58,7 +53,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="35" />
-          <entry key="PHP" value="4371" />
+          <entry key="PHP" value="4687" />
           <entry key="Twig" value="639" />
           <entry key="YAML" value="26" />
         </counts>
@@ -67,7 +62,7 @@
         <counts>
           <entry key="git.branch.checkout.local" value="1" />
           <entry key="git.branch.checkout.remote" value="1" />
-          <entry key="git.branch.compare" value="7" />
+          <entry key="git.branch.compare" value="8" />
           <entry key="git.branch.merge" value="8" />
         </counts>
       </usages-collector>
@@ -166,8 +161,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="341" column="53" selection-start-line="341" selection-start-column="42" selection-end-line="341" selection-end-column="53" />
+            <state relative-caret-position="401">
+              <caret line="371" column="43" lean-forward="true" selection-start-line="371" selection-start-column="43" selection-end-line="371" selection-end-column="43" />
               <folding>
                 <element signature="e#660#4360#0#PHP" />
                 <element signature="e#4458#6354#0#PHP" />
@@ -369,10 +364,10 @@
         <option value="$PROJECT_DIR$/src/Form/WinterJobsType.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/WinterJobsController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/WinterReportController.php" />
         <option value="$PROJECT_DIR$/src/Controller/ReportsController.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" />
         <option value="$PROJECT_DIR$/src/DataFixtures/WinterJobsFixture.php" />
+        <option value="$PROJECT_DIR$/src/Controller/WinterReportController.php" />
       </list>
     </option>
   </component>
@@ -484,7 +479,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2316" />
+    <option name="x" value="2312" />
     <option name="y" value="27" />
     <option name="width" value="1176" />
     <option name="height" value="767" />
@@ -651,7 +646,7 @@
       <workItem from="1539281136471" duration="4452000" />
       <workItem from="1539285614928" duration="38000" />
       <workItem from="1539285763850" duration="4064000" />
-      <workItem from="1539321555704" duration="8132000" />
+      <workItem from="1539321555704" duration="11506000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -678,7 +673,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79502000" />
+    <option name="totallyTimeSpent" value="82876000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1054,8 +1049,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="341" column="53" selection-start-line="341" selection-start-column="42" selection-end-line="341" selection-end-column="53" />
+        <state relative-caret-position="401">
+          <caret line="371" column="43" lean-forward="true" selection-start-line="371" selection-start-column="43" selection-end-line="371" selection-end-column="43" />
           <folding>
             <element signature="e#660#4360#0#PHP" />
             <element signature="e#4458#6354#0#PHP" />

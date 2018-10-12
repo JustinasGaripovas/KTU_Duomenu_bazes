@@ -49,8 +49,9 @@ class ReportsController extends Controller
 
             //Einamepro mechanizmus auksciau isvardintus
             foreach ($mechanisms as $x => $x_value) {
+
                 //einame pro visus winter darbus, kur duomenys atrenkami pagal data, kt, winterJob mechanizmu vardus kurie yra panasus i mechanisms array values
-                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
+                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$end' AND w.Date <= '$start')";
                 $mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
 
                 // $mechanisms["Kiti"] pasiima visas reiksmes, delto turime minusuoti reiksmes kurios yra $mechanisms array
@@ -71,8 +72,7 @@ class ReportsController extends Controller
      * @param $start -> Pradine data nuo kada ieskosim
      * @param $end -> Galutine data nuo kada ieskosim
      * @return array -> Grazinamas visu subunit array
-     *         $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
-
+     * $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
      */
     private function getDaysMaterials($start,$end)
     {
@@ -94,7 +94,7 @@ class ReportsController extends Controller
             $subunitId = $subunit->getSubunitId();
 
             //Gauname visus WinterJobs PAGAL KT ID ir datas
-            $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+            $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$end' AND w.Date <= '$start')";
             $winterRoadSectionArray = $em->createQuery($dql2)->execute();
 
             $subunitRoadsFinal = array();
@@ -129,8 +129,7 @@ class ReportsController extends Controller
      * @param $end
      * @param $subunit
      * @return array SVARBU Idedame visa subunit ne tik SubunitId
-     *  $this->getDaysMaterialsForSubunit(new \DateTime(),new \DateTime("-100 days"),$ldapUserRepository->findUnitIdByUserName($username)->getSubunit());
-
+     * $this->getDaysMaterialsForSubunit(new \DateTime(),new \DateTime("-100 days"),$ldapUserRepository->findUnitIdByUserName($username)->getSubunit());
      */
     private function getDaysMaterialsForSubunit($start,$end,$subunit)
     {
@@ -145,7 +144,7 @@ class ReportsController extends Controller
         $subunitId = $subunit->getSubunitId();
 
         //Gauname visus WinterJobs PAGAL KT ID ir datas
-        $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+        $dql2 = "SELECT w.RoadSections FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$end' AND w.Date <= '$start')";
         $winterRoadSectionArray = $em->createQuery($dql2)->execute();
 
         $subunitRoads = array();
@@ -179,6 +178,7 @@ class ReportsController extends Controller
     public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $username = $this->getUser()->getUserName();
+
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
                 'danger',

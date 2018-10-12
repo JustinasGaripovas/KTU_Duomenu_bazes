@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\WinterJobs;
+use App\Entity\WinterMaintenance;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
@@ -705,10 +707,16 @@ class ReportsController extends Controller
         }
     }
 
+    function deleteElement($element, &$array){
+        $index = array_search($element, $array);
+        if($index !== false){
+            unset($array[$index]);
+        }
+    }
+
     /**
      * @Route("/reports/wintermaintenance/LAKD", name="wintermaintenance_LAKD")
      */
-
     public function wintermaintenanceReportToLAKD (Request $request) {
 
         $form = $this->createForm(LAKDReportType::class);
@@ -719,17 +727,52 @@ class ReportsController extends Controller
             $reportFor = $form->get('reportFor')->getData();
             $dql = '';
 
-            $dql = "SELECT r FROM App:WinterMaintenance r WHERE (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor')";
+            $dql = "SELECT r FROM App:WinterMaintenance r WHERE (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $report = $query->execute();
 
+            $dql = "SELECT w FROM App:Subunit w";
+
+            $array = array();
+            //Gauname visus KT
+            foreach ($em->createQuery($dql)->execute() as $subunit)
+            {
+                //Sukuriame WInterMaintanence obijekta, kad galetume sujunti array su report array
+                $obj = new WinterMaintenance();
+                $obj->setSubunit($subunit->getSubunitId());
+                $obj->setRoadConditionHighway(array());
+                $array[] = $obj;
+            }
+
+            //Einame pro abu array
+            foreach ($array as $empty)
+            {
+                foreach ($report as $r)
+                {
+                    //Jei sutampa Subunit id tada mes is tuscio WinterMaintenance array istrinam reiksme kuri yra report array
+                    if($empty->getSubunit()==$r->getSubunit())
+                    {
+                        $this->deleteElement($empty,$array);
+                    }
+                }
+            }
+
+            //Sujungiame
+            $report = array_merge($report,$array);
+
+            //Sortinam
+            usort($report, function($a, $b)
+            {
+                return $a->getSubunit() >  $b->getSubunit();
+            });
+
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
                 $spreadsheet = $reader->load('ziemos_ataskaita_LAKD.xlsx');
-// Set document properties
+                // Set document properties
                 $index = 6;
 
                 $dateNow = new \DateTime('now');

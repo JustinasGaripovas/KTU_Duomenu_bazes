@@ -63,6 +63,11 @@ class WinterJobs
      */
     private $Date;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $SubunitName;
+
     public function addRoadSection($additionalSection)
     {
         $this->RoadSections[] = $additionalSection;
@@ -264,5 +269,17 @@ class WinterJobs
     public function __toString()
     {
         return $this->getMechanism();
+    }
+
+    public function getSubunitName(): ?string
+    {
+        return $this->SubunitName;
+    }
+
+    public function setSubunitName(string $SubunitName): self
+    {
+        $this->SubunitName = $SubunitName;
+
+        return $this;
     }
 }

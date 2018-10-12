@@ -24,7 +24,7 @@
         {% for winter_job in winter_jobs | default ('') %}
             <tr>
                 <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ winter_job.Subunit }}</td>
+                <td>{{ winter_job.SubunitName }}</td>
                 <td>{{ winter_job.Date ? winter_job.Date|date('Y-m-d') : ''}}</td>
                 <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
                 <td>{{ winter_job.Job }}</td>

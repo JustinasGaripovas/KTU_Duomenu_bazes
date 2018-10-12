@@ -29,6 +29,9 @@ class WinterJobsController extends Controller
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
+
+        dump(['winter_jobs' => $pagination]);
+
         return $this->render('winter_jobs/index.html.twig', ['winter_jobs' => $pagination]);
     }
 
@@ -38,10 +41,10 @@ class WinterJobsController extends Controller
     public function new(ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository,Request $request): Response
     {
         $username = $this->getUser()->getUserName();
-        $subunitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
+        $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit();
         $choicesName = array();
         $choicesKey = array();
-        $choices = $mechanismRepository->findBySubunitField($subunitId);
+        $choices = $mechanismRepository->findBySubunitField($subunit->getSubunitId());
         foreach ($choices as $item) {
             array_push($choicesName, $item['Type'] . ' | ' . $item['Number']);
             array_push($choicesKey, $item['Type'] . ' | ' . $item['Number']);
@@ -57,7 +60,8 @@ class WinterJobsController extends Controller
         $choiceArrayForJobs = array_combine($choicesKey, $choicesName);
 
         $winterJob = new WinterJobs();
-        $winterJob->setSubunit($subunitId);
+        $winterJob->setSubunit($subunit->getSubunitId());
+        $winterJob->setSubunitName($subunit->getName());
         $winterJob->setCreatedBy($this->getUser()->getUserName());
         $winterJob->setCreatedAt(new \DateTime("now"));
 

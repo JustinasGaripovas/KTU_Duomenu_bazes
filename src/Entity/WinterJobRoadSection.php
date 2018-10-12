@@ -2,78 +2,36 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\WinterJobRoadSectionRepository")
- */
 class WinterJobRoadSection
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $SectionId;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $SectionName;
 
-    /**
-     * @ORM\Column(type="float")
-     */
     private $SectionBegin;
 
-    /**
-     * @ORM\Column(type="float")
-     */
     private $SectionEnd;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $level;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $RoadSectionSearch;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
     private $SaltChecked;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
     private $SandChecked;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
     private $SolutionChecked;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
     private $SaltValue;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+
     private $SandValue;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
+
     private $SolutionValue;
 
     public function getId(): ?int

@@ -355,15 +355,15 @@ class WinterReportController extends Controller
             $mechanismSum = array("Sunkvežimis"=>0, "Autogreideris"=>0,"Traktorius"=>0);
 
             //Einamepro mechanizmus auksciau isvardintus
-
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
-            //$mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
+            //select('DISTINCT(rec.city) as city')
+            $dql = "SELECT DISTINCT w.Mechanism FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
 
             $winterJobArray = $em->createQuery($dql)->getResult();
 
             foreach ($winterJobArray as $winterJob) {
+                $winterJob = $winterJob["Mechanism"];
                 foreach ($mechanisms as $x => $x_value) {
-                    if (strpos($winterJob->getMechanism(), $x_value) || $winterJob->getMechanism()==$x_value && $x!="Kiti") {
+                    if (strpos(strtolower($winterJob), strtolower($x_value)) !== false && $x!="Kiti") {
                         $mechanismSum[$x]++;
                     }
                 }
@@ -371,10 +371,10 @@ class WinterReportController extends Controller
 
             $mechanismSum["Kiti"] = count($winterJobArray)- array_sum($mechanismSum);
 
-
             $result[$subunit["Name"]] = $mechanismSum;
         }
 
         return $result;
     }
+
 }

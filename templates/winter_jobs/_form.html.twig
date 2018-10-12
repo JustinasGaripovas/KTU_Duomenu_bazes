@@ -70,7 +70,7 @@
         // create the panel
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
-            '<div class="panel col-3">' +
+            '<div class="panel col-sm-3">' +
                 '<div class="panel-heading text-center">' +
                     '<strong>{% trans %} New Road {% endtrans %}</strong>' +
                 '</div>' +
@@ -212,7 +212,7 @@
 
 </script>
 {{ form_start(form) }}
-<div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row" style="align-items: top;">
+<div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row">
     {% for row in form.RoadSections %}
         <div class="panel col-sm-6 col-md-3" style="vertical-align: top;">
             <div class="panel-heading text-center">

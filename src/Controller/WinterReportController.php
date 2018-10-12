@@ -221,7 +221,7 @@ class WinterReportController extends Controller
      * @param $start -> Pradine data nuo kada ieskosim
      * @param $end -> Galutine data nuo kada ieskosim
      * @return array -> Grazinamas visu subunit array
-     *         $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
+     * $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
 
      */
     private function getDaysMaterials($start,$end)
@@ -229,7 +229,7 @@ class WinterReportController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
 
         //Suformatuojam data kad galetume ja naudoti DQL
-       // $start = $start->format('Y-m-d');
+        //$start = $start->format('Y-m-d');
         //$end = $end->format('Y-m-d');
 
         $result = array();
@@ -344,18 +344,17 @@ class WinterReportController extends Controller
         $result = array();
 
         //Gauname visus KT
-        $dql = "SELECT w.SubunitId FROM App:Subunit w ORDER BY w.SubunitId";
+        $dql = "SELECT w FROM App:Subunit w ORDER BY w.SubunitId";
         $subunits = $em->createQuery($dql)->getArrayResult();
 
         //einame pro visus KT
         foreach ($subunits as $subunit) {
             //Kadangi is Query imam tik SubunitId delto reikia patikslinti su ["SubunitId"]
-            $subunit = $subunit["SubunitId"];
-
+            $subunitId = $subunit["SubunitId"];
             //Einamepro mechanizmus auksciau isvardintus
             foreach ($mechanisms as $x => $x_value) {
                 //einame pro visus winter darbus, kur duomenys atrenkami pagal data, kt, winterJob mechanizmu vardus kurie yra panasus i mechanisms array values
-                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
+                $dql = "SELECT COUNT(w) FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND w.Mechanism LIKE '%$x_value%' AND (w.Date >='$start' AND w.Date <= '$end')";
                 $mechanismSum[$x] = $em->createQuery($dql)->getResult()[0][1];
 
                 // $mechanisms["Kiti"] pasiima visas reiksmes, delto turime minusuoti reiksmes kurios yra $mechanisms array
@@ -365,10 +364,9 @@ class WinterReportController extends Controller
 
             }
 
-            $result[$subunit] = $mechanismSum;
+            $result[$subunit["Name"]] = $mechanismSum;
         }
 
         return $result;
     }
-
 }

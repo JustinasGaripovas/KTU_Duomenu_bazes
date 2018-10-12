@@ -71,7 +71,6 @@ class WinterJobsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($winterJob);
             $em->flush();
-
             return $this->redirectToRoute('winter_jobs_index');
 
         }

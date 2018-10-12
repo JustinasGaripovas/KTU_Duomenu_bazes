@@ -19,22 +19,19 @@ class RoadSectionForWinterJobsRepository extends ServiceEntityRepository
         parent::__construct($registry, RoadSectionForWinterJobs::class);
     }
 
-//   /**
-//   * @return RoadSectionForWinterJobs[] Returns an array of RoadSectionForWinterJobs objects
-//   */
-    /*
-    public function findByExampleField($value)
+    public function findRoadByNameOrIdField($search, $unit_id, $subunit_id)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('r.SectionId LIKE :val')
+            ->andWhere('r.Subunit = :val3 or r.Subunit = :val4')
+            ->setParameter('val', '%'.$search.'%')
+            ->setParameter('val3', $unit_id)
+            ->setParameter('val4', $subunit_id)
+            ->setMaxResults(100)
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?RoadSectionForWinterJobs

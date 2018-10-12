@@ -37,6 +37,11 @@ class RoadSectionForWinterJobs
     private $SectionEnd;
 
     /**
+     * @ORM\Column(type="float")
+     */
+    private $SectionLength;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $Subunit;
@@ -90,6 +95,18 @@ class RoadSectionForWinterJobs
     public function setSectionEnd(float $SectionEnd): self
     {
         $this->SectionEnd = $SectionEnd;
+
+        return $this;
+    }
+
+    public function getSectionLength(): ?float
+    {
+        return $this->SectionLength;
+    }
+
+    public function setSectionLength(float $SectionLength): self
+    {
+        $this->SectionLength = $SectionLength;
 
         return $this;
     }

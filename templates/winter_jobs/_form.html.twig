@@ -195,9 +195,10 @@
                 }
             });
 
+
             $('#'+sectionSearch).autocomplete({
-                source: "{{ path('search/road') }}",
-                minLength: 2,
+                source: "{{ path('search/road/winter') }}",
+                minLength: 1,
                 delay: 500,
                 select: function( event, ui ) {
                     $('#'+sectionId).val(ui.item.section_id),
@@ -207,7 +208,7 @@
                 },
             });
 
-            });
+        });
     }
 
 </script>

@@ -21,9 +21,25 @@ class WinterMaintenanceController extends Controller
     /**
      * @Route("/", name="winter_maintenance_index", methods="GET")
      */
-    public function index(WinterMaintenanceRepository $winterMaintenanceRepository): Response
+    public function index(WinterMaintenanceRepository $winterMaintenanceRepository, LdapUserRepository $ldapUserRepository): Response
     {
-        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $winterMaintenanceRepository->findAll()]);
+        $username = $this->getUser()->getUserName();
+        $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "";
+
+        $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+
+        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $em->createQuery($dql)->execute()]);
     }
 
     /**
@@ -32,6 +48,15 @@ class WinterMaintenanceController extends Controller
     public function new(ChoicesRepository $choicesRepository,RoadSectionRepository $roadSectionRepository, Request $request, LdapUserRepository $ldapUserRepository): Response
     {
         $userName = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
         $em = $this->getDoctrine()->getRepository('App:Subunit');
         $unitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
         $subUnitId = $em->findOneBy(['id' => $unitId])->getSubunitId();

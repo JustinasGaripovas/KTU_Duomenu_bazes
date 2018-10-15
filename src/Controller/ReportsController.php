@@ -717,7 +717,18 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/wintermaintenance/LAKD", name="wintermaintenance_LAKD")
      */
-    public function wintermaintenanceReportToLAKD (Request $request) {
+    public function wintermaintenanceReportToLAKD (LdapUserRepository $ldapUserRepository, Request $request) {
+
+
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
 
         $form = $this->createForm(LAKDReportType::class);
 

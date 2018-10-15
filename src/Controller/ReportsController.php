@@ -184,12 +184,12 @@ class ReportsController extends Controller
                     foreach ($report as $rep) {
                         $spreadsheet->getActiveSheet()
                             ->setCellValue('A' . $index, $rep->getRoadId() . '(' . $rep->getRoadSectionBegin() . '-' . $rep->getRoadSectionEnd() . ')');
-                            if($rep->getIsAdditional() === true){
-                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
-                            }
-                            else {
-                                $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
-                            }
+                        if($rep->getIsAdditional() === true){
+                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote() . '( Kelio būklė: '. $rep->getRoadCondition() .', '. 'Bangos dydis: ' .  $rep->getWaveSize(). 'cm. Vieta: ' . $rep->getplace() .'km.'. ')' );
+                        }
+                        else {
+                            $spreadsheet->getActiveSheet()->setCellValue('B' . $index, $rep->getNote());
+                        }
                         foreach ($rep->getJob() as $job) {
                             $spreadsheet->getActiveSheet()->setCellValue('C' . $index, $job->getDoneJobDate()->format('Y-m-d'));
                         }
@@ -652,7 +652,7 @@ class ReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
-                    $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
+                $dql = "SELECT r FROM App:Restriction r WHERE (r.DateTo >= '$from') ORDER BY r.DateFrom ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -721,6 +721,7 @@ class ReportsController extends Controller
 
         $username = $this->getUser()->getUserName();
         $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
+        $shouldCreateEmptySubunits = false;
 
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
@@ -738,75 +739,82 @@ class ReportsController extends Controller
             $reportFor = $form->get('reportFor')->getData();
             $dql = '';
 
-            $dql = "SELECT r FROM App:WinterMaintenance r WHERE (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
+            $em = $this->get('doctrine.orm.entity_manager');
+            $dql = "SELECT s FROM App:Subunit s";
+            $subunits = array();
+            foreach ($em->createQuery($dql)->execute() as $item)
+            {
+                $subunits[$item->getSubunitId()] = $item->getName();
+            }
+            
+            $dql = "SELECT r FROM App:WinterMaintenance r WHERE AND (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
 
             if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
             } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
             } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
             } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = true;
             } elseif (true === $this->isGranted('ROLE_ADMIN')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = true;
             } elseif (true === $this->isGranted('ROLE_WORKER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
             }
 
-            $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $report = $query->execute();
 
-            $dql = "SELECT w FROM App:Subunit w";
+            if($shouldCreateEmptySubunits) {
+                $dql = "SELECT w FROM App:Subunit w";
+                $array = array();
+                $subunitArray = $em->createQuery($dql)->execute();
 
-            $array = array();
-            //Gauname visus KT
+                unset($subunitArray[count($subunitArray) - 1]);
 
-            $subunitArray = $em->createQuery($dql)->execute();
+                foreach ($subunitArray as $subunit) {
+                    //Sukuriame WInterMaintanence obijekta, kad galetume sujunti array su report array
+                    $obj = new WinterMaintenance();
+                    $obj->setSubunit($subunit->getSubunitId());
+                    $obj->setRoadConditionHighway(array());
+                    $obj->setRoadConditionHighway2(array());
+                    $obj->setRoadConditionHighway3(array());
+                    $obj->setRoadConditionDistrict(array());
+                    $obj->setRoadConditionDistrict2(array());
+                    $obj->setRoadConditionDistrict3(array());
+                    $obj->setRoadConditionLocal(array());
+                    $obj->setRoadConditionLocal2(array());
+                    $obj->setRoadConditionLocal3(array());
+                    $obj->setWeather(array());
 
-            unset($subunitArray[count($subunitArray)-1]);
+                    $array[] = $obj;
+                }
 
-            foreach ($subunitArray as $subunit)
-            {
-                //Sukuriame WInterMaintanence obijekta, kad galetume sujunti array su report array
-                $obj = new WinterMaintenance();
-                $obj->setSubunit($subunit->getSubunitId());
-                $obj->setRoadConditionHighway(array());
-                $obj->setRoadConditionHighway2(array());
-                $obj->setRoadConditionHighway3(array());
-                $obj->setRoadConditionDistrict(array());
-                $obj->setRoadConditionDistrict2(array());
-                $obj->setRoadConditionDistrict3(array());
-                $obj->setRoadConditionLocal(array());
-                $obj->setRoadConditionLocal2(array());
-                $obj->setRoadConditionLocal3(array());
-                $obj->setWeather(array());
-
-                $array[] = $obj;
-            }
-
-            //Einame pro abu array
-            foreach ($array as $empty)
-            {
-                foreach ($report as $r)
-                {
-                    //Jei sutampa Subunit id tada mes is tuscio WinterMaintenance array istrinam reiksme kuri yra report array
-                    if($empty->getSubunit()==$r->getSubunit())
-                    {
-                        $this->deleteElement($empty,$array);
+                //Einame pro abu array
+                foreach ($array as $empty) {
+                    foreach ($report as $r) {
+                        //Jei sutampa Subunit id tada mes is tuscio WinterMaintenance array istrinam reiksme kuri yra report array
+                        if ($empty->getSubunit() == $r->getSubunit()) {
+                            $this->deleteElement($empty, $array);
+                        }
                     }
                 }
+
+                //Sujungiame
+                $report = array_merge($report, $array);
+
+                //Sortinam
+                usort($report, function ($a, $b) {
+                    return $a->getSubunit() > $b->getSubunit();
+                });
             }
-
-            //Sujungiame
-            $report = array_merge($report,$array);
-
-            //Sortinam
-            usort($report, function($a, $b)
-            {
-                return $a->getSubunit() >  $b->getSubunit();
-            });
 
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
@@ -847,7 +855,7 @@ class ReportsController extends Controller
                         ->setCellValue('G' . $index, $rep->getOtherEvents())
                         ->setCellValue('H' . $index, $rep->getMechanism())
                         ->setCellValue('I' . $index, $rep->getRoadConditionScore());
-                $index++;
+                    $index++;
                 }
 
 // Rename worksheet
@@ -856,7 +864,7 @@ class ReportsController extends Controller
                 return $this->file(('files/' . $fileName . '.xlsx'));
             }
 
-            return $this->render('reports/index_LAKD.html.twig', ['form' => $form->createView(), 'winter_maintenances' => $report]);
+            return $this->render('reports/index_LAKD.html.twig', ['form' => $form->createView(), 'winter_maintenances' => $report,"subunits" => $subunits]);
         } else {
             return $this->render('reports/index_LAKD.html.twig', ['form' => $form->createView(), ['winter_maintenances' => null]]);
         }

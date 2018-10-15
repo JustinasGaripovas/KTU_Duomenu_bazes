@@ -54,12 +54,15 @@ class WinterMaintenanceController extends Controller
         $query = $em->createQuery($dql);
 
         $dql = "SELECT s FROM App:Subunit s";
-        $em->createQuery($dql)->execute();
-
+        $subunitArray = array();
+        foreach ($em->createQuery($dql)->execute() as $item)
+        {
+            $subunitArray[$item->getSubunitId()] = $item->getName();
+        }
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
-        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $pagination,'subunits'=>$em->createQuery($dql)->execute()]);
+        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $pagination,'subunits'=>$subunitArray]);
     }
 
     /**

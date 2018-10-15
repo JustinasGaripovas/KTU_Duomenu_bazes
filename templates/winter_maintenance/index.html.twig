@@ -27,7 +27,7 @@
         {% for winter_maintenance in winter_maintenances %}
             <tr>
                 <td> {{ winter_maintenance.reportFor }}</td>
-                <td>{{ winter_maintenance.Subunit }}</td>
+                <td>{{ subunits[winter_maintenance.Subunit]}}</td>
                 <td>
                     M1 - {{ winter_maintenance.RoadConditionHighway | join(', ') }},
                     M2 - {{ winter_maintenance.RoadConditionHighway2 | join(', ') }},

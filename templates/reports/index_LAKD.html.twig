@@ -39,7 +39,7 @@
                     <tbody>
                     {% for winter_maintenance in winter_maintenances | default('') %}
                         <tr>
-                            <td>{{ winter_maintenance.Subunit }}</td>
+                            <td>{{ subunits[winter_maintenance.Subunit] }}</td>
                             <td>
 
                                 M1 - {{ winter_maintenance.RoadConditionHighway | join(', ') }},

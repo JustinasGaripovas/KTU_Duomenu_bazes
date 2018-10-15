@@ -68,13 +68,13 @@ class WinterReportController extends Controller
 
                 $index = 5;
                 foreach ($report as $item){
-                $spreadsheet->getActiveSheet()
-                    ->setCellValue('A' . $index, $item->getSubunitName())
-                    ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
-                    ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
-                    ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
-                    ->setCellValue('E' . $index, $item->getMechanism())
-                    ->setCellValue('F' . $index, $item->getJob());
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A' . $index, $item->getSubunitName())
+                        ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
+                        ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
+                        ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
+                        ->setCellValue('E' . $index, $item->getMechanism())
+                        ->setCellValue('F' . $index, $item->getJob());
                     if (sizeof($item->getRoadSections()) > 1) {
                         foreach ($item->getRoadSections() as $value) {
                             $spreadsheet->getActiveSheet()
@@ -89,32 +89,31 @@ class WinterReportController extends Controller
                         }
                     }
                     else {
-                            foreach ($item->getRoadSections() as $value) {
-                                $spreadsheet->getActiveSheet()
-                                    ->setCellValue('G' . $index, $value->getSectionId())
-                                    ->setCellValue('H' . $index, $value->getSectionType())
-                                    ->setCellValue('I' . $index, $value->getSectionBegin())
-                                    ->setCellValue('J' . $index, $value->getSectionEnd())
-                                    ->setCellValue('K' . $index, $value->getSaltValue())
-                                    ->setCellValue('L' . $index, $value->getSandValue())
-                                    ->setCellValue('M' . $index, $value->getSolutionValue());
-                                $index++;
-                            }
+                        foreach ($item->getRoadSections() as $value) {
+                            $spreadsheet->getActiveSheet()
+                                ->setCellValue('G' . $index, $value->getSectionId())
+                                ->setCellValue('H' . $index, $value->getSectionType())
+                                ->setCellValue('I' . $index, $value->getSectionBegin())
+                                ->setCellValue('J' . $index, $value->getSectionEnd())
+                                ->setCellValue('K' . $index, $value->getSaltValue())
+                                ->setCellValue('L' . $index, $value->getSandValue())
+                                ->setCellValue('M' . $index, $value->getSolutionValue());
+                            $index++;
                         }
+                    }
                 }
                 // Rename worksheet
                 $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                 $writer->save('files/' . $fileName . '.xlsx');
                 return $this->file(('files/' . $fileName . '.xlsx'));
 // Set document properties
-                }
+            }
 
             return $this->render('winter_report/winter_jobs_report.html.twig', ['form' => $form->createView(), 'winter_jobs_report' => $report]);
         } else {
             return $this->render('winter_report/winter_jobs_report.html.twig', ['form' => $form->createView(), ['winter_jobs_report' => null]]);
         }
     }
-
 
     /**
      * @Route("/winter/report/materials", name="winter_report_materials")
@@ -190,7 +189,7 @@ class WinterReportController extends Controller
                 $writer->save('files/' . $fileName . '.xlsx');
                 return $this->file(('files/' . $fileName . '.xlsx'));
             }
-        // Rename worksheet
+            // Rename worksheet
 
             return $this->render('winter_report/winter_material_report.html.twig', ['form' => $form->createView(), 'winter_material_report' => $report]);
         } else {
@@ -201,8 +200,8 @@ class WinterReportController extends Controller
     /**
      * @Route("/winter/report/mechanism", name="winter_report_mechanism")
      */
-
     public function winterMaintenanceReportMechanism (AuthorizationCheckerInterface $authChecker,LdapUserRepository $ldapUserRepository, Request $request) {
+
         $username = $this->getUser()->getUserName();
 
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
@@ -216,6 +215,7 @@ class WinterReportController extends Controller
         $form = $this->createForm(WinterJobsReportType::class);
         $form->handleRequest($request);
         $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit();
+        $dateNow = new \DateTime('now');
         if ($form->isSubmitted() && $form->isValid()) {
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
@@ -238,30 +238,26 @@ class WinterReportController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('winter_jobs_mechanism_tmpl.xlsx');
-
-                $spreadsheet->getActiveSheet()
-                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
-
-                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
-                    ->setLastModifiedBy('VĮ Kelių priežiūra')
-                    ->setTitle('Atliktų žiemos mechanizmų ataskaita')
-                    ->setSubject('Atliktų žiemos mechanizmų ataskaita')
-                    ->setDescription('Atliktų žiemos mechanizmų ataskaita')
-                    ->setKeywords('Atliktų žiemos mechanizmų ataskaita')
-                    ->setCategory('Atliktų žiemos mechanizmų ataskaita');
-
+                $spreadsheet = $reader->load('mechanizm_report.xlsx');
                 $index = 5;
                 $keyIndex = 0;
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A1', $dateNow->format('Y-m-d'));
                 foreach ($report as $rep) {
-                    $spreadsheet->getActiveSheet()
-                        ->setCellValue('A'. $index, $arrayKeys[$keyIndex])
-                        ->setCellValue('B' . $index, $rep['Autogreideris'])
-                        ->setCellValue('C' . $index, $rep['Traktorius'])
-                        ->setCellValue('D' . $index, $rep['Sunkvežimis'])
-                        ->setCellValue('E' . $index, $rep['Kiti']);
-                    $index ++;
-                    $keyIndex++;
+                    if($arrayKeys[$keyIndex] == 'Nepriskirta'){
+                        $keyIndex ++;
+                    }
+                    else {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A'. $index, $this->getRegionBySubunitId($this->getSubunitIdByName($arrayKeys[$keyIndex])))
+                            ->setCellValue('B'. $index, $arrayKeys[$keyIndex])
+                            ->setCellValue('D' . $index, $rep['Sunkvežimis'])
+                            ->setCellValue('E' . $index, $rep['Autogreideris'])
+                            ->setCellValue('F' . $index, $rep['Traktorius'])
+                            ->setCellValue('G' . $index, $rep['Kiti']);
+                        $index ++;
+                        $keyIndex++;
+                    }
                 }
 
                 $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
@@ -274,6 +270,16 @@ class WinterReportController extends Controller
         } else {
             return $this->render('winter_report/winter_mechanism_report.html.twig', ['form' => $form->createView(), ['winter_mechanism_report' => null]]);
         }
+    }
+
+    public function getRegionBySubunitId($SubunitId) {
+        $em2 = $this->getDoctrine()->getRepository('App:Region');
+        return $em2->findOneBy(['SubunitId' => $SubunitId])->getRegionName();
+    }
+
+    public function getSubunitIdByName($name) {
+        $em2 = $this->getDoctrine()->getRepository('App:Subunit');
+        return $em2->findOneBy(['Name' => $name])->getSubunitId();
     }
 
     /**
@@ -394,7 +400,7 @@ class WinterReportController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
 
         //Suformatuojam data kad galetume ja naudoti DQL
-       // $start = $start->format('Y-m-d');
+        // $start = $start->format('Y-m-d');
         // $end = $end->format('Y-m-d');
 
         //Surasome kokius mechanizmus norime surasti, visi mechanizmai kurie nebus cia surasyti atsidurs "Kiti" value

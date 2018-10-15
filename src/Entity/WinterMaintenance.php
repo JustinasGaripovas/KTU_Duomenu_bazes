@@ -65,7 +65,6 @@ class WinterMaintenance
      */
     private $Mechanism;
 
-
     /**
      * @ORM\Column(type="string", length=255)
      */

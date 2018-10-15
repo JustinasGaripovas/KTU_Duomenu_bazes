@@ -21,7 +21,7 @@ class WinterMaintenanceController extends Controller
     /**
      * @Route("/", name="winter_maintenance_index", methods="GET")
      */
-    public function index(WinterMaintenanceRepository $winterMaintenanceRepository, LdapUserRepository $ldapUserRepository): Response
+    public function index(WinterMaintenanceRepository $winterMaintenanceRepository, LdapUserRepository $ldapUserRepository, Request $request ): Response
     {
         $username = $this->getUser()->getUserName();
         $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
@@ -38,8 +38,15 @@ class WinterMaintenanceController extends Controller
         $dql = "";
 
         $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+        $query = $em->createQuery($dql);
 
-        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $em->createQuery($dql)->execute()]);
+        $dql = "SELECT s FROM App:Subunit s";
+        $em->createQuery($dql)->execute();
+
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
+        return $this->render('winter_maintenance/index.html.twig', ['winter_maintenances' => $pagination,'subunits'=>$em->createQuery($dql)->execute()]);
     }
 
     /**

@@ -37,7 +37,20 @@ class WinterMaintenanceController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "";
 
-        $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+        if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_ADMIN')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_WORKER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        }
+
         $query = $em->createQuery($dql);
 
         $dql = "SELECT s FROM App:Subunit s";

@@ -719,8 +719,8 @@ class ReportsController extends Controller
      */
     public function wintermaintenanceReportToLAKD (LdapUserRepository $ldapUserRepository, Request $request) {
 
-
         $username = $this->getUser()->getUserName();
+        $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
 
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
@@ -739,6 +739,20 @@ class ReportsController extends Controller
             $dql = '';
 
             $dql = "SELECT r FROM App:WinterMaintenance r WHERE (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
+
+            if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+            } elseif (true === $this->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
+            } elseif (true === $this->isGranted('ROLE_WORKER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            }
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);

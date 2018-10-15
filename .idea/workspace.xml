@@ -2,59 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/files/057ecfc772b0cf0f93b9501fc968b48a.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/0bb70f11713f98222721da38d149e251.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/0f6f53e400079d68f80e65da1bf4ce3f.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/16f59f7e5add0635d40f5e0f4199be92.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/2552fc83e92b045589fd56c8f50dad6c.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/270b7442dbbac9a3b9bab48cfda28476.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/282a2b98efd476b04a64541a3f95693b.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/29dc9eef4772548a73a6b9609fe608f5.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/34622467563d514a2b62d6c8c1371f6e.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/42bedbe10ce779f40345410b10040c19.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/5008e9d5454eb5edda24e110c19b817a.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/5c675a4c694ab2e3d13500e4d01c8ffd.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/5e960b40cb861c835c7b65608c08201b.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/63547509e7d04e94015d2381a069fbe8.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/659db4789236975bd9a833b46d8a275b.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/666eb186f8a4f2d9e3bcf80d2805be57.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/669403d44af08a0b5fc4fbaf84305b57.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/6f30808bb39c62d48ff457207e479651.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/6fbf953900c07d6615c5a739bb9dee44.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/7aedc9b0dd515a66da69b4733604fcf2.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/848ad0786da2b0d72098650b0c1ab098.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/8525a391188f16445b32d20769a848af.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/8947231f5ec4fb8e73e0c44530fd035f.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/91ea2c2f62ba217b2240fd9d01254cb4.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/ac755b935e591dba4babe6ea70bb2ece.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/adf714bdd5a8c8dff6724e31c4031544.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/af16d2d14dfd77df86a40cd316a935c4.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/b2914dcc6e9fea1ebb96c6353848d71e.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/b3aad58875aa6403cf1217591f7d236f.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/b7be83ff64d94eb7849a6a7783b1295a.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/c9f853432af7c165bf1e973a867df7b7.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/d145c6a10742c37ce5c0807baf3a1ba6.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/d8bfa83f1b9d14c5aa2fbb97e071f051.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/da92b958108e1725bf02f3438db4d846.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/eff7e16f48a8428a389640f48544008a.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/f5fb771a36cefef12523cb583c1ab5e9.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/faccfb9585d8ced57bf3f3068327fc43.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/files/fb8d0bb34751842d8eb6fb7986431600.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/winter_jobs_material_tmpl.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/winter_jobs_tmpl.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReportsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WinterReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/RoadSectionForWinterJobs.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RoadSectionForWinterJobs.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_report/winter_jobs_report.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_report/winter_jobs_report.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_report/winter_material_report.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_report/winter_material_report.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/translation.lt.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/translation.lt.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -82,8 +33,8 @@
         <counts>
           <entry key="env" value="2" />
           <entry key="js" value="2" />
-          <entry key="php" value="93" />
-          <entry key="twig" value="49" />
+          <entry key="php" value="100" />
+          <entry key="twig" value="50" />
           <entry key="xlsx#" value="1" />
           <entry key="yml" value="3" />
         </counts>
@@ -92,9 +43,9 @@
         <counts>
           <entry key=".env file" value="2" />
           <entry key="JavaScript" value="2" />
-          <entry key="PHP" value="93" />
+          <entry key="PHP" value="100" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Twig" value="49" />
+          <entry key="Twig" value="50" />
           <entry key="YAML" value="3" />
         </counts>
       </usages-collector>
@@ -102,17 +53,17 @@
         <counts>
           <entry key="dummy" value="22" />
           <entry key="env" value="35" />
-          <entry key="php" value="6763" />
-          <entry key="twig" value="810" />
+          <entry key="php" value="7078" />
+          <entry key="twig" value="811" />
           <entry key="yml" value="43" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="35" />
-          <entry key="PHP" value="6763" />
+          <entry key="PHP" value="7078" />
           <entry key="PLAIN_TEXT" value="22" />
-          <entry key="Twig" value="810" />
+          <entry key="Twig" value="811" />
           <entry key="YAML" value="43" />
         </counts>
       </usages-collector>
@@ -204,50 +155,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/RoadSectionForWinterJobs.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/SearchController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
-              <caret line="105" column="55" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1071">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+            <state relative-caret-position="384">
+              <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
               <folding>
-                <element signature="e#1126#1155#0#PHP" expanded="true" />
+                <element signature="e#34#60#0#PHP" expanded="true" />
+                <element signature="e#2636#2665#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/DoneJobsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-345">
+              <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+              <folding>
+                <element signature="e#3655#3682#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/InspectionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-825">
+              <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -257,18 +194,37 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="660">
+              <caret line="44" column="138" selection-start-line="44" selection-start-column="138" selection-end-line="44" selection-end-column="138" />
+              <folding>
+                <element signature="e#12#26#0#Twig" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="242" column="72" selection-start-line="242" selection-start-column="72" selection-end-line="242" selection-end-column="72" />
+            <state relative-caret-position="344">
+              <caret line="204" column="156" selection-start-line="204" selection-start-column="156" selection-end-line="204" selection-end-column="156" />
               <folding>
-                <element signature="e#4070#4114#0#PHP" expanded="true" />
-                <element signature="e#6893#6941#0#PHP" expanded="true" />
-                <element signature="e#7064#7112#0#PHP" expanded="true" />
-                <element signature="e#11814#14212#0#PHP" />
-                <element signature="e#16697#18685#0#PHP" />
+                <element signature="e#660#6668#0#PHP" />
+                <element signature="e#6765#10486#0#PHP" />
+                <element signature="e#10583#14224#0#PHP" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="97">
+              <caret line="535" column="46" selection-start-line="535" selection-start-column="46" selection-end-line="535" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -276,8 +232,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Utils/MaterialReportObject.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+            <state>
+              <caret column="5" selection-start-column="5" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -299,8 +255,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/translations/translation.lt.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="519">
-              <caret line="149" column="41" selection-start-line="149" selection-start-column="41" selection-end-line="149" selection-end-column="41" />
+            <state relative-caret-position="158">
+              <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -309,7 +265,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot; . $this-&gt;subUnit . &quot;</find>
       <find>no reco</find>
       <find>'&quot; .</find>
       <find>getPermissions()</find>
@@ -339,6 +294,7 @@
       <find>SubunitId</find>
       <find>insured_event_tmpl1.xlsx</find>
       <find>RoadType</find>
+      <find>Bendra</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -392,7 +348,6 @@
         <option value="$PROJECT_DIR$/src/Controller/UninsuredController.php" />
         <option value="$PROJECT_DIR$/src/Controller/RestrictionController.php" />
         <option value="$PROJECT_DIR$/templates/uninsured/index.html.twig" />
-        <option value="$PROJECT_DIR$/templates/main/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/base.html.twig" />
         <option value="$PROJECT_DIR$/src/Form/UninsecureEventEditType.php" />
         <option value="$PROJECT_DIR$/templates/insured_event/newUninsurede.html.twig" />
@@ -403,7 +358,6 @@
         <option value="$PROJECT_DIR$/templates/insured_event/edit.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/InsuredEventController.php" />
         <option value="$PROJECT_DIR$/templates/insured_event/_form.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/InspectionController.php" />
         <option value="$PROJECT_DIR$/src/Form/RoadSectionForWinterType.php" />
         <option value="$PROJECT_DIR$/templates/insured_event/editUninsured.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/InsuredEvent.php" />
@@ -416,7 +370,6 @@
         <option value="$PROJECT_DIR$/src/Repository/RoadSectionForWinterJobsRepository.php" />
         <option value="$PROJECT_DIR$/templates/winter_report/winter_material_report.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/ReportsController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/WinterJobsController.php" />
         <option value="$PROJECT_DIR$/src/Entity/RoadSectionForWinterJobs.php" />
         <option value="$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php" />
         <option value="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" />
@@ -424,7 +377,10 @@
         <option value="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" />
         <option value="$PROJECT_DIR$/translations/translation.lt.yml" />
         <option value="$PROJECT_DIR$/templates/winter_report/winter_jobs_report.html.twig" />
+        <option value="$PROJECT_DIR$/templates/main/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/InspectionController.php" />
         <option value="$PROJECT_DIR$/src/Controller/WinterReportController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/WinterJobsController.php" />
       </list>
     </option>
   </component>
@@ -536,9 +492,9 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2251" />
+    <option name="x" value="1987" />
     <option name="y" value="27" />
-    <option name="width" value="1290" />
+    <option name="width" value="1853" />
     <option name="height" value="1053" />
   </component>
   <component name="ProjectView">
@@ -552,11 +508,6 @@
             <path>
               <item name="DAIS" type="b2602c69:ProjectViewProjectNode" />
               <item name="DAIS" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAIS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAIS" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DAIS" type="b2602c69:ProjectViewProjectNode" />
@@ -609,6 +560,12 @@
               <item name="DAIS" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="job" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAIS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAIS" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DAIS" type="b2602c69:ProjectViewProjectNode" />
@@ -705,7 +662,7 @@
       <workItem from="1539285763850" duration="4064000" />
       <workItem from="1539321555704" duration="24992000" />
       <workItem from="1539365471144" duration="2549000" />
-      <workItem from="1539580726079" duration="8892000" />
+      <workItem from="1539580726079" duration="13247000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -732,7 +689,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="107803000" />
+    <option name="totallyTimeSpent" value="112158000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -806,13 +763,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/padariukas/dais&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/Controller/InsuredEventController.php&#10;#&#9;src/Controller/WinterJobsController.php&#10;#&#9;src/Entity/InsuredEvent.php&#10;#&#9;src/Entity/RoadSection.php&#10;#&#9;src/Entity/WinterJobs.php&#10;#&#9;src/Form/InsuredEventType.php&#10;#&#9;src/Form/UninsecureEventEditType.php&#10;#&#9;src/Form/WinterJobsType.php&#10;#&#9;templates/insured_event/edit.html.twig&#10;#&#9;templates/insured_event/editUninsured.html.twig&#10;#&#9;templates/insured_event/new.html.twig&#10;#&#9;templates/insured_event/newUninsured.html.twig&#10;#&#9;templates/winter_jobs/_form.html.twig&#10;#&#9;templates/winter_jobs/edit.html.twig&#10;#&#9;templates/winter_jobs/index.html.twig&#10;#&#9;templates/winter_jobs/new.html.twig" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Form/WinterJobRoadsType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Form/InsuredEventType.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -909,11 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/ReportType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-185" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DataFixtures/WinterJobsFixture.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -925,13 +870,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1770">
           <caret line="118" selection-start-line="118" selection-end-line="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobs.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1525">
-          <caret line="227" column="5" selection-start-line="227" selection-start-column="5" selection-end-line="227" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -991,13 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/InspectionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="38" column="89" selection-start-line="38" selection-start-column="79" selection-end-line="38" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/IReader.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1032,23 +963,6 @@
           <folding>
             <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/DoneJobsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="41" column="14" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
-          <folding>
-            <element signature="e#3655#3682#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="184" column="54" selection-start-line="184" selection-start-column="54" selection-end-line="184" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -1092,8 +1006,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/translations/translation.lt.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="149" column="41" selection-start-line="149" selection-start-column="41" selection-end-line="149" selection-end-column="41" />
+        <state relative-caret-position="158">
+          <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1109,36 +1023,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Utils/MaterialReportObject.php">
+    <entry file="file://$PROJECT_DIR$/src/Form/ReportType.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        <state relative-caret-position="97">
+          <caret line="535" column="46" selection-start-line="535" selection-start-column="46" selection-end-line="535" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobs.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="814">
+          <caret line="227" column="5" selection-start-line="227" selection-start-column="5" selection-end-line="227" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="138" selection-start-line="44" selection-start-column="138" selection-end-line="44" selection-end-column="138" />
+          <folding>
+            <element signature="e#12#26#0#Twig" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Repository/WinterJobsRepository.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
+    <entry file="file://$PROJECT_DIR$/src/Utils/MaterialReportObject.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1071">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-          <folding>
-            <element signature="e#1126#1155#0#PHP" expanded="true" />
-          </folding>
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="242" column="72" selection-start-line="242" selection-start-column="72" selection-end-line="242" selection-end-column="72" />
+        <state relative-caret-position="344">
+          <caret line="204" column="156" selection-start-line="204" selection-start-column="156" selection-end-line="204" selection-end-column="156" />
           <folding>
-            <element signature="e#4070#4114#0#PHP" expanded="true" />
-            <element signature="e#6893#6941#0#PHP" expanded="true" />
-            <element signature="e#7064#7112#0#PHP" expanded="true" />
-            <element signature="e#11814#14212#0#PHP" />
-            <element signature="e#16697#18685#0#PHP" />
+            <element signature="e#660#6668#0#PHP" />
+            <element signature="e#6765#10486#0#PHP" />
+            <element signature="e#10583#14224#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/InspectionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-825">
+          <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/DoneJobsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-345">
+          <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+          <folding>
+            <element signature="e#3655#3682#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
+          <folding>
+            <element signature="e#34#60#0#PHP" expanded="true" />
+            <element signature="e#2636#2665#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

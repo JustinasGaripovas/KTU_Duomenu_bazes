@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\WinterJobRoadSection;
 use App\Entity\WinterJobs;
 use App\Form\WinterJobsType;
 use App\Repository\ChoicesRepository;
@@ -22,10 +21,34 @@ class WinterJobsController extends Controller
     /**
      * @Route("/", name="winter_jobs_index", methods="GET")
      */
-    public function index(WinterJobsRepository $winterJobsRepository, Request $request): Response
+    public function index(LdapUserRepository $ldapUserRepository, WinterJobsRepository $winterJobsRepository, Request $request): Response
     {
         $em = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
+        $username = $this->getUser()->getUserName();
+        $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getSubunitId();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
+        if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
+            $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_ADMIN')) {
+            $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
+        } elseif (true === $this->isGranted('ROLE_WORKER')) {
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        }
+
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
@@ -37,6 +60,15 @@ class WinterJobsController extends Controller
      */
     public function new(ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository,Request $request): Response
     {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
         $username = $this->getUser()->getUserName();
         $subunit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit();
         $choicesName = array();
@@ -64,7 +96,6 @@ class WinterJobsController extends Controller
 
         $form = $this->createForm(WinterJobsType::class, $winterJob, ['mechanism_choices' => $choicesArray, 'jobs_choices' => $choiceArrayForJobs ]);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()){
 

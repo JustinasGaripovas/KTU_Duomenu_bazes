@@ -18,8 +18,17 @@ class WinterReportController extends Controller
     /**
      * @Route("/winter/report/jobs", name="winter_report_jobs")
      */
+    public function winterMaintenanceReportJobs (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker) {
 
-    public function winterMaintenanceReportJobs (Request $request) {
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
 
         $form = $this->createForm(WinterJobsReportType::class);
 
@@ -29,7 +38,21 @@ class WinterReportController extends Controller
             $to = $form->get('To')->getData();
             $dql = '';
 
-            $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') ORDER BY r.Date ASC";
+            $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit()->getSubunitId();
+
+            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
+            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
+            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            }
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
@@ -38,11 +61,15 @@ class WinterReportController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $index = 5;
                 foreach ($report as $item){
                 $spreadsheet->getActiveSheet()
-                    ->setCellValue('A' . $index, $item->getSubunit())
+                    ->setCellValue('A' . $index, $item->getSubunitName())
                     ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
                     ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
                     ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
@@ -52,11 +79,12 @@ class WinterReportController extends Controller
                         foreach ($item->getRoadSections() as $value) {
                             $spreadsheet->getActiveSheet()
                                 ->setCellValue('G' . $index, $value->getSectionId())
-                                ->setCellValue('H' . $index, $value->getSectionName())
+                                ->setCellValue('H' . $index, $value->getSectionType())
                                 ->setCellValue('I' . $index, $value->getSectionBegin())
                                 ->setCellValue('J' . $index, $value->getSectionEnd())
                                 ->setCellValue('K' . $index, $value->getSaltValue())
-                                ->setCellValue('L' . $index, $value->getSandValue());
+                                ->setCellValue('L' . $index, $value->getSandValue())
+                                ->setCellValue('M' . $index, $value->getSolutionValue());
                             $index++;
                         }
                     }
@@ -64,11 +92,12 @@ class WinterReportController extends Controller
                             foreach ($item->getRoadSections() as $value) {
                                 $spreadsheet->getActiveSheet()
                                     ->setCellValue('G' . $index, $value->getSectionId())
-                                    ->setCellValue('H' . $index, $value->getSectionName())
+                                    ->setCellValue('H' . $index, $value->getSectionType())
                                     ->setCellValue('I' . $index, $value->getSectionBegin())
                                     ->setCellValue('J' . $index, $value->getSectionEnd())
                                     ->setCellValue('K' . $index, $value->getSaltValue())
-                                    ->setCellValue('L' . $index, $value->getSandValue());
+                                    ->setCellValue('L' . $index, $value->getSandValue())
+                                    ->setCellValue('M' . $index, $value->getSolutionValue());
                                 $index++;
                             }
                         }
@@ -90,65 +119,59 @@ class WinterReportController extends Controller
     /**
      * @Route("/winter/report/materials", name="winter_report_materials")
      */
+    public function winterMaintenanceReportMaterial (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker) {
 
-    public function winterMaintenanceReportMaterial (Request $request) {
+        $username = $this->getUser()->getUserName();
 
-        $form = $this->createForm(WinterJobsReportType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $from = $form->get('From')->getData();
-            $to = $form->get('To')->getData();
-            $report = $this->getDaysMaterials($from, $to);
-            if ($form->get('GenerateXLS')->isClicked()) {
-                $fileName = md5($this->getUser()->getUserName() . microtime());
-                $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
-                foreach ($report as $rep) {
-                    if (!empty($rep)){
-                        foreach ( $rep as $item){
-                            $spreadsheet->getActiveSheet()
-                                ->setCellValue('A' . $index, $item->getName())
-                                ->setCellValue('B' . $index, $item->getSectionId())
-                                ->setCellValue('C' . $index, $item->getSaltValue())
-                                ->setCellValue('D' . $index, $item->getSandValue());
-                            $index++;
-                        }
-                    }
-                }
-
-                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-                $writer->save('files/' . $fileName . '.xlsx');
-                return $this->file(('files/' . $fileName . '.xlsx'));
-            }
-// Rename worksheet
-
-            return $this->render('winter_report/winter_material_report.html.twig', ['form' => $form->createView(), 'winter_material_report' => $report]);
-        } else {
-            return $this->render('winter_report/winter_material_report.html.twig', ['form' => $form->createView(), ['winter_material_report' => null]]);
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
         }
-    }
-
-
-    /**
-     * @Route("/winter/report/materials/subunit", name="winter_report_materials_subunit")
-     */
-
-    public function winterMaintenanceReportMaterialSubunit (LdapUserRepository $ldapUserRepository ,Request $request) {
 
         $form = $this->createForm(WinterJobsReportType::class);
+
         $form->handleRequest($request);
         $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
-            $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+
+            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                $report = $this->getDaysMaterials($from, $to);
+            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $report = $this->getDaysMaterials($from, $to);
+            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            }
+
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_material_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos medžiagų ataskaita')
+                    ->setSubject('Atliktų žiemos medžiagų ataskaita')
+                    ->setDescription('Atliktų žiemos medžiagų ataskaita')
+                    ->setKeywords('Atliktų žiemos medžiagų ataskaita')
+                    ->setCategory('Atliktų žiemos medžiagų ataskaita');
+
+                $index = 5;
+
                 foreach ($report as $rep) {
                     if (!empty($rep)){
                         foreach ( $rep as $item){
@@ -156,7 +179,8 @@ class WinterReportController extends Controller
                                 ->setCellValue('A' . $index, $item->getName())
                                 ->setCellValue('B' . $index, $item->getSectionId())
                                 ->setCellValue('C' . $index, $item->getSaltValue())
-                                ->setCellValue('D' . $index, $item->getSandValue());
+                                ->setCellValue('D' . $index, $item->getSandValue())
+                                ->setCellValue('E' . $index, $item->getSolutionValue());
                             $index++;
                         }
                     }
@@ -166,7 +190,7 @@ class WinterReportController extends Controller
                 $writer->save('files/' . $fileName . '.xlsx');
                 return $this->file(('files/' . $fileName . '.xlsx'));
             }
-// Rename worksheet
+        // Rename worksheet
 
             return $this->render('winter_report/winter_material_report.html.twig', ['form' => $form->createView(), 'winter_material_report' => $report]);
         } else {
@@ -178,7 +202,16 @@ class WinterReportController extends Controller
      * @Route("/winter/report/mechanism", name="winter_report_mechanism")
      */
 
-    public function winterMaintenanceReportMechanism (LdapUserRepository $ldapUserRepository, Request $request) {
+    public function winterMaintenanceReportMechanism (AuthorizationCheckerInterface $authChecker,LdapUserRepository $ldapUserRepository, Request $request) {
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
 
         $form = $this->createForm(WinterJobsReportType::class);
         $form->handleRequest($request);
@@ -186,13 +219,39 @@ class WinterReportController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
-            $report = $this->getDaysMechanism($from, $to);
+
+            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+                $report = $this->getDaysMechanism($from, $to);
+            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+                $report = $this->getDaysMechanism($from, $to);
+            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            }
+
             $arrayKeys = array_keys($report);
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_mechanism_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos mechanizmų ataskaita')
+                    ->setSubject('Atliktų žiemos mechanizmų ataskaita')
+                    ->setDescription('Atliktų žiemos mechanizmų ataskaita')
+                    ->setKeywords('Atliktų žiemos mechanizmų ataskaita')
+                    ->setCategory('Atliktų žiemos mechanizmų ataskaita');
+
+                $index = 5;
                 $keyIndex = 0;
                 foreach ($report as $rep) {
                     $spreadsheet->getActiveSheet()
@@ -373,6 +432,53 @@ class WinterReportController extends Controller
 
             $result[$subunit["Name"]] = $mechanismSum;
         }
+
+        return $result;
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @return array
+     * $this->getDaysMechanism(new \DateTime(), new \DateTime("-100 days"));
+     */
+    private function getDaysMechanismForSubunit($start,$end,$subunit)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $subunitId = $subunit->getSubunitId();
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+        // $start = $start->format('Y-m-d');
+        // $end = $end->format('Y-m-d');
+
+        //Surasome kokius mechanizmus norime surasti, visi mechanizmai kurie nebus cia surasyti atsidurs "Kiti" value
+        $mechanisms = array("Kiti"=>0,"Sunkvežimis"=>"Sunkvežimis", "Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius");
+        $mechanismSum = array("Sunkvežimis"=>0, "Autogreideris"=>0,"Traktorius"=>0);
+        $result = array();
+
+        $mechanisms["Kiti"] = 0;
+        $mechanismSum = array("Sunkvežimis"=>0, "Autogreideris"=>0,"Traktorius"=>0);
+
+        //Einamepro mechanizmus auksciau isvardintus
+        //select('DISTINCT(rec.city) as city')
+        $dql = "SELECT DISTINCT w.Mechanism FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+
+        $winterJobArray = $em->createQuery($dql)->getResult();
+
+        foreach ($winterJobArray as $winterJob) {
+            $winterJob = $winterJob["Mechanism"];
+            foreach ($mechanisms as $x => $x_value) {
+                if (strpos(strtolower($winterJob), strtolower($x_value)) !== false && $x!="Kiti") {
+                    $mechanismSum[$x]++;
+                }
+            }
+        }
+
+        $mechanismSum["Kiti"] = count($winterJobArray)- array_sum($mechanismSum);
+
+        $result[$subunit->getName()] = $mechanismSum;
+
 
         return $result;
     }

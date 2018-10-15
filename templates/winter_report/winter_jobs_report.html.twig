@@ -34,19 +34,19 @@
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Mechanizmas {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Job {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} RoadSectionId {% endtrans %}</th>
-                    <th style="text-align: center; vertical-align: middle"> {% trans %} RoadName {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} SectionType {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} SectionBegin {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} SectionEnd {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Salt value {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Sand value {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Solution value {% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for job in winter_jobs_report | default('') %}
                 <tr>
                 <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
-                            {{ job.Subunit }}
-                    {{ dump(job.RoadSections|length) }}
+                            {{ job.SubunitName }}
                         </td>
                         <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Date | date('Y-m-d') }}
@@ -71,7 +71,7 @@
                                     {{ item.SectionId }}
                                 </td>
                                 <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SectionName }}
+                                    {{ item.SectionType }}
                                 </td>
                                 <td style="white-space: nowrap;text-align: center; vertical-align: middle">
                                     {{ item.SectionBegin }}
@@ -84,6 +84,9 @@
                                 </td>
                                 <td style="white-space: nowrap;text-align: center; vertical-align: middle">
                                     {{ item.SandValue }}
+                                </td>
+                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                    {{ item.SolutionValue }}
                                 </td>
                     {% if job.RoadSections|length > 1 %}
                         </tr>

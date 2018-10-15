@@ -364,7 +364,7 @@ class ReportsController extends Controller
 
                 $dql = '';
 
-                    $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.DamageData >= '$from' AND ie.DamageData <= '$to') ORDER BY ie.DamageData ASC";
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -717,7 +717,18 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/wintermaintenance/LAKD", name="wintermaintenance_LAKD")
      */
-    public function wintermaintenanceReportToLAKD (Request $request) {
+    public function wintermaintenanceReportToLAKD (LdapUserRepository $ldapUserRepository, Request $request) {
+
+
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
 
         $form = $this->createForm(LAKDReportType::class);
 

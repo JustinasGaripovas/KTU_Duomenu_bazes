@@ -746,7 +746,7 @@ class ReportsController extends Controller
             {
                 $subunits[$item->getSubunitId()] = $item->getName();
             }
-            
+
             $dql = "SELECT r FROM App:WinterMaintenance r WHERE AND (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
 
             if (true === $this->isGranted('ROLE_ROAD_MASTER')) {

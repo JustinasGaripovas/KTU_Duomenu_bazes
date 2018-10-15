@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReportsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reports/index_LAKD.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reports/index_LAKD.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_maintenance/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_maintenance/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +51,7 @@
         <counts>
           <entry key="dummy" value="22" />
           <entry key="env" value="35" />
-          <entry key="php" value="7712" />
+          <entry key="php" value="7731" />
           <entry key="twig" value="854" />
           <entry key="yml" value="43" />
         </counts>
@@ -62,7 +59,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="35" />
-          <entry key="PHP" value="7712" />
+          <entry key="PHP" value="7731" />
           <entry key="PLAIN_TEXT" value="22" />
           <entry key="Twig" value="854" />
           <entry key="YAML" value="43" />
@@ -156,11 +153,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="345">
+              <caret line="86" column="22" lean-forward="true" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
               <folding>
                 <element signature="e#1651#1687#0#PHP" expanded="true" />
               </folding>
@@ -192,11 +189,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="748" column="12" selection-start-line="748" selection-start-column="12" selection-end-line="748" selection-end-column="12" />
+            <state relative-caret-position="354">
+              <caret line="748" selection-start-line="748" selection-end-line="748" />
               <folding>
                 <element signature="e#30697#36999#0#PHP" />
                 <element signature="e#37091#41106#0#PHP" />
@@ -225,7 +222,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>no reco</find>
       <find>'&quot; .</find>
       <find>getPermissions()</find>
       <find>return $this-&gt;DetermineAccess(false, null, null, $dqlArray);</find>
@@ -255,6 +251,7 @@
       <find>RoadType</find>
       <find>Bendra</find>
       <find>dump</find>
+      <find>r.</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -272,6 +269,7 @@
       <replace>$vehicleSum</replace>
       <replace>$subunit-&gt;getSubunitId()</replace>
       <replace>SectionType</replace>
+      <replace>w.</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/templates/inspection</dir>
@@ -336,11 +334,11 @@
         <option value="$PROJECT_DIR$/src/Controller/WinterJobsController.php" />
         <option value="$PROJECT_DIR$/src/Entity/WinterMaintenance.php" />
         <option value="$PROJECT_DIR$/templates/winter_maintenance/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php" />
         <option value="$PROJECT_DIR$/src/Controller/WinterReportController.php" />
         <option value="$PROJECT_DIR$/templates/winter_report/winter_material_report.html.twig" />
         <option value="$PROJECT_DIR$/templates/reports/index_LAKD.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/ReportsController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php" />
       </list>
     </option>
   </component>
@@ -452,7 +450,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2161" />
+    <option name="x" value="2086" />
     <option name="y" value="27" />
     <option name="width" value="1290" />
     <option name="height" value="1053" />
@@ -634,7 +632,7 @@
       <workItem from="1539285763850" duration="4064000" />
       <workItem from="1539321555704" duration="24992000" />
       <workItem from="1539365471144" duration="2549000" />
-      <workItem from="1539580726079" duration="21069000" />
+      <workItem from="1539580726079" duration="21595000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -661,7 +659,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119980000" />
+    <option name="totallyTimeSpent" value="120506000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -673,10 +671,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1987" y="27" width="1853" height="1053" extended-state="6" />
+    <frame x="2214" y="350" width="1290" height="1053" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2888766" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.41961414" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1069,16 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-          <folding>
-            <element signature="e#1651#1687#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/reports/index_LAKD.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1091,8 +1079,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="748" column="12" selection-start-line="748" selection-start-column="12" selection-end-line="748" selection-end-column="12" />
+        <state relative-caret-position="354">
+          <caret line="748" selection-start-line="748" selection-end-line="748" />
           <folding>
             <element signature="e#30697#36999#0#PHP" />
             <element signature="e#37091#41106#0#PHP" />
@@ -1100,6 +1088,16 @@
             <element signature="e#49158#49188#0#PHP" expanded="true" />
             <element signature="e#49378#49391#1#PHP" expanded="true" />
             <element signature="e#49549#49562#1#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WinterMaintenanceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="86" column="22" lean-forward="true" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+          <folding>
+            <element signature="e#1651#1687#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

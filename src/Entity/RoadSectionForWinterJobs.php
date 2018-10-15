@@ -19,7 +19,7 @@ class RoadSectionForWinterJobs
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $RoadType;
+    private $SectionType;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -51,14 +51,14 @@ class RoadSectionForWinterJobs
         return $this->id;
     }
 
-    public function getRoadType(): ?string
+    public function getSectionType(): ?string
     {
-        return $this->RoadType;
+        return $this->SectionType;
     }
 
-    public function setRoadType(string $RoadType): self
+    public function setSectionType(string $SectionType): self
     {
-        $this->RoadType = $RoadType;
+        $this->SectionType = $SectionType;
 
         return $this;
     }

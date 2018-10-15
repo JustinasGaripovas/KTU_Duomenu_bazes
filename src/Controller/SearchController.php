@@ -107,7 +107,7 @@ class SearchController extends Controller
                     'section_id' => $entity->getSectionId(),
                     'section_begin' => $entity->getSectionBegin(),
                     'section_end' => $entity->getSectionEnd(),
-                    //'road_name' => "1"
+                    'section_type' => $entity->getSectionType()
                 ];
             }
         }

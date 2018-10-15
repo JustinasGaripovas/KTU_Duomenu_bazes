@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\WinterJobRoadSection;
 use App\Entity\WinterJobs;
 use App\Form\WinterJobsType;
 use App\Repository\ChoicesRepository;
@@ -64,7 +63,6 @@ class WinterJobsController extends Controller
 
         $form = $this->createForm(WinterJobsType::class, $winterJob, ['mechanism_choices' => $choicesArray, 'jobs_choices' => $choiceArrayForJobs ]);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()){
 

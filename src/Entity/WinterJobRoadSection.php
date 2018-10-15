@@ -28,6 +28,7 @@ class WinterJobRoadSection
 
     private $SaltValue;
 
+    private $SectionType;
 
     private $SandValue;
 
@@ -37,6 +38,18 @@ class WinterJobRoadSection
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSectionType(): ?string
+    {
+        return $this->SectionType;
+    }
+
+    public function setSectionType(string $SectionType): self
+    {
+        $this->SectionType = $SectionType;
+
+        return $this;
     }
 
     public function getSectionId(): ?string

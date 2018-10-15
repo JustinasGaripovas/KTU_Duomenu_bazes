@@ -18,6 +18,7 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('RoadSectionSearch')
             ->add('SectionId',HiddenType::class)
             ->add('SectionName', HiddenType::class)
+            ->add('SectionType', HiddenType::class)
             ->add('SectionBegin')
             ->add('SectionEnd')
             /*

@@ -127,6 +127,7 @@
 
             var sectionSearch =     $(this).find('[id*=_RoadSectionSearch]').attr('id');
             var sectionId =         $(this).find('[id*=_SectionId]').attr('id');
+            var sectionType =       $(this).find('[id*=_SectionType]').attr('id');
             var sectionName =       $(this).find('[id*=_SectionName]').attr('id');
             var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
             var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
@@ -202,6 +203,7 @@
                 delay: 500,
                 select: function( event, ui ) {
                     $('#'+sectionId).val(ui.item.section_id),
+                        $('#'+sectionType).val(ui.item.section_type), //****
                         $('#'+sectionName).val(ui.item.road_name),
                         $('#'+sectionBegin).val(ui.item.section_begin),
                         $('#'+sectionEnd).val(ui.item.section_end)

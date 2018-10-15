@@ -38,11 +38,15 @@ class WinterReportController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $index = 5;
                 foreach ($report as $item){
                 $spreadsheet->getActiveSheet()
-                    ->setCellValue('A' . $index, $item->getSubunit())
+                    ->setCellValue('A' . $index, $item->getSubunitName())
                     ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
                     ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
                     ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
@@ -52,11 +56,12 @@ class WinterReportController extends Controller
                         foreach ($item->getRoadSections() as $value) {
                             $spreadsheet->getActiveSheet()
                                 ->setCellValue('G' . $index, $value->getSectionId())
-                                ->setCellValue('H' . $index, $value->getSectionName())
+                                ->setCellValue('H' . $index, $value->getSectionType())
                                 ->setCellValue('I' . $index, $value->getSectionBegin())
                                 ->setCellValue('J' . $index, $value->getSectionEnd())
                                 ->setCellValue('K' . $index, $value->getSaltValue())
-                                ->setCellValue('L' . $index, $value->getSandValue());
+                                ->setCellValue('L' . $index, $value->getSandValue())
+                                ->setCellValue('M' . $index, $value->getSolutionValue());
                             $index++;
                         }
                     }
@@ -64,11 +69,12 @@ class WinterReportController extends Controller
                             foreach ($item->getRoadSections() as $value) {
                                 $spreadsheet->getActiveSheet()
                                     ->setCellValue('G' . $index, $value->getSectionId())
-                                    ->setCellValue('H' . $index, $value->getSectionName())
+                                    ->setCellValue('H' . $index, $value->getSectionType())
                                     ->setCellValue('I' . $index, $value->getSectionBegin())
                                     ->setCellValue('J' . $index, $value->getSectionEnd())
                                     ->setCellValue('K' . $index, $value->getSaltValue())
-                                    ->setCellValue('L' . $index, $value->getSandValue());
+                                    ->setCellValue('L' . $index, $value->getSandValue())
+                                    ->setCellValue('M' . $index, $value->getSolutionValue());
                                 $index++;
                             }
                         }
@@ -93,18 +99,38 @@ class WinterReportController extends Controller
 
     public function winterMaintenanceReportMaterial (Request $request) {
 
+        //die;
+
         $form = $this->createForm(WinterJobsReportType::class);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
+
             $report = $this->getDaysMaterials($from, $to);
+
+           // dump($report);
+
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_material_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos medžiagų ataskaita')
+                    ->setSubject('Atliktų žiemos medžiagų ataskaita')
+                    ->setDescription('Atliktų žiemos medžiagų ataskaita')
+                    ->setKeywords('Atliktų žiemos medžiagų ataskaita')
+                    ->setCategory('Atliktų žiemos medžiagų ataskaita');
+
+                $index = 5;
+
                 foreach ($report as $rep) {
                     if (!empty($rep)){
                         foreach ( $rep as $item){
@@ -112,7 +138,8 @@ class WinterReportController extends Controller
                                 ->setCellValue('A' . $index, $item->getName())
                                 ->setCellValue('B' . $index, $item->getSectionId())
                                 ->setCellValue('C' . $index, $item->getSaltValue())
-                                ->setCellValue('D' . $index, $item->getSandValue());
+                                ->setCellValue('D' . $index, $item->getSandValue())
+                                ->setCellValue('E' . $index, $item->getSolutionValue());
                             $index++;
                         }
                     }
@@ -147,8 +174,20 @@ class WinterReportController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_material_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos medžiagų ataskaita')
+                    ->setSubject('Atliktų žiemos medžiagų ataskaita')
+                    ->setDescription('Atliktų žiemos medžiagų ataskaita')
+                    ->setKeywords('Atliktų žiemos medžiagų ataskaita')
+                    ->setCategory('Atliktų žiemos medžiagų ataskaita');
+
+                $index = 5;
                 foreach ($report as $rep) {
                     if (!empty($rep)){
                         foreach ( $rep as $item){
@@ -156,7 +195,8 @@ class WinterReportController extends Controller
                                 ->setCellValue('A' . $index, $item->getName())
                                 ->setCellValue('B' . $index, $item->getSectionId())
                                 ->setCellValue('C' . $index, $item->getSaltValue())
-                                ->setCellValue('D' . $index, $item->getSandValue());
+                                ->setCellValue('D' . $index, $item->getSandValue())
+                                ->setCellValue('E' . $index, $item->getSolutionValue());
                             $index++;
                         }
                     }
@@ -191,8 +231,20 @@ class WinterReportController extends Controller
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());
                 $reader = IOFactory::createReader('Xlsx');
-                $spreadsheet = $reader->load('materials.xlsx');
-                $index = 3;
+                $spreadsheet = $reader->load('winter_jobs_mechanism_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos mechanizmų ataskaita')
+                    ->setSubject('Atliktų žiemos mechanizmų ataskaita')
+                    ->setDescription('Atliktų žiemos mechanizmų ataskaita')
+                    ->setKeywords('Atliktų žiemos mechanizmų ataskaita')
+                    ->setCategory('Atliktų žiemos mechanizmų ataskaita');
+
+                $index = 5;
                 $keyIndex = 0;
                 foreach ($report as $rep) {
                     $spreadsheet->getActiveSheet()

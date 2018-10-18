@@ -3,36 +3,10 @@
 {% block title %}RoadSection{% endblock %}
 
 {% block body %}
-    <h1>RoadSection</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ road_section.id }}</td>
-            </tr>
-            <tr>
-                <th>SectionId</th>
-                <td>{{ road_section.SectionId }}</td>
-            </tr>
-            <tr>
-                <th>UnitId</th>
-                <td>{{ road_section.UnitId }}</td>
-            </tr>
-            <tr>
-                <th>SectionBegin</th>
-                <td>{{ road_section.SectionBegin }}</td>
-            </tr>
-            <tr>
-                <th>SectionEnd</th>
-                <td>{{ road_section.SectionEnd }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <a href="{{ path('mechanism_index') }}">back to list</a>
 
-    <a href="{{ path('road_section_index') }}">back to list</a>
+    <a href="{{ path('mechanism_edit', {'id': road_section.id}) }}">edit</a>
 
-    <a href="{{ path('road_section_edit', {'id': road_section.id}) }}">edit</a>
-
-    {{ include('road_section/_delete_form.html.twig') }}
+    {{ include('mechanism/_delete_form.html.twig') }}
 {% endblock %}

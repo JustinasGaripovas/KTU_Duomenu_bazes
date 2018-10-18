@@ -9,6 +9,8 @@
     </style>
     <h1>Mechanism index</h1>
 
+    <a type="button" class="btn btn-primary btn-lg btn-block" href="{{ path('mechanism_new') }}">Create new</a>
+
     <table class="table">
         <thead>
         <tr>
@@ -42,6 +44,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('road_section_new') }}">Create new</a>
 {% endblock %}

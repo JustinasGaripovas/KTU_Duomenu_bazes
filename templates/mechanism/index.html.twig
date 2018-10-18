@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mechanism index{% endblock %}
+
+{% block body %}
+    <style>
+        thead { display: table-header-group; }
+        tr{page-break-inside: avoid !important;}
+    </style>
+    <h1>Mechanism index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Subunit</th>
+            <th>TypeId</th>
+            <th colspan="2">action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for mech in mechanisms %}
+            <tr>
+                <td>{{ mech.id }}</td>
+                <td>{{ mech.Number }}</td>
+                <td>{{ mech.Type }}</td>
+                <td>{{ mech.Subunit }}</td>
+                <td>{{ mech.TypeId }}</td>
+                <td>
+                    <a href="{{ path('mechanism_show', {'id': mech.id}) }}">show</a>
+                </td>
+                <td>
+                    <a href="{{ path('mechanism_edit', {'id': mech.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('road_section_new') }}">Create new</a>
+{% endblock %}

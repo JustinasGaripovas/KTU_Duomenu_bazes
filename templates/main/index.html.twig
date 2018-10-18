@@ -23,6 +23,8 @@
             <h1>{% trans %}Ldap users{% endtrans %}</h1>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
             {% if is_granted('ROLE_ADMIN') %}
+                <h1>{% trans %}Mechanism{% endtrans %}</h1>
+                <a class="btn btn-success btn-lg btn-block" href="{{ path('mechanism_index') }}">{% trans %}Mechanism{% endtrans %}</a>
             <h1>{% trans %}Road Sections{% endtrans %}</h1>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
                 <h1>{% trans %} Jobs {% endtrans %}</h1>

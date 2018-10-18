@@ -16,7 +16,6 @@ class SearchController extends Controller
     /**
      * @Route("/search", name="search")
      */
-
     public function searchForJobs(Request $request, SerializerInterface $serializer) {
 
         if(!$request->isXmlHttpRequest()){
@@ -77,6 +76,7 @@ class SearchController extends Controller
             }
         }
 
+
         return $this->json($results);
     }
 
@@ -111,6 +111,39 @@ class SearchController extends Controller
                 ];
             }
         }
+
+        return $this->json($results);
+    }
+
+    /**
+     * @Route("/search/mechanism", name="search/mechanism")
+     */
+    public function searchMechanism(LdapUserRepository $ldapUserRepository,Request $request, SerializerInterface $serializer) {
+
+        if(!$request->isXmlHttpRequest()){
+            return $this->render('search/index.html.twig');
+        }
+        $username = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName());
+        $unit_id = $username->getUnit()->getUnitId();
+        $subunit_id = $username->getSubunit()->getSubunitId();
+
+        $results = [];
+        $searchString = $request->get('term');
+
+            $results[] = [
+                'section_begin' => "aaaaaaaaaa",
+                'section_end' => 1
+            ];
+            $results[] = [
+                'section_begin' => "bbbbbbbbb",
+                'section_end' => 2
+            ];
+            $results[] = [
+                'section_begin' => "cccccccccc",
+                'section_end' => 3
+            ];
+
+
 
         return $this->json($results);
     }

@@ -15,7 +15,7 @@ class MechanismType extends AbstractType
         $builder
             ->add('Number')
             ->add('Type')
-            ->add('Subunit', HiddenType::class)
+            ->add('Subunit')
             ->add('TypeId', HiddenType::class)
         ;
     }

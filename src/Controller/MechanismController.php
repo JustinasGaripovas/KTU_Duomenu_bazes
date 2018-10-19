@@ -38,7 +38,6 @@ class MechanismController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $mechanism->setSubunit($subUnitId);
             $em->persist($mechanism);
             $em->flush();
 
@@ -71,7 +70,6 @@ class MechanismController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $mechanism->setSubunit($subUnitId);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('mechanism_edit', ['id' => $mechanism->getId()]);

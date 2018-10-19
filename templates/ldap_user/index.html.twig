@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'translation' %}
 
-{% block title %}LdapUser index{% endblock %}
+{% block title %}{% trans %}LdapUsers list{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>LdapUser index</h1>
+    <h1>{% trans %}LdapUsers list{% endtrans %}</h1>
 
     <table class="table">
         <thead>
@@ -22,7 +22,7 @@
                 <td>{{ ldap_user.Unit.unitId }}</td>
                 <td>{{ ldap_user.subunit.subunitId | default(' ') }}</td>
                 <td>
-                    <a class="btn btn-success" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                    <a class="btn btn-success" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}edit{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}

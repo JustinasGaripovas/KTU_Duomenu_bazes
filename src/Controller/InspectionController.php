@@ -8,6 +8,7 @@ use App\Entity\Inspection;
 use App\Form\InspectionType;
 use App\Repository\InspectionRepository;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/inspection")
+ * @IsGranted("INSPECTION")
  */
 class InspectionController extends Controller
 {

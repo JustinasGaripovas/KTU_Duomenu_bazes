@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\RoadSection;
 use App\Form\RoadSectionType;
 use App\Repository\RoadSectionRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 /**
  * @Route("/road/section")
+ * @IsGranted("ROLE_ADMIN")
  */
 class RoadSectionController extends Controller
 {

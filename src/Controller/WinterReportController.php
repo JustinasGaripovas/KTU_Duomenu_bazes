@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\WinterJobsReportType;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,9 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
+/**
+ * @IsGranted("WINTER")
+ */
 class WinterReportController extends Controller
 {
     /**

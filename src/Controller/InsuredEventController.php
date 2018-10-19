@@ -7,11 +7,15 @@ use App\Form\InsuredEventType;
 use App\Form\InsuredEventTypeEdit;
 use App\Repository\InsuredEventRepository;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @IsGranted("INSURED")
+ */
 class InsuredEventController extends Controller
 {
     /**

@@ -7,6 +7,7 @@ use App\Entity\WinterMaintenance;
 use App\Form\LAKDReportType;
 use App\Form\ReportType;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,7 +17,9 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 
-
+/**
+ * @IsGranted("REPORTS")
+ */
 class ReportsController extends Controller
 {
     /**

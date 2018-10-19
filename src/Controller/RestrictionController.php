@@ -6,6 +6,7 @@ use App\Entity\Restriction;
 use App\Form\RestrictionType;
 use App\Repository\LdapUserRepository;
 use App\Repository\RestrictionRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/restriction")
+ * @IsGranted("RESTRICTIONS")
  */
 class RestrictionController extends Controller
 {

@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}New RoadSection{% endblock %}
+{% block title %}{% trans %}New Road{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new RoadSection</h1>
+    <h1>{% trans %}New Road{% endtrans %}</h1>
 
     {{ include('road_section/_form.html.twig') }}
 
-    <a href="{{ path('road_section_index') }}">back to list</a>
+    <a class="btn btn-primary btn-lg" href="{{ path('road_section_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

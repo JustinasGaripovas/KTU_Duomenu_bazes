@@ -1,23 +1,26 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}RoadSection index{% endblock %}
+{% block title %}{% trans %}Road Sections{% endtrans %}{% endblock %}
 
 {% block body %}
     <style>
         thead { display: table-header-group; }
         tr{page-break-inside: avoid !important;}
     </style>
-    <h1>RoadSection index</h1>
+    <h1>{% trans %}Road Sections{% endtrans %}</h1>
+
+    <a type="button" class="btn btn-primary btn-lg btn-block" href="{{ path('road_section_new') }}">{% trans %}Create new road{% endtrans %}</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>SectionId</th>
-                <th>UnitId</th>
-                <th>SectionBegin</th>
-                <th>SectionEnd</th>
-                <th>actions</th>
+                <th>{% trans %}Id{% endtrans %}</th>
+                <th>{% trans %}RoadSectionId{% endtrans %}</th>
+                <th>{% trans %}UnitId{% endtrans %}</th>
+                <th>{% trans %}Section begin{% endtrans %}</th>
+                <th>{% trans %}Section end{% endtrans %}</th>
+                <th>{% trans %}actions{% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -29,17 +32,15 @@
                 <td>{{ road_section.SectionBegin }}</td>
                 <td>{{ road_section.SectionEnd }}</td>
                 <td>
-                    <a href="{{ path('road_section_show', {'id': road_section.id}) }}">show</a>
-                    <a href="{{ path('road_section_edit', {'id': road_section.id}) }}">edit</a>
+                    <a class="btn btn-info btn-lg" href="{{ path('road_section_show', {'id': road_section.id}) }}">{% trans %}show{% endtrans %}</a>
+                    <a class="btn btn-success btn-lg" href="{{ path('road_section_edit', {'id': road_section.id}) }}">{% trans %}edit{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">{% trans %}no records found{% endtrans %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('road_section_new') }}">Create new</a>
 {% endblock %}

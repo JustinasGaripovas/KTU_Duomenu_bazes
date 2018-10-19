@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}New Job{% endblock %}
+{% block title %}{% trans %}Create new job{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Create new Job</h1>
+    <h1>{% trans %}Create new job{% endtrans %}</h1>
 
     {{ include('job/_form.html.twig') }}
 
-    <a href="{{ path('job_index') }}">back to list</a>
+    <a class="btn btn-primary btn-lg" href="{{ path('job_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

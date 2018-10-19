@@ -22,7 +22,7 @@
                 <td>{{ ldap_user.Unit.unitId }}</td>
                 <td>{{ ldap_user.subunit.subunitId | default(' ') }}</td>
                 <td>
-                    <a href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}Edit{% endtrans %}</a>
+                    <a class="btn btn-success" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}Edit{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}

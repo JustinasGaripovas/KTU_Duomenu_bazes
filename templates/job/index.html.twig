@@ -2,7 +2,7 @@
 {% trans_default_domain 'translation' %}
 
 
-{% block title %}Job index{% endblock %}
+{% block title %}{% trans %}Jobs {% endtrans %}{% endblock %}
 
 {% block body %}
     <h1> {% trans %}Jobs {% endtrans %}</h1>
@@ -16,7 +16,7 @@
                 <th>{% trans %} JobId{% endtrans %}</th>
                 <th> {% trans %} JobName{% endtrans %}</th>
                 <th> {% trans %} JobQuantity{% endtrans %}</th>
-                <th> {% trans %} actions {% endtrans %}</th>
+                <th colspan="2"> {% trans %} actions {% endtrans %}</th>
             </tr>
         </thead>
         <tbody>
@@ -27,8 +27,10 @@
                 <td>{{ job.JobName }}</td>
                 <td>{{ job.JobQuantity }}</td>
                 <td>
-                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+                    <a class="btn btn-info btn" href="{{ path('job_show', {'id': job.id}) }}">{% trans %}show{% endtrans %}</a>
+                </td>
+                <td>
+                    <a class="btn btn-success btn" href="{{ path('job_edit', {'id': job.id}) }}">{% trans %}edit{% endtrans %}</a>
                 </td>
             </tr>
         {% else %}

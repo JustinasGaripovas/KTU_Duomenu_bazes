@@ -27,6 +27,8 @@ RoadSectionEnd: Pabaiga
 RoadSection: Atkarpa
 JobName: Darbas
 JobId: Šifras
+Edit job: Redaguoti Darbą
+Create new job: Sukurti naują darbą
 DoneJobDate: Atlikta
 actions: Veiksmai
 New: Naujas įrašas
@@ -89,6 +91,7 @@ Insured Events Index: Draudiminių įvykių sąrašas
 Subunit: Tarnyba
 SectionBegin: Pradžia
 SectionEnd: Pabaiga
+Edit RoadSection: Redaguoti kelią
 DamagedStuff: Sugagintas kelio turtas
 Documents: Draudimui pateikti dokumentai
 EstimateToCompany: Draudimui pateikta suma, be PVM
@@ -146,6 +149,7 @@ Sand: Smėlis
 Mix: Mišinys
 Solution: Tirpalas
 Road section search: Kelio ruožas
+Create new road: Naujas kelio ruožas
 Salt checked: Druska
 Sand checked: Smėlis
 Mix checked: Mišinys

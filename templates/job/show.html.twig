@@ -1,34 +1,35 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}Job{% endblock %}
+{% block title %}{% trans %}Job{% endtrans %}{% endblock %}
 
 {% block body %}
-    <h1>Job</h1>
+    <h1>{% trans %}Job{% endtrans %}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{% trans %}Id{% endtrans %}</th>
                 <td>{{ job.id }}</td>
             </tr>
             <tr>
-                <th>JobId</th>
+                <th>{% trans %}JobId{% endtrans %}</th>
                 <td>{{ job.JobId }}</td>
             </tr>
             <tr>
-                <th>JobName</th>
+                <th> {% trans %}JobName{% endtrans %}</th>
                 <td>{{ job.JobName }}</td>
             </tr>
             <tr>
-                <th>JobQuantity</th>
+                <th> {% trans %}JobQuantity{% endtrans %}</th>
                 <td>{{ job.JobQuantity }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('job_index') }}">back to list</a>
+    <a class="btn btn-primary btn-lg" href="{{ path('job_index') }}">{% trans %}back to list{% endtrans %}</a>
 
-    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+    <a class="btn btn-success btn-lg" href="{{ path('job_edit', {'id': job.id}) }}">{% trans %}edit{% endtrans %}</a>
 
     {{ include('job/_delete_form.html.twig') }}
 {% endblock %}

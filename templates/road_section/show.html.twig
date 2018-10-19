@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
 {% block title %}RoadSection{% endblock %}
 
@@ -8,31 +9,31 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{% trans %}Id{% endtrans %}</th>
                 <td>{{ road_section.id }}</td>
             </tr>
             <tr>
-                <th>SectionId</th>
+                <th>{% trans %}RoadSectionId{% endtrans %}</th>
                 <td>{{ road_section.SectionId }}</td>
             </tr>
             <tr>
-                <th>UnitId</th>
+                <th>{% trans %}UnitId{% endtrans %}</th>
                 <td>{{ road_section.UnitId }}</td>
             </tr>
             <tr>
-                <th>SectionBegin</th>
+                <th>{% trans %}RoadSectionBegin{% endtrans %}</th>
                 <td>{{ road_section.SectionBegin }}</td>
             </tr>
             <tr>
-                <th>SectionEnd</th>
+                <th>{% trans %}RoadSectionEnd{% endtrans %}</th>
                 <td>{{ road_section.SectionEnd }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('road_section_index') }}">back to list</a>
+    <a class="btn btn-primary btn-lg" href="{{ path('road_section_index') }}">{% trans %}back to list{% endtrans %}</a>
 
-    <a href="{{ path('road_section_edit', {'id': road_section.id}) }}">edit</a>
+    <a class="btn btn-success btn-lg" href="{{ path('road_section_edit', {'id': road_section.id}) }}">{% trans %}edit{% endtrans %}</a>
 
     {{ include('road_section/_delete_form.html.twig') }}
 {% endblock %}

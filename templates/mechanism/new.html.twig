@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
 {% block title %}New Mechanism{% endblock %}
 
 {% block body %}
-    <h1>Create new Mechanism</h1>
+    <h1>{% trans %}New{% endtrans %}</h1>
 
     {{ include('mechanism/_form.html.twig') }}
 
-    <a href="{{ path('mechanism_index') }}">back to list</a>
+    <a class="btn btn-primary btn-lg" href="{{ path('mechanism_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

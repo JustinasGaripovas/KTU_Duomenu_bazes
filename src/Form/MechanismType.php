@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Mechanism;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MechanismType extends AbstractType
@@ -14,8 +16,12 @@ class MechanismType extends AbstractType
     {
         $builder
             ->add('Number')
-            ->add('Type')
-            ->add('Subunit')
+            ->add('Type', ChoiceType::class, array(
+                'choices' => $options['mechanism_choices']
+            ))
+            ->add('Subunit', ChoiceType::class, array(
+                'choices' => $options['subunit_choices']
+            ))
             ->add('TypeId', HiddenType::class)
         ;
     }
@@ -23,6 +29,8 @@ class MechanismType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'mechanism_choices' => array(),
+            'subunit_choices' => array(),
             'data_class' => Mechanism::class,
         ]);
     }

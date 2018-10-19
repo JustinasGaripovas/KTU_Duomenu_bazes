@@ -126,7 +126,10 @@ Road condition local3: Kelių būklė krašto (K3)
 Road condition district: Kelių būklė rajoniniuose (R1)
 Road condition district2: Kelių būklė rajoniniuose (R2)
 Road condition district3: Kelių būklė rajoniniuose (R3)
-Mechanism: Mechanizmų kiekis (darbas)
+Mechanism: Mechanizmai
+Create new mechanism: Sukurti naują mechanizmą
+Mechanism number: Mechanizmo numeris
+Edit mechanism: Redaguoti mechanizmą
 Winter Maintenance New: Eismo ir oro sąlygos (Naujas įrašas)
 Winter Maintenance List: Eismo ir oro sąlygos (Sąrašas)
 Winter Maintenance: Žiemos priežiūra
@@ -161,4 +164,6 @@ Remove: Pašalinti
 New Road: Naujas ruožas
 RoadSectionId: Kelio Nr.
 SectionType: Kelio tipas
+show: Rodyti
+edit: Redaguoti
 

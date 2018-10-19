@@ -6,6 +6,8 @@ use App\Entity\Mechanism;
 use App\Form\MechanismType;
 use App\Repository\LdapUserRepository;
 use App\Repository\MechanismRepository;
+use App\Repository\SubunitRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,9 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/mechanism")
+ * @IsGranted("ROLE_ADMIN")
  */
 class MechanismController extends AbstractController
 {
+    private $mechanismChoises = array("Sunkvežimis"=>"Sunkvežimis","Autogreideris"=>"Autogreideris","Traktorius"=>"Traktorius","Kiti"=>"Kiti");
+
     /**
      * @Route("/", name="mechanism_index")
      */
@@ -27,17 +32,18 @@ class MechanismController extends AbstractController
     /**
      * @Route("/new", name="mechanism_new", methods="GET|POST")
      */
-    public function new(LdapUserRepository $ldapUserRepository, Request $request): Response
+    public function new(LdapUserRepository $ldapUserRepository, Request $request, SubunitRepository $subunitRepository): Response
     {
         $userName = $this->getUser()->getUserName();
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
 
         $mechanism = new Mechanism();
-        $form = $this->createForm(MechanismType::class, $mechanism);
+        $form = $this->createForm(MechanismType::class, $mechanism, ['mechanism_choices' => $this->mechanismChoises, "subunit_choices"=>$this->subunitChoices($subunitRepository)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            //TODO: make type id usable AKA set type id in accordance with tyoe (choice)
+            $mechanism->setTypeId(0);
             $em->persist($mechanism);
             $em->flush();
 
@@ -61,15 +67,14 @@ class MechanismController extends AbstractController
     /**
      * @Route("/{id}/edit", name="mechanism_edit", methods="GET|POST")
      */
-    public function edit(LdapUserRepository $ldapUserRepository, Request $request, Mechanism $mechanism): Response
+    public function edit(LdapUserRepository $ldapUserRepository, Request $request, Mechanism $mechanism, SubunitRepository $subunitRepository): Response
     {
-        $userName = $this->getUser()->getUserName();
-        $subUnitId = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getId();
-
-        $form = $this->createForm(MechanismType::class, $mechanism);
+        $form = $this->createForm(MechanismType::class, $mechanism, ['mechanism_choices' => $this->mechanismChoises, "subunit_choices"=>$this->subunitChoices($subunitRepository)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //TODO: make type id usable AKA set type id in accordance with tyoe (choice)
+            $mechanism->setTypeId(0);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('mechanism_edit', ['id' => $mechanism->getId()]);
@@ -93,5 +98,16 @@ class MechanismController extends AbstractController
         }
 
         return $this->redirectToRoute('mechanism_index');
+    }
+
+    private function subunitChoices(SubunitRepository $subunitRepository){
+        $subunitChoices = array();
+
+        foreach ($subunitRepository->findAll() as $subunit)
+        {
+            $subunitChoices[$subunit->getName()] = $subunit->getSubunitId();
+        }
+
+        return $subunitChoices;
     }
 }

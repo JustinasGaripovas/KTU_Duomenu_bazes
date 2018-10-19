@@ -1,71 +1,7 @@
-<script>
-    $( function() {
-
-        $( "#save_button" ).click(function() {
-            var type =  $("#mechanism_Type").val();
-            var typeId = $("#mechanism_TypeId").val();
-
-            if(mechanisms.includes(type)==false)
-            {
-                $("#mechanism_TypeId").val(0);
-            }
-        });
-
-
-        var projects = [
-            {
-                id: 1,
-                label: "Sunkvežimis",
-            },
-            {
-                id: 2,
-                label: "Autogreideris",
-            },
-            {
-                id: 3,
-                label: "Traktorius",
-            }
-        ];
-
-        var mechanisms = ["Sunkvežimis","Autogreideris","Traktorius"];
-
-        $( "#mechanism_Type" ).autocomplete({
-            source: projects,
-            minLength: 2,
-            delay: 500,
-            focus: function( event, ui ) {
-                $( "#mechanism_Type" ).val( ui.item.label );
-                return false;
-            },
-            select: function( event, ui ) {
-                $( "#mechanism_Type" ).val( ui.item.label );
-                $( "#mechanism_TypeId" ).val( ui.item.id );
-                return false;
-            }
-        });
-        $( ".js-datepicker" ).datepicker();
-    });
-/*
-    $( function() {
-        function log( message ) {
-            $( "<div>" ).text( message ).prependTo( "#log" );
-            $( "#log" ).scrollTop( 0 );
-        }
-        $( "#mechanism_Type" ).autocomplete({
-            source: "{{ path('search/road') }}",
-            minLength: 2,
-            delay: 500,
-            select: function( event, ui ) {
-                $('#mechanism_Type').val(ui.item.section_id),
-                    $('#mechanism_TypeId').val(ui.item.section_begin)
-                    //$('#inspection_RoadSectionEnd').val(ui.item.section_end)
-            },
-        });
-        $( ".js-datepicker" ).datepicker();
-    });*/
-</script>
+{% trans_default_domain 'translation' %}
 
 {{ form_start(form) }}
+
     {{ form_widget(form) }}
-    <button id="save_button" class="btn">{{ button_label|default('Save') }}</button>
+    <button id="save_button" class="btn btn-success btn-lg">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -40,24 +40,26 @@ class InspectionController extends Controller
         else {
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
             $dql = '';
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+
+            if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')){
+            elseif ($this->isGranted('SUPER_VIEWER')){
                 $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+            elseif ($this->isGranted('UNIT_VIEWER')) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+            elseif ($this->isGranted('SUPER_MASTER')) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
             }
-            elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+            elseif ($this->isGranted('ROAD_MASTER')) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
             }
-            elseif(true === $authChecker->isGranted('ROLE_WORKER') ) {
+            elseif($this->isGranted('WORKER') ) {
                 $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.Date DESC";
             }
+
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $paginator  = $this->get('knp_paginator');
@@ -69,7 +71,7 @@ class InspectionController extends Controller
 
             return $this->render('inspection/index.html.twig', ['pagination' => $pagination]);
         }
-        }
+    }
 
     /**
      * @Route("/new", name="inspection_new", methods="GET|POST")
@@ -114,6 +116,8 @@ class InspectionController extends Controller
      */
     public function show(Inspection $inspection): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$inspection);
+
         return $this->render('inspection/show.html.twig', ['inspection' => $inspection]);
     }
 
@@ -122,6 +126,9 @@ class InspectionController extends Controller
      */
     public function edit(Request $request, Inspection $inspection): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$inspection);
+
+
         $form = $this->createForm(InspectionType::class, $inspection);
         $form->handleRequest($request);
 
@@ -142,6 +149,8 @@ class InspectionController extends Controller
      */
     public function delete(Request $request, Inspection $inspection): Response
     {
+        $this->denyAccessUnlessGranted('DELETE',$inspection);
+
         if ($this->isCsrfTokenValid('delete'.$inspection->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($inspection);

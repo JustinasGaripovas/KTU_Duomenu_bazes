@@ -1,0 +1,21 @@
+Road id: Kelio nr.
+Road name: Kelio pavadinimas
+Section begin: Nuo (km.)
+Section end: Iki (km.)
+Water deep: Vandens gylis (cm.)
+Notes: Pastabos
+Status: Statusas
+Create new FloodedRoads: Naujas įrašas
+Save: Įrašyti
+back to list: Atgal
+New: Naujas
+CreatedAt: Data
+RoadId: Kelio nr.
+RoadName: Kelio pavadinimas
+SectionBegin: Nuo (km.)
+SectionEnd: Iki (km.)
+WaterDeep: Vandens gylis (cm.)
+Subunit: Tarnyba
+CreatedBy: Autorius
+actions: Veiksmai
+edit: Redaguoti

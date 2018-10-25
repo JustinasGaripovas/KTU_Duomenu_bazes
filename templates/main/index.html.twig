@@ -8,37 +8,36 @@
     <div class="container">
         <ul>
             {% if is_granted('INSPECTION') %}
-                <h1>{% trans %}Inspection {% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_index') }}">{% trans %} Inspections List {% endtrans %}</a>
+            <h1>{% trans %}Inspection {% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_index') }}">{% trans %} Inspections List {% endtrans %}</a>
             {% endif %}
 
             {% if is_granted('DONE_JOBS') %}
-                <h1>{% trans %}Jobs{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
+            <h1>{% trans %}Jobs{% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_new') }}">{% trans %}New Job {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('done_jobs_index') }}">{% trans %}Jobs list{% endtrans %}</a>
             {% endif %}
 
             {% if is_granted('RESTRICTIONS') %}
-                <h1>{% trans %} Restrictions {% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('restriction_index') }}">{% trans %}New Job {% endtrans %}</a>
+            <h1>{% trans %} Restrictions {% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('restriction_index') }}">{% trans %}New Job {% endtrans %}</a>
             {% endif %}
+
+            <h1>{% trans %} Flooded roads {% endtrans %}</h1>
+            <a class="btn btn-warning btn-lg btn-block" href="{{ path('flooded_roads_index') }}">{% trans %} Flooded Roads List {% endtrans %}</a>
 
             {% if is_granted('WINTER') %}
-                <h1>{% trans %} Winter Maintenance {% endtrans %}</h1>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_new') }}">{% trans %} Winter Maintenance New {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_index') }}">{% trans %} Winter Maintenance List {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_new') }}">{% trans %} Winter Jobs New {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_index') }}">{% trans %} Winter Jobs List {% endtrans %}</a>
+            <h1>{% trans %} Winter Maintenance {% endtrans %}</h1>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_new') }}">{% trans %} Winter Maintenance New {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_index') }}">{% trans %} Winter Maintenance List {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_new') }}">{% trans %} Winter Jobs New {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_index') }}">{% trans %} Winter Jobs List {% endtrans %}</a>
             {% endif %}
 
-            {% if is_granted('LDAP_USER') %}
+            {% if is_granted('ADMIN') %}
                 <h1>{% trans %}Ldap users{% endtrans %}</h1>
                 <a class="btn btn-success btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
-            {% endif %}
-
-
-            {% if is_granted('ROLE_ADMIN') %}
                 <h1>{% trans %}Mechanism{% endtrans %}</h1>
                 <a class="btn btn-success btn-lg btn-block" href="{{ path('mechanism_index') }}">{% trans %}Mechanism{% endtrans %}</a>
                 <h1>{% trans %}Road Sections{% endtrans %}</h1>
@@ -48,26 +47,27 @@
             {% endif %}
 
             {% if is_granted('INSURED') %}
-                <h1>{% trans %}Insured Events{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('insured_event_index') }}">{% trans %}Insured Events Index{% endtrans %}</a>
-                <h1>{% trans %}Uninsured Events{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('uninsured_event_index') }}">{% trans %}Uninsured Events Index{% endtrans %}</a>
+            <h1>{% trans %}Insured Events{% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('insured_event_index') }}">{% trans %}Insured Events Index{% endtrans %}</a>
+            <h1>{% trans %}Uninsured Events{% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('uninsured_event_index') }}">{% trans %}Uninsured Events Index{% endtrans %}</a>
             {% endif %}
 
             {% if is_granted('REPORTS') %}
-                <h1>{% trans %}Reports{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('insured_events_report') }}">{% trans %} Insured Events {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_restrictions') }}">{% trans %} Restriction {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter') }}">{% trans %} Report with filter {% endtrans %}</a>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter_inspection') }}">{% trans %} Bendra patrulinių {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_jobs') }}">{% trans %} Žiemos darbų ataskaita {% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_materials') }}">{% trans %} Žiemos medžiagų ataskaita{% endtrans %}</a>
-                <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_mechanism') }}">{% trans %} Žiemos mechanizmų ataskaita {% endtrans %}</a>
+            <h1>{% trans %}Reports{% endtrans %}</h1>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('insured_events_report') }}">{% trans %} Insured Events {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_restrictions') }}">{% trans %} Restriction {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter') }}">{% trans %} Report with filter {% endtrans %}</a>
+            <a class="btn btn-success btn-lg btn-block" href="{{ path('reports_filter_inspection') }}">{% trans %} Bendra patrulinių {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_jobs') }}">{% trans %} Žiemos darbų ataskaita {% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_materials') }}">{% trans %} Žiemos medžiagų ataskaita{% endtrans %}</a>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_mechanism') }}">{% trans %} Žiemos mechanizmų ataskaita {% endtrans %}</a>
             {% endif %}
+
         </ul>
     </div>
 {% endblock %}

@@ -7,6 +7,7 @@ use App\Form\InsuredEventType;
 use App\Form\InsuredEventTypeEdit;
 use App\Repository\InsuredEventRepository;
 use App\Repository\LdapUserRepository;
+use App\Repository\SubunitRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class InsuredEventController extends Controller
     /**
      * @Route("insured/event/", name="insured_event_index", methods="GET")
      */
-    public function index(LdapUserRepository $ldapUserRepository, InsuredEventRepository $insuredEventRepository, Request $request): Response
+    public function index(LdapUserRepository $ldapUserRepository, InsuredEventRepository $insuredEventRepository, Request $request, SubunitRepository $subunitRepository): Response
     {
         $userName = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
@@ -34,9 +35,30 @@ class InsuredEventController extends Controller
 
             $username = $this->getUser()->getUserName();
             $em = $this->get('doctrine.orm.entity_manager');
-            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+
+            $subunitName = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getName();
+
             $dql = '';
+
+            if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif($this->isGranted('WORKER') ) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+
 
             //
             $query = $em->createQuery($dql);
@@ -56,7 +78,7 @@ class InsuredEventController extends Controller
     /**
      * @Route("uninsured/event/", name="uninsured_event_index", methods="GET")
      */
-    public function indexUninsured(LdapUserRepository $ldapUserRepository, InsuredEventRepository $insuredEventRepository, Request $request): Response
+    public function indexUninsured(LdapUserRepository $ldapUserRepository, InsuredEventRepository $insuredEventRepository, Request $request, SubunitRepository $subunitRepository): Response
     {
         $userName = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
@@ -69,8 +91,29 @@ class InsuredEventController extends Controller
 
             $username = $this->getUser()->getUserName();
             $em = $this->get('doctrine.orm.entity_manager');
-            $dql = "SELECT ie FROM App:InsuredEvent ie WHERE ie.isInsuredType = 0 ORDER BY ie.id DESC";
 
+            $subunitName = $ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()->getName();
+
+            $dql = '';
+
+            if ($this->isGranted('ADMIN')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
+            elseif($this->isGranted('WORKER') ) {
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+            }
             //
             $query = $em->createQuery($dql);
             $paginator = $this->get('knp_paginator');
@@ -147,6 +190,8 @@ class InsuredEventController extends Controller
      */
     public function show(InsuredEvent $insuredEvent): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$insuredEvent);
+
         return $this->render('insured_event/show.html.twig', ['insured_event' => $insuredEvent]);
     }
 
@@ -155,6 +200,8 @@ class InsuredEventController extends Controller
      */
     public function add(Request $request, InsuredEvent $insuredEvent): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$insuredEvent);
+
         $form = $this->createForm(InsuredEventTypeEdit::class, $insuredEvent);
         $form->handleRequest($request);
 
@@ -175,6 +222,8 @@ class InsuredEventController extends Controller
      */
     public function editUninsured(Request $request, InsuredEvent $insuredEvent): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$insuredEvent);
+
         $form = $this->createForm(InsuredEventType::class, $insuredEvent);
         $form->handleRequest($request);
 
@@ -195,6 +244,8 @@ class InsuredEventController extends Controller
      */
     public function edit(Request $request, InsuredEvent $insuredEvent): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$insuredEvent);
+
         $form = $this->createForm(InsuredEventType::class, $insuredEvent);
         $form->handleRequest($request);
 
@@ -215,6 +266,8 @@ class InsuredEventController extends Controller
      */
     public function delete(Request $request, InsuredEvent $insuredEvent): Response
     {
+        $this->denyAccessUnlessGranted('DELETE',$insuredEvent);
+
         if ($this->isCsrfTokenValid('delete'.$insuredEvent->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($insuredEvent);

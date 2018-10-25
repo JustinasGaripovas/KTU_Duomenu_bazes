@@ -1,4 +1,67 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success btn-lg">{{ button_label|default('Save') }}</button>
+
+    {{ form_row(form.name) }}
+    {{ form_row(form.unit) }}
+    {{ form_row(form.subunit) }}
+
+
+    {{ form_row(form.role) }}
+
+<div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.inspection) }}</h4>
+                        {{ form_row(form.inspection) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.doneJobs) }}</h4>
+                        {{ form_row(form.doneJobs) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.restrictions) }}</h4>
+                        {{ form_row(form.restrictions) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.winter) }}</h4>
+                        {{ form_row(form.winter) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.insuredEvent) }}</h4>
+                        {{ form_row(form.insuredEvent) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_label(form.reports) }}</h4>
+                        {{ form_row(form.reports) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+
+<button class="container-fluid btn btn-success btn-lg">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

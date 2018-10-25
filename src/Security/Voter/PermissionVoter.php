@@ -3,22 +3,22 @@ namespace App\Security\Voter;
 use App\Repository\LdapUserRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 class PermissionVoter extends Voter
 {
     private $ldapUserRepository;
+    private $security;
 
     const Inspection = 'INSPECTION';
     const DoneJobs = 'DONE_JOBS';
     const Restriction = 'RESTRICTIONS';
-    const LdapUser = 'LDAP_USER';
-    const Section = 'ROAD_SECTION';
-    const Job = 'JOB';
     const Insured = 'INSURED';
     const Reports = 'REPORTS';
     const Winter = 'WINTER';
-    public function __construct(LdapUserRepository $ldapUserRepository)
+    public function __construct(LdapUserRepository $ldapUserRepository,Security $security)
     {
+        $this->security = $security;
         $this->ldapUserRepository = $ldapUserRepository;
     }
     /**
@@ -35,9 +35,6 @@ class PermissionVoter extends Voter
             self::Inspection,
             self::DoneJobs,
             self::Restriction,
-            self::LdapUser,
-            self::Section,
-            self::Job,
             self::Insured,
             self::Reports,
             self::Winter
@@ -76,20 +73,11 @@ class PermissionVoter extends Voter
             case self::Restriction:
                 return 0 != $ldap->getRestrictions();
                 break;
-            case self::Section:
-                return 0 != $ldap->getRoadSection();
-                break;
-            case self::Job:
-                return 0 != $ldap->getJob();
-                break;
             case self::Insured:
                 return 0 != $ldap->getInsuredEvent();
                 break;
             case self::Reports:
                 return 0 != $ldap->getReports();
-                break;
-            case self::LdapUser:
-                return 0 != $ldap->getLdap();
                 break;
             case self::Winter:
                 return 0 != $ldap->getWinter();

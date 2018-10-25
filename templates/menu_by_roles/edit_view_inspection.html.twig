@@ -1,20 +1,20 @@
-{% if is_granted('ROLE_ADMIN') %}
+{% if is_granted('ADMIN') %}
 <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('inspection_show', {'id': inspection.id}) }}"></a>
 <a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('inspection_edit', {'id': inspection.id}) }}"></a>
 
-{% elseif is_granted('ROLE_SUPER_VIEWER') %}
+{% elseif is_granted('SUPER_VIEWER') %}
 
-{% elseif is_granted('ROLE_UNIT_VIEWER') %}
+{% elseif is_granted('UNIT_VIEWER') %}
 
-{% elseif is_granted('ROLE_SUPER_MASTER') %}
+{% elseif is_granted('SUPER_MASTER') %}
     <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
     <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
 
-{% elseif is_granted('ROLE_ROAD_MASTER') %}
+{% elseif is_granted('ROAD_MASTER') %}
     <a href="{{ path('inspection_show', {'id': inspection.id}) }}">show</a>
     <a href="{{ path('inspection_edit', {'id': inspection.id}) }}">edit</a>
 
 
-{% elseif is_granted('ROLE_WORKER') %}
+{% elseif is_granted('WORKER') %}
 
 {% endif %}

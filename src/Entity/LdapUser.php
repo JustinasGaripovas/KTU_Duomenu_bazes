@@ -61,26 +61,6 @@ class LdapUser
     /**
      * @ORM\Column(type="integer")
      */
-    private $Ldap;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $Mechanism;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $RoadSection;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $Job;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $InsuredEvent;
 
     /**
@@ -132,54 +112,6 @@ class LdapUser
     public function setWinter(int $Winter): self
     {
         $this->Winter = $Winter;
-
-        return $this;
-    }
-
-    public function getLdap(): ?int
-    {
-        return $this->Ldap;
-    }
-
-    public function setLdap(int $Ldap): self
-    {
-        $this->Ldap = $Ldap;
-
-        return $this;
-    }
-
-    public function getMechanism(): ?int
-    {
-        return $this->Mechanism;
-    }
-
-    public function setMechanism(int $Mechanism): self
-    {
-        $this->Mechanism = $Mechanism;
-
-        return $this;
-    }
-
-    public function getRoadSection(): ?int
-    {
-        return $this->RoadSection;
-    }
-
-    public function setRoadSection(int $RoadSection): self
-    {
-        $this->RoadSection = $RoadSection;
-
-        return $this;
-    }
-
-    public function getJob(): ?int
-    {
-        return $this->Job;
-    }
-
-    public function setJob(int $Job): self
-    {
-        $this->Job = $Job;
 
         return $this;
     }

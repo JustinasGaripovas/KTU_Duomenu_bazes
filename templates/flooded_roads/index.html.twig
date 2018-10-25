@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'flooded_roads' %}
+
+{% block title %}FloodedRoads index{% endblock %}
+
+{% block body %}
+    <a class="btn btn-success btn-block btn-lg" href="{{ path('flooded_roads_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+    <hr>
+    <table class="table table-sm thead-dark">
+        <thead>
+            <tr>
+                <th>{% trans %} CreatedAt {% endtrans %}</th>
+                <th>{% trans %} RoadId {% endtrans %}</th>
+                <th>{% trans %} RoadName {% endtrans %}</th>
+                <th>{% trans %} SectionBegin {% endtrans %}</th>
+                <th>{% trans %} SectionEnd {% endtrans %}</th>
+                <th>{% trans %} WaterDeep {% endtrans %}</th>
+                <th>{% trans %} Notes {% endtrans %}</th>
+                <th>{% trans %} Status {% endtrans %}</th>
+                <th>{% trans %} Subunit {% endtrans %}</th>
+                <th>{% trans %} CreatedBy {% endtrans %}</th>
+                <th>{% trans %} actions {% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for flooded_road in flooded_roads %}
+            <tr>
+                <td>{{ flooded_road.createdAt | date('Y-m-d') }}</td>
+                <td>{{ flooded_road.RoadId }}</td>
+                <td>{{ flooded_road.RoadName }}</td>
+                <td>{{ flooded_road.SectionBegin }}</td>
+                <td>{{ flooded_road.SectionEnd }}</td>
+                <td>{{ flooded_road.WaterDeep }}</td>
+                <td>{{ flooded_road.Notes }}</td>
+                <td>{{ flooded_road.Status }}</td>
+                <td>{{ flooded_road.subunitId }}</td>
+                <td>{{ flooded_road.createdBy }}</td>
+                <td>
+                    <a href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"> {% trans %}edit{% endtrans %}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(flooded_roads) }}
+    </div>
+    <hr>
+{% endblock %}

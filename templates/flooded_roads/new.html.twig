@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'flooded_roads' %}
+
+{% block title %}New FloodedRoads{% endblock %}
+
+{% block body %}
+    <script>
+        $( function() {
+            $( "#flooded_roads_RoadId" ).autocomplete({
+                source: "{{ path('search/road2') }}",
+                minLength: 2,
+                delay: 500,
+                select: function( event, ui ) {
+                        $('#flooded_roads_SectionBegin').val(ui.item.section_begin),
+                        $('#flooded_roads_SectionEnd').val(ui.item.section_end),
+                        $('#flooded_roads_RoadName').val(ui.item.road_name)
+                }
+            });
+        });
+    </script>
+
+    <h3>{% trans %} Create new FloodedRoads {% endtrans %}</h3>
+
+    {{ include('flooded_roads/_form.html.twig') }}
+    <a class="btn btn-light btn-block btn-lg" href="{{ path('flooded_roads_index') }}">{% trans %}back to list{% endtrans %}</a>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FloodedRoads{% endblock %}
+
+{% block body %}
+    <h1>FloodedRoads</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ flooded_road.id }}</td>
+            </tr>
+            <tr>
+                <th>RoadId</th>
+                <td>{{ flooded_road.RoadId }}</td>
+            </tr>
+            <tr>
+                <th>RoadName</th>
+                <td>{{ flooded_road.RoadName }}</td>
+            </tr>
+            <tr>
+                <th>SectionBegin</th>
+                <td>{{ flooded_road.SectionBegin }}</td>
+            </tr>
+            <tr>
+                <th>SectionEnd</th>
+                <td>{{ flooded_road.SectionEnd }}</td>
+            </tr>
+            <tr>
+                <th>WaterDeep</th>
+                <td>{{ flooded_road.WaterDeep }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ flooded_road.Notes }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ flooded_road.Status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('flooded_roads_index') }}">back to list</a>
+
+    <a href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}">edit</a>
+
+    {{ include('flooded_roads/_delete_form.html.twig') }}
+{% endblock %}

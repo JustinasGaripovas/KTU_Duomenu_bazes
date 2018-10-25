@@ -48,7 +48,7 @@ class DoneJobVoter extends Voter
         }
 
         if($this->security->isGranted("UNIT_VIEWER") || $this->security->isGranted("SUPER_MASTER") || $this->security->isGranted("ROAD_MASTER")) {
-            if ($ldapUser->getSubunit() == $subject->getSubUnitId()) {
+            if ($ldapUser->getSubunit()->getSubunitId() == $subject->getSubUnitId()) {
                 return $this->switchCase($attribute, $ldapUser->getDoneJobs());
             }
         }

@@ -11,7 +11,8 @@
     <table class="table table-sm thead-dark table-bordered">
         <thead>
             <tr>
-                <th>{% trans%} Report for {% endtrans %}</th>
+                <th> {% trans%} Report for {% endtrans %}</th>
+                <th> {% trans%} Date {% endtrans %}</th>
                 <th> {% trans %} Subunit {% endtrans %}</th>
                 <th> {% trans %} RoadCondition {% endtrans %}</th>
                 <th> {% trans %} Weather {% endtrans %}</th>
@@ -27,6 +28,7 @@
         {% for winter_maintenance in winter_maintenances %}
             <tr>
                 <td> {{ winter_maintenance.reportFor }}</td>
+                <td> {{ winter_maintenance.createdAt ? winter_maintenance.createdAt|date('Y-m-d') : '' }}</td>
                 <td>{{ subunits[winter_maintenance.Subunit]}}</td>
                 <td>
                     M1 - {{ winter_maintenance.RoadConditionHighway | join(', ') }},

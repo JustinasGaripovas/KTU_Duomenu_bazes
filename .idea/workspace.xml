@@ -6,14 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FloodedRoadsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FloodedRoadsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/DoneJobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DoneJobsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/LdapUserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/LdapUserType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/Voter/RoleVoter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/Voter/RoleVoter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ldap_user/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ldap_user/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu_by_roles/edit_view_done_job.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_by_roles/edit_view_done_job.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -217,7 +211,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="env" value="1" />
-          <entry key="php" value="177" />
+          <entry key="php" value="179" />
           <entry key="rnc" value="1" />
           <entry key="twig" value="119" />
           <entry key="yaml" value="1" />
@@ -227,7 +221,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key=".env file" value="1" />
-          <entry key="PHP" value="177" />
+          <entry key="PHP" value="179" />
           <entry key="RNG Compact" value="1" />
           <entry key="Twig" value="119" />
           <entry key="YAML" value="4" />
@@ -236,7 +230,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="env" value="50" />
-          <entry key="php" value="5086" />
+          <entry key="php" value="5113" />
           <entry key="twig" value="1999" />
           <entry key="yaml" value="6" />
           <entry key="yml" value="331" />
@@ -245,7 +239,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key=".env file" value="50" />
-          <entry key="PHP" value="5086" />
+          <entry key="PHP" value="5113" />
           <entry key="Twig" value="1999" />
           <entry key="YAML" value="337" />
         </counts>
@@ -266,18 +260,6 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="26" column="5" selection-end-line="81" />
-              <folding>
-                <element signature="e#38#64#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="279">
@@ -290,28 +272,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/ReportsController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12446">
-              <caret line="45" column="50" selection-start-line="45" selection-start-column="50" selection-end-line="45" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
-              <caret line="131" column="5" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
+            <state relative-caret-position="184">
+              <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="54" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+            <state relative-caret-position="495">
+              <caret line="49" column="87" selection-start-line="49" selection-start-column="87" selection-end-line="49" selection-end-column="87" />
             </state>
           </provider>
         </entry>
@@ -337,11 +310,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Security/Voter/FloodVoter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="735">
+              <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
               <folding>
                 <element signature="e#38#66#0#PHP" expanded="true" />
               </folding>
@@ -491,7 +464,6 @@
         <option value="$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php" />
         <option value="$PROJECT_DIR$/templates/inspection/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/InspectionController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/DoneJobsController.php" />
         <option value="$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php" />
         <option value="$PROJECT_DIR$/src/Controller/ReportsController.php" />
         <option value="$PROJECT_DIR$/src/Security/Voter/WinterVoter.php" />
@@ -502,9 +474,10 @@
         <option value="$PROJECT_DIR$/templates/ldap_user/_form.html.twig" />
         <option value="$PROJECT_DIR$/templates/main/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Security/Voter/RoleVoter.php" />
-        <option value="$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php" />
         <option value="$PROJECT_DIR$/src/Controller/FloodedRoadsController.php" />
         <option value="$PROJECT_DIR$/src/Security/Voter/FloodVoter.php" />
+        <option value="$PROJECT_DIR$/src/Controller/DoneJobsController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php" />
       </list>
     </option>
   </component>
@@ -793,7 +766,7 @@
       <workItem from="1540225565476" duration="2341000" />
       <workItem from="1540400923362" duration="635000" />
       <workItem from="1540443655524" duration="15077000" />
-      <workItem from="1540530121164" duration="18490000" />
+      <workItem from="1540530121164" duration="19722000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -820,7 +793,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193353000" />
+    <option name="totallyTimeSpent" value="194585000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -894,13 +867,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/padariukas/dais&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/Controller/InsuredEventController.php&#10;#&#9;src/Controller/WinterJobsController.php&#10;#&#9;src/Entity/InsuredEvent.php&#10;#&#9;src/Entity/RoadSection.php&#10;#&#9;src/Entity/WinterJobs.php&#10;#&#9;src/Form/InsuredEventType.php&#10;#&#9;src/Form/UninsecureEventEditType.php&#10;#&#9;src/Form/WinterJobsType.php&#10;#&#9;templates/insured_event/edit.html.twig&#10;#&#9;templates/insured_event/editUninsured.html.twig&#10;#&#9;templates/insured_event/new.html.twig&#10;#&#9;templates/insured_event/newUninsured.html.twig&#10;#&#9;templates/winter_jobs/_form.html.twig&#10;#&#9;templates/winter_jobs/edit.html.twig&#10;#&#9;templates/winter_jobs/index.html.twig&#10;#&#9;templates/winter_jobs/new.html.twig" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/mechanism/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/index.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1076,13 +1042,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/DoneJobsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/RestrictionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1253,20 +1212,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="58" column="42" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="131" column="5" selection-start-line="131" selection-start-column="5" selection-end-line="131" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -1277,13 +1222,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/FloodedRoadsType.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/DoneJobsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-360">
+          <caret line="54" column="55" selection-start-line="54" selection-start-column="55" selection-end-line="54" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Security/Voter/FloodVoter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="735">
+          <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
           <folding>
             <element signature="e#38#66#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="33" column="11" selection-start-line="33" selection-start-column="11" selection-end-line="54" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/FloodedRoadsReportsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="49" column="87" selection-start-line="49" selection-start-column="87" selection-end-line="49" selection-end-column="87" />
         </state>
       </provider>
     </entry>

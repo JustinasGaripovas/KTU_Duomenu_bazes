@@ -30,7 +30,7 @@ class FloodedRoadsReportsController extends Controller
         }
         else {
             $form = $this->createForm(FloodedRoadsReportType::class);
-            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->html = '';

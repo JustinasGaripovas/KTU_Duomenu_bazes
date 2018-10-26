@@ -43,6 +43,7 @@ class DoneJobsController extends Controller
             $filterByJobId = $request->query->get('filterJob');
             $filterByRoadId = $request->query->get('filterRoad');
             $dql = '';
+
             if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             }elseif ($this->isGranted('SUPER_VIEWER')) {

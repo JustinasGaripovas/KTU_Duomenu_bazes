@@ -7,6 +7,22 @@
 
     <div class="container">
         <ul>
+            {% if (is_granted('ADMIN') or (is_granted('SUPER_VIEWER'))) %}
+                <h1>Admin dashboard</h1>
+                <div class="card border-danger mb-3">
+                    <div class="container p-3">
+                        <h2>{% trans %}Ldap users{% endtrans %}</h2>
+                        <a class="btn btn-danger btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
+                        <h2>{% trans %}Mechanism{% endtrans %}</h2>
+                        <a class="btn btn-danger btn-lg btn-block" href="{{ path('mechanism_index') }}">{% trans %}Mechanism{% endtrans %}</a>
+                        <h2>{% trans %}Road Sections{% endtrans %}</h2>
+                        <a class="btn btn-danger btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
+                        <h2>{% trans %} Jobs {% endtrans %}</h2>
+                        <a class="btn btn-danger btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if is_granted('INSPECTION') %}
             <h1>{% trans %}Inspection {% endtrans %}</h1>
             <a class="btn btn-success btn-lg btn-block" href="{{ path('inspection_new') }}">{% trans %}New Inspection {% endtrans %}</a>
@@ -24,8 +40,10 @@
             <a class="btn btn-success btn-lg btn-block" href="{{ path('restriction_index') }}">{% trans %}New Job {% endtrans %}</a>
             {% endif %}
 
+            {% if is_granted('FLOOD') %}
             <h1>{% trans %} Flooded roads {% endtrans %}</h1>
             <a class="btn btn-warning btn-lg btn-block" href="{{ path('flooded_roads_index') }}">{% trans %} Flooded Roads List {% endtrans %}</a>
+            {% endif %}
 
             {% if is_granted('WINTER') %}
             <h1>{% trans %} Winter Maintenance {% endtrans %}</h1>
@@ -33,17 +51,6 @@
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_maintenance_index') }}">{% trans %} Winter Maintenance List {% endtrans %}</a>
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_new') }}">{% trans %} Winter Jobs New {% endtrans %}</a>
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_jobs_index') }}">{% trans %} Winter Jobs List {% endtrans %}</a>
-            {% endif %}
-
-            {% if is_granted('ADMIN') %}
-                <h1>{% trans %}Ldap users{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('ldap_user_index') }}">{% trans %}LdapUsers list{% endtrans %}</a>
-                <h1>{% trans %}Mechanism{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('mechanism_index') }}">{% trans %}Mechanism{% endtrans %}</a>
-                <h1>{% trans %}Road Sections{% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('road_section_index') }}">{% trans %}Road Sections{% endtrans %}</a>
-                <h1>{% trans %} Jobs {% endtrans %}</h1>
-                <a class="btn btn-success btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
             {% endif %}
 
             {% if is_granted('INSURED') %}

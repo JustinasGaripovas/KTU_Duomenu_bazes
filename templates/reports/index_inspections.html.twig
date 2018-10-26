@@ -39,12 +39,14 @@
                         <td style="white-space: nowrap;text-align: center; vertical-align: middle">{{ inspection.RoadId }} ({{ inspection.RoadSectionBegin }}; {{ inspection.RoadSectionEnd }})</td>
                         <td style="text-align: center; vertical-align: middle">{{ inspection.Note }}</td>
                     <td style="text-align: center; vertical-align: middle">
+
                         {% for job in inspection.getJob %}
                             {% if job.DoneJobDate != null %}
                         {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')}}
                                 <br>
                             {% endif %}
                         {% endfor %}
+
                     </td>
                     <td style="text-align: center; vertical-align: middle; white-space: nowrap"> </td>
                     </tr>
@@ -53,6 +55,7 @@
                         <td colspan="5">no records found</td>
                     </tr>
                 {% endfor %}
+
                 </tbody>
             </table>
             ________________________________________________________________________________________________

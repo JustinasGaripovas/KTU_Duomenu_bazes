@@ -44,19 +44,25 @@ class WinterReportController extends Controller
 
             $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit()->getSubunitId();
 
-            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+            if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
-            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
-            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
             }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            }
+            elseif($this->isGranted('WORKER') ) {
+                $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
+            }
+
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
@@ -143,17 +149,22 @@ class WinterReportController extends Controller
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
 
-            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+            if ($this->isGranted('ADMIN')) {
                 $report = $this->getDaysMaterials($from, $to);
-            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
                 $report = $this->getDaysMaterials($from, $to);
-            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
+            }
+            elseif($this->isGranted('WORKER') ) {
                 $report = $this->getDaysMaterialsForSubunit($from, $to, $subunit);
             }
 
@@ -224,17 +235,22 @@ class WinterReportController extends Controller
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
 
-            if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
-                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
-                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+            if ($this->isGranted('ADMIN')) {
                 $report = $this->getDaysMechanism($from, $to);
-            } elseif (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
                 $report = $this->getDaysMechanism($from, $to);
-            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
+            }
+            elseif($this->isGranted('WORKER') ) {
                 $report = $this->getDaysMechanismForSubunit($from, $to, $subunit);
             }
 

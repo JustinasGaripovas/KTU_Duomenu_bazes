@@ -37,6 +37,9 @@ class WinterJobsController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
 
+        dump("Mes randame");
+        dump($subunit);
+
         if ($this->isGranted('ADMIN')) {
             $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
         }

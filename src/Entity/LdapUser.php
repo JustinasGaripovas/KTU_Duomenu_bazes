@@ -68,6 +68,11 @@ class LdapUser
      */
     private $Reports;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Flood;
+
     public function getInspection(): ?int
     {
         return $this->Inspection;
@@ -188,6 +193,18 @@ class LdapUser
     public function setSubunit(?Subunit $Subunit): self
     {
         $this->Subunit = $Subunit;
+
+        return $this;
+    }
+
+    public function getFlood(): ?int
+    {
+        return $this->Flood;
+    }
+
+    public function setFlood(int $Flood): self
+    {
+        $this->Flood = $Flood;
 
         return $this;
     }

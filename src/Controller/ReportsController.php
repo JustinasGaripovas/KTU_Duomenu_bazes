@@ -76,7 +76,7 @@ class ReportsController extends Controller
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
                     $spreadsheet = $reader->load('job_tmpl.xlsx');
-// Set document properties
+                    // Set document properties
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
                         ->setTitle('Atliktų darbų ataskaita')
@@ -102,7 +102,7 @@ class ReportsController extends Controller
                     $spreadsheet->getActiveSheet()
                         ->getPageSetup()
                         ->setPaperSize(PageSetup::PAPERSIZE_A4);
-// Rename worksheet
+                    // Rename worksheet
                     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                     $writer->save('files/' . $fileName . '.xlsx');
                     return $this->file(('files/' . $fileName . '.xlsx'));
@@ -118,7 +118,6 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/inspection", name="inspection_reports")
      */
-
     public function inspectionRepor(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $userName = $this->getUser()->getUserName();
@@ -140,22 +139,30 @@ class ReportsController extends Controller
                 $em = $this->get('doctrine.orm.entity_manager');
                 $dql = '';
 
-                if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('SUPER_MASTER')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
-                } elseif ($this->isGranted('UNIT_VIEWER')) {
+                if ($this->isGranted('ADMIN')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId'AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
-                } elseif ($this->isGranted('SUPER_VIEWER')){
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('ADMIN')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('WORKER')){
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif($this->isGranted('WORKER') ) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.Username = '$userName' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
                 }
 
                 $query = $em->createQuery($dql);
+
+                //PROBLEMA CIA
                 $report = $query->execute();
+
                 $html = $this->renderView('reports/report_inspections.html.twig', [
                     'report' => $report,
                     'subunit_name' => $subUnitName
@@ -223,7 +230,6 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/jobs/road/level", name="report_done_jobs_by road_level")
      */
-
     public function sumReportsByRoadLevel(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $userName = $this->getUser()->getUserName();
@@ -246,19 +252,25 @@ class ReportsController extends Controller
                 $em = $this->get('doctrine.orm.entity_manager');
                 $dql = '';
 
-                if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
-                } elseif ($this->isGranted('SUPER_MASTER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
-                } elseif ($this->isGranted('UNIT_VIEWER')) {
-                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
-                } elseif ($this->isGranted('SUPER_VIEWER')){
+                if ($this->isGranted('ADMIN')) {
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
-                } elseif ($this->isGranted('ADMIN')) {
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
-                } elseif ($this->isGranted('WORKER')){
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif($this->isGranted('WORKER') ) {
                     $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.Username = '$username' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
                 }
+
                 $query = $em->createQuery($dql);
                 $report = $query->execute();
                 $html = $this->renderView('reports/report_sum_level.html.twig', [
@@ -453,19 +465,26 @@ class ReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
+
                 if ($this->isGranted('ADMIN')) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif ($this->isGranted('SUPER_MASTER')) {
-                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif ($this->isGranted('ROAD_MASTER')) {
-                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif ($this->isGranted('UNIT_VIEWER')) {
-                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif ($this->isGranted('SUPER_VIEWER')){
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
-                } elseif ($this->isGranted('WORKER')){
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
+                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
+                }
+                elseif($this->isGranted('WORKER') ) {
                     $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.DoneJobDate >= '$from' AND d.DoneJobDate <= '$to') ORDER BY d.DoneJobDate ASC";
                 }
+
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
                 $report = $query->execute();
@@ -521,7 +540,6 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/filter/inspection", name="reports_filter_inspection")
      */
-
     public function reportWithFilterInspection(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $username = $this->getUser()->getUserName();
@@ -543,21 +561,24 @@ class ReportsController extends Controller
 
                 $dql = '';
 
-
-                if (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('SUPER_MASTER')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
-                } elseif ($this->isGranted('UNIT_VIEWER')) {
+                if ($this->isGranted('ADMIN')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId'AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
-                } elseif ($this->isGranted('SUPER_VIEWER')){
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('ADMIN')) {
-                    $dql = "SELECT i FROM App:Inspection i WHERE (i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
-                } elseif ($this->isGranted('WORKER')){
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT i FROM App:Inspection i WHERE (i.SubUnitId = '$subUnitId' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id DESC";
+                }
+                elseif($this->isGranted('WORKER') ) {
                     $dql = "SELECT i FROM App:Inspection i WHERE (i.Username = '$userName' AND i.RepairDate >= '$from' AND i.RepairDate <= '$to') ORDER BY i.id ASC";
                 }
-
 
                 $em = $this->get('doctrine.orm.entity_manager');
                 $query = $em->createQuery($dql);
@@ -636,7 +657,6 @@ class ReportsController extends Controller
     /**
      * @Route("/reports/restriction", name="reports_restrictions")
      */
-
     public function reportRestrictions(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
     {
         $username = $this->getUser()->getUserName();
@@ -752,24 +772,31 @@ class ReportsController extends Controller
                 $subunits[$item->getSubunitId()] = $item->getName();
             }
 
-            $dql = "SELECT r FROM App:WinterMaintenance r WHERE AND (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
+            //$dql = "SELECT r FROM App:WinterMaintenance r WHERE AND (r.CreatedAt = '$date' AND r.ReportFor = '$reportFor') ORDER BY r.Subunit";
 
-            if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
-                $shouldCreateEmptySubunits = false;
-            } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
-                $shouldCreateEmptySubunits = false;
-            } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
-                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
-                $shouldCreateEmptySubunits = false;
-            } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
+            $dql = '';
+
+            if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT w FROM App:WinterMaintenance w WHERE (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
                 $shouldCreateEmptySubunits = true;
-            } elseif (true === $this->isGranted('ROLE_ADMIN')) {
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
                 $dql = "SELECT w FROM App:WinterMaintenance w WHERE (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
                 $shouldCreateEmptySubunits = true;
-            } elseif (true === $this->isGranted('ROLE_WORKER')) {
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
+                $shouldCreateEmptySubunits = false;
+            }
+            elseif($this->isGranted('WORKER') ) {
                 $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' AND (w.CreatedAt = '$date' AND w.ReportFor = '$reportFor') ORDER BY w.CreatedAt DESC";
                 $shouldCreateEmptySubunits = false;
             }

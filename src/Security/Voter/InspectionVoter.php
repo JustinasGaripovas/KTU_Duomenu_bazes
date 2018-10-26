@@ -48,7 +48,7 @@ class InspectionVoter extends Voter
         }
 
         if($this->security->isGranted("UNIT_VIEWER") || $this->security->isGranted("SUPER_MASTER") || $this->security->isGranted("ROAD_MASTER")) {
-            if ($ldapUser->getSubunit()->getSubunitId() == $subject->getSubUnitId()) {
+            if ($ldapUser->getSubunit()->getId() == $subject->getSubUnitId()) {
                 return $this->switchCase($attribute, $ldapUser->getInspection());
             }
         }

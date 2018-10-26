@@ -16,6 +16,8 @@ class PermissionVoter extends Voter
     const Insured = 'INSURED';
     const Reports = 'REPORTS';
     const Winter = 'WINTER';
+    const Flood = "FLOOD";
+
     public function __construct(LdapUserRepository $ldapUserRepository,Security $security)
     {
         $this->security = $security;
@@ -37,7 +39,8 @@ class PermissionVoter extends Voter
             self::Restriction,
             self::Insured,
             self::Reports,
-            self::Winter
+            self::Winter,
+            self::Flood
         ]);
     }
 
@@ -81,6 +84,9 @@ class PermissionVoter extends Voter
                 break;
             case self::Winter:
                 return 0 != $ldap->getWinter();
+                break;
+                case self::Flood:
+                return 0 != $ldap->getFlood();
                 break;
         }
         return false;

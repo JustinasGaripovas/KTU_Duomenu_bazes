@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+        <br>
+        <hr>
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th>{% trans %} CreatedAt {% endtrans %}</th>
+                    <th>{% trans %} RoadId {% endtrans %}</th>
+                    <th>{% trans %} RoadName {% endtrans %}</th>
+                    <th>{% trans %} SectionBegin {% endtrans %}</th>
+                    <th>{% trans %} SectionEnd {% endtrans %}</th>
+                    <th>{% trans %} WaterDeep {% endtrans %}</th>
+                    <th>{% trans %} Notes {% endtrans %}</th>
+                    <th>{% trans %} Status {% endtrans %}</th>
+                    <th>{% trans %} Subunit {% endtrans %}</th>
+                    <th>{% trans %} CreatedBy {% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for flooded_road in report | default('') %}
+                    <tr>
+                        <td>{{ flooded_road.createdAt | date('Y-m-d') }}</td>
+                        <td>{{ flooded_road.RoadId }}</td>
+                        <td>{{ flooded_road.RoadName }}</td>
+                        <td>{{ flooded_road.SectionBegin }}</td>
+                        <td>{{ flooded_road.SectionEnd }}</td>
+                        <td>{{ flooded_road.WaterDeep }}</td>
+                        <td>{{ flooded_road.Notes }}</td>
+                        <td>{{ flooded_road.Status }}</td>
+                        <td>{{ flooded_road.subunitId }}</td>
+                        <td>{{ flooded_road.createdBy }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+

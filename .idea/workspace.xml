@@ -5,18 +5,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/Form/LdapUserType.php" line="49" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ReportsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReportsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterJobsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WinterReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/LdapUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/LdapUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Security/Voter/PermissionVoter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Security/Voter/PermissionVoter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/reports/index_inspections.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/reports/index_inspections.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,8 +241,8 @@
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
         <counts>
-          <entry key="git.branch.compare" value="4" />
-          <entry key="git.branch.merge" value="1" />
+          <entry key="git.branch.compare" value="5" />
+          <entry key="git.branch.merge" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.new.class">
@@ -277,7 +266,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/RoadSectionController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
@@ -346,11 +335,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Security/Voter/WinterVoter.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#38#64#0#PHP" expanded="true" />
               </folding>
@@ -361,7 +350,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="495">
               <caret line="50" column="46" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="46" />
               <folding>
                 <element signature="e#38#64#0#PHP" expanded="true" />
@@ -760,7 +749,7 @@
       <workItem from="1540225565476" duration="2341000" />
       <workItem from="1540400923362" duration="635000" />
       <workItem from="1540443655524" duration="15077000" />
-      <workItem from="1540530121164" duration="12925000" />
+      <workItem from="1540530121164" duration="13312000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -787,7 +776,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="187788000" />
+    <option name="totallyTimeSpent" value="188175000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -802,7 +791,7 @@
     <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23604201" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23604201" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -814,7 +803,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32919255" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4991708" visible="true" weight="0.2615063" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.4991708" visible="true" weight="0.2615063" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4997236" weight="0.32751092" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50082916" side_tool="true" weight="0.33054394" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1151,33 +1140,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="50" column="46" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="46" />
-          <folding>
-            <element signature="e#38#64#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-          <folding>
-            <element signature="e#38#62#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/RoadSectionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/RestrictionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1229,10 +1191,37 @@
     <entry file="file://$PROJECT_DIR$/src/Security/Voter/WinterVoter.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#38#64#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Security/Voter/InspectionVoter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="50" column="46" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="46" />
+          <folding>
+            <element signature="e#38#64#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Security/Voter/DoneJobVoter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+          <folding>
+            <element signature="e#38#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/RoadSectionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
         </state>
       </provider>
     </entry>

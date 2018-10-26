@@ -100,6 +100,14 @@ class LdapUserType extends AbstractType
                     'Mato, redaguoja ir trina' => 3
                 )
             ))
+            ->add('flood',ChoiceType::class, array(
+                'choices' => array(
+                    'Nemato' => 0,
+                    'Mato' => 1,
+                    'Mato ir redaguoja' => 2,
+                    'Mato, redaguoja ir trina' => 3
+                )
+            ))
 
         ;
 

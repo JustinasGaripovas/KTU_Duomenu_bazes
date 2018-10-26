@@ -42,6 +42,7 @@ class RoleVoter extends Voter
         //Ldap role
         $role = $this->ldapUserRepository->findUnitIdByUserName($user->getUsername())->getRole();
         // ... (check conditions and return true to grant permission) ...
+
         switch ($attribute) {
             case self::admin:
                 return (self::admin == $role);

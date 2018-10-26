@@ -41,7 +41,27 @@ class FloodedRoadsReportsController extends Controller
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
+
+
+                if ($this->isGranted('ADMIN')) {
                     $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt ASC";
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt ASC";
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                }
+                elseif($this->isGranted('WORKER') ) {
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.CreatedBy = '$username' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                }
+
                     $em = $this->get('doctrine.orm.entity_manager');
                     $query = $em->createQuery($dql);
                     $report = $query->execute();

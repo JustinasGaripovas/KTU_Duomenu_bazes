@@ -30,8 +30,30 @@ class FloodedRoadsController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
         else {
+
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
+
             $em2 = $this->get('doctrine.orm.entity_manager');
-            $dql = "SELECT f FROM App:FloodedRoads f ORDER BY f.CreatedAt DESC";
+
+            if ($this->isGranted('ADMIN')) {
+                $dql = "SELECT f FROM App:FloodedRoads f ORDER BY f.CreatedAt DESC";
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
+                $dql = "SELECT f FROM App:FloodedRoads f ORDER BY f.CreatedAt DESC";
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' ORDER BY f.CreatedAt DESC";
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' ORDER BY f.CreatedAt DESC";
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' ORDER BY f.CreatedAt DESC";
+            }
+            elseif($this->isGranted('WORKER') ) {
+                $dql = "SELECT f FROM App:FloodedRoads f WHERE f.CreatedBy = '$username' ORDER BY f.CreatedAt DESC";
+            }
+
             $query = $em2->createQuery($dql);
             $paginator  = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
@@ -76,6 +98,8 @@ class FloodedRoadsController extends Controller
      */
     public function show(FloodedRoads $floodedRoad): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $floodedRoad);
+
         return $this->render('flooded_roads/show.html.twig', ['flooded_road' => $floodedRoad]);
     }
 
@@ -84,6 +108,8 @@ class FloodedRoadsController extends Controller
      */
     public function edit(Request $request, FloodedRoads $floodedRoad): Response
     {
+        $this->denyAccessUnlessGranted('EDIT', $floodedRoad);
+
         $form = $this->createForm(FloodedRoadsType::class, $floodedRoad);
         $form->handleRequest($request);
 
@@ -104,6 +130,8 @@ class FloodedRoadsController extends Controller
      */
     public function delete(Request $request, FloodedRoads $floodedRoad): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $floodedRoad);
+
         if ($this->isCsrfTokenValid('delete'.$floodedRoad->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($floodedRoad);

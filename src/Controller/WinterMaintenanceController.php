@@ -8,6 +8,7 @@ use App\Repository\ChoicesRepository;
 use App\Repository\LdapUserRepository;
 use App\Repository\RoadSectionRepository;
 use App\Repository\WinterMaintenanceRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/winter/maintenance")
+ * @IsGranted("WINTER")
  */
 class WinterMaintenanceController extends Controller
 {
@@ -37,17 +39,23 @@ class WinterMaintenanceController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "";
 
-        if (true === $this->isGranted('ROLE_ROAD_MASTER')) {
-            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
-        } elseif (true === $this->isGranted('ROLE_SUPER_MASTER')) {
-            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
-        } elseif (true === $this->isGranted('ROLE_UNIT_VIEWER')) {
-            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
-        } elseif (true === $this->isGranted('ROLE_SUPER_VIEWER')) {
+
+        if ($this->isGranted('ADMIN')) {
             $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
-        } elseif (true === $this->isGranted('ROLE_ADMIN')) {
+        }
+        elseif ($this->isGranted('SUPER_VIEWER')){
             $dql = "SELECT w FROM App:WinterMaintenance w  ORDER BY w.CreatedAt DESC";
-        } elseif (true === $this->isGranted('ROLE_WORKER')) {
+        }
+        elseif ($this->isGranted('UNIT_VIEWER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        }
+        elseif ($this->isGranted('SUPER_MASTER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        }
+        elseif ($this->isGranted('ROAD_MASTER')) {
+            $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+        }
+        elseif($this->isGranted('WORKER') ) {
             $dql = "SELECT w FROM App:WinterMaintenance w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
         }
 
@@ -110,6 +118,8 @@ class WinterMaintenanceController extends Controller
      */
     public function show(WinterMaintenance $winterMaintenance): Response
     {
+        $this->denyAccessUnlessGranted('SHOW', $winterMaintenance);
+
         return $this->render('winter_maintenance/show.html.twig', ['winter_maintenance' => $winterMaintenance]);
     }
 
@@ -118,6 +128,8 @@ class WinterMaintenanceController extends Controller
      */
     public function edit(Request $request, WinterMaintenance $winterMaintenance): Response
     {
+        $this->denyAccessUnlessGranted('EDIT', $winterMaintenance);
+
         $form = $this->createForm(WinterMaintenanceType::class, $winterMaintenance);
         $form->handleRequest($request);
 
@@ -138,6 +150,8 @@ class WinterMaintenanceController extends Controller
      */
     public function delete(Request $request, WinterMaintenance $winterMaintenance): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $winterMaintenance);
+
         if ($this->isCsrfTokenValid('delete'.$winterMaintenance->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($winterMaintenance);

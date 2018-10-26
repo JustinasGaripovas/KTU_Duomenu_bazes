@@ -7,6 +7,7 @@ use App\Entity\Inspection;
 use App\Form\DoneJobsType;
 use App\Repository\DoneJobsRepository;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/done/jobs")
+ * @IsGranted("DONE_JOBS")
  */
 class DoneJobsController extends Controller
 {
@@ -41,19 +43,20 @@ class DoneJobsController extends Controller
             $filterByJobId = $request->query->get('filterJob');
             $filterByRoadId = $request->query->get('filterRoad');
             $dql = '';
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+            if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
+            }elseif ($this->isGranted('SUPER_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_UNIT_VIEWER')) {
+            }elseif ($this->isGranted('UNIT_VIEWER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%' ) ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_SUPER_MASTER')) {
+            }elseif ($this->isGranted('SUPER_MASTER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_ROAD_MASTER')) {
+            }elseif ($this->isGranted('ROAD_MASTER')) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.SubUnitId = '$subUnitId' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
-            } elseif (true === $authChecker->isGranted('ROLE_WORKER')) {
+            }elseif($this->isGranted('WORKER') ) {
                 $dql = "SELECT d FROM App:DoneJobs d WHERE (d.Username = '$username' AND d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') ORDER BY d.Date DESC";
             }
+
             $query = $em->createQuery($dql);
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
@@ -66,7 +69,6 @@ class DoneJobsController extends Controller
      */
     public function new(TestController $testController, LdapUserRepository $ldapUserRepository, Request $request): Response
     {
-
         $userName = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
             $this->addFlash(
@@ -110,6 +112,8 @@ class DoneJobsController extends Controller
      */
     public function show(DoneJobs $doneJob): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$doneJob);
+
         return $this->render('done_jobs/show.html.twig', ['done_job' => $doneJob]);
     }
 
@@ -118,6 +122,8 @@ class DoneJobsController extends Controller
      */
     public function edit(Request $request, DoneJobs $doneJob): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$doneJob);
+
         $userName = $this->getUser()->getUserName();
         $form = $this->createForm(DoneJobsType::class, $doneJob);
         $doneJob->setUsername($userName);
@@ -145,6 +151,8 @@ class DoneJobsController extends Controller
      */
     public function delete(Request $request, DoneJobs $doneJob): Response
     {
+        $this->denyAccessUnlessGranted('DELETE',$doneJob);
+
         if ($this->isCsrfTokenValid('delete'.$doneJob->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($doneJob);

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\WinterJobRoads;
 use App\Form\WinterJobRoads1Type;
+use App\Repository\LdapUserRepository;
 use App\Repository\WinterJobRoadsRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,14 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/winter/job/roads")
+ * @IsGranted("WINTER")
  */
 class WinterJobRoadsController extends Controller
 {
     /**
      * @Route("/", name="winter_job_roads_index", methods="GET")
      */
-    public function index(WinterJobRoadsRepository $winterJobRoadsRepository): Response
+    public function index(WinterJobRoadsRepository $winterJobRoadsRepository, LdapUserRepository $ldapUserRepository): Response
     {
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
         return $this->render('winter_job_roads/index.html.twig', ['winter_job_roads' => $winterJobRoadsRepository->findAll()]);
     }
 

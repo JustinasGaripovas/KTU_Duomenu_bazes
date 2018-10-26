@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\LdapUser;
 use App\Form\LdapUserType;
 use App\Repository\LdapUserRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +24,7 @@ class LdapUserController extends Controller
      */
     public function index(LdapUserRepository $ldapUserRepository, AuthorizationCheckerInterface $authChecker): Response
     {
-        if (false === $authChecker->isGranted('ROLE_ADMIN')) {
-            $userName = $this->getUser()->getUserName();
-            return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findBy(['name'=>$userName])]);
-        }
-
-        else {
-            return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findAll()]);
-        }
+        return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findAll()]);
     }
 
     /**
@@ -60,6 +55,8 @@ class LdapUserController extends Controller
      */
     public function show(LdapUser $ldapUser): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$ldapUser);
+
         return $this->render('ldap_user/show.html.twig', ['ldap_user' => $ldapUser]);
     }
 
@@ -68,6 +65,8 @@ class LdapUserController extends Controller
      */
     public function edit(Request $request, LdapUser $ldapUser): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$ldapUser);
+
         $form = $this->createForm(LdapUserType::class, $ldapUser);
         $form->handleRequest($request);
 

@@ -7,7 +7,7 @@ use App\Form\MechanismType;
 use App\Repository\LdapUserRepository;
 use App\Repository\MechanismRepository;
 use App\Repository\SubunitRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/mechanism")
- * @IsGranted("ROLE_ADMIN")
  */
 class MechanismController extends AbstractController
 {
@@ -37,6 +36,9 @@ class MechanismController extends AbstractController
         $userName = $this->getUser()->getUserName();
 
         $mechanism = new Mechanism();
+
+        $this->denyAccessUnlessGranted('EDIT',$mechanism);
+
         $form = $this->createForm(MechanismType::class, $mechanism, ['mechanism_choices' => $this->mechanismChoises, "subunit_choices"=>$this->subunitChoices($subunitRepository)]);
         $form->handleRequest($request);
 
@@ -61,6 +63,8 @@ class MechanismController extends AbstractController
      */
     public function show(Mechanism $mechanism): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$mechanism);
+
         return $this->render('mechanism/show.html.twig', ['mechanism' => $mechanism]);
     }
 
@@ -69,6 +73,8 @@ class MechanismController extends AbstractController
      */
     public function edit(LdapUserRepository $ldapUserRepository, Request $request, Mechanism $mechanism, SubunitRepository $subunitRepository): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$mechanism);
+
         $form = $this->createForm(MechanismType::class, $mechanism, ['mechanism_choices' => $this->mechanismChoises, "subunit_choices"=>$this->subunitChoices($subunitRepository)]);
         $form->handleRequest($request);
 
@@ -91,6 +97,8 @@ class MechanismController extends AbstractController
      */
     public function delete(Request $request, Mechanism $mechanism): Response
     {
+        $this->denyAccessUnlessGranted('DELETE',$mechanism);
+
         if ($this->isCsrfTokenValid('delete'.$mechanism->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($mechanism);

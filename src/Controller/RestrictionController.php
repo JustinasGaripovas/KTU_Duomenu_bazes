@@ -6,6 +6,7 @@ use App\Entity\Restriction;
 use App\Form\RestrictionType;
 use App\Repository\LdapUserRepository;
 use App\Repository\RestrictionRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/restriction")
+ * @IsGranted("RESTRICTIONS")
  */
 class RestrictionController extends Controller
 {
@@ -30,31 +32,27 @@ class RestrictionController extends Controller
                 'Jūs nepasirinkęs kelių tarnybos!'
             );
             return $this->redirectToRoute('ldap_user_index');
-        }
-        else {
-            $subUnit = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
+        } else {
+            $subunitName = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
             $dql = '';
-            if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+
+            if ($this->isGranted('ADMIN') || ($this->isGranted('SUPER_VIEWER'))) {
                 $dql = "SELECT r FROM App:Restriction r ORDER BY r.id DESC";
-            }
-            elseif (true === $authChecker->isGranted('ROLE_SUPER_VIEWER')) {
-                $dql = "SELECT r FROM App:Restriction r ORDER BY r.id DESC";
-            }
-            else {
-                $dql = "SELECT r FROM App:Restriction r WHERE r.Subunit = '$subUnit' ORDER BY r.id DESC";
-            }
+            } else {
+                $dql = "SELECT r FROM App:Restriction r WHERE r.Subunit = '$subunitName' ORDER BY r.id DESC";
             }
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
-            $paginator  = $this->get('knp_paginator');
+            $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
                 $query, /* query NOT result */
                 $request->query->getInt('page', 1)/*page number*/,
                 20/*limit per page*/
             );
 
-        return $this->render('restriction/index.html.twig', ['pagination' => $pagination]);
+            return $this->render('restriction/index.html.twig', ['pagination' => $pagination]);
+        }
     }
 
     /**
@@ -89,6 +87,8 @@ class RestrictionController extends Controller
      */
     public function show(Restriction $restriction): Response
     {
+        $this->denyAccessUnlessGranted('SHOW',$restriction);
+
         return $this->render('restriction/show.html.twig', ['restriction' => $restriction]);
     }
 
@@ -97,6 +97,8 @@ class RestrictionController extends Controller
      */
     public function edit(LdapUserRepository $ldapUserRepository, Request $request, Restriction $restriction): Response
     {
+        $this->denyAccessUnlessGranted('EDIT',$restriction);
+
         $username = $this->getUser()->getUserName();
         $subUnitName = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
         $form = $this->createForm(RestrictionType::class, $restriction);
@@ -120,6 +122,8 @@ class RestrictionController extends Controller
      */
     public function delete(Request $request, Restriction $restriction): Response
     {
+        $this->denyAccessUnlessGranted('DELETE',$restriction);
+
         if ($this->isCsrfTokenValid('delete'.$restriction->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($restriction);

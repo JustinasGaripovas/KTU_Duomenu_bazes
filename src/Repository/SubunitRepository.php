@@ -19,32 +19,24 @@ class SubunitRepository extends ServiceEntityRepository
         parent::__construct($registry, Subunit::class);
     }
 
-//    /**
-//     * @return Subunit[] Returns an array of Subunit objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findOneByName($value): ?Subunit
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Subunit
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->andWhere('s.Name = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+    public function findOneById($value): ?Subunit
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.SubunitId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 }

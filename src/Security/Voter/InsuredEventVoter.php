@@ -41,19 +41,19 @@ class InsuredEventVoter extends Voter
 
         $subunitName = $this->ldapUserRepository->findUnitIdByUserName($user->getUsername())->getSubunit()->getName();
 
-        if ($this->security->isGranted("WORKER")) {
+        if ($this->security->isGranted("WORKER", $ldapUser)) {
             if ($subject->getSubunit() == $subunitName)
             {
                 return $this->switchCase($attribute,$ldapUser->getInsuredEvent());
             }
         }
 
-        if($this->security->isGranted("ADMIN") || $this->security->isGranted("SUPER_VIEWER"))
+        if($this->security->isGranted("ADMIN", $ldapUser) || $this->security->isGranted("SUPER_VIEWER", $ldapUser))
         {
             return $this->switchCase($attribute,$ldapUser->getInsuredEvent());
         }
 
-        if($this->security->isGranted("UNIT_VIEWER") || $this->security->isGranted("SUPER_MASTER") || $this->security->isGranted("ROAD_MASTER")) {
+        if($this->security->isGranted("UNIT_VIEWER", $ldapUser) || $this->security->isGranted("SUPER_MASTER", $ldapUser) || $this->security->isGranted("ROAD_MASTER", $ldapUser)) {
             if ($subject->getSubunit() == $subunitName) {
                 return $this->switchCase($attribute, $ldapUser->getInsuredEvent());
             }

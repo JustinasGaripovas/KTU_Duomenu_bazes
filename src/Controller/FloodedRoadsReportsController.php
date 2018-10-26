@@ -42,7 +42,6 @@ class FloodedRoadsReportsController extends Controller
 
                 $dql = '';
 
-
                 if ($this->isGranted('ADMIN')) {
                     $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt ASC";
                 }

@@ -2,6 +2,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\LdapUser;
 use App\Repository\LdapUserRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -28,7 +29,7 @@ class RoleVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::admin, self::super_viewer,self::unit_viewer,self::super_master,self::road_master,self::worker])
-            && $subject == null;
+            && $subject == null || $subject instanceof LdapUser;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -39,8 +40,13 @@ class RoleVoter extends Voter
             return false;
         }
 
-        //Ldap role
-        $role = $this->ldapUserRepository->findUnitIdByUserName($user->getUsername())->getRole();
+        if($subject instanceof LdapUser)
+        {
+            $role = $subject->getRole();
+        }else{
+            $role = $this->ldapUserRepository->findUnitIdByUserName($user->getUsername())->getRole();
+        }
+
         // ... (check conditions and return true to grant permission) ...
 
         switch ($attribute) {

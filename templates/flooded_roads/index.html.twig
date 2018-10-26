@@ -37,7 +37,15 @@
                 <td>{{ flooded_road.subunitId }}</td>
                 <td>{{ flooded_road.createdBy }}</td>
                 <td>
-                    <a href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"> {% trans %}edit{% endtrans %}</a>
+                    {% if is_granted('DELETE', flooded_road) %}
+                        <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                        <a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"></a>
+                    {% elseif is_granted('EDIT', flooded_road) %}
+                        <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                        <a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"></a>
+                    {% elseif is_granted('SHOW', flooded_road) %}
+                        <a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

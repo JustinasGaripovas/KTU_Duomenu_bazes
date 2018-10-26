@@ -10,5 +10,8 @@
     {{ include('inspection/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a class="btn btn-info btn-block btn-lg" href="{{ path('inspection_index') }}">{% trans %}back to list{% endtrans %}</a>
-    {{ include('inspection/_delete_form.html.twig') }}
+
+    {% if is_granted('DELETE', inspection) %}
+        {{ include('inspection/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

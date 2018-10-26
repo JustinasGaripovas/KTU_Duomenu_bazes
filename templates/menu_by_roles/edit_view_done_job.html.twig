@@ -1,9 +1,9 @@
 {% if is_granted('DELETE', done_job) %}
 <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
-<a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+<a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
 {% elseif is_granted('EDIT', done_job) %}
 <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
-<a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
+<a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('done_jobs_edit', {'id': done_job.id}) }}"></a>
 {% elseif is_granted('SHOW', done_job) %}
 <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('done_jobs_show', {'id': done_job.id}) }}"></a>
 {% endif %}

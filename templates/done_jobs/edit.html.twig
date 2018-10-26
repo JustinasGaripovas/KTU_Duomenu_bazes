@@ -40,6 +40,10 @@
     </script>
 
     {{ include('done_jobs/_form.html.twig', {'button_label': 'Update'|trans }) }}
-    {{ include('done_jobs/_delete_form.html.twig') }}
+
+    {% if is_granted('DELETE', done_job) %}
+        {{ include('done_jobs/_delete_form.html.twig') }}
+    {% endif %}
+
     <a class="btn btn-info btn-block btn-lg" href="{{ path('done_jobs_index') }}">{% trans %}back to list{% endtrans %}</a>
 {% endblock %}

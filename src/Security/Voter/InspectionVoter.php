@@ -36,18 +36,18 @@ class InspectionVoter extends Voter
 
         $ldapUser = $this->ldapUserRepository->findUnitIdByUserName($user->getUsername());
 
-        if ($this->security->isGranted("WORKER")) {
+        if ($this->security->isGranted("WORKER",$ldapUser)) {
             if ($ldapUser->getName() == $subject->getUsername()) {
                 return $this->switchCase($attribute,$ldapUser->getInspection());
             }
         }
 
-        if($this->security->isGranted("ADMIN") || $this->security->isGranted("SUPER_VIEWER"))
+        if($this->security->isGranted("ADMIN",$ldapUser) || $this->security->isGranted("SUPER_VIEWER", $ldapUser))
         {
             return $this->switchCase($attribute,$ldapUser->getInspection());
         }
 
-        if($this->security->isGranted("UNIT_VIEWER") || $this->security->isGranted("SUPER_MASTER") || $this->security->isGranted("ROAD_MASTER")) {
+        if($this->security->isGranted("UNIT_VIEWER",$ldapUser) || $this->security->isGranted("SUPER_MASTER", $ldapUser) || $this->security->isGranted("ROAD_MASTER", $ldapUser)) {
             if ($ldapUser->getSubunit()->getId() == $subject->getSubUnitId()) {
                 return $this->switchCase($attribute, $ldapUser->getInspection());
             }

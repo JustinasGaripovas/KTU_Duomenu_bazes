@@ -7,7 +7,7 @@
 
     <div class="container">
         <ul>
-            {% if (is_granted('ADMIN') or is_granted('SUPER_VIEWER')) %}
+            {% if (is_granted('ADMIN')) %}
                 <h1>Admin dashboard</h1>
                 <div class="card border-danger mb-3">
                     <div class="container p-3">

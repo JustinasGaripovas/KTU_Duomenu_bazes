@@ -36,42 +36,42 @@ class LdapUser
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Role;
+    private $Role = 'WORKER';
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Inspection;
+    private $Inspection = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $DoneJobs;
+    private $DoneJobs = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Restrictions;
+    private $Restrictions = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Winter;
+    private $Winter = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $InsuredEvent;
+    private $InsuredEvent = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Reports;
+    private $Reports = 1;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Flood;
+    private $Flood = 1;
 
     public function getInspection(): ?int
     {

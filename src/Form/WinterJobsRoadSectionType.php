@@ -15,12 +15,18 @@ class WinterJobsRoadSectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('RoadSectionSearch')
+            ->add('RoadSectionSearch',null,array(
+                'required' => true,
+            ))
             ->add('SectionId',HiddenType::class)
             ->add('SectionName', HiddenType::class)
             ->add('SectionType', HiddenType::class)
-            ->add('SectionBegin')
-            ->add('SectionEnd')
+            ->add('SectionBegin',null,array(
+                'required' => true,
+            ))
+            ->add('SectionEnd',null,array(
+                'required' => true,
+            ))
             /*
             ->add('level', ChoiceType::class, array(
                 'choices' => array(

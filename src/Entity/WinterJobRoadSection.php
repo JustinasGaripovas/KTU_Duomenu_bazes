@@ -165,9 +165,10 @@ class WinterJobRoadSection
         return $this->SaltValue;
     }
 
-    public function setSaltValue(?float $SaltValue): self
+    public function setSaltValue($SaltValue): self
     {
-        $this->SaltValue = $SaltValue;
+        $this->SaltValue = (float) str_replace(',', '.', $SaltValue);
+
 
         return $this;
     }
@@ -177,9 +178,10 @@ class WinterJobRoadSection
         return $this->SandValue;
     }
 
-    public function setSandValue(?float $SandValue): self
+    public function setSandValue($SandValue): self
     {
-        $this->SandValue = $SandValue;
+
+        $this->SandValue = (float) str_replace(',', '.', $SandValue);
 
         return $this;
     }
@@ -189,9 +191,9 @@ class WinterJobRoadSection
         return $this->SolutionValue;
     }
 
-    public function setSolutionValue(?float $SolutionValue): self
+    public function setSolutionValue($SolutionValue): self
     {
-        $this->SolutionValue = $SolutionValue;
+        $this->SolutionValue = (float) str_replace(',', '.', $SolutionValue);
 
         return $this;
     }

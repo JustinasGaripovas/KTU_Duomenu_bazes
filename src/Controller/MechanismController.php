@@ -7,6 +7,7 @@ use App\Form\MechanismType;
 use App\Repository\LdapUserRepository;
 use App\Repository\MechanismRepository;
 use App\Repository\SubunitRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/mechanism")
+ * @IsGranted("ADMIN")
  */
 class MechanismController extends AbstractController
 {

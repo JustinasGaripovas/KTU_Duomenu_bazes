@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/ldap/user")
+ * @IsGranted("ADMIN")
  */
 class LdapUserController extends Controller
 {

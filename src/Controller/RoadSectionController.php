@@ -15,6 +15,7 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 /**
  * @Route("/road/section")
+ * @IsGranted("ADMIN")
  */
 class RoadSectionController extends Controller
 {

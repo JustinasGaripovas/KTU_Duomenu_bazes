@@ -22,7 +22,8 @@ class WinterReportController extends Controller
     /**
      * @Route("/winter/report/jobs", name="winter_report_jobs")
      */
-    public function winterMaintenanceReportJobs (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker) {
+    public function winterMaintenanceReportJobs (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
 
         $username = $this->getUser()->getUserName();
 
@@ -46,20 +47,15 @@ class WinterReportController extends Controller
 
             if ($this->isGranted('ADMIN')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
-            }
-            elseif ($this->isGranted('SUPER_VIEWER')){
+            } elseif ($this->isGranted('SUPER_VIEWER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to')  ORDER BY r.Date ASC";
-            }
-            elseif ($this->isGranted('UNIT_VIEWER')) {
+            } elseif ($this->isGranted('UNIT_VIEWER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            }
-            elseif ($this->isGranted('SUPER_MASTER')) {
+            } elseif ($this->isGranted('SUPER_MASTER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            }
-            elseif ($this->isGranted('ROAD_MASTER')) {
+            } elseif ($this->isGranted('ROAD_MASTER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
-            }
-            elseif($this->isGranted('WORKER') ) {
+            } elseif ($this->isGranted('WORKER')) {
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
             }
 
@@ -77,41 +73,26 @@ class WinterReportController extends Controller
                     ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
 
                 $index = 5;
-                foreach ($report as $item){
-                    $spreadsheet->getActiveSheet()
-                        ->setCellValue('A' . $index, $item->getSubunitName())
-                        ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
-                        ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
-                        ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
-                        ->setCellValue('E' . $index, $item->getMechanism())
-                        ->setCellValue('F' . $index, $item->getJob());
-                    if (sizeof($item->getRoadSections()) > 1) {
-                        foreach ($item->getRoadSections() as $value) {
-                            $spreadsheet->getActiveSheet()
-                                ->setCellValue('G' . $index, $value->getSectionId())
-                                ->setCellValue('H' . $index, $value->getSectionType())
-                                ->setCellValue('I' . $index, $value->getSectionBegin())
-                                ->setCellValue('J' . $index, $value->getSectionEnd())
-                                ->setCellValue('K' . $index, $value->getSaltValue())
-                                ->setCellValue('L' . $index, $value->getSandValue())
-                                ->setCellValue('M' . $index, $value->getSolutionValue());
-                            $index++;
-                        }
-                    }
-                    else {
-                        foreach ($item->getRoadSections() as $value) {
-                            $spreadsheet->getActiveSheet()
-                                ->setCellValue('G' . $index, $value->getSectionId())
-                                ->setCellValue('H' . $index, $value->getSectionType())
-                                ->setCellValue('I' . $index, $value->getSectionBegin())
-                                ->setCellValue('J' . $index, $value->getSectionEnd())
-                                ->setCellValue('K' . $index, $value->getSaltValue())
-                                ->setCellValue('L' . $index, $value->getSandValue())
-                                ->setCellValue('M' . $index, $value->getSolutionValue());
-                            $index++;
-                        }
+                foreach ($report as $item) {
+                    foreach ($item->getRoadSections() as $value) {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A' . $index, $item->getSubunitName())
+                            ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
+                            ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
+                            ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
+                            ->setCellValue('E' . $index, $item->getMechanism())
+                            ->setCellValue('F' . $index, $item->getJob())
+                            ->setCellValue('G' . $index, $value->getSectionId())
+                            ->setCellValue('H' . $index, $value->getSectionType())
+                            ->setCellValue('I' . $index, $value->getSectionBegin())
+                            ->setCellValue('J' . $index, $value->getSectionEnd())
+                            ->setCellValue('K' . $index, $value->getSaltValue())
+                            ->setCellValue('L' . $index, $value->getSandValue())
+                            ->setCellValue('M' . $index, $value->getSolutionValue());
+                        $index++;
                     }
                 }
+
                 // Rename worksheet
                 $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                 $writer->save('files/' . $fileName . '.xlsx');

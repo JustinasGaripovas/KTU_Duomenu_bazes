@@ -45,53 +45,50 @@
                 <tbody>
                 {% for job in winter_jobs_report | default('') %}
                 <tr>
-                <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.SubunitName }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Date | date('Y-m-d') }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1  }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.TimeFrom | date('H:m') }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1 }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.TimeTo | date('H:m') }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Mechanism }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Job }}
                         </td>
                     {% for item in  job.RoadSections %}
-                        {% if job.RoadSections|length > 1 %}
-                        {% else %}
-                            {% endif %}
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SectionId }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SectionType }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SectionBegin }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SectionEnd }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SaltValue }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SandValue }}
-                                </td>
-                                <td style="white-space: nowrap;text-align: center; vertical-align: middle">
-                                    {{ item.SolutionValue }}
-                                </td>
-                    {% if job.RoadSections|length > 1 %}
+                        <tr>
+
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionId }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionType }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionBegin }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionEnd }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SaltValue }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SandValue }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SolutionValue }}
+                            </td>
+
                         </tr>
-                    {% else %}
-                    {% endif %}
                     {% endfor %}
                     </tr>
                 {% endfor %}
@@ -99,3 +96,5 @@
             </table>
         </div>
     {% endblock %}
+
+

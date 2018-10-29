@@ -19,22 +19,24 @@ class LdapUserRepository extends ServiceEntityRepository
         parent::__construct($registry, LdapUser::class);
     }
 
-//    /**
-//     * @return LdapUser[] Returns an array of LdapUser objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return LdapUser[] Returns an array of LdapUser objects
+     */
+
+    public function findAllByName($value)
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
+
+        $r = $this->createQueryBuilder('l')
+            ->andWhere('l.name = :val')
+            ->setParameter('val','%'.$value.'%')
             ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
+
+        dump($r);
     }
-    */
+
 
 
     public function findUnitIdByUserName($value): ?LdapUser

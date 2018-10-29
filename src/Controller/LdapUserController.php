@@ -23,9 +23,15 @@ class LdapUserController extends Controller
     /**
      * @Route("/", name="ldap_user_index", methods="GET")
      */
-    public function index(LdapUserRepository $ldapUserRepository, AuthorizationCheckerInterface $authChecker): Response
+    public function index(LdapUserRepository $ldapUserRepository, AuthorizationCheckerInterface $authChecker, Request $request): Response
     {
-        return $this->render('ldap_user/index.html.twig', ['ldap_users' => $ldapUserRepository->findAll()]);
+        $filter = $request->query->get('filter');
+
+        $dql = "SELECT d FROM App:LdapUser d WHERE (d.name LIKE '$filter%') ORDER BY d.id ASC";
+        $em = $this->get('doctrine.orm.entity_manager');
+
+
+        return $this->render('ldap_user/index.html.twig', ['ldap_users' =>  $em->createQuery($dql)->execute()]);
     }
 
     /**

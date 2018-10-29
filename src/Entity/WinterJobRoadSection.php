@@ -169,7 +169,6 @@ class WinterJobRoadSection
     {
         $this->SaltValue = (float) str_replace(',', '.', $SaltValue);
 
-
         return $this;
     }
 

@@ -6,6 +6,11 @@
 {% block body %}
     <h1>{% trans %}LdapUsers list{% endtrans %}</h1>
 
+    <form class="form-inline">
+        <input style="margin: 5px" class="form-control js-datepicker" placeholder="Veskite varda" value="{{ app.request.get('filter') }}" type="text" name="filter">
+        <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
+    </form>
+
     <table class="table">
         <thead>
             <tr>

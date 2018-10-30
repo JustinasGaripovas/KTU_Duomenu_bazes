@@ -70,13 +70,27 @@
         // create the panel
         // this is the panel that will be appending to the collectionHolder
         var $panel = $('' +
-            '<div class="panel col-sm-3">' +
-                '<div class="panel-heading text-center">' +
-                    '<strong>{% trans %} New Road {% endtrans %}</strong>' +
-                '</div>' +
+            '<div class="panel card border-primary p-3 col-sm-12 col-md-12">' +
             '</div>');
         // create the panel-body and append the form to it
         var $panelBody = $('<div class="panel-body" style="margin-bottom: 32px;"></div>').append(newForm);
+
+
+        var Salt =              $panelBody.find('[id*=_SaltValue]').attr('id');
+        var SaltChecked =       $panelBody.find('[id*=_SaltChecked]').attr('id');
+        var Sand =              $panelBody.find('[id*=_SandValue]').attr('id');
+        var SandChecked =       $panelBody.find('[id*=_SandChecked]').attr('id');
+        var Solution =          $panelBody.find('[id*=_SolutionValue]').attr('id');
+        var SolutionChecked =   $panelBody.find('[id*=_SolutionChecked]').attr('id');
+
+        var sectionSearch =     $panelBody.find('[id*=_RoadSectionSearch]').attr('id');
+        var sectionId =         $panelBody.find('[id*=_SectionId]').attr('id');
+        var sectionType =       $panelBody.find('[id*=_SectionType]').attr('id');
+        var sectionName =       $panelBody.find('[id*=_SectionName]').attr('id');
+        var sectionBegin =      $panelBody.find('[id*=_SectionBegin]').attr('id');
+        var sectionEnd =        $panelBody.find('[id*=_SectionEnd]').attr('id');
+
+       // $('#'.Salt).parent().parent().addClass('row');
 
         $panel.append($panelBody);
 
@@ -84,6 +98,16 @@
         // append the panel to the addNewItem
         // we are doing it this way to that the link is always at the bottom of the collectionHolder
         $collectionHolder.append($panel);
+
+        $panelBody.find($('.form-group')).addClass('col-1');
+
+
+
+
+
+
+
+        $panelBody.find('[id*=winter_jobs_RoadSections]').addClass('row col-12');
 
         refreshAutocorrect();
 
@@ -97,7 +121,7 @@
         // create remove button
         var $removeButton = $('<a href="#" class="btn btn-danger col-12">{% trans %}Remove {% endtrans %}</a>');
         // appending the removebutton to the panel footer
-        var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+        var $panelFooter = $('<div class="panel-footer col-12"></div>').append($removeButton);
         // handle the click event of the remove button
         $removeButton.click(function (e) {
             e.preventDefault();
@@ -210,32 +234,49 @@
                 },
             });
 
-        });
+        })
     }
 
 </script>
 {{ form_start(form) }}
 <div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row">
     {% for row in form.RoadSections %}
-        <div class="panel col-sm-6 col-md-3" style="vertical-align: top;">
-            <div class="panel-heading text-center">
-                <strong>Road</strong>
-            </div>
-            <div class="panel-body">
+        <div class="panel card border-primary p-3 col-sm-12 col-md-12 " style="margin-bottom: 10px;">
+            <div class="panel-body row col-12">
 
-                {{  form_row(row.RoadSectionSearch) }}
+                <div class="col-1">
+                    {{  form_row(row.RoadSectionSearch) }}
+                </div>
+
+                <div class="col-2">
+                    {{  form_row(row.SectionBegin) }}
+                </div>
+                <div class="col-2">
+                    {{  form_row(row.SectionEnd) }}
+                </div>
+
+                <div class="col-1">
+                    {{ form_row(row.SaltChecked) }}
+
+                    {{ form_row(row.SandChecked) }}
+
+                    {{ form_row(row.SolutionChecked) }}
+                </div>
+
+                <div class="col-2">
+                    {{ form_row(row.SaltValue) }}
+                </div>
+                <div class="col-2">
+                    {{ form_row(row.SandValue) }}
+                </div>
+                <div class="col-2">
+                    {{ form_row(row.SolutionValue) }}
+                </div>
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}
                 {{ form_row(row.SectionType) }}
-                {{ form_row(row.SectionBegin) }}
-                {{ form_row(row.SectionEnd) }}
                 {{ form_row(row.level) }}
-                {{ form_row(row.SaltChecked) }}
-                {{ form_row(row.SandChecked) }}
-                {{ form_row(row.SolutionChecked) }}
-                {{ form_row(row.SaltValue) }}
-                {{ form_row(row.SandValue) }}
-                {{ form_row(row.SolutionValue) }}
+
 
             </div>
         </div>

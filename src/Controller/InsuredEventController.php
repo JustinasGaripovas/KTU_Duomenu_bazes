@@ -97,22 +97,22 @@ class InsuredEventController extends Controller
             $dql = '';
 
             if ($this->isGranted('ADMIN')) {
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) ORDER BY ie.id DESC";
             }
             elseif ($this->isGranted('SUPER_VIEWER')){
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) ORDER BY ie.id DESC";
             }
             elseif ($this->isGranted('UNIT_VIEWER')) {
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
             }
             elseif ($this->isGranted('SUPER_MASTER')) {
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
             }
             elseif ($this->isGranted('ROAD_MASTER')) {
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
             }
             elseif($this->isGranted('WORKER') ) {
-                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 1) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
+                $dql = "SELECT ie FROM App:InsuredEvent ie WHERE (ie.isInsuredType = 0) AND ie.Subunit = '$subunitName' ORDER BY ie.id DESC";
             }
             //
             $query = $em->createQuery($dql);

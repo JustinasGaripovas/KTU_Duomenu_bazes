@@ -44,12 +44,12 @@ class LdapUserType extends AbstractType
             ))
             ->add('role',ChoiceType::class,array(
                 'choices' => array(
-                    'Administratorius' => self::admin,
+                    'ADMIN' => self::admin,
                     'SUPER VIEWER' => self::super_viewer,
                     'UNIT VIEWER' => self::unit_viewer,
-                    'SUPER_Master' => self::super_master,
+                    'SUPER MASTER' => self::super_master,
                     'ROAD MASTER' => self::road_master,
-                    'Darbuotojas' => self::worker
+                    'WORKER' => self::worker
                 )
             ))
             ->add('inspection',ChoiceType::class, array(
@@ -108,7 +108,6 @@ class LdapUserType extends AbstractType
                     'Mato, redaguoja ir trina' => 3
                 )
             ))
-
         ;
 
     }

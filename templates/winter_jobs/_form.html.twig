@@ -94,7 +94,7 @@
         var sectionBegin =      $panelBody.find('[id*=_SectionBegin]').attr('id');
         var sectionEnd =        $panelBody.find('[id*=_SectionEnd]').attr('id');
 
-       // $('#'.Salt).parent().parent().addClass('row');
+        // $('#'.Salt).parent().parent().addClass('row');
 
         $panel.append($panelBody);
 
@@ -110,9 +110,9 @@
             forms.push($this);
         });
 
-        forms[0].wrap('<div class = "col-md-1"></div>')
-        forms[1].wrap('<div class = "col-md-2"></div>')
-        forms[2].wrap('<div class = "col-md-2"></div>')
+        forms[0].wrap('<div class = "col-md-3"></div>');
+        forms[1].wrap('<div class = "col-md-1"></div>');
+        forms[2].wrap('<div class = "col-md-1"></div>');
 
         forms[3].addClass('check_class');
         forms[4].addClass('check_class');
@@ -136,7 +136,7 @@
      */
     function addRemoveButton ($panel) {
         // create remove button
-        var $removeButton = $('<a href="#" class="btn btn-danger col-12">{% trans %}Remove {% endtrans %}</a>');
+        var $removeButton = $('<a href="#" class="btn btn-danger col-md-2">{% trans %}Remove {% endtrans %}</a>');
         // appending the removebutton to the panel footer
         var $panelFooter = $('<div class="panel-footer col-12"></div>').append($removeButton);
         // handle the click event of the remove button
@@ -157,7 +157,7 @@
     function refreshAutocorrect() {
 
 
-            $('#road_section_list').find('.panel').each(function () {
+        $('#road_section_list').find('.panel').each(function () {
 
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
@@ -261,14 +261,14 @@
         <div class="panel card p-3 col-sm-12 col-md-12 " style="margin-bottom: 10px;">
             <div class="panel-body row col-12">
 
-                <div class="col-md-1">
+                <div class="col-md-3">
                     {{  form_row(row.RoadSectionSearch) }}
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1">
                     {{  form_row(row.SectionBegin) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     {{  form_row(row.SectionEnd) }}
                 </div>
 

@@ -30,9 +30,7 @@ class FloodedRoadsController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
         else {
-
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
-
             $em2 = $this->get('doctrine.orm.entity_manager');
 
             if ($this->isGranted('ADMIN')) {
@@ -109,7 +107,6 @@ class FloodedRoadsController extends Controller
     public function edit(Request $request, FloodedRoads $floodedRoad): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $floodedRoad);
-
         $form = $this->createForm(FloodedRoadsType::class, $floodedRoad);
         $form->handleRequest($request);
 
@@ -118,7 +115,6 @@ class FloodedRoadsController extends Controller
 
             return $this->redirectToRoute('flooded_roads_edit', ['id' => $floodedRoad->getId()]);
         }
-
         return $this->render('flooded_roads/edit.html.twig', [
             'flooded_road' => $floodedRoad,
             'form' => $form->createView(),

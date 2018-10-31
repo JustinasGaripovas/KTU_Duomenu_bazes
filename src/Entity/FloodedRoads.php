@@ -66,6 +66,11 @@ class FloodedRoads
      */
     private $CreatedBy;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $IsActive;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -187,6 +192,18 @@ class FloodedRoads
     public function setCreatedBy(string $CreatedBy): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->IsActive;
+    }
+
+    public function setIsActive(bool $IsActive): self
+    {
+        $this->IsActive = $IsActive;
 
         return $this;
     }

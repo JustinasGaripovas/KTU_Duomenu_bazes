@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,10 @@ class FloodedRoadsReportType extends AbstractType
                 'attr' => [
                     'class' => 'js-datepicker-2',
                     'autocomplete'=>'off']
+            ))
+            ->add('IsActive', CheckboxType::class, array(
+                'mapped' => false,
+                'required' => false
             ))
             ->add('Preview', SubmitType::class,array(
                 'attr' => [

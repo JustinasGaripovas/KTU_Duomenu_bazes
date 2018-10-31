@@ -38,27 +38,28 @@ class FloodedRoadsReportsController extends Controller
                 $to = $form->get('To')->getData();
                 $dateFrom = $from .' '.'00:00:00';
                 $dateTo = $to .' '. '23:59:59';
+                $isActive = $form->get('IsActive')->getData();
                 $username = $this->getUser()->getUserName();
 
                 $dql = '';
 
                 if ($this->isGranted('ADMIN')) {
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt ASC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt ASC";
                 }
                 elseif ($this->isGranted('SUPER_VIEWER')){
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt ASC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt ASC";
                 }
                 elseif ($this->isGranted('UNIT_VIEWER')) {
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt DESC";
                 }
                 elseif ($this->isGranted('SUPER_MASTER')) {
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt DESC";
                 }
                 elseif ($this->isGranted('ROAD_MASTER')) {
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.SubunitId = '$subUnitId' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt DESC";
                 }
                 elseif($this->isGranted('WORKER') ) {
-                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.CreatedBy = '$username' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo') ORDER BY f.CreatedAt DESC";
+                    $dql = "SELECT f FROM App:FloodedRoads f WHERE f.CreatedBy = '$username' AND (f.CreatedAt BETWEEN '$dateFrom' AND '$dateTo' AND f.IsActive = '$isActive') ORDER BY f.CreatedAt DESC";
                 }
 
                     $em = $this->get('doctrine.orm.entity_manager');
@@ -81,7 +82,7 @@ class FloodedRoadsReportsController extends Controller
                                 //->setCellValue('F' . $index, $rep->getSectionBegin())
                                 ->setCellValue('G' . $index, $rep->getWaterDeep())
                                 ->setCellValue('H' . $index, $rep->getNotes())
-                                ->setCellValue('H' . $index, $rep->getStatus());
+                                ->setCellValue('I' . $index, $rep->getStatus());
                             $index++;
                     }
                     $spreadsheet->getActiveSheet()

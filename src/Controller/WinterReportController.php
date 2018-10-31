@@ -59,7 +59,6 @@ class WinterReportController extends Controller
                 $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$from' AND r.Date <= '$to') AND r.Subunit = '$subunit'  ORDER BY r.Date ASC";
             }
 
-
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $report = $query->execute();
@@ -99,7 +98,6 @@ class WinterReportController extends Controller
                 return $this->file(('files/' . $fileName . '.xlsx'));
 // Set document properties
             }
-
             return $this->render('winter_report/winter_jobs_report.html.twig', ['form' => $form->createView(), 'winter_jobs_report' => $report]);
         } else {
             return $this->render('winter_report/winter_jobs_report.html.twig', ['form' => $form->createView(), ['winter_jobs_report' => null]]);

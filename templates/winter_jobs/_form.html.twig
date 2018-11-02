@@ -110,24 +110,23 @@
             forms.push($this);
         });
 
-        forms[0].wrap('<div class = "col-md-3"></div>');
-        forms[1].wrap('<div class = "col-md-1"></div>');
-        forms[2].wrap('<div class = "col-md-1"></div>');
+        forms[0].wrap('<div class = "col-md-4"></div>');
+        forms[1].wrap('<div class = "col-md-4"></div>');
+        forms[2].wrap('<div class = "col-md-4"></div>');
 
-        forms[3].addClass('check_class');
-        forms[4].addClass('check_class');
-        forms[5].addClass('check_class');
+        forms[3].wrap('<div class = "col-md-1"></div>');
+        forms[4].wrap('<div class = "col-md-1"></div>');
+        forms[5].wrap('<div class = "col-md-1"></div>');
 
-        forms[6].wrap('<div class = "col-md-2"></div>');
-        forms[7].wrap('<div class = "col-md-2"></div>');
-        forms[8].wrap('<div class = "col-md-2"></div>');
+        forms[6].wrap('<div class = "col-md-3"></div>');
+        forms[7].wrap('<div class = "col-md-3"></div>');
+        forms[8].wrap('<div class = "col-md-3"></div>');
 
 
         $panelBody.find('#winter_jobs_RoadSections_'+index).addClass('row col-12');
-        $panelBody.find('.check_class').wrapAll('<div class = "col-md-1"></div>')
+       // $panelBody.find('.check_class').wrapAll('<div class = "col-md-3"></div>')
 
         refreshAutocorrect();
-
     }
 
     /**
@@ -138,7 +137,7 @@
         // create remove button
         var $removeButton = $('<a href="#" class="btn btn-danger col-md-2">{% trans %}Remove {% endtrans %}</a>');
         // appending the removebutton to the panel footer
-        var $panelFooter = $('<div class="panel-footer col-12"></div>').append($removeButton);
+        var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
         // handle the click event of the remove button
         $removeButton.click(function (e) {
             e.preventDefault();
@@ -151,6 +150,7 @@
             refreshAutocorrect();
         });
         // append the footer to the panel
+        $panelFooter.after("<br>");
         $panel.append($panelFooter);
     }
 
@@ -261,32 +261,34 @@
         <div class="panel card p-3 col-sm-12 col-md-12 " style="margin-bottom: 10px;">
             <div class="panel-body row col-12">
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     {{  form_row(row.RoadSectionSearch) }}
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-4">
                     {{  form_row(row.SectionBegin) }}
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-4">
                     {{  form_row(row.SectionEnd) }}
                 </div>
 
                 <div class="col-md-1">
                     {{ form_row(row.SaltChecked) }}
-
+                </div>
+                <div class="col-md-1">
                     {{ form_row(row.SandChecked) }}
-
+                </div>
+                <div class="col-md-1">
                     {{ form_row(row.SolutionChecked) }}
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {{ form_row(row.SaltValue) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {{ form_row(row.SandValue) }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     {{ form_row(row.SolutionValue) }}
                 </div>
                 {{ form_row(row.SectionId) }}

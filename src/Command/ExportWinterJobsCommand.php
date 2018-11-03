@@ -60,8 +60,8 @@ class ExportWinterJobsCommand extends ContainerAwareCommand
                 }
             }
             // Rename worksheet
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $writer->save('/home/samba/DAIS/DAIS_GIS.xlsx');
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+            $writer->save('/home/samba/DAIS/DAIS_GIS.csv');
             $output->writeln('Valio');
         }
     }

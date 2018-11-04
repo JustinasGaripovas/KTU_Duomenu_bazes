@@ -17,22 +17,28 @@ class ExportWinterJobsCommand extends ContainerAwareCommand
     {
         $this
             ->setDescription('Make excel file from WinterJobs entity')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('generateXLS')
-        ;
+            ->addArgument('dateFrom', InputArgument::OPTIONAL, 'For testing purpose')
+            ->addArgument('dateTo', InputArgument::OPTIONAL, 'For testing purpose')
+            ->addOption('generateXLS');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-         //$io = new SymfonyStyle($input, $output);
+        //$io = new SymfonyStyle($input, $output);
         if ($input->getOption('generateXLS')) {
-            $dateFrom = new \DateTime('now');
-            $dateFrom = $dateFrom->modify('- 24 hours');
-            $dateFrom = $dateFrom->format('Y-m-d H:m:s');
-            $output->writeln('Date nuo:' . $dateFrom);
-            $dateTo = new \DateTime('now');
-            $dateTo = $dateTo->format('Y-m-d H:m:s');
-            $output->writeln('Data iki:' . $dateTo);
+            if ($input->getArgument('dateFrom') == null) {
+                $dateFrom = new \DateTime('now');
+                $dateFrom = $dateFrom->modify('- 24 hours');
+                $dateFrom = $dateFrom->format('Y-m-d H:m:s');
+            } else {
+                $dateFrom = $input->getArgument('dateFrom');
+            }
+            if ($input->getArgument('dateTo') == null) {
+                $dateTo = new \DateTime('now');
+                $dateTo = $dateTo->format('Y-m-d H:m:s');
+            } else {
+                $dateTo = $input->getArgument('dateTo');
+            }
             $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$dateFrom' AND r.Date <= '$dateTo')  ORDER BY r.Date ASC";
             $em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);

@@ -44,24 +44,25 @@ class ExportWinterJobsCommand extends ContainerAwareCommand
             $query = $em->createQuery($dql);
             $report = $query->execute();
             $reader = IOFactory::createReader('Xlsx');
-            $spreadsheet = $reader->load('public/DAIS_GIS.xlsx');
+            $spreadsheet = $reader->load('public/DAIS_GIS_1.xlsx');
             $index = 2;
             foreach ($report as $item) {
                 foreach ($item->getRoadSections() as $value) {
                     $spreadsheet->getActiveSheet()
-                        ->setCellValue('A' . $index, $item->getSubunitName())
-                        ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
-                        ->setCellValue('C' . $index, $item->getTimeFrom()->format('H:m'))
-                        ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
-                        ->setCellValue('E' . $index, $item->getMechanism())
-                        ->setCellValue('F' . $index, $item->getJob())
-                        ->setCellValue('G' . $index, $value->getSectionId())
-                        ->setCellValue('H' . $index, $value->getSectionType())
-                        ->setCellValue('I' . $index, $value->getSectionBegin())
-                        ->setCellValue('J' . $index, $value->getSectionEnd())
-                        ->setCellValue('K' . $index, $value->getSaltValue())
-                        ->setCellValue('L' . $index, $value->getSandValue())
-                        ->setCellValue('M' . $index, $value->getSolutionValue());
+                        ->setCellValue('A' . $index, $item->getId())
+                        ->setCellValue('B' . $index, $item->getSubunitName())
+                        ->setCellValue('C' . $index, $item->getDate()->format('Y-m-d'))
+                        ->setCellValue('D' . $index, $item->getTimeFrom()->format('H:m'))
+                        ->setCellValue('E' . $index, $item->getTimeTo()->format('H:m'))
+                        ->setCellValue('F' . $index, $item->getMechanism())
+                        ->setCellValue('G' . $index, $item->getJob())
+                        ->setCellValue('H' . $index, $value->getSectionId())
+                        ->setCellValue('I' . $index, $value->getSectionType())
+                        ->setCellValue('J' . $index, $value->getSectionBegin())
+                        ->setCellValue('K' . $index, $value->getSectionEnd())
+                        ->setCellValue('L' . $index, $value->getSaltValue())
+                        ->setCellValue('M' . $index, $value->getSandValue())
+                        ->setCellValue('N' . $index, $value->getSolutionValue());
                     $index++;
                 }
             }

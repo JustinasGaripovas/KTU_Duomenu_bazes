@@ -18,9 +18,18 @@
             tr{page-break-inside: avoid !important;}
         </style>
         {{ form_start(form) }}
-        {{ form_widget(form) }}
+        <div style="padding: 5px;" class="row justify-content-center">
+            <div style="border: 1px solid whitesmoke; padding-top: 15px" class="col-auto">
+                {{ form_row(form.IsActive) }}
+            </div>
+            <div style="border: 1px solid whitesmoke; padding-top: 10px" class="col-auto">
+                {{ form_row(form.Preview) }}
+            </div>
+            <div style="border: 1px solid whitesmoke; padding-top: 10px" class="col-auto">
+                {{ form_row(form.GenerateXLS) }}
+            </div>
+        </div>
         {{ form_end(form) }}
-        <br>
         <hr>
         <div class="print_a">
             <table class="table table-sm thead-dark table-bordered">

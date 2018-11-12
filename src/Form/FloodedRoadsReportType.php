@@ -14,7 +14,7 @@ class FloodedRoadsReportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('From', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array(
+            /*->add('From', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array(
                 'mapped'=> false,
                 'attr' => [
                     'class' => 'js-datepicker-1',
@@ -25,7 +25,7 @@ class FloodedRoadsReportType extends AbstractType
                 'attr' => [
                     'class' => 'js-datepicker-2',
                     'autocomplete'=>'off']
-            ))
+            ))*/
             ->add('IsActive', CheckboxType::class, array(
                 'mapped' => false,
                 'required' => false

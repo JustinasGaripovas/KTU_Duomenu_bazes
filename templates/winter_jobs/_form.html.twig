@@ -120,17 +120,21 @@
             forms.push($this);
         });
 
-        forms[0].wrap('<div class = "col-md-4"></div>');
-        forms[1].wrap('<div class = "col-md-4"></div>');
-        forms[2].wrap('<div class = "col-md-4"></div>');
+        forms[0].wrap('<div class = "col-md-3"></div>');
+        forms[1].wrap('<div class = "col-md-3"></div>');
+        forms[2].wrap('<div class = "col-md-3"></div>');
+        forms[3].wrap('<div class = "col-md-3"></div>');
 
-        forms[3].wrap('<div class = "col-md-1"></div>');
+
         forms[4].wrap('<div class = "col-md-1"></div>');
         forms[5].wrap('<div class = "col-md-1"></div>');
+        forms[6].wrap('<div class = "col-md-1"></div>');
 
-        forms[6].wrap('<div class = "col-md-3"></div>');
         forms[7].wrap('<div class = "col-md-3"></div>');
         forms[8].wrap('<div class = "col-md-3"></div>');
+        forms[9].wrap('<div class = "col-md-3"></div>');
+
+
 
 
         $panelBody.find('#winter_jobs_RoadSections_'+index).addClass('row col-12');
@@ -267,6 +271,18 @@
 
 </script>
 
+<style>
+    .col-centered {
+        display:inline-block;
+        float:none;
+        /* reset the text-align */
+        text-align:left;
+        /* inline-block space fix */
+        margin-right:-4px;
+        text-align: center;
+    }
+</style>
+
 
 {{ form_start(form) }}
 <div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row">
@@ -274,15 +290,18 @@
         <div class="panel card p-3 col-sm-12 col-md-12 " style="margin-bottom: 10px;">
             <div class="panel-body row col-12">
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     {{  form_row(row.RoadSectionSearch) }}
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     {{  form_row(row.SectionBegin) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     {{  form_row(row.SectionEnd) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(row.Quadrature) }}
                 </div>
 
                 <div class="col-md-1">
@@ -304,6 +323,7 @@
                 <div class="col-md-3">
                     {{ form_row(row.SolutionValue) }}
                 </div>
+
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}
                 {{ form_row(row.SectionType) }}

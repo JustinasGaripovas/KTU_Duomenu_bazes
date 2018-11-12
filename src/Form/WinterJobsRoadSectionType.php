@@ -27,6 +27,9 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('SectionEnd',null,array(
                 'required' => true,
             ))
+            ->add('Quadrature',null,array(
+                'required' => true,
+            ))
             /*
             ->add('level', ChoiceType::class, array(
                 'choices' => array(
@@ -54,6 +57,7 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('SolutionValue',null,array(
                 'required' => false,
             ))
+
         ;
     }
 

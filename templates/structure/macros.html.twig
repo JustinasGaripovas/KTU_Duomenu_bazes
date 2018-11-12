@@ -1,0 +1,14 @@
+{% macro recursiveCategory(entity) %}
+    {% import _self as self %}
+        {% if entity.array|length %}
+            <ul>
+                {% for child in entity.array %}
+                    <ul>
+                    <a>{{ child.Name }}</a>
+
+                    {{ self.recursiveCategory(child) }}
+                    </ul>
+                {% endfor %}
+            </ul>
+        {% endif %}
+{% endmacro %}

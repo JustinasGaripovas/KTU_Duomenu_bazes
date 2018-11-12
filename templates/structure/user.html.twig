@@ -1,0 +1,235 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}entity{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid p-3">
+
+        <h1 style="text-align: center">Inspected user</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>{% trans %} Subunit{% endtrans %}</th>
+                <th> {% trans %} Name{% endtrans %}</th>
+                <th> {% trans %} Role{% endtrans %}</th>
+
+                <th> {% trans %} inspection {% endtrans %}</th>
+                <th> {% trans %} donejob{% endtrans %}</th>
+                <th> {% trans %} restriction{% endtrans %}</th>
+                <th> {% trans %} winter{% endtrans %}</th>
+                <th> {% trans %} insuredevents{% endtrans %}</th>
+                <th> {% trans %} reports{% endtrans %}</th>
+                <th> {% trans %} flood{% endtrans %}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.subunit.name }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.inspection }}</td>
+                    <td>{{ user.doneJobs }}</td>
+                    <td>{{ user.restrictions }}</td>
+                    <td>{{ user.winter }}</td>
+                    <td>{{ user.insuredEvent }}</td>
+                    <td>{{ user.reports }}</td>
+                    <td>{{ user.flood }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        </div>
+
+        <h1 style="text-align: center">Activities</h1>
+
+        <h2 style="text-align: center;padding: 2rem" >Inpections</h2>
+        <table class="table table-sm thead-dark table-bordered">
+            <thead>
+            <tr>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RoadId {% endtrans %}</th>
+                <th style="text-align: center"> {% trans %} Inspection Note {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Inspection Date {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} RepairDate {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Tipas {% endtrans %} </th>
+                <th style="text-align: center; vertical-align: middle"> {% trans %} Username {% endtrans %} </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for inspection in inspections %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <tr>
+                    <td style="white-space: nowrap; text-align: center; vertical-align: middle">{{ inspection.RoadId }} ({{ inspection.RoadSectionBegin }}; {{ inspection.RoadSectionEnd }})</td>
+                    <td style="text-align: center; vertical-align: middle">{{ inspection.Note }} {% if inspection. IsAdditional%} ( Kelio būklė: {{ inspection.RoadCondition }}; Bangos dydis: {{ inspection.WaveSize }} cm. Vieta: {{ inspection.place }} km. ) {% endif %}</td>
+                    <td style="text-align: center; vertical-align: middle">{{ inspection.RepairDate ? inspection.RepairDate|date('Y-m-d') : '' }}</td>
+                    <td style="text-align: center; vertical-align: middle">
+                        {% for job in inspection.getJob %}
+                            {% if job.DoneJobDate != null %}
+                                <a data-placement="auto" data-toggle="tooltip" data-html="true" title="<b>Data:</b> {{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }} <br><b>Darbas:</b> {{ job.JobName }} <br><b>Kelias:</b> {{ job.RoadSection }} <br><b>Kiekis:</b> {{ job.Quantity }}
+                            " href="{{ path('done_jobs_show', {'id': job.Id}) }}">{{ job.DoneJobDate ? job.DoneJobDate|date('Y-m-d')  : '' }}</a><br>
+                            {% endif %}
+                        {% endfor %}
+                        <a class="btn btn-success" href="{{ path('done_jobs_add_job_to_inspection', {'id': inspection.Id}) }}">
+                            <i class="fa fa-plus-circle"></i> {% trans %} Add {% endtrans %}</a>
+                    <td style="text-align: center; vertical-align: middle"> {% if inspection.IsAdditional %} <p style="background-color: #F5871F; font-size: inherit; padding: 1em; margin: auto" class="fa fa-road">Sustiprinta</p> {% else %} <p style="background-color: #6b9311; font-size: inherit; padding: 1em; margin: auto" class="fa fa-road"> Patrulinė </p> {% endif %}</td>
+                    <td style="text-align: center; vertical-align: middle">{{ inspection.Username }}</td>
+                    <td style="text-align: center; vertical-align: middle">
+                        {% include 'menu_by_roles/edit_view_inspection.html.twig' %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        <h2 style="text-align: center;padding: 2rem">Done jobs</h2>
+        <table class="table table-sm thead-dark">
+            <thead>
+            <tr>
+                <th>{% trans %} JobId {% endtrans %}</th>
+                <th>{% trans %} JobName  {% endtrans %}</th>
+                <th>{% trans %} RoadSection {% endtrans %}</th>
+                <th>{% trans %} RoadSectionBegin {% endtrans %}</th>
+                <th>{% trans %} RoadSectionEnd {% endtrans %}</th>
+                <th>{% trans %} Unit of {% endtrans %}</th>
+                <th>{% trans %} Quantity {% endtrans %}</th>
+                <th>{% trans %} username {% endtrans %}</th>
+                <th>{% trans %} Date {% endtrans %}</th>
+                <th>- </th>
+                <th>{% trans %} Note  {% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for done_job in done_jobs %}
+                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <tr>
+                    <td>{{ done_job.JobId }}</td>
+                    <td>{{ done_job.JobName }}</td>
+                    <td>{{ done_job.RoadSection }}</td>
+                    <td>{{ done_job.RoadSectionBegin }}</td>
+                    <td>{{ done_job.RoadSectionEnd }}</td>
+                    <td>{{ done_job.UnitOf }}</td>
+                    <td>{{ done_job.Quantity }}</td>
+                    <td>{{ done_job.Username }}</td>
+                    <td>{{ done_job.Date ? done_job.Date|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ done_job.DoneJobDate ? done_job.DoneJobDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ done_job.Note }}</td>
+                    <td>
+                        {% include 'menu_by_roles/edit_view_done_job.html.twig' %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="13">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 style="text-align: center;padding: 2rem">Winter jobs</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{% trans %} CreatedAt {% endtrans %}</th>
+                <th>{% trans %} Subunit {% endtrans %}</th>
+                <th>{% trans %} Date {% endtrans %}</th>
+                <th>{% trans %} Mechanism {% endtrans %}</th>
+                <th>{% trans %} Job {% endtrans %}</th>
+                <th>{% trans %} RoadSection {% endtrans %}</th>
+                <th>{% trans %} Salt {% endtrans %}</th>
+                <th>{% trans %} Sand {% endtrans %}</th>
+                <th>{% trans %} Solution {% endtrans %}</th>
+                <th>{% trans %} actions {% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for winter_job in winter_jobs | default ('') %}
+                <tr>
+                    <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ winter_job.SubunitName }}</td>
+                    <td>{{ winter_job.Date ? winter_job.Date|date('Y-m-d') : ''}}</td>
+                    <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
+                    <td>{{ winter_job.Job }}</td>
+                    <td>{{ winter_job.getRoadSectionsStringArray| join('\n')| nl2br }}</td>
+                    <td>{{ winter_job.getRoadSectionsSalt| join('\n')| nl2br }}</td>
+                    <td>{{ winter_job.getRoadSectionsSand| join('\n')| nl2br }}</td>
+                    <td>{{ winter_job.getRoadSectionsSolution| join('\n')| nl2br }}</td>
+
+                    <td>
+                        <a href="{{ path('winter_jobs_edit', {'id': winter_job.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <h2 style="text-align: center;padding: 2rem">Flooded roads</h2>
+        <table class="table table-sm thead-dark">
+            <thead>
+            <tr>
+                <th>{% trans %} CreatedAt {% endtrans %}</th>
+                <th>{% trans %} RoadId {% endtrans %}</th>
+                <th>{% trans %} RoadName {% endtrans %}</th>
+                <th>{% trans %} SectionBegin {% endtrans %}</th>
+                <th>{% trans %} SectionEnd {% endtrans %}</th>
+                <th>{% trans %} WaterDeep {% endtrans %}</th>
+                <th>{% trans %} Notes {% endtrans %}</th>
+                <th>{% trans %} Status {% endtrans %}</th>
+                <th>{% trans %} Subunit {% endtrans %}</th>
+                <th>{% trans %} CreatedBy {% endtrans %}</th>
+                <th>{% trans %} IsActive {% endtrans %}</th>
+                <th>{% trans %} actions {% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for flooded_road in flooded_roads %}
+                <tr>
+                    <td>{{ flooded_road.createdAt | date('Y-m-d') }}</td>
+                    <td>{{ flooded_road.RoadId }}</td>
+                    <td>{{ flooded_road.RoadName }}</td>
+                    <td>{{ flooded_road.SectionBegin }}</td>
+                    <td>{{ flooded_road.SectionEnd }}</td>
+                    <td>{{ flooded_road.WaterDeep }}</td>
+                    <td>{{ flooded_road.Notes }}</td>
+                    <td>{{ flooded_road.Status }}</td>
+                    <td>{{ flooded_road.subunitId }}</td>
+                    <td>{{ flooded_road.createdBy }}</td>
+                    <td>{{ flooded_road.IsActive ? 'Galioja' : 'Negalioja'}}</td>
+                    <td>
+                        {% if is_granted('DELETE', flooded_road) %}
+                            <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                            <a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"></a>
+                        {% elseif is_granted('EDIT', flooded_road) %}
+                            <a class="fa fa-eye btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                            <a class="fa fa-pencil btn btn-outline-warning btn-lg btn-block" href="{{ path('flooded_roads_edit', {'id': flooded_road.id}) }}"></a>
+                        {% elseif is_granted('SHOW', flooded_road) %}
+                            <a class="fa fa-pencil btn btn-outline-primary btn-lg btn-block" href="{{ path('flooded_roads_show', {'id': flooded_road.id}) }}"></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    <div id="user-panel">
+
+    </div>
+{% endblock %}

@@ -19,22 +19,20 @@ class FloodedRoadsRepository extends ServiceEntityRepository
         parent::__construct($registry, FloodedRoads::class);
     }
 
-//    /**
-//     * @return FloodedRoads[] Returns an array of FloodedRoads objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return FloodedRoads[] Returns an array of FloodedRoads objects
+     */
+    public function findByUserName($value)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+            ->andWhere('f.CreatedBy = :val')
             ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('f.CreatedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?FloodedRoads

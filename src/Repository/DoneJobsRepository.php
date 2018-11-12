@@ -19,17 +19,20 @@ class DoneJobsRepository extends ServiceEntityRepository
         parent::__construct($registry, DoneJobs::class);
     }
 
-  /**
-    * @return DoneJobs[] Returns an array of DoneJobs objects by username
-   */
-    public function findAllByUserName($value): ?DoneJobs
+
+    /**
+     * @return DoneJobs[] Returns an array of Inspection objects
+     */
+
+    public function findByUserName($value)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.Username = :val')
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.Username = :val')
             ->setParameter('val', $value)
+            ->orderBy('i.Date', 'ASC')
             ->getQuery()
-            ->getMaxResults()
-        ;
+            ->getResult()
+            ;
     }
 
 }

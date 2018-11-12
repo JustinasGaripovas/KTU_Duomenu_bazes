@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}entity{% endblock %}
+
+{% block body %}
+
+    <style>
+        ul, li{
+            padding-left: 5px;
+            padding-right: 5px;
+            list-style-type: none;
+        }
+    </style>
+
+    <script>
+        //href="{{ path('structure_inner', {'slug': 0}) }}>"
+        var array;
+        var txt;
+
+
+        $(document).ready(function () {
+
+            $(document).on("click", ".dropdown-trigger", function() {
+                var id = $(this).attr('id');
+                console.log(id);
+
+                if($(this).attr("data-type") == 1) {
+                    $.ajax({
+                        url: '/structure/ajax',
+                        type: 'POST',
+                        dataType: 'json',
+                        async: true,
+                        data: {name: id},
+
+                        success: function (data, status) {
+                            var e = $('<tr><th>Name</th></tr>');
+                            $('#structure').html('');
+                            $('#structure').append(e);
+                            for (i = 0; i < data.length; i++) {
+                                structure = data[i];
+
+                                var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
+                                route = route.replace("PLACEHOLDER", structure['name']);
+
+                                var e = $('<tr><td><a href=' + route + ' id = "name" class="btn btn-primary"></a></td></tr>');
+
+                                $('#name', e).html(structure['name']);
+
+                                $('#structure').append(e);
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert('Ajax request failed.');
+                        }
+                    });
+                }
+
+                $(this).next().slideToggle();
+
+                //$('#content').html('');
+              //  $('#content').append(txt);
+            });
+
+            var json = {{ structure|json_encode|raw }};
+
+            var myObj = JSON.parse(json);
+
+            txt = "<ul><div class='row-fluid' id='sidebar_container'>"
+                findObject(myObj);
+            txt += "</div></ul>"
+
+            $('#sidebar').append(txt);
+        });
+
+        function findObject(object) {
+            if (object != null) {
+
+                var bool = true;
+
+                for (x in object) {
+
+                    if (object[x].array.length > 0) {
+                        var bool = false;
+
+                        //console.log(object[x])
+
+                        txt += "<li data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class='dropdown-trigger'><a  class='container-fluid btn-primary btn-lg btn-block '> ▼" + object[x].Name + "</a></li>"
+                        txt += "<ul class='dropdown-content border_not_active'>"
+                        findObject(object[x].array);
+                        txt += "</ul>"
+
+                    } else {
+                        if(bool == false)
+                        {
+                            txt += "<li><a data-type='"+object[x].InformationType+"' class='container-fluid btn-success btn-lg btn-block ' id='" + object[x].Name + "'>" + object[x].Name + "</a></li>";
+
+                        }else{
+                            txt += "<li style='padding-left: 10px;padding-right: 10px;' ><a class='container-fluid btn-secondary btn-lg btn-block ' id='" + object[x].Name + "'>" + object[x].Name + "</a></li>";
+                            //findObject(object[x].array);
+                        }
+                    }
+                }
+            }
+        }
+
+        function findPeople(object, master) {
+            if (object != null) {
+
+                var bool = true;
+
+                for (x in object) {
+
+                    if (object[x].array.length > 0) {
+                        var bool = false;
+                        findPeople(object[x].array, master);
+
+                    } else {
+                       if(bool != false)
+                       {
+                            if( object[x].Master == master) {
+                                txt += "<p id='" + object[x].Name + "'>" + object[x].Name + "</p>";
+                            }
+                            findPeople(object[x].array, master);
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+    </script>
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+    <h1 style="text-align: center; font-weight: bold;">{{ current_name }}</h1>
+
+    <div class="container-fluid row" id="main_container">
+
+        <div class="col-sm-3" id="sidebar">
+        <h4>Sidebar </h4>
+        </div>
+        <div class="col-sm-9">
+            <h4>Content </h4>
+            <a id = "loadstructure" class="user" href = "#">justinas.garipovas</a>
+
+            <div id="content" class="container-fluid" style="background: #5eb5e0;">
+                {{ include('structure/content.html.twig') }}
+            </div>
+        </div>
+
+    </div>
+
+    <div id="user-panel">
+
+    </div>
+{% endblock %}

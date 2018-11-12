@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,7 @@ class WinterJobsType extends AbstractType
             ->add('Mechanism', ChoiceType::class, array(
                 'choices' => $options['mechanism_choices']
             ))
-            ->add('job', ChoiceType::class, array(
+            ->add('Job', ChoiceType::class, array(
                 'choices' => $options['jobs_choices']
             ))
             ->add('RoadSections', CollectionType::class, [
@@ -32,6 +33,11 @@ class WinterJobsType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true
             ])
+            ->add('JobName', null)
+            ->add('JobId', HiddenType::class)
+            ->add('JobQuantity', null, [
+                'attr' => ['readonly' => true],
+                ])
             ->add('Date', DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,

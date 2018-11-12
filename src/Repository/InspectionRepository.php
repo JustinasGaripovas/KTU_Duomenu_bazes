@@ -19,22 +19,21 @@ class InspectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inspection::class);
     }
 
-//    /**
-//     * @return Inspection[] Returns an array of Inspection objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Inspection[] Returns an array of Inspection objects
+     */
+
+    public function findByUserName($value)
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
+            ->andWhere('i.Username = :val')
             ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('i.Date', 'ASC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Inspection

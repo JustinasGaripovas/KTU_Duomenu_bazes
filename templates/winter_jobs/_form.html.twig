@@ -48,6 +48,16 @@
             // and by form we mean a new panel which contains the form
             addNewForm();
         })
+
+        $( "#winter_jobs_JobName" ).autocomplete({
+            source: "{{ path('search') }}",
+            minLength: 1,
+            delay: 500,
+            select: function( event, ui ) {
+                $('#winter_jobs_JobId').val(ui.item.job_id),
+                    $('#winter_jobs_JobQuantity').val(ui.item.unit_of)
+            }
+        });
     });
     /*
      * creates a new form and appends it to the collectionHolder
@@ -251,10 +261,13 @@
                 },
             });
 
+
         })
     }
 
 </script>
+
+
 {{ form_start(form) }}
 <div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row">
     {% for row in form.RoadSections %}
@@ -320,11 +333,20 @@
 </div>
 <hr>
 <div class="row">
-    <div id="salt" class="col-sm">
+    <div class="col-sm-6">
         {{ form_row(form.Mechanism) }}
     </div>
-    <div id="salt" class="col-sm">
-        {{ form_row(form.job) }}
+    <div class="col-sm-6">
+        {{ form_row(form.Job) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.JobName) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.JobQuantity) }}
     </div>
 </div>
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Entity\RoadSection;
 use App\Entity\RoadSectionForWinterJobs;
+use App\Repository\JobRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,8 +21,9 @@ class SearchController extends Controller
 
         if(!$request->isXmlHttpRequest()){
             return $this->render('search/index.html.twig');
-       }
-            $results = [];
+        }
+
+        $results = [];
             $searchString = $request->get('term');
             $foundEntities = $this->getDoctrine()
                 ->getRepository(Job::class)
@@ -116,7 +118,6 @@ class SearchController extends Controller
 
         return $this->json($results);
     }
-
 
     /**
      * @Route("/search/winterRoad", name="search/road/winter")

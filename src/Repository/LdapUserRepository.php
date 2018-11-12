@@ -33,8 +33,20 @@ class LdapUserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
 
-        dump($r);
+    public function findAllById($value)
+    {
+
+        $r = $this->createQueryBuilder('l')
+            ->andWhere('l.Subunit = :val')
+            ->setParameter('val', $value)
+            ->orderBy('l.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $r;
     }
 
 

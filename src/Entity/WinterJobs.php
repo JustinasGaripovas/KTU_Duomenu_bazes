@@ -45,8 +45,7 @@ class WinterJobs
      * @ORM\Column(type="string", length=255)
      */
     private $Job;
-
-
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -67,6 +66,21 @@ class WinterJobs
      * @ORM\Column(type="string", length=255)
      */
     private $SubunitName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $JobId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $JobQuantity;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $JobName;
 
     public function addRoadSection($additionalSection)
     {
@@ -279,6 +293,42 @@ class WinterJobs
     public function setSubunitName(string $SubunitName): self
     {
         $this->SubunitName = $SubunitName;
+
+        return $this;
+    }
+
+    public function getJobId(): ?string
+    {
+        return $this->JobId;
+    }
+
+    public function setJobId(?string $JobId): self
+    {
+        $this->JobId = $JobId;
+
+        return $this;
+    }
+
+    public function getJobQuantity(): ?string
+    {
+        return $this->JobQuantity;
+    }
+
+    public function setJobQuantity(?string $JobQuantity): self
+    {
+        $this->JobQuantity = $JobQuantity;
+
+        return $this;
+    }
+
+    public function getJobName(): ?string
+    {
+        return $this->JobName;
+    }
+
+    public function setJobName(?string $JobName): self
+    {
+        $this->JobName = $JobName;
 
         return $this;
     }

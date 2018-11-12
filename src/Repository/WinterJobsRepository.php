@@ -19,22 +19,21 @@ class WinterJobsRepository extends ServiceEntityRepository
         parent::__construct($registry, WinterJobs::class);
     }
 
-//    /**
-//     * @return WinterJobs[] Returns an array of WinterJobs objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return WinterJobs[] Returns an array of WinterJobs objects
+     */
+
+    public function findByUserName($value)
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
+            ->andWhere('w.CreatedBy = :val')
             ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('w.CreatedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?WinterJobs

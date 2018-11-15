@@ -1,0 +1,7 @@
+{% trans_default_domain 'translation' %}
+
+{{ form_start(form) }}
+
+    {{ form_widget(form) }}
+    <button id="save_button" class="btn btn-success btn-lg">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

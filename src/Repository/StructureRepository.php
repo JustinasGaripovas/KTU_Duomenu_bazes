@@ -54,7 +54,7 @@ class StructureRepository extends ServiceEntityRepository
             ->andWhere('s.Name = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
             ;
     }
 

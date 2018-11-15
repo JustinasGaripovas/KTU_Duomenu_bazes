@@ -2,28 +2,78 @@
 {% trans_default_domain 'translation' %}
 {% block title %}entity{% endblock %}
 
-{% block body %}
+  {% block top_menu %}
+              <nav class="navbar navbar-default navbar-static-top navbar navbar-dark bg-dark" style="margin-bottom: 0">
+                  <div class="navbar-header">
+                      <a class="navbar-brand" href="{{ path('main') }}">DAIS</a>
+                  </div>
+                  <ul class="nav navbar-top-links navbar-right">
+                      <li class="divider"></li>
+                      <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
+                      </li>
+                  </ul>
+              </nav>
+  {% endblock %}
 
+{% block body %}
     <style>
-        ul, li{
-            padding-left: 15px;
+        #main_container{
+            display: flex;
+            width: 100%;
+        }
+        #sidebar_container a:hover{
+            background-color: #428bca;
+        }
+        #side-menu{
+            color:black;
+            position:absolute;
+            left:0;
+            top:10px;
+            z-index:1;
+            width:100%;
+            padding:45px 10px 0px;
+            margin-bottom: 20px;
+            background-color:#8DB9DF;
+            border-left: 6px solid #2E618D;
+            visibility:visible;
+            overflow:visible;
+            -webkit-overflow-scrolling:touch;
+            -webkit-transition:opacity .2s 0s,visibility 0s 0s;
+            -moz-transition:opacity .2s 0s,visibility 0s 0s;
+            transition:opacity .2s 0s,visibility 0s 0s;
+            max-height:none;
+            box-shadow:0 2px 10px rgba(0,0,0,.2)
+
+
+        }
+        #sidebar_container ul, li {
             list-style-type: none;
+            padding-top: 3px;
+            margin:auto;
+        }
+        .dropdown-trigger{
+            padding: 0px;
+            margin: 0px;
+            display:inline;
+        }
+        .dropdown-content {
+            display: none;
         }
     </style>
 
+
     <script>
+
         //href="{{ path('structure_inner', {'slug': 0}) }}>"
         var array;
         var txt;
-
 
         $(document).ready(function () {
 
             $(document).on("click", ".dropdown-trigger", function() {
                 var id = $(this).attr('id');
-                console.log(id);
 
-                if($(this).attr("data-type") == 1) {
+                if ($(this).attr("data-type") == 2) {
                     $.ajax({
                         url: '/structure/ajax',
                         type: 'POST',
@@ -32,18 +82,22 @@
                         data: {name: id},
 
                         success: function (data, status) {
-                            var e = $('<tr><th>Name</th></tr>');
+
                             $('#structure').html('');
+                            var e = $('<h2 style="text-align: center;color: black;" class=\' col-12 p-1\'>Darbuotoju sarašas</h2>');
+
                             $('#structure').append(e);
+
                             for (i = 0; i < data.length; i++) {
                                 structure = data[i];
 
                                 var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
                                 route = route.replace("PLACEHOLDER", structure['name']);
 
-                                var e = $('<tr><td><a href=' + route + ' id = "name" class="btn btn-primary"></a></td></tr>');
+                                var e = $('<div style="text-align: center;color: black;" class=\' col-sm-6 col-sm-4 col-lg-2 p-1\'>' +
+                                    '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['name'] + '</a>' +
+                                    '</div>');
 
-                                $('#name', e).html(structure['name']);
 
                                 $('#structure').append(e);
                             }
@@ -53,22 +107,18 @@
                         }
                     });
                 }
-
                 $(this).next().slideToggle();
-
-                //$('#content').html('');
-              //  $('#content').append(txt);
             });
 
             var json = {{ structure|json_encode|raw }};
 
             var myObj = JSON.parse(json);
 
-            txt = "<ul><div class='row-fluid' id='sidebar_container'>"
+            txt = "<div class='row-fluid' id='sidebar_container'>"
                 findObject(myObj);
-            txt += "</div></ul>"
+            txt += "</div>"
 
-            $('#sidebar').append(txt);
+            $('#side-menu').append(txt);
         });
 
         function findObject(object) {
@@ -77,98 +127,35 @@
                 var bool = true;
 
                 for (x in object) {
-
                     if (object[x].array.length > 0) {
-                        var bool = false;
+                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block dropdown-trigger '>" + object[x].Name + "</a>"
+                        txt += "<ul class='dropdown-content'>"
+                                findObject(object[x].array);
+                        txt += "</ul></li>"
 
-                        //console.log(object[x])
-
-                        txt += "<li data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class='dropdown-trigger'><a  class=' m-1 container-fluid btn-primary btn-lg btn-block '>" + object[x].Name + "</a></li>"
-                        txt += "<ul class='dropdown-content border_not_active'>"
-                        findObject(object[x].array);
-                        txt += "</ul>"
-
-                    } else {
-                        if(bool == false)
-                        {
-                            txt += "<li><a data-type='"+object[x].InformationType+"' class='container-fluid m-1 btn-success btn-lg btn-block ' id='" + object[x].Name + "'>" + object[x].Name + "</a></li>";
-
-                        }else{
-                            //txt += "<li style='padding-left: 10px;padding-right: 10px;' ><a class='container-fluid m-1 btn-secondary btn-lg btn-block ' id='" + object[x].Name + "'>" + object[x].Name + "</a></li>";
-                            //findObject(object[x].array);
+                    } else if(object[x].InformationType != 0) {
+                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block dropdown-trigger'>" + object[x].Name + "</a>"
+                            txt += "<div class='dropdown-content'>"
+                            txt += "</div></li>"
                         }
                     }
                 }
             }
-        }
-
-        function findPeople(object, master) {
-            if (object != null) {
-
-                var bool = true;
-
-                for (x in object) {
-
-                    if (object[x].array.length > 0) {
-                        var bool = false;
-                        findPeople(object[x].array, master);
-
-                    } else {
-                       if(bool != false)
-                       {
-                            if( object[x].Master == master) {
-                                txt += "<p id='" + object[x].Name + "'>" + object[x].Name + "</p>";
-                            }
-                            findPeople(object[x].array, master);
-                        }
-
-                    }
-
-                }
-            }
-        }
-
 
     </script>
-
-    <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
-
-    <h1 style="text-align: center; font-weight: bold;">{{ current_name }}</h1>
 
     <div class="container-fluid row" id="main_container">
-
-        <div class="col-sm-2" id="sidebar">
-        <h4>Sidebar </h4>
+      <div class="sidebar hidden-xs col-sm-5 col-md-5 col-lg-3">
+       <div id="side-menu">
+            <h3> Navigacijos meniu </h3>
+            <hr>
         </div>
-        <div class="col-sm-10">
-            <h4>Content </h4>
-
-            <div id="content" class="container-fluid" style="background: #5eb5e0;">
+      </div>
+        <div class=" col-sm-7 col-md-7 col-lg-9" id='content-menu'>
+            <div id="content" class="container-fluid">
                 {{ include('structure/content.html.twig') }}
             </div>
         </div>
-
     </div>
 
     <div id="user-panel">

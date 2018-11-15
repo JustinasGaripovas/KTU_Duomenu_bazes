@@ -38,5 +38,14 @@ class SubunitRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
+    public function finaAllBySubunit($value): ?Subunit
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.SubunitId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 }

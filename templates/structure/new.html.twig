@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}New Structure{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}New{% endtrans %}</h1>
+
+    {{ include('structure/_form.html.twig') }}
+
+    <a class="btn btn-primary btn-lg" href="{{ path('structure_index') }}">{% trans %}back to list{% endtrans %}</a>
+{% endblock %}

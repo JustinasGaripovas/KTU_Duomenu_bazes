@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\LdapUser;
 use App\Entity\Structure;
+use App\Form\StructureType;
 use App\Repository\DoneJobsRepository;
 use App\Repository\FloodedRoadsRepository;
 use App\Repository\InspectionRepository;
@@ -16,6 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -36,14 +38,107 @@ class StructureController extends Controller
     private $result = array();
 
     /**
-     * @Route("/structure", name="structure")
+     * @Route("/structure", name="structure_index")
      */
     public function index(StructureRepository $structureRepository)
     {
         return $this->render('structure/index.html.twig', [
-            'current_name' => "Base",
-            'structure' => $this->findStructure($structureRepository,0),
+            'structure' => $this->findStructure($structureRepository,"ROOT"),
         ]);
+    }
+
+    /**
+     * @Route("/structure/new", name="structure_new", methods="GET|POST")
+     */
+    public function new(StructureRepository $structureRepository, LdapUserRepository $ldapUserRepository,SubunitRepository $subunitRepository,Request $request): Response
+    {
+        $dql = "SELECT i.Name FROM App:Structure i WHERE i.InformationType != 0 ORDER BY i.id DESC";
+        $em = $this->get('doctrine.orm.entity_manager');
+        $query = $em->createQuery($dql);
+
+        $master_choice = array();
+
+
+        foreach ($query->execute() as $item)
+        {
+            $master_choice[(string)$item["Name"]] = $item["Name"];
+        }
+
+        $information_choice = array();
+        $information_choice["Darbuotojas"] = 0;
+        $information_choice["Regionas"] = 1;
+        $information_choice["Tarnyba"] = 2;
+        $information_choice["Master Tarnyba"] = 3;
+
+
+        $username = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
+        $username = $this->getUser()->getUserName();
+
+        $structure = new Structure();
+        $form = $this->createForm(StructureType::class, $structure, ['master_choice' => $master_choice, 'information_choice' =>$information_choice]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $master = $structureRepository->findByName($structure->getMaster());
+            $structure->setLevel(0);
+
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($structure);
+            $em->flush();
+            return $this->redirectToRoute('structure_new');
+
+        }
+
+
+        return $this->render('structure/new.html.twig', [
+            'structure' => $structure,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/structure/{id}/edit", name="structure_edit", methods="GET|POST")
+     */
+    public function edit(LdapUserRepository $ldapUserRepository, Request $request, Structure $structure, StructureRepository $structureRepository): Response
+    {
+
+        $form = $this->createForm(StructureType::class, $structure, ['master_choice' => $structureRepository->findAll()]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('mechanism_edit', ['id' => $structure->getId()]);
+        }
+
+        return $this->render('structure/edit.html.twig', [
+            'structure' => $structure,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/structure/{id}", name="structure_delete", methods="DELETE")
+     */
+    public function delete(Request $request, Structure $structure): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$structure->getId(), $request->request->get('_token'))) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($structure);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('structure_index');
     }
 
     public function findStructure(StructureRepository $structureRepository, $input)
@@ -54,11 +149,12 @@ class StructureController extends Controller
 
         if(is_numeric($input))
         {
-            $structure = $structureRepository->findByLevel($input);
+           // $structure = $structureRepository->findByLevel($input);
         }else if(is_string($input))
         {
             $structure = $structureRepository->findByMaster($input);
         }
+
 
         foreach ($structure as $entity)
         {
@@ -94,7 +190,8 @@ class StructureController extends Controller
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $data = $request->request->get('name');
-            $allUsers =  $structureRepository->findByMaster($data);
+
+            $allUsers =  $ldapUserRepository->findAllById($subunitRepository->findOneByName($data)->getSubunitId());
 
             $jsonData = array();
             $idx = 0;
@@ -103,8 +200,7 @@ class StructureController extends Controller
             foreach($allUsers as $item) {
                 $temp = array(
                     'name' => $item->getName(),
-                    'role' => $item->getMaster(),
-
+                    'role' => $item->getRole(),
                 );
                 $jsonData[$idx++] = $temp;
             }
@@ -117,7 +213,7 @@ class StructureController extends Controller
         }
     }
 
-    /**
+    /**W
      * @Route("/user/ajax", name="structure_user_ajax")
      */
     public function userAjax(SubunitRepository $subunitRepository,LdapUserRepository $ldapUserRepository, StructureRepository $structureRepository, Request $request) {
@@ -126,7 +222,7 @@ class StructureController extends Controller
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $data = $request->request->get('name');
-            $allUsers =  $ldapUserRepository->findUnitIdByUserName("justinas.garipovas");
+            $allUsers =  $ldapUserRepository->findUnitIdByUserName($data);
             $jsonData = array();
             $idx = 0;
 /*
@@ -147,20 +243,21 @@ class StructureController extends Controller
             return $this->render('structure/content.html.twig');
         }
     }
-
+/*
     /**
      * @Route("/structure/", name="content_show")
-     */
+     *//*
     public function contentShow(StructureRepository $structureRepository, $slug)
     {
         return $this->render('structure/index.html.twig', [
             'content' => $structureRepository->findByMaster($slug),
             'current_name' => $slug,
-            'structure' => $this->findStructure($structureRepository,0),
+            'structure' => $this->findStructure($structureRepository,"KP"),
         ]);
-    }
+    }*/
+
     /**
-     * @Route("/structure/{slug}", name="user_show")
+     * @Route("/structure/user/{slug}", name="user_show")
      */
     public function userActivityShow(LdapUserRepository $ldapUserRepository, DoneJobsRepository $doneJobsRepository, WinterJobsRepository $winterJobsRepository,
                                      InspectionRepository $inspectionRepository, FloodedRoadsRepository $floodedRoadsRepository, $slug)
@@ -184,7 +281,7 @@ class StructureController extends Controller
 
         foreach ($this->data as $slave)
         {
-            if($slave->getLevel() == $structure->getLevel()+1 && $slave->getMaster() == $structure->getName())
+            if(/*$slave->getLevel() == $structure->getLevel()+1 &&*/ $slave->getMaster() == $structure->getName())
             {
                 array_push($structure->array,$slave);
                 $this->findBelow($slave);

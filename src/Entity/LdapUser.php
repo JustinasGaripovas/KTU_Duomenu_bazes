@@ -73,6 +73,11 @@ class LdapUser
      */
     private $Flood = 1;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ContractJobs =1;
+
     public function getInspection(): ?int
     {
         return $this->Inspection;
@@ -205,6 +210,18 @@ class LdapUser
     public function setFlood(int $Flood): self
     {
         $this->Flood = $Flood;
+
+        return $this;
+    }
+
+    public function getContractJobs(): ?int
+    {
+        return $this->ContractJobs;
+    }
+
+    public function setContractJobs(int $ContractJobs): self
+    {
+        $this->ContractJobs = $ContractJobs;
 
         return $this;
     }

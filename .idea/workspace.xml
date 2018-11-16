@@ -240,7 +240,7 @@
           <entry key="css" value="17" />
           <entry key="env" value="28" />
           <entry key="php" value="7176" />
-          <entry key="twig" value="11525" />
+          <entry key="twig" value="11526" />
           <entry key="yaml" value="6" />
           <entry key="yml" value="61" />
         </counts>
@@ -251,7 +251,7 @@
           <entry key="CSS" value="18" />
           <entry key="HTML" value="7" />
           <entry key="PHP" value="7176" />
-          <entry key="Twig" value="11517" />
+          <entry key="Twig" value="11518" />
           <entry key="YAML" value="67" />
         </counts>
       </usages-collector>
@@ -314,22 +314,28 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="64" selection-start-line="64" selection-end-line="64" />
+            <state relative-caret-position="94">
+              <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
               <folding>
+                <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/inspection/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="260">
               <caret line="21" column="39" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="39" />
             </state>
           </provider>
@@ -644,11 +650,11 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="353" />
-    <option name="y" value="199" />
-    <option name="width" value="1504" />
-    <option name="height" value="935" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="569" />
+    <option name="y" value="-4" />
+    <option name="width" value="1506" />
+    <option name="height" value="964" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -998,7 +1004,7 @@
       <workItem from="1542355352383" duration="1791000" />
       <workItem from="1542357164212" duration="1792000" />
       <workItem from="1542358984712" duration="1817000" />
-      <workItem from="1542360836339" duration="947000" />
+      <workItem from="1542360836339" duration="1263000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -1039,7 +1045,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="311184000" />
+    <option name="totallyTimeSpent" value="311500000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1051,10 +1057,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="353" y="199" width="1504" height="935" extended-state="0" />
+    <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20398352" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1641791" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1445,20 +1451,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/templates/inspection/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="64" selection-start-line="64" selection-end-line="64" />
-          <folding>
-            <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="260">
+          <caret line="21" column="39" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/inspection/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="39" />
+        <state relative-caret-position="94">
+          <caret line="57" column="26" lean-forward="true" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

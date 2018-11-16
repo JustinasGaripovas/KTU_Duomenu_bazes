@@ -61,19 +61,8 @@
 
 
     <script>
-        $(function(){ $('#dish-select-component-canvas').on('click', "ul.pagination a" , function(e){
 
-        }
-            $.ajax({
-                type: "GET",
-                url: $(this).attr('href'),
-            })
-                .done(function( msg ) {
-                    $('#dish-select-component-items').html(msg);
-                });
-            e.preventDefault();
-        });
-/*
+
         function informationAjax(id) {
             var ajaxUser = $.ajax({
                 url: '/structure/ajax/users',
@@ -126,7 +115,7 @@
                     $('#structure').append(e);
                 }
             });
-        }*/
+        }
 
         //href="{{ path('structure_inner', {'slug': 0}) }}>"
         var array;

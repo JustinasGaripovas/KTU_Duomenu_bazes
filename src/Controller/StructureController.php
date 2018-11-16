@@ -60,7 +60,6 @@ class StructureController extends Controller
 
         $master_choice = array();
 
-
         foreach ($query->execute() as $item)
         {
             $master_choice[(string)$item["Name"]] = $item["Name"];
@@ -90,7 +89,6 @@ class StructureController extends Controller
             $master = $structureRepository->findByName($structure->getMaster());
             $em = $this->get('doctrine.orm.entity_manager');
 
-
             switch ($structure->getInformationType())
             {
                 case 1:
@@ -109,15 +107,11 @@ class StructureController extends Controller
                     break;
             }
 
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($structure);
             $em->flush();
             return $this->redirectToRoute('structure_new');
-
         }
-
 
         return $this->render('structure/new.html.twig', [
             'structure' => $structure,
@@ -229,14 +223,19 @@ class StructureController extends Controller
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $data = $request->request->get('name');
+            $pages = $request->request->get('page');
 
-           // $allWinterRoads = $roadSectionForWinterJobsRepository->findRoadByNameOrIdField(0,0,18);
-            $allWinterRoads = $roadSectionForWinterJobsRepository->findAll();
+            $em = $this->get('doctrine.orm.entity_manager');
+            $allItems = $roadSectionForWinterJobsRepository->findCount()[0][1];
+
+            $itemsPerPage = 20;
+            $limit =0;
+
+            $allWinterRoads = $roadSectionForWinterJobsRepository->findWithPages($itemsPerPage * $pages, $itemsPerPage);
 
             $jsonData = array();
             $idx = 0;
 
-            // if(empty($allUsers) && $allUsers != null)
             foreach($allWinterRoads as $item) {
                 $temp = array(
                     'section_id' => $item->getSectionId(),
@@ -245,6 +244,25 @@ class StructureController extends Controller
                 );
                 $jsonData[$idx++] = $temp;
             }
+
+            return new JsonResponse($jsonData);
+        } else {
+            return $this->render('structure/content.html.twig');
+        }
+    }
+
+    //TODO: count ajax return to paginator
+
+    /**
+     * @Route("/structure/winter_jobs_count", name="winter_roads_count")
+     */
+    public function winterJobCount(Request $request, RoadSectionForWinterJobsRepository $roadSectionForWinterJobsRepository)
+    {
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+
+            $jsonData = array();
+            $idx = 0;
+            $jsonData[$idx++] = floor($roadSectionForWinterJobsRepository->findCount()[0][1]/20);
 
             return new JsonResponse($jsonData);
         } else {
@@ -275,7 +293,7 @@ class StructureController extends Controller
 
         foreach ($this->data as $slave)
         {
-            if(/*$slave->getLevel() == $structure->getLevel()+1 &&*/ $slave->getMaster() == $structure->getName())
+            if($slave->getMaster() == $structure->getName())
             {
                 array_push($structure->array,$slave);
                 $this->findBelow($slave);

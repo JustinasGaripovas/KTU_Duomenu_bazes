@@ -29,20 +29,30 @@
             position:fixed;
             left:0;
             z-index:1;
-           /* padding:45px 10px 0px;*/
             padding-right: 50px;
             margin-bottom: 20px;
             padding-left: 15px;
             background-color:#343A40;
             height: 100vh;
-           /* border-right: 6px solid #394046;
-            border-top: 6px solid #394046;*/
+            border-right: 6px solid #394046;
             visibility:visible;
             overflow:visible;
             max-height:none;
             box-shadow:0 2px 10px rgba(0,0,0,.2)
-
-
+        }
+        .pagination {
+            display: inline-block;
+        }
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
         }
         #sidebar_container ul, li {
             list-style-type: none;
@@ -59,47 +69,83 @@
         }
     </style>
 
-
     <script>
+        function addPagination(object, page_count, current_page, id) {
+            object.html('');
+            txt = ""
 
+        var count=0;
 
-        function informationAjax(id) {
-            var ajaxUser = $.ajax({
-                url: '/structure/ajax/users',
-                type: 'POST',
-                dataType: 'json',
-                async: true,
-                data: {name: id}});
+            console.log(page_count)
+            console.log(current_page);
+
+            if(current_page <=3)
+            {
+                for (i = 1; i < 4; i++) {
+                    count++;
+                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                }
+                for (i = 4; i < page_count; i++) {
+                    count++;
+                    if(count>7)
+                    {
+                        break;
+                    }
+                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                }
+
+                count=0;
+
+            }else{
+                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' style='color: black;'>" + 1 + "</a>"
+                txt += "<a class='disabled' style='color: black;'> .... </a>"
+
+                for (i = current_page-2; i < current_page; i++) {
+                    count++;
+                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                }
+                for (i = current_page; i < page_count; i++) {
+                    count++;
+                    if(count>5)
+                    {
+                        break;
+                    }
+                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                }
+
+                txt += "<a class='disabled' style='color: black;'> .... </a>"
+
+                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' style='color: black;'>" + page_count + "</a>"
+
+                count=0;
+
+            }
+
+            object.append(txt);
+        }
+
+        function informationAjax(id, winter_roads_page) {
 
             var ajaxRoads = $.ajax({
                 url: '/structure/ajax/winter_roads',
                 type: 'POST',
                 dataType: 'json',
                 async: true,
+                data: {name: id, page: winter_roads_page}
+            });
+
+            var ajaxRoadsCount = $.ajax({
+                url: '/structure/winter_jobs_count',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
                 data: {name: id}
             });
 
-            $.when(ajaxUser, ajaxRoads).done(function(ajax_user, ajax_roads) {
-                $('#structure').html('');
+            $.when(ajaxRoads, ajaxRoadsCount).done(function(ajax_roads, ajax_roads_count) {
+                $('#winter_roads').html('');
 
-                $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Darbuotoju sarašas</h2>');
-
-                for (i = 0; i < ajax_user[0].length; i++) {
-                    structure = ajax_user[0][i];
-
-                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
-                    route = route.replace("PLACEHOLDER", structure['name']);
-
-                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
-                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['name'] + '</a>' +
-                        '</div>');
-
-
-                    $('#structure').append(e);
-                }
-
-
-                $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
+                $('#winter_roads').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
 
                 for (i = 0; i < ajax_roads[0].length; i++) {
                     structure = ajax_roads[0][i];
@@ -110,39 +156,40 @@
                     var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
                         '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
                         '</div>');
-
-
-                    $('#structure').append(e);
+                    $('#winter_roads').append(e);
                 }
+
+                addPagination($("#winter_road_pages"),ajax_roads_count[0][0],winter_roads_page,id);
+
             });
         }
 
-        //href="{{ path('structure_inner', {'slug': 0}) }}>"
         var array;
         var txt;
-
 
         $(document).ready(function () {
             $(document).on("click", ".kt_button", function() {
                 var id = $(this).attr('id');
+                    if ($(this).attr("data-type") == 2) {
+                        informationAjax(id,0);
+                    }
+            });
 
-                if ($(this).attr("data-type") == 2) {
-                    informationAjax(id);
-                }
+            $(document).on("click", ".winter_page", function() {
+                informationAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
             });
 
             $(document).on("click", ".dropdown-trigger", function() {
 
                 if ($(this).attr("data-type") == 3) {
-                    $('#structure').html('');
+                    //$('#structure').html('');
 
-                    $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>MES ESAME MASTER KT</h2>');
+                    $('#content').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>MES ESAME MASTER KT</h2>');
                 }
 
                 $(".dropdown-content").not(
                     $(this).parents('.dropdown-content')).not(
                     $(this).next(),
-                   // $(this).next()
                 ).slideUp();
 
                 $(this).next().slideToggle();
@@ -180,7 +227,6 @@
                     }
                 }
             }
-
     </script>
 
     <div class="container-fluid row" id="main_container">
@@ -193,10 +239,19 @@
       </div>
         <div class=" col-sm-7 col-md-7 col-lg-9" id='content-menu'>
             <div id="content" class="container-fluid">
+                <div class="row-fluid">
+                    <div id="users" class="row"></div>
+                    <div id="user_pages" class="pagination">
+                    </div>
+                </div>
+                <div>
+                    <div id="winter_roads" class="row"></div>
+                    <div id="winter_road_pages" class="pagination">
+                    </div>
 
-                {{ include('structure/content.html.twig') }}
-            </div>
+                </div>
         </div>
+
     </div>
 
     <div id="user-panel">

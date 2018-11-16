@@ -33,6 +33,24 @@ class RoadSectionForWinterJobsRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findWithPages($offset, $limit)
+    {
+        return $this->createQueryBuilder('r')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    public function findCount()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     /*
     public function findOneBySomeField($value): ?RoadSectionForWinterJobs
     {

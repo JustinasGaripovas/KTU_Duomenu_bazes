@@ -22,11 +22,6 @@ class Structure
     private $Name;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $Level;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $Master;
@@ -37,6 +32,11 @@ class Structure
      * @ORM\Column(type="integer")
      */
     private $InformationType;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $StructureId;
 
     public function getId(): ?int
     {
@@ -51,18 +51,6 @@ class Structure
     public function setName(string $Name): self
     {
         $this->Name = $Name;
-
-        return $this;
-    }
-
-    public function getLevel(): ?int
-    {
-        return $this->Level;
-    }
-
-    public function setLevel(int $Level): self
-    {
-        $this->Level = $Level;
 
         return $this;
     }
@@ -90,4 +78,17 @@ class Structure
 
         return $this;
     }
+
+    public function getStructureId(): ?string
+    {
+        return $this->StructureId;
+    }
+
+    public function setStructureId(string $StructureId): self
+    {
+        $this->StructureId = $StructureId;
+
+        return $this;
+    }
+
 }

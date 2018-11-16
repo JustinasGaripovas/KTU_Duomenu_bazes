@@ -22,19 +22,6 @@ class StructureRepository extends ServiceEntityRepository
     /**
      * @return Structure[] Returns an array of Structure objects
      */
-    public function findByLevel($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.Level = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    /**
-     * @return Structure[] Returns an array of Structure objects
-     */
     public function findByMaster($value)
     {
         return $this->createQueryBuilder('s')

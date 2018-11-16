@@ -3,16 +3,16 @@
 {% block title %}entity{% endblock %}
 
   {% block top_menu %}
-              <nav class="navbar navbar-default navbar-static-top navbar navbar-dark bg-dark" style="margin-bottom: 0">
-                  <div class="navbar-header">
-                      <a class="navbar-brand" href="{{ path('main') }}">DAIS</a>
-                  </div>
-                  <ul class="nav navbar-top-links navbar-right">
-                      <li class="divider"></li>
-                      <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
-                      </li>
-                  </ul>
-              </nav>
+          <nav class="navbar navbar-default sticky-top navbar navbar-dark bg-dark" style="width: auto">
+              <div class="navbar-header">
+                  <a class="navbar-brand" href="{{ path('main') }}">DAIS</a>
+              </div>
+              <ul class="nav navbar-top-links navbar-right">
+                  <li class="divider"></li>
+                  <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
+                  </li>
+              </ul>
+          </nav>
   {% endblock %}
 
 {% block body %}
@@ -25,22 +25,20 @@
             background-color: #428bca;
         }
         #side-menu{
-            color:black;
-            position:absolute;
+            color:white;
+            position:fixed;
             left:0;
-            top:10px;
             z-index:1;
-            width:100%;
-            padding:45px 10px 0px;
+           /* padding:45px 10px 0px;*/
+            padding-right: 50px;
             margin-bottom: 20px;
-            background-color:#8DB9DF;
-            border-left: 6px solid #2E618D;
+            padding-left: 15px;
+            background-color:#343A40;
+            height: 100vh;
+           /* border-right: 6px solid #394046;
+            border-top: 6px solid #394046;*/
             visibility:visible;
             overflow:visible;
-            -webkit-overflow-scrolling:touch;
-            -webkit-transition:opacity .2s 0s,visibility 0s 0s;
-            -moz-transition:opacity .2s 0s,visibility 0s 0s;
-            transition:opacity .2s 0s,visibility 0s 0s;
             max-height:none;
             box-shadow:0 2px 10px rgba(0,0,0,.2)
 
@@ -51,7 +49,7 @@
             padding-top: 3px;
             margin:auto;
         }
-        .dropdown-trigger{
+        .dropdown-trigger, .kt_button{
             padding: 0px;
             margin: 0px;
             display:inline;
@@ -63,51 +61,103 @@
 
 
     <script>
+        $(function(){ $('#dish-select-component-canvas').on('click', "ul.pagination a" , function(e){
+
+        }
+            $.ajax({
+                type: "GET",
+                url: $(this).attr('href'),
+            })
+                .done(function( msg ) {
+                    $('#dish-select-component-items').html(msg);
+                });
+            e.preventDefault();
+        });
+/*
+        function informationAjax(id) {
+            var ajaxUser = $.ajax({
+                url: '/structure/ajax/users',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
+                data: {name: id}});
+
+            var ajaxRoads = $.ajax({
+                url: '/structure/ajax/winter_roads',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
+                data: {name: id}
+            });
+
+            $.when(ajaxUser, ajaxRoads).done(function(ajax_user, ajax_roads) {
+                $('#structure').html('');
+
+                $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Darbuotoju sarašas</h2>');
+
+                for (i = 0; i < ajax_user[0].length; i++) {
+                    structure = ajax_user[0][i];
+
+                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
+                    route = route.replace("PLACEHOLDER", structure['name']);
+
+                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
+                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['name'] + '</a>' +
+                        '</div>');
+
+
+                    $('#structure').append(e);
+                }
+
+
+                $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
+
+                for (i = 0; i < ajax_roads[0].length; i++) {
+                    structure = ajax_roads[0][i];
+
+                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
+                    route = route.replace("PLACEHOLDER", structure['section_id']);
+
+                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
+                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
+                        '</div>');
+
+
+                    $('#structure').append(e);
+                }
+            });
+        }*/
 
         //href="{{ path('structure_inner', {'slug': 0}) }}>"
         var array;
         var txt;
 
-        $(document).ready(function () {
 
-            $(document).on("click", ".dropdown-trigger", function() {
+        $(document).ready(function () {
+            $(document).on("click", ".kt_button", function() {
                 var id = $(this).attr('id');
 
                 if ($(this).attr("data-type") == 2) {
-                    $.ajax({
-                        url: '/structure/ajax',
-                        type: 'POST',
-                        dataType: 'json',
-                        async: true,
-                        data: {name: id},
-
-                        success: function (data, status) {
-
-                            $('#structure').html('');
-                            var e = $('<h2 style="text-align: center;color: black;" class=\' col-12 p-1\'>Darbuotoju sarašas</h2>');
-
-                            $('#structure').append(e);
-
-                            for (i = 0; i < data.length; i++) {
-                                structure = data[i];
-
-                                var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
-                                route = route.replace("PLACEHOLDER", structure['name']);
-
-                                var e = $('<div style="text-align: center;color: black;" class=\' col-sm-6 col-sm-4 col-lg-2 p-1\'>' +
-                                    '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['name'] + '</a>' +
-                                    '</div>');
-
-
-                                $('#structure').append(e);
-                            }
-                        },
-                        error: function (xhr, textStatus, errorThrown) {
-                            alert('Ajax request failed.');
-                        }
-                    });
+                    informationAjax(id);
                 }
+            });
+
+            $(document).on("click", ".dropdown-trigger", function() {
+
+                if ($(this).attr("data-type") == 3) {
+                    $('#structure').html('');
+
+                    $('#structure').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>MES ESAME MASTER KT</h2>');
+                }
+
+                $(".dropdown-content").not(
+                    $(this).parents('.dropdown-content')).not(
+                    $(this).next(),
+                   // $(this).next()
+                ).slideUp();
+
                 $(this).next().slideToggle();
+
             });
 
             var json = {{ structure|json_encode|raw }};
@@ -134,7 +184,7 @@
                         txt += "</ul></li>"
 
                     } else if(object[x].InformationType != 0) {
-                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block dropdown-trigger'>" + object[x].Name + "</a>"
+                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block kt_button'>" + object[x].Name + "</a>"
                             txt += "<div class='dropdown-content'>"
                             txt += "</div></li>"
                         }
@@ -147,12 +197,14 @@
     <div class="container-fluid row" id="main_container">
       <div class="sidebar hidden-xs col-sm-5 col-md-5 col-lg-3">
        <div id="side-menu">
+           <br>
             <h3> Navigacijos meniu </h3>
             <hr>
         </div>
       </div>
         <div class=" col-sm-7 col-md-7 col-lg-9" id='content-menu'>
             <div id="content" class="container-fluid">
+
                 {{ include('structure/content.html.twig') }}
             </div>
         </div>

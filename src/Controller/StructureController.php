@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\LdapUser;
+use App\Entity\RoadSectionForWinterJobs;
 use App\Entity\Structure;
 use App\Form\StructureType;
 use App\Repository\DoneJobsRepository;
 use App\Repository\FloodedRoadsRepository;
 use App\Repository\InspectionRepository;
 use App\Repository\LdapUserRepository;
+use App\Repository\RoadSectionForWinterJobsRepository;
 use App\Repository\StructureRepository;
 use App\Repository\SubunitRepository;
 use App\Repository\WinterJobsRepository;
@@ -43,7 +45,7 @@ class StructureController extends Controller
     public function index(StructureRepository $structureRepository)
     {
         return $this->render('structure/index.html.twig', [
-            'structure' => $this->findStructure($structureRepository,"ROOT"),
+            'structure' => $this->findStructure($structureRepository,"KP"),
         ]);
     }
 
@@ -52,7 +54,7 @@ class StructureController extends Controller
      */
     public function new(StructureRepository $structureRepository, LdapUserRepository $ldapUserRepository,SubunitRepository $subunitRepository,Request $request): Response
     {
-        $dql = "SELECT i.Name FROM App:Structure i WHERE i.InformationType != 0 ORDER BY i.id DESC";
+        $dql = "SELECT i.Name FROM App:Structure i WHERE i.InformationType != 0 AND i.InformationType !=2 ORDER BY i.id DESC";
         $em = $this->get('doctrine.orm.entity_manager');
         $query = $em->createQuery($dql);
 
@@ -65,10 +67,9 @@ class StructureController extends Controller
         }
 
         $information_choice = array();
-        $information_choice["Darbuotojas"] = 0;
-        $information_choice["Regionas"] = 1;
         $information_choice["Tarnyba"] = 2;
-        $information_choice["Master Tarnyba"] = 3;
+        $information_choice["Regionas"] = 1;
+        $information_choice["Tarnyba su mažesnėmis tarnybomis"] = 3;
 
 
         $username = $this->getUser()->getUserName();
@@ -80,8 +81,6 @@ class StructureController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
 
-        $username = $this->getUser()->getUserName();
-
         $structure = new Structure();
         $form = $this->createForm(StructureType::class, $structure, ['master_choice' => $master_choice, 'information_choice' =>$information_choice]);
         $form->handleRequest($request);
@@ -89,7 +88,27 @@ class StructureController extends Controller
         if ($form->isSubmitted() && $form->isValid()){
 
             $master = $structureRepository->findByName($structure->getMaster());
-            $structure->setLevel(0);
+            $em = $this->get('doctrine.orm.entity_manager');
+
+
+            switch ($structure->getInformationType())
+            {
+                case 1:
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =1";
+                    $structure->setStructureId("R-" . $em->createQuery($dql)->execute()[0][1]);
+                    break;
+
+                case 2:
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =2";
+                    $structure->setStructureId("T-" . $em->createQuery($dql)->execute()[0][1]);
+                    break;
+
+                case 3:
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =3";
+                    $structure->setStructureId("MT-" . $em->createQuery($dql)->execute()[0][1]);
+                    break;
+            }
+
 
 
             $em = $this->getDoctrine()->getManager();
@@ -147,14 +166,7 @@ class StructureController extends Controller
 
         $this->data = $structureRepository->findAll();
 
-        if(is_numeric($input))
-        {
-           // $structure = $structureRepository->findByLevel($input);
-        }else if(is_string($input))
-        {
-            $structure = $structureRepository->findByMaster($input);
-        }
-
+        $structure = $structureRepository->findByMaster($input);
 
         foreach ($structure as $entity)
         {
@@ -184,7 +196,7 @@ class StructureController extends Controller
     }
 
     /**
-     * @Route("/structure/ajax", name="structure_ajax")
+     * @Route("/structure/ajax/users", name="structure_ajax_user")
      */
     public function ajaxAction(SubunitRepository $subunitRepository,LdapUserRepository $ldapUserRepository, StructureRepository $structureRepository, Request $request) {
 
@@ -199,62 +211,46 @@ class StructureController extends Controller
            // if(empty($allUsers) && $allUsers != null)
             foreach($allUsers as $item) {
                 $temp = array(
-                    'name' => $item->getName(),
-                    'role' => $item->getRole(),
+                    'name' => $item->getName()
                 );
                 $jsonData[$idx++] = $temp;
             }
 
             return new JsonResponse($jsonData);
         } else {
-            $allUsers =  $structureRepository->findByMaster("20");
-
             return $this->render('structure/content.html.twig');
         }
     }
 
-    /**W
-     * @Route("/user/ajax", name="structure_user_ajax")
+    /**
+     * @Route("/structure/ajax/winter_roads", name="structure_ajax_winter_roads")
      */
-    public function userAjax(SubunitRepository $subunitRepository,LdapUserRepository $ldapUserRepository, StructureRepository $structureRepository, Request $request) {
-
-        //dump($ldapUserRepository->findUnitIdByUserName("justinas.garipovas"));
+    public function ajaxActionRoads(SubunitRepository $subunitRepository,RoadSectionForWinterJobsRepository $roadSectionForWinterJobsRepository, StructureRepository $structureRepository, Request $request) {
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
             $data = $request->request->get('name');
-            $allUsers =  $ldapUserRepository->findUnitIdByUserName($data);
+
+           // $allWinterRoads = $roadSectionForWinterJobsRepository->findRoadByNameOrIdField(0,0,18);
+            $allWinterRoads = $roadSectionForWinterJobsRepository->findAll();
+
             $jsonData = array();
             $idx = 0;
-/*
-            if(empty($allUsers) || $allUsers == null) {
-                return new JsonResponse(array());
+
+            // if(empty($allUsers) && $allUsers != null)
+            foreach($allWinterRoads as $item) {
+                $temp = array(
+                    'section_id' => $item->getSectionId(),
+                    'section_begin' => $item->getSectionBegin(),
+                    'section_end' => $item->getSectionEnd()
+                );
+                $jsonData[$idx++] = $temp;
             }
-*/
-            $temp = array(
-                'role' => $allUsers->getRole(),
-                'name' => $allUsers->getRole(),
-            );
-            $jsonData[$idx++] = $temp;
 
-            return new JsonResponse($temp);
+            return new JsonResponse($jsonData);
         } else {
-            $allUsers =  $structureRepository->findByMaster("20");
-
             return $this->render('structure/content.html.twig');
         }
     }
-/*
-    /**
-     * @Route("/structure/", name="content_show")
-     *//*
-    public function contentShow(StructureRepository $structureRepository, $slug)
-    {
-        return $this->render('structure/index.html.twig', [
-            'content' => $structureRepository->findByMaster($slug),
-            'current_name' => $slug,
-            'structure' => $this->findStructure($structureRepository,"KP"),
-        ]);
-    }*/
 
     /**
      * @Route("/structure/user/{slug}", name="user_show")
@@ -262,8 +258,6 @@ class StructureController extends Controller
     public function userActivityShow(LdapUserRepository $ldapUserRepository, DoneJobsRepository $doneJobsRepository, WinterJobsRepository $winterJobsRepository,
                                      InspectionRepository $inspectionRepository, FloodedRoadsRepository $floodedRoadsRepository, $slug)
     {
-
-
         return $this->render('structure/user.html.twig', [
             'user' => $ldapUserRepository->findUnitIdByUserName($slug),
             'inspections' => $inspectionRepository->findByUserName($slug),

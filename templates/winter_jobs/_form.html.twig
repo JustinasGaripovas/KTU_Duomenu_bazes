@@ -250,15 +250,6 @@
                 }
             });
 
-            $('#'+sectionEnd).keydown(function (event) {
-                event.preventDefault();
-            })
-
-            $('#'+sectionBegin).keydown(function (event) {
-                event.preventDefault();
-            })
-
-
             $('#'+sectionSearch).keypress(function() {
                 $('#'+sectionId).val(null);
                 $('#'+sectionType).val(null);

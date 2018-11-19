@@ -172,6 +172,8 @@
 
         $('#road_section_list').find('.panel').each(function () {
 
+            var isFromAutocomplete = true;
+
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
             var Sand =              $(this).find('[id*=_SandValue]').attr('id');
@@ -250,12 +252,27 @@
                 }
             });
 
+            $('#'+sectionBegin).keypress(function(event) {
+                if(isFromAutocomplete == false)
+                {
+                    event.preventDefault();
+                }
+            });
+            $('#'+sectionEnd).keypress(function(event) {
+               if(isFromAutocomplete == false)
+               {
+                   event.preventDefault();
+               }
+            });
+
             $('#'+sectionSearch).keypress(function() {
                 $('#'+sectionId).val(null);
                 $('#'+sectionType).val(null);
                 $('#'+sectionName).val(null);
                 $('#'+sectionBegin).val(null);
                 $('#'+sectionEnd).val(null);
+                isFromAutocomplete=false;
+
             });
 
 
@@ -264,6 +281,7 @@
                 minLength: 1,
                 delay: 500,
                 select: function( event, ui ) {
+                    isFromAutocomplete=true;
                     $('#'+sectionId).val(ui.item.section_id),
                         $('#'+sectionType).val(ui.item.section_type), //****
                         $('#'+sectionName).val(ui.item.road_name),
@@ -271,6 +289,8 @@
                         $('#'+sectionEnd).val(ui.item.section_end)
                 },
             });
+
+            console.log(isFromAutocomplete);
 
 
         })

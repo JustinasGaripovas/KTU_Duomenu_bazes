@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +186,7 @@
     <session id="-1441087069">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="62" />
+          <entry key="project.closed" value="63" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="3" />
@@ -1021,7 +1018,7 @@
       <workItem from="1542558022435" duration="599000" />
       <workItem from="1542615927388" duration="1774000" />
       <workItem from="1542617730036" duration="2012000" />
-      <workItem from="1542628107189" duration="29000" />
+      <workItem from="1542628107189" duration="629000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -1062,7 +1059,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="329821000" />
+    <option name="totallyTimeSpent" value="330421000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

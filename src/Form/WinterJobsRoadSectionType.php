@@ -18,26 +18,21 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('RoadSectionSearch',null,array(
                 'required' => true,
             ))
-            ->add('SectionId',HiddenType::class)
+            ->add('SectionId',HiddenType::class,array(
+                'required' => true
+            ))
             ->add('SectionName', HiddenType::class)
             ->add('SectionType', HiddenType::class)
             ->add('SectionBegin',null,array(
                 'required' => true,
+               // 'attr' => ['disabled' => true],
+
             ))
             ->add('SectionEnd',null,array(
                 'required' => true,
+               // 'attr' => ['disabled' => true],
+
             ))
-            ->add('Quadrature',null,array(
-                'required' => true,
-            ))
-            /*
-            ->add('level', ChoiceType::class, array(
-                'choices' => array(
-                    '1' => 1,
-                    '2' => 2,
-                    '3' => 3
-                )
-            ))*/
             ->add('level', HiddenType::class)
             ->add('SaltChecked', CheckboxType::class, array(
                 'required' => false,

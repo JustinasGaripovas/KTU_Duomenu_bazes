@@ -32,9 +32,6 @@ class WinterJobRoadSection
 
     private $SandValue;
 
-    private $Quadrature;
-
-
     private $SolutionValue;
 
     public function getId(): ?int
@@ -169,7 +166,7 @@ class WinterJobRoadSection
 
     public function setSaltValue($SaltValue): self
     {
-        $this->SaltValue = (float) str_replace(',', '.', $SaltValue);
+        $this->SaltValue = (float)str_replace(',', '.', $SaltValue);
 
         return $this;
     }
@@ -182,7 +179,7 @@ class WinterJobRoadSection
     public function setSandValue($SandValue): self
     {
 
-        $this->SandValue = (float) str_replace(',', '.', $SandValue);
+        $this->SandValue = (float)str_replace(',', '.', $SandValue);
 
         return $this;
     }
@@ -194,19 +191,7 @@ class WinterJobRoadSection
 
     public function setSolutionValue($SolutionValue): self
     {
-        $this->SolutionValue = (float) str_replace(',', '.', $SolutionValue);
-
-        return $this;
-    }
-
-    public function getQuadrature(): ?float
-    {
-        return $this->Quadrature;
-    }
-
-    public function setQuadrature(float $Quadrature): self
-    {
-        $this->Quadrature = (float) str_replace(',', '.', $Quadrature);
+        $this->SolutionValue = (float)str_replace(',', '.', $SolutionValue);
 
         return $this;
     }

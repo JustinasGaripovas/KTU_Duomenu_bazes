@@ -70,6 +70,10 @@
     </style>
 
     <script>
+        var array;
+        var txt;
+        var page_count = 0;
+
         function addPagination(object, page_count, current_page, id) {
             object.html('');
             txt = ""
@@ -124,7 +128,7 @@
             object.append(txt);
         }
 
-        function informationAjax(id, winter_roads_page) {
+        function winterRoadAjax(id, winter_roads_page) {
 
             var ajaxRoads = $.ajax({
                 url: '/structure/ajax/winter_roads',
@@ -134,6 +138,35 @@
                 data: {name: id, page: winter_roads_page}
             });
 
+            ajaxRoads.done(function(data) {
+
+                $('#winter_roads').html('');
+
+                $('#winter_roads').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
+
+                for (i = 0; i < data.length; i++) {
+                    structure = data[i];
+                    console.log(structure);
+
+                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
+                    route = route.replace("PLACEHOLDER", structure['section_id']);
+
+                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
+                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
+                        '</div>');
+                    $('#winter_roads').append(e);
+                }
+
+                addPagination($("#winter_road_pages"),page_count,winter_roads_page,id);
+
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
+            });
+
+        }
+
+        function winterRoadCount(id) {
+
             var ajaxRoadsCount = $.ajax({
                 url: '/structure/winter_jobs_count',
                 type: 'POST',
@@ -142,6 +175,12 @@
                 data: {name: id}
             });
 
+            ajaxRoadsCount.done(function(data) {
+                page_count = data;
+            });
+        }
+
+/*
             $.when(ajaxRoads, ajaxRoadsCount).done(function(ajax_roads, ajax_roads_count) {
                 $('#winter_roads').html('');
 
@@ -161,29 +200,37 @@
 
                 addPagination($("#winter_road_pages"),ajax_roads_count[0][0],winter_roads_page,id);
 
-            });
-        }
-
-        var array;
-        var txt;
+            });*/
 
         $(document).ready(function () {
+
+            initSideMenu();
+
+            winterRoadCount();
+
+            dropdownClick();
+
+            $(document).on("click", ".winter_page", function() {
+                winterRoadAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
+            });
+
             $(document).on("click", ".kt_button", function() {
                 var id = $(this).attr('id');
                     if ($(this).attr("data-type") == 2) {
-                        informationAjax(id,0);
+                        if(page_count == 0)
+                        {
+                            winterRoadCount(id);
+                        }
+                        winterRoadAjax(id,0);
                     }
             });
 
-            $(document).on("click", ".winter_page", function() {
-                informationAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
-            });
+        });
 
+        function dropdownClick() {
             $(document).on("click", ".dropdown-trigger", function() {
 
                 if ($(this).attr("data-type") == 3) {
-                    //$('#structure').html('');
-
                     $('#content').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>MES ESAME MASTER KT</h2>');
                 }
 
@@ -193,19 +240,20 @@
                 ).slideUp();
 
                 $(this).next().slideToggle();
-
             });
+        }
 
+        function initSideMenu() {
             var json = {{ structure|json_encode|raw }};
 
             var myObj = JSON.parse(json);
 
             txt = "<div class='row-fluid' id='sidebar_container'>"
-                findObject(myObj);
+            findObject(myObj);
             txt += "</div>"
 
             $('#side-menu').append(txt);
-        });
+        }
 
         function findObject(object) {
             if (object != null) {

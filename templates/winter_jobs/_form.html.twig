@@ -10,6 +10,7 @@
     // when the page is loaded and ready
     $(document).ready(function () {
 
+
         $('.js-datepicker').datepicker({
             format: 'yyyy-mm-dd'
         });
@@ -25,7 +26,6 @@
             var $string = $collectionHolder.find('.panel').last().find('[id*=winter_jobs_RoadSections_]').attr('id');
             $string = $string.replace('winter_jobs_RoadSections_', '');
             $string = $string.replace('_RoadSectionSearch', '');
-            console.log(($string));
             $collectionHolder.data('index', parseInt($string) + 1);
         }
 
@@ -120,19 +120,18 @@
             forms.push($this);
         });
 
+
         forms[0].wrap('<div class = "col-md-3"></div>');
         forms[1].wrap('<div class = "col-md-3"></div>');
         forms[2].wrap('<div class = "col-md-3"></div>');
-        forms[3].wrap('<div class = "col-md-3"></div>');
 
-
+        forms[3].wrap('<div class = "col-md-1"></div>');
         forms[4].wrap('<div class = "col-md-1"></div>');
         forms[5].wrap('<div class = "col-md-1"></div>');
-        forms[6].wrap('<div class = "col-md-1"></div>');
 
-        forms[7].wrap('<div class = "col-md-3"></div>');
-        forms[8].wrap('<div class = "col-md-3"></div>');
-        forms[9].wrap('<div class = "col-md-3"></div>');
+        forms[6].wrap('<div class = "col-md-4"></div>');
+        forms[7].wrap('<div class = "col-md-4"></div>');
+        forms[8].wrap('<div class = "col-md-4"></div>');
 
 
 
@@ -251,6 +250,23 @@
                 }
             });
 
+            $('#'+sectionEnd).keydown(function (event) {
+                event.preventDefault();
+            })
+
+            $('#'+sectionBegin).keydown(function (event) {
+                event.preventDefault();
+            })
+
+
+            $('#'+sectionSearch).keypress(function() {
+                $('#'+sectionId).val(null);
+                $('#'+sectionType).val(null);
+                $('#'+sectionName).val(null);
+                $('#'+sectionBegin).val(null);
+                $('#'+sectionEnd).val(null);
+            });
+
 
             $('#'+sectionSearch).autocomplete({
                 source: "{{ path('search/road/winter') }}",
@@ -300,9 +316,6 @@
                 <div class="col-md-3">
                     {{  form_row(row.SectionEnd) }}
                 </div>
-                <div class="col-md-3">
-                    {{ form_row(row.Quadrature) }}
-                </div>
 
                 <div class="col-md-1">
                     {{ form_row(row.SaltChecked) }}
@@ -314,13 +327,13 @@
                     {{ form_row(row.SolutionChecked) }}
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     {{ form_row(row.SaltValue) }}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     {{ form_row(row.SandValue) }}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     {{ form_row(row.SolutionValue) }}
                 </div>
 

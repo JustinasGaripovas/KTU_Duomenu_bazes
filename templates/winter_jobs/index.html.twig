@@ -13,6 +13,8 @@
                 <th>{% trans %} Date {% endtrans %}</th>
                 <th>{% trans %} Mechanism {% endtrans %}</th>
                 <th>{% trans %} Job {% endtrans %}</th>
+                <th>{% trans %} Job namee {% endtrans %}</th>
+                <th>{% trans %} JobQuantity {% endtrans %}</th>
                 <th>{% trans %} RoadSection {% endtrans %}</th>
                 <th>{% trans %} Salt {% endtrans %}</th>
                 <th>{% trans %} Sand {% endtrans %}</th>
@@ -28,6 +30,8 @@
                 <td>{{ winter_job.Date ? winter_job.Date|date('Y-m-d') : ''}}</td>
                 <td>{{ winter_job.Mechanism ? winter_job.Mechanism|join(', ') : '' }}</td>
                 <td>{{ winter_job.Job }}</td>
+                <td>{{ winter_job.JobId }}</td>
+                <td>{{ winter_job.JobQuantity }}</td>
                 <td>{{ winter_job.getRoadSectionsStringArray| join('\n')| nl2br }}</td>
                 <td>{{ winter_job.getRoadSectionsSalt| join('\n')| nl2br }}</td>
                 <td>{{ winter_job.getRoadSectionsSand| join('\n')| nl2br }}</td>

@@ -81,13 +81,15 @@ class WinterReportController extends Controller
                             ->setCellValue('D' . $index, $item->getTimeTo()->format('H:m'))
                             ->setCellValue('E' . $index, $item->getMechanism())
                             ->setCellValue('F' . $index, $item->getJob())
-                            ->setCellValue('G' . $index, $value->getSectionId())
-                            ->setCellValue('H' . $index, $value->getSectionType())
-                            ->setCellValue('I' . $index, $value->getSectionBegin())
-                            ->setCellValue('J' . $index, $value->getSectionEnd())
-                            ->setCellValue('K' . $index, $value->getSaltValue())
-                            ->setCellValue('L' . $index, $value->getSandValue())
-                            ->setCellValue('M' . $index, $value->getSolutionValue());
+                            ->setCellValue('G' . $index, $item->getJobId())
+                            ->setCellValue('H' . $index, $item->getJobQuantity())
+                            ->setCellValue('I' . $index, $value->getSectionId())
+                            ->setCellValue('J' . $index, $value->getSectionType())
+                            ->setCellValue('K' . $index, $value->getSectionBegin())
+                            ->setCellValue('L' . $index, $value->getSectionEnd())
+                            ->setCellValue('M' . $index, $value->getSaltValue())
+                            ->setCellValue('N' . $index, $value->getSandValue())
+                            ->setCellValue('O' . $index, $value->getSolutionValue());
                         $index++;
                     }
                 }

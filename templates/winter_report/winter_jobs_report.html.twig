@@ -33,6 +33,8 @@
                     <th style="text-align: center; vertical-align: middle"> {% trans %} To {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Mechanizmas {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} Job {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Job namee {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} JobQuantity {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} RoadSectionId {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} SectionType {% endtrans %}</th>
                     <th style="text-align: center; vertical-align: middle"> {% trans %} SectionBegin {% endtrans %}</th>
@@ -45,16 +47,16 @@
                 <tbody>
                 {% for job in winter_jobs_report | default('') %}
                 <tr>
-                <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.SubunitName }}
                         </td>
                         <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Date | date('Y-m-d') }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length + 1  }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.TimeFrom | date('H:m') }}
                         </td>
-                        <td rowspan="{{ job.RoadSections|length + 1 }}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.TimeTo | date('H:m') }}
                         </td>
                         <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
@@ -62,6 +64,12 @@
                         </td>
                         <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
                             {{ job.Job }}
+                        </td>
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                             {{ job.JobId }}
+                        </td>
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                            {{ job.JobQuantity }}
                         </td>
                     {% for item in  job.RoadSections %}
                         <tr>

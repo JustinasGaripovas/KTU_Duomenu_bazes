@@ -3,10 +3,15 @@
 {% block title %}entity{% endblock %}
 
   {% block top_menu %}
-          <nav class="navbar navbar-default sticky-top navbar navbar-dark bg-dark" style="width: auto">
+          <nav class="navbar navbar-default fixed-top navbar navbar-dark bg-dark" style="height:65px;width: auto">
               <div class="navbar-header">
-                  <a class="navbar-brand" href="{{ path('main') }}">DAIS</a>
+                  <h3 class="btn btn-lg" id="side-menu-close" style="font-size: 1.4em;color: white;"> Meniu
+                      <i id="side-menu-close-icon" style="font-size: 1.2em;" class="fa fa-plus" aria-hidden="true"></i>
+                  </h3>
               </div>
+
+              <a class="navbar-brand" href="{{ path('main') }}"><h3>DAIS</h3></a>
+
               <ul class="nav navbar-top-links navbar-right">
                   <li class="divider"></li>
                   <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
@@ -21,39 +26,91 @@
             display: flex;
             width: 100%;
         }
-        #sidebar_container a:hover{
+
+        #main_container{
+            padding-top: 65px;
+        }
+
+        #wrapper {
+            position: relative;
+            padding-left: 0px;
+            transition: all 0.4s ease 0s;
+            float: left;
+            width: 100%;
+        }
+
+        #wrapper.active {
+            width: available;
+            padding-left: 0px;
+            left: 0px;
+        }
+        #wrapper.active  #sidebar-wrapper {
+            left: 0px;
+            width: 0px
+        }
+        #wrapper.active  #page-content-wrapper {
+            padding-left: 0px;
+        }
+
+        #sidebar-wrapper {
+            color: white;
+            margin-left: -250px;
+            left: 250px;
+            right:0px;
+            width: 250px;
+            background: #343A40;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: all 0.4s ease 0s;
+        }
+
+        #page-content-wrapper {
+            width: 100%;
+            padding-left: 275px;
+            transition: all 0.4s ease 0s;
+        }
+
+        #side-menu {
+            position: absolute;
+            top: 0;
+            width: 250px;
+            list-style: none;
+            margin: 0;
+            padding-left: 15px;
+            padding-top: 20px;
+        }
+
+        #sidebar-wrapper a:hover{
             background-color: #428bca;
         }
-        #side-menu{
-            color:white;
-            position:fixed;
-            left:0;
-            z-index:1;
-            padding-right: 50px;
-            margin-bottom: 20px;
-            padding-left: 15px;
-            background-color:#343A40;
-            height: 100vh;
-            border-right: 6px solid #394046;
-            visibility:visible;
-            overflow:visible;
-            max-height:none;
-            box-shadow:0 2px 10px rgba(0,0,0,.2)
-        }
+
         .pagination {
-            display: inline-block;
+            padding-top: 10px;
+            display: table;
+            margin: 0 auto;
         }
+
         .pagination a {
             color: black;
             float: left;
             padding: 8px 16px;
             text-decoration: none;
-            transition: background-color .3s;
+            border: 1px solid #ddd; /* Gray */
+            border-radius: 8px;
         }
-        .pagination a.active {
-            background-color: #4CAF50;
+
+        .pagination a.active-page {
             color: white;
+            color: white;
+            background-color: #007BFF;
         }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
         #sidebar_container ul, li {
             list-style-type: none;
             padding-top: 3px;
@@ -70,7 +127,6 @@
     </style>
 
     <script>
-        var array;
         var txt;
         var page_count = 0;
 
@@ -78,54 +134,47 @@
             object.html('');
             txt = ""
 
-        var count=0;
+            var count = 0;
 
-            console.log(page_count)
             console.log(current_page);
+            console.log(page_count);
 
-            if(current_page <=3)
+            if (current_page <= 3)
             {
-                for (i = 1; i < 4; i++) {
-                    count++;
-                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
-                }
-                for (i = 4; i < page_count; i++) {
-                    count++;
-                    if(count>7)
-                    {
+                for (i = 1; i < page_count[0]; i++) {
+                    if (i > 5) {
                         break;
                     }
-                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' >" + i + "</a>"
                 }
 
-                count=0;
+                txt += "<a class='disabled' > .... </a>"
+                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' >" + page_count + "</a>"
 
-            }else{
-                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' style='color: black;'>" + 1 + "</a>"
-                txt += "<a class='disabled' style='color: black;'> .... </a>"
+            } else if (current_page > page_count-3) {
+                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' >" + 1 + "</a>"
+                txt += "<a class='disabled' > .... </a>"
 
-                for (i = current_page-2; i < current_page; i++) {
-                    count++;
-                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+                for (i = -4; i <= 0;i++ ) {
+                    var page_num = parseInt(page_count[0])+i;
+                    txt += "<a data-master=" + id + " data-winter-page=" + page_num + " class='winter_page' >" + page_num + "</a>"
                 }
-                for (i = current_page; i < page_count; i++) {
-                    count++;
-                    if(count>5)
-                    {
-                        break;
-                    }
-                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' style='color: black;'>" + i + "</a>"
+            } else {
+                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' >" + 1 + "</a>"
+                txt += "<a class='disabled' > .... </a>"
+
+                for (i = -2; i <= 2;i++ ) {
+                    var page_num = parseInt(current_page)+i;
+                    txt += "<a data-master=" + id + " data-winter-page=" + page_num + " class='winter_page' >" + page_num + "</a>"
                 }
 
-                txt += "<a class='disabled' style='color: black;'> .... </a>"
-
-                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' style='color: black;'>" + page_count + "</a>"
-
-                count=0;
-
+                txt += "<a class='disabled' > .... </a>"
+                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' >" + page_count + "</a>"
             }
 
             object.append(txt);
+
+            object.find('*[data-winter-page="'+ current_page +'"]').addClass("active-page");
         }
 
         function winterRoadAjax(id, winter_roads_page) {
@@ -139,19 +188,17 @@
             });
 
             ajaxRoads.done(function(data) {
-
                 $('#winter_roads').html('');
 
                 $('#winter_roads').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
 
                 for (i = 0; i < data.length; i++) {
                     structure = data[i];
-                    console.log(structure);
 
                     var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
                     route = route.replace("PLACEHOLDER", structure['section_id']);
 
-                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
+                    var e = $('<div style="text-align: center;color: black;" class=\'col-md-4 col-lg-3 p-1\'>' +
                         '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
                         '</div>');
                     $('#winter_roads').append(e);
@@ -180,28 +227,6 @@
             });
         }
 
-/*
-            $.when(ajaxRoads, ajaxRoadsCount).done(function(ajax_roads, ajax_roads_count) {
-                $('#winter_roads').html('');
-
-                $('#winter_roads').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
-
-                for (i = 0; i < ajax_roads[0].length; i++) {
-                    structure = ajax_roads[0][i];
-
-                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
-                    route = route.replace("PLACEHOLDER", structure['section_id']);
-
-                    var e = $('<div style="text-align: center;color: black;" class=\' col-sm-12 col-sm-4 col-lg-3 p-1\'>' +
-                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
-                        '</div>');
-                    $('#winter_roads').append(e);
-                }
-
-                addPagination($("#winter_road_pages"),ajax_roads_count[0][0],winter_roads_page,id);
-
-            });*/
-
         $(document).ready(function () {
 
             initSideMenu();
@@ -212,6 +237,13 @@
 
             $(document).on("click", ".winter_page", function() {
                 winterRoadAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
+
+            });
+
+            $(document).on("click", "#side-menu-close", function() {
+                $('#side-menu-close-icon').animateRotate(90, 320, "linear", function(){});
+                $("#wrapper").toggleClass("active");
+
             });
 
             $(document).on("click", ".kt_button", function() {
@@ -221,11 +253,30 @@
                         {
                             winterRoadCount(id);
                         }
+
                         winterRoadAjax(id,0);
                     }
             });
-
         });
+
+        $.fn.animateRotate = function(angle, duration, easing, complete) {
+            var args = $.speed(duration, easing, complete);
+
+            var step = args.step ;
+
+
+            return this.each(function(i, e) {
+                args.step = function(now) {
+
+                    //var last = now + tr;
+
+                    $.style(e, 'transform', 'rotate(' + now + 'deg)');
+                    if (step) return step.apply(this, arguments);
+                };
+
+                $({deg: 0}).animate({deg: angle}, args);
+            });
+        };
 
         function dropdownClick() {
             $(document).on("click", ".dropdown-trigger", function() {
@@ -262,13 +313,13 @@
 
                 for (x in object) {
                     if (object[x].array.length > 0) {
-                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block dropdown-trigger '>" + object[x].Name + "</a>"
+                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block dropdown-trigger '>" + object[x].Name + "</a>"
                         txt += "<ul class='dropdown-content'>"
                                 findObject(object[x].array);
                         txt += "</ul></li>"
 
                     } else if(object[x].InformationType != 0) {
-                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].Name+"' class=' btn btn-lg btn-block kt_button'>" + object[x].Name + "</a>"
+                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block kt_button'>" + object[x].Name + "</a>"
                             txt += "<div class='dropdown-content'>"
                             txt += "</div></li>"
                         }
@@ -277,29 +328,78 @@
             }
     </script>
 
-    <div class="container-fluid row" id="main_container">
-      <div class="sidebar hidden-xs col-sm-5 col-md-5 col-lg-3">
-       <div id="side-menu">
-           <br>
-            <h3> Navigacijos meniu </h3>
-            <hr>
+<div id="wrapper">
+
+
+    <div class="container-fluid" id="main_container">
+        <div id="sidebar-wrapper">
+            <div id="side-menu">
         </div>
-      </div>
-        <div class=" col-sm-7 col-md-7 col-lg-9" id='content-menu'>
+    </div>
+        <div id="page-content-wrapper">
             <div id="content" class="container-fluid">
                 <div class="row-fluid">
                     <div id="users" class="row"></div>
                     <div id="user_pages" class="pagination">
                     </div>
                 </div>
+
                 <div>
                     <div id="winter_roads" class="row"></div>
-                    <div id="winter_road_pages" class="pagination">
-                    </div>
-
+                    <ul id="winter_road_pages" class="pagination">
+                    </ul>
                 </div>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+                <h1>dasdasdadasdasdadadasdasdsd</h1>
+            </div>
         </div>
-
     </div>
 
     <div id="user-panel">

@@ -36,6 +36,8 @@ use Symfony\Component\Serializer\Serializer;
  */
 class StructureController extends Controller
 {
+    const ITEMS_PER_PAGE = 20;
+
     private $data;
     private $result = array();
 
@@ -70,7 +72,6 @@ class StructureController extends Controller
         $information_choice["Regionas"] = 1;
         $information_choice["Tarnyba su mažesnėmis tarnybomis"] = 3;
 
-
         $username = $this->getUser()->getUserName();
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
             $this->addFlash(
@@ -86,23 +87,22 @@ class StructureController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()){
 
-            $master = $structureRepository->findByName($structure->getMaster());
             $em = $this->get('doctrine.orm.entity_manager');
 
             switch ($structure->getInformationType())
             {
                 case 1:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =1";
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 1";
                     $structure->setStructureId("R-" . $em->createQuery($dql)->execute()[0][1]);
                     break;
 
                 case 2:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =2";
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 2";
                     $structure->setStructureId("T-" . $em->createQuery($dql)->execute()[0][1]);
                     break;
 
                 case 3:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType =3";
+                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 3";
                     $structure->setStructureId("MT-" . $em->createQuery($dql)->execute()[0][1]);
                     break;
             }
@@ -124,7 +124,6 @@ class StructureController extends Controller
      */
     public function edit(LdapUserRepository $ldapUserRepository, Request $request, Structure $structure, StructureRepository $structureRepository): Response
     {
-
         $form = $this->createForm(StructureType::class, $structure, ['master_choice' => $structureRepository->findAll()]);
         $form->handleRequest($request);
 
@@ -156,8 +155,6 @@ class StructureController extends Controller
 
     public function findStructure(StructureRepository $structureRepository, $input)
     {
-        $structure = array();
-
         $this->data = $structureRepository->findAll();
 
         $structure = $structureRepository->findByMaster($input);
@@ -228,10 +225,8 @@ class StructureController extends Controller
             $em = $this->get('doctrine.orm.entity_manager');
             $allItems = $roadSectionForWinterJobsRepository->findCount()[0][1];
 
-            $itemsPerPage = 20;
-            $limit =0;
 
-            $allWinterRoads = $roadSectionForWinterJobsRepository->findWithPages($itemsPerPage * $pages, $itemsPerPage);
+            $allWinterRoads = $roadSectionForWinterJobsRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE);
 
             $jsonData = array();
             $idx = 0;
@@ -262,7 +257,7 @@ class StructureController extends Controller
 
             $jsonData = array();
             $idx = 0;
-            $jsonData[$idx++] = floor($roadSectionForWinterJobsRepository->findCount()[0][1]/20);
+            $jsonData[$idx++] = floor($roadSectionForWinterJobsRepository->findCount()[0][1]/self::ITEMS_PER_PAGE);
 
             return new JsonResponse($jsonData);
         } else {

@@ -311,11 +311,11 @@
                 $(".dropdown-content").not(
                     $(this).parents('.dropdown-content')).not(
                     $(this).next(),
-                ).slideUp();
+                ).slideUp().parent().find(".dropdown-arrow").removeClass("fa-angle-left").removeClass("fa-angle-down").addClass("fa-angle-left");;
 
                 $(this).find(".dropdown-arrow").toggleClass("fa-angle-left").toggleClass("fa-angle-down");
 
-                $(this).next().slideToggle();
+                $(this).next(".dropdown-content").slideToggle();
             });
         }
 

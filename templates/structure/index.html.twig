@@ -6,7 +6,7 @@
           <nav class="navbar navbar-default fixed-top navbar navbar-dark bg-dark" style="height:65px;width: auto">
               <div class="navbar-header">
                   <h3 class="btn btn-lg" id="side-menu-close" style="font-size: 1.4em;color: white;"> Meniu
-                      <i id="side-menu-close-icon" style="font-size: 1.2em;" class="fa fa-plus" aria-hidden="true"></i>
+                      <i id="side-menu-close-icon" style="font-size: 1.2em;" class="fa fa-bars" aria-hidden="true"></i>
                   </h3>
               </div>
 
@@ -22,6 +22,11 @@
 
 {% block body %}
     <style>
+
+        body{
+            background-color: #F0F1F6;
+        }
+
         #main_container{
             display: flex;
             width: 100%;
@@ -68,8 +73,19 @@
 
         #page-content-wrapper {
             width: 100%;
-            padding-left: 275px;
+            padding-left: 225px;
             transition: all 0.4s ease 0s;
+        }
+
+        #content-header{
+            padding: 10px;
+            text-align: center;
+        }
+
+        .search-input{
+            margin-left: 4px;
+            margin-bottom: 4px;
+
         }
 
         #side-menu {
@@ -103,11 +119,10 @@
 
         .pagination a.active-page {
             color: white;
-            color: white;
             background-color: #007BFF;
         }
 
-        .pagination a:hover:not(.active) {
+        .pagination a:hover:not(.active-page) {
             background-color: #ddd;
         }
 
@@ -116,7 +131,7 @@
             padding-top: 3px;
             margin:auto;
         }
-        .dropdown-trigger, .kt_button{
+        .dropdown-trigger, .side-button{
             padding: 0px;
             margin: 0px;
             display:inline;
@@ -124,24 +139,100 @@
         .dropdown-content {
             display: none;
         }
+
+        #side-menu-close{
+            transition: 500ms;
+        }
+
+        #side-menu-close:not(.active){
+            transform: translate(35px, 0px);
+        }
+
+        #side-menu-close.active{
+            transform: translate(0px, 0px);
+
+        }
     </style>
 
     <script>
         var txt;
-        var page_count = 0;
+
+        $(document).ready(function () {
+
+            initSideMenu();
+
+            sideMenuToggle();
+
+            dropdownClick();
+
+            viewToggle();
+
+            $("#winter-roads-container").hide();
+
+            triggerClick("#winter-road-trigger","#winter-road-content","#winter-icon");
+
+            paginatorClick(".winter_page");
+        });
+
+        function viewToggle() {
+            $(document).on("click", ".side-button", function() {
+                var id = $(this).attr('id');
+                var header = $(this).html();
+
+                if($(this).attr("data-type") == 1){
+                    $("#winter-roads-container").hide();
+
+                } else if($(this).attr("data-type") == 2){
+                    $("#winter-roads-container").show();
+                    header += " kelių tarnyba";
+                    winterRoadAjax(id,0);
+
+                }else if($(this).attr("data-type") == 3){
+                    $("#winter-roads-container").hide();
+                    header += " master tarnyba";
+
+                }else{
+
+                }
+
+                $("#content-header").html(header);
+
+            });
+        }
+
+        function sideMenuToggle() {
+            $(document).on("click", "#side-menu-close", function() {
+                $(this).toggleClass("active");
+                $("#wrapper").toggleClass("active");
+            });
+        }
+
+        function paginatorClick(page_type) {
+            $(document).on("click", page_type, function() {
+                winterRoadAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
+            });
+        }
+
+        function triggerClick(trigger, content, icon) {
+            $(document).on("click", trigger, function() {
+
+                $(content).stop();
+                $(icon).toggleClass("fa-plus").toggleClass("fa-minus");
+
+                $(content).slideToggle("fast","linear",function () {
+                    $(icon).toggleClass("open");
+                });
+
+            });
+        }
 
         function addPagination(object, page_count, current_page, id) {
             object.html('');
             txt = ""
 
-            var count = 0;
-
-            console.log(current_page);
-            console.log(page_count);
-
             if (current_page <= 3)
             {
-                for (i = 1; i < page_count[0]; i++) {
+                for (i = 1; i < page_count; i++) {
                     if (i > 5) {
                         break;
                     }
@@ -156,7 +247,7 @@
                 txt += "<a class='disabled' > .... </a>"
 
                 for (i = -4; i <= 0;i++ ) {
-                    var page_num = parseInt(page_count[0])+i;
+                    var page_num = parseInt(page_count)+i;
                     txt += "<a data-master=" + id + " data-winter-page=" + page_num + " class='winter_page' >" + page_num + "</a>"
                 }
             } else {
@@ -188,12 +279,13 @@
             });
 
             ajaxRoads.done(function(data) {
-                $('#winter_roads').html('');
+                $('#winter-roads-page').html('');
+                $('#winter-roads').html('');
 
-                $('#winter_roads').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>Ziemos keliu sarašas</h2>');
+                console.log(data);
 
-                for (i = 0; i < data.length; i++) {
-                    structure = data[i];
+                for (i = 0; i < data[1].length; i++) {
+                    structure = data[1][i];
 
                     var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
                     route = route.replace("PLACEHOLDER", structure['section_id']);
@@ -201,10 +293,10 @@
                     var e = $('<div style="text-align: center;color: black;" class=\'col-md-4 col-lg-3 p-1\'>' +
                         '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
                         '</div>');
-                    $('#winter_roads').append(e);
+                    $('#winter-roads').append(e);
                 }
 
-                addPagination($("#winter_road_pages"),page_count,winter_roads_page,id);
+                addPagination($("#winter-road-pages"),data[0],winter_roads_page,id);
 
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);
@@ -212,78 +304,9 @@
 
         }
 
-        function winterRoadCount(id) {
-
-            var ajaxRoadsCount = $.ajax({
-                url: '/structure/winter_jobs_count',
-                type: 'POST',
-                dataType: 'json',
-                async: true,
-                data: {name: id}
-            });
-
-            ajaxRoadsCount.done(function(data) {
-                page_count = data;
-            });
-        }
-
-        $(document).ready(function () {
-
-            initSideMenu();
-
-            winterRoadCount();
-
-            dropdownClick();
-
-            $(document).on("click", ".winter_page", function() {
-                winterRoadAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
-
-            });
-
-            $(document).on("click", "#side-menu-close", function() {
-                $('#side-menu-close-icon').animateRotate(90, 320, "linear", function(){});
-                $("#wrapper").toggleClass("active");
-
-            });
-
-            $(document).on("click", ".kt_button", function() {
-                var id = $(this).attr('id');
-                    if ($(this).attr("data-type") == 2) {
-                        if(page_count == 0)
-                        {
-                            winterRoadCount(id);
-                        }
-
-                        winterRoadAjax(id,0);
-                    }
-            });
-        });
-
-        $.fn.animateRotate = function(angle, duration, easing, complete) {
-            var args = $.speed(duration, easing, complete);
-
-            var step = args.step ;
-
-
-            return this.each(function(i, e) {
-                args.step = function(now) {
-
-                    //var last = now + tr;
-
-                    $.style(e, 'transform', 'rotate(' + now + 'deg)');
-                    if (step) return step.apply(this, arguments);
-                };
-
-                $({deg: 0}).animate({deg: angle}, args);
-            });
-        };
-
         function dropdownClick() {
             $(document).on("click", ".dropdown-trigger", function() {
-
-                if ($(this).attr("data-type") == 3) {
-                    $('#content').append('<h2 style="text-align: center;color: black;" class=\' col-12 p-3\'>MES ESAME MASTER KT</h2>');
-                }
+                $(".dropdown-content").stop();
 
                 $(".dropdown-content").not(
                     $(this).parents('.dropdown-content')).not(
@@ -313,13 +336,14 @@
 
                 for (x in object) {
                     if (object[x].array.length > 0) {
-                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block dropdown-trigger '>" + object[x].Name + "</a>"
+                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block side-button dropdown-trigger '>" + object[x].Name + "</a>"
                         txt += "<ul class='dropdown-content'>"
                                 findObject(object[x].array);
                         txt += "</ul></li>"
 
                     } else if(object[x].InformationType != 0) {
-                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block kt_button'>" + object[x].Name + "</a>"
+                       //     txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block kt_button'>" + object[x].Name + "</a>"
+                            txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block side-button'>" + object[x].Name + "</a>"
                             txt += "<div class='dropdown-content'>"
                             txt += "</div></li>"
                         }
@@ -329,8 +353,6 @@
     </script>
 
 <div id="wrapper">
-
-
     <div class="container-fluid" id="main_container">
         <div id="sidebar-wrapper">
             <div id="side-menu">
@@ -338,66 +360,40 @@
     </div>
         <div id="page-content-wrapper">
             <div id="content" class="container-fluid">
-                <div class="row-fluid">
-                    <div id="users" class="row"></div>
-                    <div id="user_pages" class="pagination">
+                <h1 id="content-header"></h1>
+                <div>
+                    <div id="winter-roads-container" class="card border-primary" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <div class="car-header">
+                            <h1 id="winter-road-trigger" style="text-align: center;padding-top: 10px;">Žiemos keliai <i id="winter-icon" style="font-size: 1em;" class="fa fa-minus" aria-hidden="true"></i></h1>
+                        </div>
+                        <div id="winter-road-content">
+                            <div id="winter_search_bar" class="card-body row">
+                                <div class="col-md-3">
+                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
+                                </div>
+                            </div>
+
+                            <div id="winter-roads" class="row" style="margin:10px;"></div>
+                            <ul id="winter-road-pages" class="pagination" style="padding: 10px;"></ul>
+                        </div>
+
                     </div>
                 </div>
 
                 <div>
-                    <div id="winter_roads" class="row"></div>
-                    <ul id="winter_road_pages" class="pagination">
+                    <div id="winter_roads2" class="row"></div>
+                    <ul id="winter_road_pages2" class="pagination">
                     </ul>
                 </div>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
-                <h1>dasdasdadasdasdadadasdasdsd</h1>
             </div>
         </div>
     </div>

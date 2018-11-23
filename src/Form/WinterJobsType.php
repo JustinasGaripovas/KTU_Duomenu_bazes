@@ -35,9 +35,7 @@ class WinterJobsType extends AbstractType
             ])
             ->add('JobName', null)
             ->add('JobId', HiddenType::class)
-            ->add('JobQuantity', null, [
-                'attr' => ['readonly' => true],
-                ])
+            ->add('JobQuantity', null, [])
             ->add('Date', DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,

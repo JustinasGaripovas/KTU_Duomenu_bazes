@@ -36,7 +36,7 @@ use Symfony\Component\Serializer\Serializer;
  */
 class StructureController extends Controller
 {
-    const ITEMS_PER_PAGE = 20;
+    const ITEMS_PER_PAGE = 12;
 
     private $data;
     private $result = array();
@@ -168,7 +168,6 @@ class StructureController extends Controller
         $normalizers = array(new ObjectNormalizer());
 
         $serializer = new Serializer($normalizers, $encoders);
-
         $jsonContent = $serializer->serialize($structure, 'json');
 
         return $jsonContent;
@@ -199,12 +198,13 @@ class StructureController extends Controller
             $jsonData = array();
             $idx = 0;
 
-           // if(empty($allUsers) && $allUsers != null)
-            foreach($allUsers as $item) {
-                $temp = array(
-                    'name' => $item->getName()
-                );
-                $jsonData[$idx++] = $temp;
+            if(empty($allUsers) && $allUsers != null) {
+                foreach ($allUsers as $item) {
+                    $temp = array(
+                        'name' => $item->getName()
+                    );
+                    $jsonData[$idx++] = $temp;
+                }
             }
 
             return new JsonResponse($jsonData);
@@ -222,15 +222,10 @@ class StructureController extends Controller
             $data = $request->request->get('name');
             $pages = $request->request->get('page');
 
-            $em = $this->get('doctrine.orm.entity_manager');
-            $allItems = $roadSectionForWinterJobsRepository->findCount()[0][1];
-
-
             $allWinterRoads = $roadSectionForWinterJobsRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE);
 
             $jsonData = array();
             $idx = 0;
-
             foreach($allWinterRoads as $item) {
                 $temp = array(
                     'section_id' => $item->getSectionId(),
@@ -240,31 +235,15 @@ class StructureController extends Controller
                 $jsonData[$idx++] = $temp;
             }
 
-            return new JsonResponse($jsonData);
+            $jsonArray= array();
+            $jsonArray[0] =  floor($roadSectionForWinterJobsRepository->findCount()[0][1]/self::ITEMS_PER_PAGE);
+            $jsonArray[1] = $jsonData;
+
+            return new JsonResponse($jsonArray);
         } else {
             return $this->render('structure/content.html.twig');
         }
     }
-
-    //TODO: count ajax return to paginator
-
-    /**
-     * @Route("/structure/winter_jobs_count", name="winter_roads_count")
-     */
-    public function winterJobCount(Request $request, RoadSectionForWinterJobsRepository $roadSectionForWinterJobsRepository)
-    {
-        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
-
-            $jsonData = array();
-            $idx = 0;
-            $jsonData[$idx++] = floor($roadSectionForWinterJobsRepository->findCount()[0][1]/self::ITEMS_PER_PAGE);
-
-            return new JsonResponse($jsonData);
-        } else {
-            return $this->render('structure/content.html.twig');
-        }
-    }
-
     /**
      * @Route("/structure/user/{slug}", name="user_show")
      */

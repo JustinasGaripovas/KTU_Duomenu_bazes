@@ -29,13 +29,10 @@
             $collectionHolder.data('index', parseInt($string) + 1);
         }
 
-
-
         $collectionHolder.find('.panel').each(function (){
 
             addRemoveButton($(this));
         });
-
 
         refreshAutocorrect();
 
@@ -57,6 +54,16 @@
                 $('#winter_jobs_JobId').val(ui.item.job_id),
                     $('#winter_jobs_JobQuantity').val(ui.item.unit_of)
             }
+        });
+
+
+        $('#winter_jobs_JobQuantity').keypress(function(event) {
+            event.preventDefault();
+        });
+
+        $('#winter_jobs_JobName').keypress(function(event) {
+            $('#winter_jobs_JobQuantity').val(null);
+            $('#winter_jobs_JobId').val(null);
         });
     });
     /*
@@ -272,7 +279,6 @@
                 $('#'+sectionBegin).val(null);
                 $('#'+sectionEnd).val(null);
                 isFromAutocomplete=false;
-
             });
 
 

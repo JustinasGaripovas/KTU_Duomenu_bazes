@@ -205,6 +205,11 @@
                 $(this).toggleClass("active");
                 $("#wrapper").toggleClass("active");
             });
+
+            $(document).on("click", "#side-menu-close", function() {
+                $(this).toggleClass("active");
+                $("#wrapper").toggleClass("active");
+            });
         }
 
         function paginatorClick(page_type) {
@@ -313,6 +318,8 @@
                     $(this).next(),
                 ).slideUp();
 
+                $(this).find(".dropdown-arrow").toggleClass("fa-angle-left").toggleClass("fa-angle-down");
+
                 $(this).next().slideToggle();
             });
         }
@@ -336,7 +343,7 @@
 
                 for (x in object) {
                     if (object[x].array.length > 0) {
-                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block side-button dropdown-trigger '>" + object[x].Name + "</a>"
+                        txt += "<li><a data-type='"+object[x].InformationType+"' id='"+object[x].StructureId+"' class=' btn btn-lg btn-block side-button dropdown-trigger '>" + object[x].Name + "<i style='float: right; padding-right:20px;' class=\"dropdown-arrow fa fa-angle-left\" aria-hidden=\"true\"></i></a>"
                         txt += "<ul class='dropdown-content'>"
                                 findObject(object[x].array);
                         txt += "</ul></li>"

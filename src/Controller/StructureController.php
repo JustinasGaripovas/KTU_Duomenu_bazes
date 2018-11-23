@@ -82,15 +82,32 @@ class StructureController extends Controller
         }
 
         $structure = new Structure();
+
+        $dql = "SELECT COUNT(w) FROM App:Structure w";
+
+        if($em->createQuery($dql)->execute()[0][1] == 0)
+        {
+            $structure->setName("KP");
+            $structure->setMaster("ROOT");
+            $structure->setInformationType(-1);
+            $structure->setStructureId(0);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($structure);
+            $em->flush();
+
+            return $this->redirectToRoute('structure_new');
+
+        }
+
+
         $form = $this->createForm(StructureType::class, $structure, ['master_choice' => $master_choice, 'information_choice' =>$information_choice]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
 
-            $em = $this->get('doctrine.orm.entity_manager');
-
-            $dql = "SELECT w FROM App:Structure w WHERE w.InformationType = 1 ORDER BY w.StructureId DESC";
-            $structure->setStructureId($em->createQuery($dql)->execute()[0]->getStrutureId()+1);
+            $dql = "SELECT w FROM App:Structure w ORDER BY w.StructureId DESC";
+            $structure->setStructureId($em->createQuery($dql)->execute()[0]->getStructureId()+1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($structure);

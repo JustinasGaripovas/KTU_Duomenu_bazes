@@ -77,12 +77,14 @@ class WinterJobRoadSection
 
     public function getSectionBegin(): ?float
     {
+
         return $this->SectionBegin;
     }
 
-    public function setSectionBegin(float $SectionBegin): self
+    public function setSectionBegin($SectionBegin): self
     {
-        $this->SectionBegin = $SectionBegin;
+
+        $this->SectionBegin = (float)str_replace(',', '.', $SectionBegin);
 
         return $this;
     }
@@ -92,9 +94,9 @@ class WinterJobRoadSection
         return $this->SectionEnd;
     }
 
-    public function setSectionEnd(float $SectionEnd): self
+    public function setSectionEnd($SectionEnd): self
     {
-        $this->SectionEnd = $SectionEnd;
+        $this->SectionEnd = (float)str_replace(',', '.', $SectionEnd);
 
         return $this;
     }

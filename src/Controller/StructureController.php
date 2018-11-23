@@ -89,23 +89,8 @@ class StructureController extends Controller
 
             $em = $this->get('doctrine.orm.entity_manager');
 
-            switch ($structure->getInformationType())
-            {
-                case 1:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 1";
-                    $structure->setStructureId("R-" . $em->createQuery($dql)->execute()[0][1]);
-                    break;
-
-                case 2:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 2";
-                    $structure->setStructureId("T-" . $em->createQuery($dql)->execute()[0][1]);
-                    break;
-
-                case 3:
-                    $dql = "SELECT COUNT(w) FROM App:Structure w WHERE w.InformationType = 3";
-                    $structure->setStructureId("MT-" . $em->createQuery($dql)->execute()[0][1]);
-                    break;
-            }
+            $dql = "SELECT w FROM App:Structure w WHERE w.InformationType = 1 ORDER BY w.StructureId DESC";
+            $structure->setStructureId($em->createQuery($dql)->execute()[0]->getStrutureId()+1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($structure);

@@ -34,7 +34,7 @@ class Structure
     private $InformationType;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $StructureId;
 
@@ -79,12 +79,12 @@ class Structure
         return $this;
     }
 
-    public function getStructureId(): ?string
+    public function getStructureId(): ?int
     {
         return $this->StructureId;
     }
 
-    public function setStructureId(string $StructureId): self
+    public function setStructureId(int $StructureId): self
     {
         $this->StructureId = $StructureId;
 

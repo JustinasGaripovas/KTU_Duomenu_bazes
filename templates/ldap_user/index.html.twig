@@ -17,6 +17,14 @@
                 <th> {% trans %}Name {% endtrans %}</th>
                 <th>{% trans %}UnitIdd {% endtrans %}</th>
                 <th> {% trans %}SubUnitId {% endtrans %}</th>
+                <th> {% trans %}Role {% endtrans %}</th>
+                <th> {% trans %}Inspection {% endtrans %}</th>
+                <th> {% trans %}DoneJobs {% endtrans %}</th>
+                <th> {% trans %}Restrictions {% endtrans %}</th>
+                <th> {% trans %}Winter {% endtrans %}</th>
+                <th> {% trans %}Insured Events {% endtrans %}</th>
+                <th> {% trans %}Reports {% endtrans %}</th>
+                <th> {% trans %}Flood {% endtrans %}</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,6 +34,14 @@
                 <td>{{ ldap_user.name }}</td>
                 <td>{{ ldap_user.Unit.unitId }}</td>
                 <td>{{ ldap_user.subunit.subunitId | default(' ') }}</td>
+                <td>{{ ldap_user.Role}}</td>
+                <td>{{ ldap_user.Inspection==0?"Nemato":(ldap_user.Inspection==1?"Mato":(ldap_user.Inspection==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.DoneJobs==0?"Nemato":(ldap_user.DoneJobs==1?"Mato":(ldap_user.DoneJobs==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.Restrictions==0?"Nemato":(ldap_user.Restrictions==1?"Mato":(ldap_user.Restrictions==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.Winter==0?"Nemato":(ldap_user.Winter==1?"Mato":(ldap_user.Winter==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.InsuredEvent==0?"Nemato":(ldap_user.InsuredEvent==1?"Mato":(ldap_user.InsuredEvent==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.Reports==0?"Nemato":(ldap_user.Reports==1?"Mato":(ldap_user.Reports==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
+                <td>{{ ldap_user.Flood==0?"Nemato":(ldap_user.Flood==1?"Mato":(ldap_user.Flood==2?"Koreguoja":"Koreguoja, ir trina"))}}</td>
                 <td>
                     <a class="btn btn-success" href="{{ path('ldap_user_edit', {'id': ldap_user.id}) }}">{% trans %}edit{% endtrans %}</a>
                 </td>

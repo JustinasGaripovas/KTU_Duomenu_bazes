@@ -18,10 +18,12 @@ class WinterJobsType extends AbstractType
     {
         $builder
             ->add('Mechanism', ChoiceType::class, array(
-                'choices' => $options['mechanism_choices']
+                'choices' => $options['mechanism_choices'],
+                'required' => true
             ))
             ->add('Job', ChoiceType::class, array(
-                'choices' => $options['jobs_choices']
+                'choices' => $options['jobs_choices'],
+                'required' => true
             ))
             ->add('RoadSections', CollectionType::class, [
                 'entry_type' => WinterJobsRoadSectionType::class,
@@ -33,9 +35,13 @@ class WinterJobsType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true
             ])
-            ->add('JobName', null)
+            ->add('JobName', null,[
+                'required' => true
+            ])
             ->add('JobId', HiddenType::class)
-            ->add('JobQuantity', null, [])
+            ->add('JobQuantity', null, [
+                'required' => true
+            ])
             ->add('Date', DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,

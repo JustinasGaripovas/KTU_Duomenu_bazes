@@ -26,7 +26,7 @@ class ExportWinterJobsCommand extends ContainerAwareCommand
     {
         //$io = new SymfonyStyle($input, $output);
         if ($input->getOption('generateXLS')) {
-            if ($input->getArgument('dateFrom') == null) {
+            /*if ($input->getArgument('dateFrom') == null) {
                 $dateFrom = new \DateTime('now');
                 $dateFrom = $dateFrom->modify('- 24 hours');
                 $dateFrom = $dateFrom->format('Y-m-d H:m:s');
@@ -38,8 +38,11 @@ class ExportWinterJobsCommand extends ContainerAwareCommand
                 $dateTo = $dateTo->format('Y-m-d H:m:s');
             } else {
                 $dateTo = $input->getArgument('dateTo');
-            }
-            $dql = "SELECT r FROM App:WinterJobs r WHERE (r.Date >= '$dateFrom' AND r.Date <= '$dateTo')  ORDER BY r.Date ASC";
+
+            WHERE (r.Date >= '$dateFrom' AND r.Date <= '$dateTo')
+
+            }*/
+            $dql = "SELECT r FROM App:WinterJobs r ORDER BY r.Date ASC";
             $em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $report = $query->execute();

@@ -57,11 +57,11 @@
         });
 
 
-        $('#winter_jobs_JobQuantity').keypress(function(event) {
+        $(document).on("keydown",'#winter_jobs_JobQuantity', function(event) {
             event.preventDefault();
         });
 
-        $('#winter_jobs_JobName').keypress(function(event) {
+        $(document).on("keydown",'#winter_jobs_JobName', function(event) {
             $('#winter_jobs_JobQuantity').val(null);
             $('#winter_jobs_JobId').val(null);
         });
@@ -259,20 +259,21 @@
                 }
             });
 
-            $('#'+sectionBegin).keypress(function(event) {
+            $(document).on("keydown",'#'+sectionBegin, function() {
                 if(isFromAutocomplete == false)
                 {
                     event.preventDefault();
                 }
             });
-            $('#'+sectionEnd).keypress(function(event) {
-               if(isFromAutocomplete == false)
-               {
-                   event.preventDefault();
-               }
+
+            $(document).on("keydown",'#'+sectionEnd, function() {
+                if(isFromAutocomplete == false)
+                {
+                    event.preventDefault();
+                }
             });
 
-            $('#'+sectionSearch).keypress(function() {
+            $(document).on("keydown",'#'+sectionSearch, function() {
                 $('#'+sectionId).val(null);
                 $('#'+sectionType).val(null);
                 $('#'+sectionName).val(null);
@@ -280,7 +281,6 @@
                 $('#'+sectionEnd).val(null);
                 isFromAutocomplete=false;
             });
-
 
             $('#'+sectionSearch).autocomplete({
                 source: "{{ path('search/road/winter') }}",

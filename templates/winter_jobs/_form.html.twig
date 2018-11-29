@@ -266,11 +266,21 @@
             }
 
             $(document).on("keydown", '#'+sectionSearch, function(e) {
-                $('#'+sectionBegin).val(null);
-                $('#'+sectionEnd).val(null);
-                $('#'+autocomplete).val(null);
-                $('#'+sectionBegin).hide();
-                $('#'+sectionEnd).hide();
+
+                console.log(e.which);
+
+                if (e.which == 9 || e.which == 20 || e.which == 37 || e.which == 16 || e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40 || e.which == 13 || e.which == 18) {
+                    $('#'+autocomplete).val("true");
+                   // e.preventDefault();
+                }else{
+                    $('#'+sectionBegin).val(null);
+                    $('#'+sectionEnd).val(null);
+                    $('#'+autocomplete).val(null);
+                    $('#'+sectionBegin).hide();
+                    $('#'+sectionEnd).hide();
+                }
+
+                return;
             });
 
             console.log($('#'+autocomplete).val() + " pow");
@@ -286,7 +296,6 @@
                     $('#'+sectionName).val(ui.item.road_name),
                     $('#'+sectionBegin).show().val(ui.item.section_begin),
                     $('#'+sectionEnd).show().val(ui.item.section_end)
-                    refreshAutocorrect();
                 },
             });
         });

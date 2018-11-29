@@ -4,6 +4,7 @@
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads">
       <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/structure/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/structure/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,13 +32,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
+            <state relative-caret-position="-25">
               <caret line="341" column="49" lean-forward="true" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/structure/_form.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="402" column="38" lean-forward="true" selection-start-line="402" selection-start-column="38" selection-end-line="402" selection-end-column="38" />
+              <folding>
+                <element signature="e#4276#5036#0#HTML" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h3#0;n#div#0;n#nav#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#1;n#nav#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,12 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$winterJob</find>
-      <find>$structureRepository,0</find>
-      <find>KP</find>
-      <find>findPeople</find>
-      <find>struc</find>
-      <find>structure</find>
       <find>Quadrature</find>
       <find>col-md-1</find>
       <find>Job</find>
@@ -95,9 +116,14 @@
       <find>keypress</find>
       <find>isFromAutocomplete</find>
       <find>refreshAutocorrect</find>
+      <find>fa-angle-left</find>
+      <find>content-header</find>
+      <find>main</find>
+      <find>li</find>
+      <find>side-menu-clo</find>
+      <find>sidebar</find>
     </findStrings>
     <replaceStrings>
-      <replace>ViewF</replace>
       <replace>class=&quot;car</replace>
       <replace>'&quot; . $this-&gt;subUnit . &quot;'</replace>
       <replace>%'</replace>
@@ -127,6 +153,7 @@
       <replace>+ &quot;&lt;/a&gt;&lt;/li&gt;</replace>
       <replace>2</replace>
       <replace>winter-roads_page</replace>
+      <replace>20vw</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/templates/inspection</dir>
@@ -191,11 +218,11 @@
         <option value="$PROJECT_DIR$/src/Entity/Structure.php" />
         <option value="$PROJECT_DIR$/src/Controller/StructureController.php" />
         <option value="$PROJECT_DIR$/src/Form/WinterJobsType.php" />
-        <option value="$PROJECT_DIR$/templates/structure/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/ldap_user/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/SearchController.php" />
         <option value="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" />
+        <option value="$PROJECT_DIR$/templates/structure/index.html.twig" />
       </list>
     </option>
   </component>
@@ -301,7 +328,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="555" />
+    <option name="x" value="142" />
     <option name="y" value="-4" />
     <option name="width" value="928" />
     <option name="height" value="1035" />
@@ -722,7 +749,7 @@
       <workItem from="1542953741808" duration="3485000" />
       <workItem from="1542957734120" duration="19670000" />
       <workItem from="1543221832115" duration="1128000" />
-      <workItem from="1543398415507" duration="12579000" />
+      <workItem from="1543398415507" duration="19109000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -763,7 +790,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="393994000" />
+    <option name="totallyTimeSpent" value="400524000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1153,20 +1180,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2364">
-          <caret line="177" column="48" selection-start-line="177" selection-end-line="178" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/structure/_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -1183,10 +1196,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
+        <state relative-caret-position="-25">
           <caret line="341" column="49" lean-forward="true" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/structure/_form.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="402" column="38" lean-forward="true" selection-start-line="402" selection-start-column="38" selection-end-line="402" selection-end-column="38" />
+          <folding>
+            <element signature="e#4276#5036#0#HTML" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h3#0;n#div#0;n#nav#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#nav#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

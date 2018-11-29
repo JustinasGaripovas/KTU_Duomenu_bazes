@@ -3,28 +3,14 @@
 {% block title %}entity{% endblock %}
 
   {% block top_menu %}
-          <nav class="navbar navbar-default fixed-top navbar navbar-dark bg-dark" style="height:65px;width: auto">
-              <div class="navbar-header">
-                  <h3 class="btn btn-lg" id="side-menu-close" style="font-size: 1.4em;color: white;"> Meniu
-                      <i id="side-menu-close-icon" style="font-size: 1.2em;" class="fa fa-bars" aria-hidden="true"></i>
-                  </h3>
-              </div>
 
-              <a class="navbar-brand" href="{{ path('main') }}"><h3>DAIS</h3></a>
-
-              <ul class="nav navbar-top-links navbar-right">
-                  <li class="divider"></li>
-                  <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
-                  </li>
-              </ul>
-          </nav>
   {% endblock %}
 
 {% block body %}
     <style>
 
         body{
-            background-color: #F0F1F6;
+            background-color: #F7F7F7;
         }
 
         #main_container{
@@ -32,8 +18,10 @@
             width: 100%;
         }
 
-        #main_container{
-            padding-top: 65px;
+        .navbar{
+            background: #EDEDED;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            padding: 0px;
         }
 
         #wrapper {
@@ -58,12 +46,13 @@
         }
 
         #sidebar-wrapper {
-            color: white;
+            color: whitesmoke;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             margin-left: -275px;
             left: 275px;
             right:0px;
             width: 275px;
-            background: #343A40;
+            background: #2A3F54;
             position: fixed;
             height: 100%;
             overflow-y: auto;
@@ -128,7 +117,7 @@
 
         #sidebar_container ul, li {
             list-style-type: none;
-            padding-top: 3px;
+            padding-top: 8px;
             margin:auto;
         }
         .dropdown-trigger, .side-button{
@@ -138,20 +127,36 @@
         }
         .dropdown-content {
             display: none;
+            border-right: 8px solid #1ABB9C;
         }
 
         #side-menu-close{
+            color: #2A3F54;
             transition: 500ms;
         }
 
         #side-menu-close:not(.active){
-            transform: translate(35px, 0px);
+            transform: translate(1vw, 0px);
         }
 
         #side-menu-close.active{
             transform: translate(0px, 0px);
 
         }
+
+        #side-menu-close li{
+            padding: 100px;
+        }
+
+        hr{
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+        }
+
     </style>
 
     <script>
@@ -177,7 +182,7 @@
         function viewToggle() {
             $(document).on("click", ".side-button", function() {
                 var id = $(this).attr('id');
-                var header = $(this).html();
+                var header = $(this).text();
 
                 if($(this).attr("data-type") == 1){
                     $("#winter-roads-container").hide();
@@ -195,7 +200,7 @@
 
                 }
 
-                $("#content-header").html(header);
+                $("#navbar-middle-header").text(header);
 
             });
         }
@@ -358,14 +363,31 @@
     <div class="container-fluid" id="main_container">
         <div id="sidebar-wrapper">
             <div id="side-menu">
+                <div>
+                <h2>Regionai</h2>
+                    <hr>
+                </div>
+            </div>
         </div>
-    </div>
         <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-default navbar">
+                <div class="navbar-header">
+                    <h3 class="btn btn-lg" id="side-menu-close" style="color: #2A3F54;font-size: 25px;"><i id="side-menu-close-icon"class="fa fa-bars" aria-hidden="true"></i></h3>
+                </div>
+
+                <h2 id="navbar-middle-header">Hello</h2>
+
+                <div class="nav navbar-top-links navbar-right ">
+                    <a style="padding-right: 10px; margin-top: 10px; " href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
+                </div>
+            </nav>
+
             <div id="content" class="container-fluid">
                 <h1 id="content-header"></h1>
                 <div>
                     <div id="winter-roads-container" class="card border-primary" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                        <div class="car-header">
+                        <div class="card-header">
                             <h1 id="winter-road-trigger" style="text-align: center;padding-top: 10px;">Žiemos keliai <i id="winter-icon" style="font-size: 1em;" class="fa fa-minus" aria-hidden="true"></i></h1>
                         </div>
                         <div id="winter-road-content">
@@ -387,7 +409,6 @@
                             <div id="winter-roads" class="row" style="margin:10px;"></div>
                             <ul id="winter-road-pages" class="pagination" style="padding: 10px;"></ul>
                         </div>
-
                     </div>
                 </div>
 

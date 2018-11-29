@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="52" column="43" lean-forward="true" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="43" />
+            <state relative-caret-position="645">
+              <caret line="341" column="49" lean-forward="true" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
               </folding>
@@ -43,83 +44,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/winter_jobs/edit.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="33" selection-start-line="9" selection-start-column="33" selection-end-line="9" selection-end-column="33" />
+            <state relative-caret-position="345">
+              <caret line="29" column="42" lean-forward="true" selection-start-line="29" selection-start-column="42" selection-end-line="29" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
+        <entry file="file://$PROJECT_DIR$/templates/winter_jobs/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="177" column="43" selection-start-line="177" selection-end-line="178" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/insured_event/index.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="70" column="34" selection-start-line="70" selection-start-column="34" selection-end-line="70" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/LdapUser.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1170">
-              <caret line="78" column="25" selection-start-line="78" selection-start-column="12" selection-end-line="78" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/LAKDReportType.php">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/InsuredEventType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="28" column="32" selection-start-line="28" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Structure.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobs.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="57" column="20" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+            <state relative-caret-position="495">
+              <caret line="33" column="53" lean-forward="true" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -128,8 +65,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sidebar_co</find>
-      <find>Darbų pradžia, km</find>
       <find>$winterJob</find>
       <find>$structureRepository,0</find>
       <find>KP</find>
@@ -158,6 +93,8 @@
       <find>Inspec</find>
       <find>Insured</find>
       <find>keypress</find>
+      <find>isFromAutocomplete</find>
+      <find>refreshAutocorrect</find>
     </findStrings>
     <replaceStrings>
       <replace>ViewF</replace>
@@ -226,7 +163,6 @@
         <option value="$PROJECT_DIR$/config/packages/doctrine.yaml" />
         <option value="$PROJECT_DIR$/src/Repository/LdapUserRepository.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/edit.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/SearchController.php" />
         <option value="$PROJECT_DIR$/src/Repository/WinterJobsRepository.php" />
         <option value="$PROJECT_DIR$/src/Repository/InspectionRepository.php" />
         <option value="$PROJECT_DIR$/src/Repository/FloodedRoadsRepository.php" />
@@ -245,7 +181,6 @@
         <option value="$PROJECT_DIR$/src/Repository/StructureRepository.php" />
         <option value="$PROJECT_DIR$/src/Controller/WinterJobsController.php" />
         <option value="$PROJECT_DIR$/templates/structure/content.html.twig" />
-        <option value="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/WinterReportController.php" />
         <option value="$PROJECT_DIR$/templates/winter_report/winter_jobs_report.html.twig" />
@@ -258,6 +193,8 @@
         <option value="$PROJECT_DIR$/src/Form/WinterJobsType.php" />
         <option value="$PROJECT_DIR$/templates/structure/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/ldap_user/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/SearchController.php" />
+        <option value="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" />
       </list>
     </option>
@@ -363,11 +300,11 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1136" />
-    <option name="height" value="1056" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="555" />
+    <option name="y" value="-4" />
+    <option name="width" value="928" />
+    <option name="height" value="1035" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -520,12 +457,6 @@
               <item name="DAIS" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="Controller" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="DAIS" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="Entity" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -628,12 +559,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug._form.html.twig">
+    <configuration name="_form.html.twig" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/DAIS/templates/winter_jobs/_form.html.twig">
+      <method v="2" />
+    </configuration>
     <configuration name="index.html.twig" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/DAIS/templates/structure/index.html.twig">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JavaScript Debug._form.html.twig" />
         <item itemvalue="JavaScript Debug.index.html.twig" />
       </list>
     </recent_temporary>
@@ -787,7 +722,7 @@
       <workItem from="1542953741808" duration="3485000" />
       <workItem from="1542957734120" duration="19670000" />
       <workItem from="1543221832115" duration="1128000" />
-      <workItem from="1543398415507" duration="624000" />
+      <workItem from="1543398415507" duration="12579000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -828,7 +763,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="382039000" />
+    <option name="totallyTimeSpent" value="393994000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -840,22 +775,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1136" height="1056" extended-state="4" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26972476" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16252074" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4991708" weight="0.26046026" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3291536" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3291536" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32919255" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4991708" weight="0.25104603" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4991708" weight="0.24346918" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4997236" weight="0.32845187" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50082916" side_tool="true" weight="0.33054394" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -915,9 +850,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Master security update. Added voter to all contollers" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/mechanism/new.html.twig">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/MechanismController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -946,13 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="780">
           <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SearchController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="101" column="63" selection-start-line="101" selection-start-column="63" selection-end-line="101" selection-end-column="63" />
         </state>
       </provider>
     </entry>
@@ -1018,13 +943,6 @@
     <entry file="file://$PROJECT_DIR$/src/Entity/WinterJobRoads.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-45" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
@@ -1114,38 +1032,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-345">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/winter_jobs/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="53" lean-forward="true" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/StructureController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3645">
-          <caret line="264" column="20" selection-start-line="264" selection-start-column="20" selection-end-line="264" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1214,25 +1104,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/structure/_form.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="177" column="43" selection-start-line="177" selection-end-line="178" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#a#0;n#li#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/insured_event/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="458">
@@ -1247,10 +1118,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SearchController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="50" column="19" lean-forward="true" selection-start-line="133" selection-start-column="21" selection-end-line="133" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/WinterJobsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="103" column="39" lean-forward="true" selection-start-line="103" selection-start-column="39" selection-end-line="103" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/StructureController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="264" column="20" selection-start-line="264" selection-start-column="20" selection-end-line="264" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/jquery/jquery.autocomplete.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8435">
+          <caret line="954" column="4" selection-start-line="954" selection-start-column="4" selection-end-line="954" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/structure/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2364">
+          <caret line="177" column="48" selection-start-line="177" selection-end-line="178" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/structure/_form.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/winter_jobs/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" column="53" lean-forward="true" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="29" column="42" lean-forward="true" selection-start-line="29" selection-start-column="42" selection-end-line="29" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="52" column="43" lean-forward="true" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="43" />
+        <state relative-caret-position="645">
+          <caret line="341" column="49" lean-forward="true" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>

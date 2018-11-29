@@ -26,12 +26,10 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('SectionBegin',null,array(
                 'required' => true,
                // 'attr' => ['disabled' => true],
-
             ))
             ->add('SectionEnd',null,array(
                 'required' => true,
                // 'attr' => ['disabled' => true],
-
             ))
             ->add('level', HiddenType::class)
             ->add('SaltChecked', CheckboxType::class, array(
@@ -52,6 +50,10 @@ class WinterJobsRoadSectionType extends AbstractType
             ->add('SolutionValue',null,array(
                 'required' => false,
             ))
+            ->add('Autocomplete', HiddenType::class,[
+                'required' => true,
+                'mapped' => false
+            ])
 
         ;
     }

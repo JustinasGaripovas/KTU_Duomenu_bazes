@@ -58,7 +58,7 @@
 
 
         $(document).on("keydown",'#winter_jobs_JobQuantity', function(event) {
-            event.preventDefault();
+            event.preventDefault();2
         });
 
         $(document).on("keydown",'#winter_jobs_JobName', function(event) {
@@ -176,10 +176,7 @@
 
     function refreshAutocorrect() {
 
-
         $('#road_section_list').find('.panel').each(function () {
-
-            var isFromAutocomplete = true;
 
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
@@ -194,10 +191,12 @@
             var sectionName =       $(this).find('[id*=_SectionName]').attr('id');
             var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
             var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
+            var autocomplete =      $(this).find('[id*=_Autocomplete]').attr('id');
 
-            var saltLabel = $(this).find('label[for*=_SaltValue]');
-            var sandLabel = $(this).find('label[for*=_SandValue]');
-            var solutionLabel = $(this).find('label[for*=_SolutionValue]');
+
+            var saltLabel =         $(this).find('label[for*=_SaltValue]');
+            var sandLabel =         $(this).find('label[for*=_SandValue]');
+            var solutionLabel =     $(this).find('label[for*=_SolutionValue]');
 
             if($('#'+SaltChecked).prop('checked'))
             {
@@ -259,47 +258,38 @@
                 }
             });
 
-            $(document).on("keydown",'#'+sectionBegin, function() {
-                if(isFromAutocomplete == false)
-                {
-                    event.preventDefault();
-                }
-            });
-
-            $(document).on("keydown",'#'+sectionEnd, function() {
-                if(isFromAutocomplete == false)
-                {
-                    event.preventDefault();
-                }
-            });
-
-            $(document).on("keydown",'#'+sectionSearch, function() {
-                $('#'+sectionId).val(null);
-                $('#'+sectionType).val(null);
-                $('#'+sectionName).val(null);
+            if(!$('#'+autocomplete).val()){
+                $('#'+sectionBegin).hide();
+                $('#'+sectionEnd).hide();
                 $('#'+sectionBegin).val(null);
                 $('#'+sectionEnd).val(null);
-                isFromAutocomplete=false;
+            }
+
+            $(document).on("keydown", '#'+sectionSearch, function(e) {
+                $('#'+sectionBegin).val(null);
+                $('#'+sectionEnd).val(null);
+                $('#'+autocomplete).val(null);
+                $('#'+sectionBegin).hide();
+                $('#'+sectionEnd).hide();
             });
+
+            console.log($('#'+autocomplete).val() + " pow");
 
             $('#'+sectionSearch).autocomplete({
                 source: "{{ path('search/road/winter') }}",
                 minLength: 1,
                 delay: 500,
                 select: function( event, ui ) {
-                    isFromAutocomplete=true;
+                    $('#'+autocomplete).val("true"),
                     $('#'+sectionId).val(ui.item.section_id),
-                        $('#'+sectionType).val(ui.item.section_type), //****
-                        $('#'+sectionName).val(ui.item.road_name),
-                        $('#'+sectionBegin).val(ui.item.section_begin),
-                        $('#'+sectionEnd).val(ui.item.section_end)
+                    $('#'+sectionType).val(ui.item.section_type), //****
+                    $('#'+sectionName).val(ui.item.road_name),
+                    $('#'+sectionBegin).show().val(ui.item.section_begin),
+                    $('#'+sectionEnd).show().val(ui.item.section_end)
+                    refreshAutocorrect();
                 },
             });
-
-            console.log(isFromAutocomplete);
-
-
-        })
+        });
     }
 
 </script>
@@ -319,6 +309,7 @@
 
 {{ form_start(form) }}
 <div id="road_section_list" data-prototype="{{ form_widget(form.RoadSections.vars.prototype)|e('html_attr') }}" class="row">
+
     {% for row in form.RoadSections %}
         <div class="panel card p-3 col-sm-12 col-md-12 " style="margin-bottom: 10px;">
             <div class="panel-body row col-12">
@@ -358,6 +349,7 @@
                 {{ form_row(row.SectionName) }}
                 {{ form_row(row.SectionType) }}
                 {{ form_row(row.level) }}
+                {{ form_row(row.Autocomplete, {'value' : 'true'}) }}
 
             </div>
         </div>

@@ -130,7 +130,7 @@ class SearchController extends Controller
         $username = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName());
         $unit_id = $username->getUnit()->getUnitId();
         $subunit_id = $username->getSubunit()->getSubunitId();
-
+        $didFind = false;
         $results = [];
         $searchString = $request->get('term');
         $foundEntities = $this->getDoctrine()

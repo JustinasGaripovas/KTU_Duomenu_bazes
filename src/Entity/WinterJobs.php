@@ -118,6 +118,20 @@ class WinterJobs
         return $str;
     }
 
+    public function getRoadSectionsSaltSum()
+    {
+        $str = 0;
+        foreach ($this->RoadSections as $road )
+        {
+            if($road->getSaltValue()  !== null)
+            {
+                $str += $road->getSaltValue();
+            }
+        }
+
+        return $str;
+    }
+
     public function getRoadSectionsSand()
     {
         $str = array();
@@ -135,6 +149,20 @@ class WinterJobs
         return $str;
     }
 
+    public function getRoadSectionsSandSum()
+    {
+        $str = 0;
+        foreach ($this->RoadSections as $road )
+        {
+            if($road->getSandValue()  !== null)
+            {
+                $str += $road->getSandValue();
+            }
+        }
+
+        return $str;
+    }
+
     public function getRoadSectionsSolution()
     {
         $str = array();
@@ -149,6 +177,20 @@ class WinterJobs
 
             }
         }
+        return $str;
+    }
+
+    public function getRoadSectionsSolutionSum()
+    {
+        $str = 0;
+        foreach ($this->RoadSections as $road )
+        {
+            if($road->getSolutionValue()  !== null)
+            {
+                $str += $road->getSolutionValue();
+            }
+        }
+
         return $str;
     }
 

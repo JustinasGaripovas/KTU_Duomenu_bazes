@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+        <br>
+        <hr>
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Region {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Subunit {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Salt value {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Sand value {% endtrans %}</th>
+                    <th style="text-align: center; vertical-align: middle"> {% trans %} Solution value {% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for subunits in winter_subunits | default('') %}
+                    <tr>
+                        <td>{{ subunits.RegionName }}</td>
+                        <td>{{ subunits.Name }}</td>
+                        <td>{{ subunits.SaltValue }}</td>
+                        <td>{{ subunits.SandValue }}</td>
+                        <td>{{ subunits.SolutionValue }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}

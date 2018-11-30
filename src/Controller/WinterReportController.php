@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\WinterJobsReportType;
 use App\Repository\LdapUserRepository;
+use App\Utils\MaterialReportObjectForSubunit;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -194,6 +195,90 @@ class WinterReportController extends Controller
     }
 
     /**
+     * @Route("/winter/report/materials_region", name="winter_report_materials_region")
+     */
+    public function winterReportMaterialRegional (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker) {
+
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
+        $form = $this->createForm(WinterJobsReportType::class);
+
+        $form->handleRequest($request);
+        $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $from = $form->get('From')->getData();
+            $to = $form->get('To')->getData();
+
+            if ($this->isGranted('ADMIN')) {
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+            elseif ($this->isGranted('SUPER_VIEWER')){
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+            elseif ($this->isGranted('UNIT_VIEWER')) {
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+            elseif ($this->isGranted('SUPER_MASTER')) {
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+            elseif ($this->isGranted('ROAD_MASTER')) {
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+            elseif($this->isGranted('WORKER') ) {
+                $report = $this->getDaysMaterialsForRegion($from, $to);
+            }
+
+            if ($form->get('GenerateXLS')->isClicked()) {
+                $fileName = md5($this->getUser()->getUserName() . microtime());
+                $reader = IOFactory::createReader('Xlsx');
+                $spreadsheet = $reader->load('winter_jobs_material_regional_tmpl.xlsx');
+
+                $spreadsheet->getActiveSheet()
+                    ->setCellValue('A3', "Nuo: " . $from . " Iki: " . $to);
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos medžiagų ataskaita')
+                    ->setSubject('Atliktų žiemos medžiagų ataskaita')
+                    ->setDescription('Atliktų žiemos medžiagų ataskaita')
+                    ->setKeywords('Atliktų žiemos medžiagų ataskaita')
+                    ->setCategory('Atliktų žiemos medžiagų ataskaita');
+
+                $index = 5;
+
+                foreach ($report as $rep) {
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A' . $index, $rep->getRegionName())
+                        ->setCellValue('B' . $index, $rep->getName())
+                        ->setCellValue('C' . $index, $rep->getSaltValue())
+                        ->setCellValue('D' . $index, $rep->getSandValue())
+                        ->setCellValue('E' . $index, $rep->getSolutionValue());
+                    $index++;
+                }
+
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $writer->save('files/' . $fileName . '.xlsx');
+                return $this->file(('files/' . $fileName . '.xlsx'));
+            }
+            // Rename worksheet
+
+            return $this->render('winter_report/winter_material_report_regional.html.twig', ['form' => $form->createView(), 'winter_subunits' => $report]);
+        } else {
+            return $this->render('winter_report/winter_material_report_regional.html.twig', ['form' => $form->createView(), ['winter_subunits' => null]]);
+        }
+    }
+
+
+    /**
      * @Route("/winter/report/mechanism", name="winter_report_mechanism")
      */
     public function winterMaintenanceReportMechanism (AuthorizationCheckerInterface $authChecker,LdapUserRepository $ldapUserRepository, Request $request) {
@@ -288,7 +373,6 @@ class WinterReportController extends Controller
      * @param $end -> Galutine data nuo kada ieskosim
      * @return array -> Grazinamas visu subunit array
      * $this->getDaysMaterials(new \DateTime(),new \DateTime('-500 days'),1);
-
      */
     private function getDaysMaterials($start,$end)
     {
@@ -336,6 +420,54 @@ class WinterReportController extends Controller
             //I array sudedame visa informacija KEY yra KT ID value yra Masyvas su sumuotais keliais
             $result[$subunitId] = $subunitRoads;
         }
+        return $result;
+    }
+
+    //Regionas -> tarn -> sum kiekis
+    private function getDaysMaterialsForRegion($start,$end)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        //Suformatuojam data kad galetume ja naudoti DQL
+        //$start = $start->format('Y-m-d');
+        //$end = $end->format('Y-m-d');
+
+        $result = array([]);
+
+        //Gauname visus KT ID kad galetume padaryti ataskaita visiems KT
+        $dql = "SELECT w FROM App:Region w ORDER BY w.SubunitId";
+        $regions = $em->createQuery($dql)->execute();
+
+        $dql = "SELECT w FROM App:Subunit w ORDER BY w.SubunitId";
+        $tempArray = $em->createQuery($dql)->execute();
+
+        $subunits = array();
+
+        foreach ($tempArray as $sub)
+        {
+            $subunits[$sub->getSubunitId()] = $sub->getName();
+        }
+
+        //einame pro visus Regionus
+        foreach ($regions as $region) {
+
+            $subunitId = $region->getSubunitId();
+            $dql2 = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+            $winterRoads = $em->createQuery($dql2)->execute();
+
+            $subunitValues = new MaterialReportObjectForSubunit($subunits[$subunitId],$region->getRegionName(), $subunitId, 0, 0, 0);
+
+            foreach ($winterRoads as $winterRoad) {
+                $subunitValues->addSalt($winterRoad->getRoadSectionsSaltSum());
+                $subunitValues->addSand($winterRoad->getRoadSectionsSandSum());
+                $subunitValues->addSolution($winterRoad->getRoadSectionsSolutionSum());
+            }
+
+            $result[] = $subunitValues;
+        }
+
+        unset($result[0]);
+
         return $result;
     }
 

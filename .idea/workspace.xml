@@ -35,13 +35,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="251" column="73" lean-forward="true" selection-start-line="251" selection-start-column="73" selection-end-line="251" selection-end-column="73" />
+            <state relative-caret-position="330">
+              <caret line="212" column="14" lean-forward="true" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
               <folding>
                 <element signature="e#755#5524#0#PHP" />
                 <element signature="e#5620#9593#0#PHP" />
                 <element signature="e#13341#13398#0#PHP" expanded="true" />
-                <element signature="e#13404#13461#0#PHP" expanded="true" />
+                <element signature="e#12764#12821#0#PHP" expanded="true" />
                 <element signature="e#9689#13437#0#PHP" />
                 <element signature="e#13443#13643#0#PHP" />
                 <element signature="e#13649#13832#0#PHP" />
@@ -55,10 +55,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="49" column="41" lean-forward="true" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
+            <state relative-caret-position="260">
+              <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
               <folding>
-                <element signature="e#5793#5823#0#Twig" expanded="true" />
+                <element signature="e#1553#1583#0#Twig" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -630,11 +630,11 @@
       <recent name="$PROJECT_DIR$/src/Entity" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Controller" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/Utils" />
       <recent name="$PROJECT_DIR$/templates/winter_report" />
       <recent name="$PROJECT_DIR$/templates/structure" />
-      <recent name="$PROJECT_DIR$/templates/mechanism" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -814,7 +814,7 @@
       <workItem from="1543221832115" duration="1128000" />
       <workItem from="1543398415507" duration="22453000" />
       <workItem from="1543531075883" duration="100000" />
-      <workItem from="1543558293402" duration="7814000" />
+      <workItem from="1543558293402" duration="8884000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -855,7 +855,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="411782000" />
+    <option name="totallyTimeSpent" value="412852000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1288,23 +1288,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="49" column="41" lean-forward="true" selection-start-line="49" selection-start-column="41" selection-end-line="49" selection-end-column="41" />
+        <state relative-caret-position="260">
+          <caret line="26" column="22" lean-forward="true" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
           <folding>
-            <element signature="e#5793#5823#0#Twig" expanded="true" />
+            <element signature="e#1553#1583#0#Twig" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="251" column="73" lean-forward="true" selection-start-line="251" selection-start-column="73" selection-end-line="251" selection-end-column="73" />
+        <state relative-caret-position="330">
+          <caret line="212" column="14" lean-forward="true" selection-start-line="212" selection-start-column="14" selection-end-line="212" selection-end-column="14" />
           <folding>
             <element signature="e#755#5524#0#PHP" />
             <element signature="e#5620#9593#0#PHP" />
             <element signature="e#13341#13398#0#PHP" expanded="true" />
-            <element signature="e#13404#13461#0#PHP" expanded="true" />
+            <element signature="e#12764#12821#0#PHP" expanded="true" />
             <element signature="e#9689#13437#0#PHP" />
             <element signature="e#13443#13643#0#PHP" />
             <element signature="e#13649#13832#0#PHP" />

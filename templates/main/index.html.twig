@@ -21,6 +21,8 @@
                         <a class="btn btn-danger btn-lg btn-block" href="{{ path('job_index') }}">{% trans %} Jobs {% endtrans %}</a>
                         <h2>{% trans %} Contract Jobs {% endtrans %}</h2>
                         <a class="btn btn-danger btn-lg btn-block" href="{{ path('contract_jobs') }}">{% trans %} Contract Jobs {% endtrans %}</a>
+                        <h2>{% trans %} Reports {% endtrans %}</h2>
+                        <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_materials_region') }}">{% trans %} Žiemos medžiagų ataskaita regioninė{% endtrans %}</a>
                     </div>
                 </div>
             {% endif %}
@@ -75,7 +77,6 @@
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_jobs') }}">{% trans %} Žiemos darbų ataskaita {% endtrans %}</a>
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_materials') }}">{% trans %} Žiemos medžiagų ataskaita{% endtrans %}</a>
-            <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_materials_region') }}">{% trans %} Žiemos medžiagų ataskaita regioninė{% endtrans %}</a>
             <a class="btn btn-primary btn-lg btn-block" href="{{ path('winter_report_mechanism') }}">{% trans %} Žiemos mechanizmų ataskaita {% endtrans %}</a>
             <a class="btn btn-warning btn-lg btn-block" href="{{ path('flooded_roads_reports') }}">{% trans %} Flooded Roads report {% endtrans %}</a>
             {% endif %}

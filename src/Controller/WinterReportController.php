@@ -199,6 +199,11 @@ class WinterReportController extends Controller
      */
     public function winterReportMaterialRegional (LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker) {
 
+        if($this->isGranted("ADMIN") || $this->isGranted("SUPER_VIEWER")) {
+        }else{
+            $this->denyAccessUnlessGranted("ADMIN");
+        }
+
         $username = $this->getUser()->getUserName();
 
         if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
@@ -218,24 +223,7 @@ class WinterReportController extends Controller
             $from = $form->get('From')->getData();
             $to = $form->get('To')->getData();
 
-            if ($this->isGranted('ADMIN')) {
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
-            elseif ($this->isGranted('SUPER_VIEWER')){
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
-            elseif ($this->isGranted('UNIT_VIEWER')) {
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
-            elseif ($this->isGranted('SUPER_MASTER')) {
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
-            elseif ($this->isGranted('ROAD_MASTER')) {
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
-            elseif($this->isGranted('WORKER') ) {
-                $report = $this->getDaysMaterialsForRegion($from, $to);
-            }
+            $report = $this->getDaysMaterialsForRegion($from, $to);
 
             if ($form->get('GenerateXLS')->isClicked()) {
                 $fileName = md5($this->getUser()->getUserName() . microtime());

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+{% block title %}{% trans %}Edit RoadSection{% endtrans %}{% endblock %}
+
+{% block body %}
+    <h1>{% trans %}Edit RoadSection{% endtrans %}</h1>
+
+    {{ include('road_section_for_winter/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary btn-lg" href="{{ path('winter_road_section') }}">{% trans %}back to list{% endtrans %}</a>
+
+    {{ include('road_section_for_winter/_delete_form.html.twig') }}
+{% endblock %}

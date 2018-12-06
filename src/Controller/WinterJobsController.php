@@ -37,28 +37,34 @@ class WinterJobsController extends Controller
             return $this->redirectToRoute('ldap_user_index');
         }
 
+        $dataFiter = $request->query->get('dataFilter');
+        $mechanizmFilter = $request->query->get('mechanizmFilter');
+        $subunitFilter = $request->query->get('subunitFilter');
+
+        /* (d.Date LIKE '$filter%' AND d.JobId LIKE '$filterByJobId%' AND d.SectionId LIKE '$filterByRoadId%') */
+
         if ($this->isGranted('ADMIN')) {
-            $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
         elseif ($this->isGranted('SUPER_VIEWER')){
-            $dql = "SELECT w FROM App:WinterJobs w  ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
         elseif ($this->isGranted('UNIT_VIEWER')) {
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
         elseif ($this->isGranted('SUPER_MASTER')) {
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
         elseif ($this->isGranted('ROAD_MASTER')) {
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
         elseif($this->isGranted('WORKER') ) {
-            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' ORDER BY w.CreatedAt DESC";
+            $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
 
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', 20));
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', $request->query->getInt('limit', 20)));
         return $this->render('winter_jobs/index.html.twig', ['winter_jobs' => $pagination]);
     }
 

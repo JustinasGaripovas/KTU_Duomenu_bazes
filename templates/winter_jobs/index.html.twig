@@ -2,8 +2,41 @@
 {% trans_default_domain 'translation' %}
 {% block title %}WinterJobs index{% endblock %}
 {% block body %}
+
+    <script>
+        $( function() {
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
     <a class="btn btn-success btn-block btn-lg" href="{{ path('winter_jobs_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
     <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
+
+    <form class="form-inline">
+        <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('dataFilter') }}" type="text" name="dataFilter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite mechanizma" value="{{ app.request.get('mechanizmFilter') }}" type="text" name="mechanizmFilter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite tarnyba" value="{{ app.request.get('subunitFilter') }}" type="text" name="subunitFilter">
+        <select style="margin: 5px" class="form-control" name="limit">
+            {% if  app.request.get('limit') == 20  %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>50</option>
+                <option>100</option>
+            {% elseif  app.request.get('limit')  == 50 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>100</option>
+            {% elseif app.request.get('limit') == 100 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>50</option>
+            {% else %}
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            {% endif %}
+        </select>
+        <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
+    </form>
 
     <table class="table">
         <thead>

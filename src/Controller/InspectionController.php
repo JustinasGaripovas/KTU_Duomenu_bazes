@@ -41,33 +41,39 @@ class InspectionController extends Controller
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
             $dql = '';
 
+            $dateFlter = $request->query->get('dateFlter');
+            $sectionIdFiler = $request->query->get('sectionIdFiler');
+            $sectionTypeFilter = $request->query->get('sectionTypeFilter');
+
+            $isAdditional = ($sectionTypeFilter == "Sustiprinta")?true:false;
+
+           // (i.isAdditional LIKE '$isAdditional%' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%')
+
             if ($this->isGranted('ADMIN')) {
-                $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.id DESC";
             }
             elseif ($this->isGranted('SUPER_VIEWER')){
-                $dql = "SELECT i FROM App:Inspection i ORDER BY i.id DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.id DESC";
             }
             elseif ($this->isGranted('UNIT_VIEWER')) {
-                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' AND (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.Date DESC";
             }
             elseif ($this->isGranted('SUPER_MASTER')) {
-                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' AND (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.Date DESC";
             }
             elseif ($this->isGranted('ROAD_MASTER')) {
-                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' ORDER BY i.Date DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE i.SubUnitId = '$subUnitId' AND (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.Date DESC";
             }
             elseif($this->isGranted('WORKER') ) {
-                $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' ORDER BY i.Date DESC";
+                $dql = "SELECT i FROM App:Inspection i WHERE i.Username = '$username' AND (i.IsAdditional = '$isAdditional' AND i.RoadId LIKE '$sectionIdFiler%' AND i.Date LIKE '$dateFlter%') ORDER BY i.Date DESC";
             }
 
             $em = $this->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $paginator  = $this->get('knp_paginator');
-            $pagination = $paginator->paginate(
-                $query, /* query NOT result */
-                $request->query->getInt('page', 1)/*page number*/,
-                20/*limit per page*/
-            );
+            $pagination = $paginator->paginate($query, $request->query->getInt('page', 1),$request->query->getInt('limit', 20));
+
+
 
             return $this->render('inspection/index.html.twig', ['pagination' => $pagination]);
         }

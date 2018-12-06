@@ -3,10 +3,55 @@
 {% block title %} {% trans %}Inspection {% endtrans %}{% endblock %}
 
 {% block body %}
+
+    <script>
+        $( function() {
+            $( ".js-datepicker" ).datepicker();
+        });
+    </script>
+
     <h2>{% trans %}Inspection {% endtrans %} </h2>
     <a class="btn btn-success btn-block btn-lg" href="{{ path('inspection_new') }}"><i class="fa fa-plus-square"></i> {% trans %} New {% endtrans %}</a>
     <a class="btn btn-light btn-block btn-lg" href="{{ path('main') }}">{% trans %}back to list{% endtrans %}</a>
     <br>
+
+    <form class="form-inline">
+        <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('dateFlter') }}" type="text" name="dateFilter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite kelio nr" value="{{ app.request.get('sectionIdFiler') }}" type="text" name="sectionIdFiler">
+
+        <select style="margin: 5px" class="form-control" name="sectionTypeFilter">
+            {% if  app.request.get('sectionTypeFilter') == "Patrulinė"  %}
+                <option>{{ app.request.get('sectionTypeFilter') }}</option>
+                <option>Sustiprinta</option>
+            {% else %}
+                <option>Sustiprinta</option>
+                <option>Patrulinė</option>
+            {% endif %}
+        </select>
+
+        <select style="margin: 5px" class="form-control" name="limit">
+            {% if  app.request.get('limit') == 20  %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>50</option>
+                <option>100</option>
+            {% elseif  app.request.get('limit')  == 50 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>100</option>
+            {% elseif app.request.get('limit') == 100 %}
+                <option>{{ app.request.get('limit') }}</option>
+                <option>20</option>
+                <option>50</option>
+            {% else %}
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+            {% endif %}
+        </select>
+        <button class="btn btn-lg"><i class="fa fa-filter"> Filtruoti</i></button>
+    </form>
+    <br>
+
     <table class="table table-sm thead-dark table-bordered">
         <thead>
             <tr>

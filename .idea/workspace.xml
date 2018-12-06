@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/WinterJobRoadSection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/translation.lt.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/translation.lt.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,14 +55,23 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3">
-              <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+            <state relative-caret-position="-855">
+              <caret line="129" selection-start-line="129" selection-end-line="129" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/translations/translation.lt.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="725">
+              <caret line="174" column="35" lean-forward="true" selection-start-line="174" selection-start-column="35" selection-end-line="174" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -207,7 +212,6 @@
         <option value="$PROJECT_DIR$/templates/structure/new.html.twig" />
         <option value="$PROJECT_DIR$/src/Controller/InspectionController.php" />
         <option value="$PROJECT_DIR$/src/Form/StructureType.php" />
-        <option value="$PROJECT_DIR$/translations/translation.lt.yml" />
         <option value="$PROJECT_DIR$/src/Controller/ContractJobsController.php" />
         <option value="$PROJECT_DIR$/src/Entity/LdapUser.php" />
         <option value="$PROJECT_DIR$/src/Security/Voter/PermissionVoter.php" />
@@ -242,6 +246,7 @@
         <option value="$PROJECT_DIR$/src/Form/WinterJobsRoadSectionType.php" />
         <option value="$PROJECT_DIR$/templates/main/index.html.twig" />
         <option value="$PROJECT_DIR$/templates/winter_jobs/_form.html.twig" />
+        <option value="$PROJECT_DIR$/translations/translation.lt.yml" />
       </list>
     </option>
   </component>
@@ -771,7 +776,7 @@
       <workItem from="1544009950200" duration="599000" />
       <workItem from="1544031397912" duration="105000" />
       <workItem from="1544042502293" duration="5083000" />
-      <workItem from="1544073948691" duration="2727000" />
+      <workItem from="1544073948691" duration="3408000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -812,7 +817,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="426457000" />
+    <option name="totallyTimeSpent" value="427138000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -899,13 +904,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Master security update. Added voter to all contollers" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/jquery/jquery.autocomplete.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8435">
-          <caret line="954" column="4" selection-start-line="954" selection-start-column="4" selection-end-line="954" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_report/winter_jobs_report.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1209,11 +1207,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/winter_jobs/_form.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3">
-          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="129" />
+        <state relative-caret-position="-855">
+          <caret line="129" selection-start-line="129" selection-end-line="129" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/translations/translation.lt.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="174" column="35" lean-forward="true" selection-start-line="174" selection-start-column="35" selection-end-line="174" selection-end-column="35" />
         </state>
       </provider>
     </entry>

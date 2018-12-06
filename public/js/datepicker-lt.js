@@ -42,4 +42,6 @@
 
     return datepicker.regional.lt;
 
-} ) );
+} )
+
+);

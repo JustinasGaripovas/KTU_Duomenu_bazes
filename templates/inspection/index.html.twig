@@ -6,7 +6,7 @@
 
     <script>
         $( function() {
-            $( ".js-datepicker" ).datepicker();
+            $('.js-datepicker').datepicker();
         });
     </script>
 
@@ -23,7 +23,13 @@
             {% if  app.request.get('sectionTypeFilter') == "Patrulinė"  %}
                 <option>{{ app.request.get('sectionTypeFilter') }}</option>
                 <option>Sustiprinta</option>
+                <option>Nefiltruoti</option>
+            {% elseif app.request.get('sectionTypeFilter') == "Sustiprinta" %}
+                <option>Sustiprinta</option>
+                <option>Patrulinė</option>
+                <option>Nefiltruoti</option>
             {% else %}
+                <option>Nefiltruoti</option>
                 <option>Sustiprinta</option>
                 <option>Patrulinė</option>
             {% endif %}

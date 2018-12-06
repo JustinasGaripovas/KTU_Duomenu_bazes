@@ -12,7 +12,9 @@
 
 
         $('.js-datepicker').datepicker({
-            format: 'yyyy-mm-dd'
+            inline: true,
+            showOtherMonths: true,
+            maxDate: new Date(),
         });
 
         // get the collectionHolder, initilize the var by getting the list;

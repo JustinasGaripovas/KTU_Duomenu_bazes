@@ -16,6 +16,7 @@ class WinterJobsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('Mechanism', ChoiceType::class, array(
                 'choices' => $options['mechanism_choices'],
@@ -47,7 +48,7 @@ class WinterJobsType extends AbstractType
                 'html5' => false,
                 'attr' => [
                     'class' => 'js-datepicker',
-                    'autocomplete' => 'off'
+                    'autocomplete' => 'off',
                 ]
             ))
             ->add('TimeFrom')

@@ -131,16 +131,19 @@
         forms[0].wrap('<div class = "col-md-3"></div>');
         forms[1].wrap('<div class = "col-md-3"></div>');
         forms[2].wrap('<div class = "col-md-3"></div>');
+        forms[3].wrap('<div class = "col-md-3"></div>');
 
-        forms[3].wrap('<div class = "col-md-1"></div>');
         forms[4].wrap('<div class = "col-md-1"></div>');
         forms[5].wrap('<div class = "col-md-1"></div>');
+        forms[6].wrap('<div class = "col-md-1"></div>');
 
-        forms[6].wrap('<div class = "col-md-4"></div>');
-        forms[7].wrap('<div class = "col-md-4"></div>');
-        forms[8].wrap('<div class = "col-md-4"></div>');
+        forms[7].wrap('<div class = "col-md-3"></div>');
+        forms[8].wrap('<div class = "col-md-3"></div>');
+        forms[9].wrap('<div class = "col-md-3"></div>');
 
 
+        $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"></div><div class="col-md-4"><div class="form-additional"> <label class="required">Darbų kiekis, m2 </label> <input readonly type="text" class="form-control JobAmount" value="0"> </div> </div>')
+        $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"><div class="form-additional"> <label class="required">Barstymo norma, g/m2 </label> <input readonly type="text" class="form-control TreatmentRate" value="0"> </div> </div>')
 
 
         $panelBody.find('#winter_jobs_RoadSections_'+index).addClass('row col-12');
@@ -178,6 +181,8 @@
 
         $('#road_section_list').find('.panel').each(function () {
 
+            var currentPanel = $(this);
+
             var Salt =              $(this).find('[id*=_SaltValue]').attr('id');
             var SaltChecked =       $(this).find('[id*=_SaltChecked]').attr('id');
             var Sand =              $(this).find('[id*=_SandValue]').attr('id');
@@ -191,6 +196,7 @@
             var sectionName =       $(this).find('[id*=_SectionName]').attr('id');
             var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
             var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
+            var sectionWidth =      $(this).find('[id*=_SectionWidth]').attr('id');
             var autocomplete =      $(this).find('[id*=_Autocomplete]').attr('id');
 
 
@@ -265,7 +271,54 @@
                 $('#'+sectionEnd).val(null);
             }
 
-            $(document).on("keydown", '#'+sectionSearch, function(e) {
+
+            calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel);
+
+            $(document).on("keyup", this, function(e) {
+
+
+
+                calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel);
+/*
+                var sEnd = 0;
+                sEnd = parseFloat($('#'+sectionEnd).val());
+
+                var sBegin = 0;
+                sBegin = parseFloat($('#'+sectionBegin).val());
+
+                var sWidth = 0;
+                sWidth = parseFloat($('#'+sectionWidth).val());
+
+                var saltV = 0;
+                saltV = parseFloat($('#'+Salt).val());
+
+                var sandV = 0;
+                sandV = parseFloat($('#'+Sand).val());
+
+                console.log( $('#'+Salt).val());
+                console.log($('#'+Sand).val());
+
+                var job_amount = calcuateJobAmount(sBegin,sEnd,sWidth);
+
+                console.log(job_amount);
+                console.log(((saltV) + (sandV)));
+                console.log(Math.pow(10,6));
+
+
+
+                var treatment_rate = ((saltV + sandV) * Math.pow(10,6))/job_amount;
+
+                console.log(treatment_rate);
+
+
+                currentPanel.find(".TreatmentRate").val(treatment_rate);
+                currentPanel.find(".JobAmount").val(job_amount);
+
+                console.log("_______________________---");*/
+
+            });
+
+                $(document).on("keydown", '#'+sectionSearch, function(e) {
 
                 console.log(e.which);
 
@@ -275,9 +328,12 @@
                 }else{
                     $('#'+sectionBegin).val(null);
                     $('#'+sectionEnd).val(null);
+                    $('#'+sectionWidth).val(null);
                     $('#'+autocomplete).val(null);
                     $('#'+sectionBegin).hide();
                     $('#'+sectionEnd).hide();
+                    $('#'+sectionWidth).hide();
+
                 }
 
                 return;
@@ -295,10 +351,39 @@
                     $('#'+sectionType).val(ui.item.section_type), //****
                     $('#'+sectionName).val(ui.item.road_name),
                     $('#'+sectionBegin).show().val(ui.item.section_begin),
-                    $('#'+sectionEnd).show().val(ui.item.section_end)
+                    $('#'+sectionEnd).show().val(ui.item.section_end),
+                    $('#'+sectionWidth).show()
                 },
             });
         });
+    }
+
+    function calcuateJobAmount($s, $e, $w) {
+        return ($e - $s)*1000*$w;
+    }
+
+    function calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel) {
+        var sEnd = parseFloat($('#'+sectionEnd).val());
+        var sBegin = parseFloat($('#'+sectionBegin).val());
+        var sWidth = parseFloat($('#'+sectionWidth).val());
+        var saltV = parseFloat($('#'+Salt).val());
+        var sandV = parseFloat($('#'+Sand).val());
+
+        var job_amount = calcuateJobAmount(sBegin,sEnd,sWidth);
+
+        var treatment_rate = Number((((saltV + sandV) * Math.pow(10,6))/job_amount).toFixed(2));
+
+        if(treatment_rate >= 8 && treatment_rate <=80)
+        {
+            currentPanel.find(".TreatmentRate").css("background","#77dd77")
+        }else{
+            currentPanel.find(".TreatmentRate").css("background","#ff6961")
+
+        }
+
+        currentPanel.find(".TreatmentRate").val(treatment_rate);
+        currentPanel.find(".JobAmount").val(Number((job_amount).toFixed(2)));
+
     }
 
 </script>
@@ -326,12 +411,14 @@
                 <div class="col-md-3">
                     {{  form_row(row.RoadSectionSearch) }}
                 </div>
-
                 <div class="col-md-3">
                     {{  form_row(row.SectionBegin) }}
                 </div>
                 <div class="col-md-3">
                     {{  form_row(row.SectionEnd) }}
+                </div>
+                <div class="col-md-3">
+                    {{  form_row(row.SectionWidth) }}
                 </div>
 
                 <div class="col-md-1">
@@ -344,6 +431,17 @@
                     {{ form_row(row.SolutionChecked) }}
                 </div>
 
+                <div class="col-md-3">
+                    {{ form_row(row.SaltValue) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(row.SandValue) }}
+                </div>
+                <div class="col-md-3">
+                    {{ form_row(row.SolutionValue) }}
+                </div>
+
+
                 <div class="col-md-4">
                     {{ form_row(row.SaltValue) }}
                 </div>
@@ -353,6 +451,26 @@
                 <div class="col-md-4">
                     {{ form_row(row.SolutionValue) }}
                 </div>
+
+                <div class="col-md-4">
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-additional">
+                        <label class="required">Darbų kiekis, m2 </label>
+                        <input readonly type="text" class="form-control JobAmount" value="0">
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-additional">
+                        <label class="required">Barstymo norma, g/m2</label>
+                        <input readonly type="text" class="form-control TreatmentRate" value="0">
+                    </div>
+                </div>
+
+
 
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}

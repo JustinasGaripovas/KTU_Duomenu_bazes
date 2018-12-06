@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 
+use Doctrine\ORM\Query\Expr\Math;
+
 class WinterJobRoadSection
 {
 
@@ -15,6 +17,8 @@ class WinterJobRoadSection
     private $SectionBegin;
 
     private $SectionEnd;
+
+    private $SectionWidth;
 
     private $level;
 
@@ -39,6 +43,16 @@ class WinterJobRoadSection
         return $this->id;
     }
 
+    public function getJobAmount()
+    {
+        return ((float)$this->SectionEnd - (float)$this->SectionBegin)*1000*$this->SectionWidth;
+    }
+
+    public function getTreatmentRate()
+    {
+        return (float)((($this->SaltValue + $this->SandValue)* 10 ** 6) / $this->getJobAmount());
+    }
+
     public function getSectionType(): ?string
     {
         return $this->SectionType;
@@ -47,6 +61,18 @@ class WinterJobRoadSection
     public function setSectionType(string $SectionType): self
     {
         $this->SectionType = $SectionType;
+
+        return $this;
+    }
+
+    public function getSectionWidth(): ?float
+    {
+        return $this->SectionWidth;
+    }
+
+    public function setSectionWidth(float $SectionWidth): self
+    {
+        $this->SectionWidth = $SectionWidth;
 
         return $this;
     }

@@ -41,7 +41,7 @@ class InspectionController extends Controller
             $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
             $dql = '';
 
-            $dateFlter = $request->query->get('dateFlter');
+            $dateFlter = $request->query->get('dateFilter');
             $sectionIdFiler = $request->query->get('sectionIdFiler');
             $sectionTypeFilter = $request->query->get('sectionTypeFilter');
 

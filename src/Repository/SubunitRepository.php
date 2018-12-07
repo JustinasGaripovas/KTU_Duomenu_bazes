@@ -48,4 +48,14 @@ class SubunitRepository extends ServiceEntityRepository
             ;
     }
 
+    public function findAllLikeSubunit($value): ?Subunit
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.SubunitId = :val')
+            ->setParameter('val', '%'.$value.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

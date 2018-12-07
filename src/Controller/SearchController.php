@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Entity\RoadSection;
 use App\Entity\RoadSectionForWinterJobs;
+use App\Entity\Subunit;
 use App\Repository\JobRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -81,6 +82,42 @@ class SearchController extends Controller
 
         return $this->json($results);
     }
+
+    /**
+     * @Route("/search/sections", name="search/sections")
+     */
+    public function searchForAllSections(LdapUserRepository $ldapUserRepository,Request $request, SerializerInterface $serializer) {
+
+        if(!$request->isXmlHttpRequest()){
+            return $this->render('search/index.html.twig');
+        }
+        $username = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName());
+        $subunit = $username->getSubunit()->getSubunitId();
+
+        $results = [];
+        $searchString = $request->get('term');
+
+        if($searchString == null)
+            throw new \Symfony\Component\Config\Definition\Exception\Exception("Its null");
+        $em = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT s FROM App:Subunit s WHERE s.Name LIKE '$searchString%'" ;
+        $foundEntities = $em->createQuery($dql)->execute();
+
+
+        if (!$foundEntities) {
+            $results[] = ['value' => "No items there found in database"] ;
+        }
+        else {
+            foreach ($foundEntities as $entity){
+                $results[] = [
+                    'value' => $entity->getName(),
+                ];
+            }
+        }
+
+        return $this->json($results);
+    }
+
 
 
     /**

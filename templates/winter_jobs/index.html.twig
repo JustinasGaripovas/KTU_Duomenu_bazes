@@ -5,7 +5,20 @@
 
     <script>
         $( function() {
+            $('.js-datepicker').datepicker({
+                inline: true,
+                showOtherMonths: true,
+                maxDate: new Date(),
+            });
 
+            $('#subunitInput').autocomplete({
+                source: "{{ path('search/sections') }}",
+                minLength: 1,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#subunitInput').val(ui.item.subunitInput)
+                },
+            });
         });
     </script>
 
@@ -14,8 +27,8 @@
 
     <form class="form-inline">
         <input style="margin: 5px" class="form-control js-datepicker" placeholder="Pasirinkite datą" value="{{ app.request.get('dataFilter') }}" type="text" name="dataFilter">
-        <input style="margin: 5px" class="form-control" placeholder="Įveskite mechanizma" value="{{ app.request.get('mechanizmFilter') }}" type="text" name="mechanizmFilter">
-        <input style="margin: 5px" class="form-control" placeholder="Įveskite tarnyba" value="{{ app.request.get('subunitFilter') }}" type="text" name="subunitFilter">
+        <input style="margin: 5px" class="form-control" placeholder="Įveskite mechanizmą" value="{{ app.request.get('mechanizmFilter') }}" type="text" name="mechanizmFilter">
+        <input style="margin: 5px" class="form-control" id="subunitInput" placeholder="Įveskite tarnybą" value="{{ app.request.get('subunitFilter') }}" type="text" name="subunitFilter">
         <select style="margin: 5px" class="form-control" name="limit">
             {% if  app.request.get('limit') == 20  %}
                 <option>{{ app.request.get('limit') }}</option>

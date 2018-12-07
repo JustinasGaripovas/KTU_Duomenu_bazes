@@ -62,6 +62,8 @@ class WinterJobsController extends Controller
             $dql = "SELECT w FROM App:WinterJobs w WHERE w.Subunit = '$subunit' AND (w.Date LIKE '$dataFiter%' AND w.Mechanism LIKE '$mechanizmFilter%' AND w.SubunitName LIKE '$subunitFilter%') ORDER BY w.CreatedAt DESC";
         }
 
+       // dump($dql);
+
         $query = $em->createQuery($dql);
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $request->query->getInt('limit', $request->query->getInt('limit', 20)));

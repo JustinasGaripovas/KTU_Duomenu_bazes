@@ -31,7 +31,7 @@ class WinterJobsRoadSectionType extends AbstractType
                 'required' => true,
                // 'attr' => ['disabled' => true],
             ))
-            ->add('SectionWidth', null, array(
+            ->add('Quadrature', null, array(
                 'required' => true,
             ))
             ->add('level', HiddenType::class)

@@ -144,8 +144,8 @@
         forms[9].wrap('<div class = "col-md-3"></div>');
 
 
-        $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"></div><div class="col-md-4"><div class="form-additional"> <label class="required">Darbų kiekis, m2 </label> <input readonly type="text" class="form-control JobAmount" value="0"> </div> </div>')
-        $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"><div class="form-additional"> <label class="required">Barstymo norma, g/m2 </label> <input readonly type="text" class="form-control TreatmentRate" value="0"> </div> </div>')
+       // $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"></div><div class="col-md-4"><div class="form-additional"> <label class="required">Darbų kiekis, m2 </label> <input readonly type="text" class="form-control JobAmount" value="0"> </div> </div>')
+       // $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"><div class="form-additional"> <label class="required">Barstymo norma, g/m2 </label> <input readonly type="text" class="form-control TreatmentRate" value="0"> </div> </div>')
 
 
         $panelBody.find('#winter_jobs_RoadSections_'+index).addClass('row col-12');
@@ -368,8 +368,8 @@
         var sEnd = parseFloat($('#'+sectionEnd).val());
         var sBegin = parseFloat($('#'+sectionBegin).val());
         var sWidth = parseFloat($('#'+sectionWidth).val());
-        var saltV = parseFloat($('#'+Salt).val());
-        var sandV = parseFloat($('#'+Sand).val());
+        var saltV = (parseFloat($('#'+Salt).val())==null)?0:parseFloat($('#'+Salt).val());
+        var sandV = (parseFloat($('#'+Sand).val())==null)?0:parseFloat($('#'+Sand).val());
 
         var job_amount = calcuateJobAmount(sBegin,sEnd,sWidth);
 
@@ -420,7 +420,7 @@
                     {{  form_row(row.SectionEnd) }}
                 </div>
                 <div class="col-md-3">
-                    {{  form_row(row.SectionWidth) }}
+                    {{  form_row(row.Quadrature) }}
                 </div>
 
                 <div class="col-md-1">
@@ -457,22 +457,14 @@
                 <div class="col-md-4">
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-additional">
-                        <label class="required">Darbų kiekis, m2 </label>
-                        <input readonly type="text" class="form-control JobAmount" value="0">
+                {#
+                    <div class="col-md-4">
+                        <div class="form-additional">
+                            <label class="required">Barstymo norma, g/m2</label>
+                            <input readonly type="text" class="form-control TreatmentRate" value="0">
+                        </div>
                     </div>
-                </div>
-
-
-                <div class="col-md-4">
-                    <div class="form-additional">
-                        <label class="required">Barstymo norma, g/m2</label>
-                        <input readonly type="text" class="form-control TreatmentRate" value="0">
-                    </div>
-                </div>
-
-
+                #}
 
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}

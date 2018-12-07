@@ -18,7 +18,7 @@ class WinterJobRoadSection
 
     private $SectionEnd;
 
-    private $SectionWidth;
+    private $Quadrature;
 
     private $level;
 
@@ -42,7 +42,7 @@ class WinterJobRoadSection
     {
         return $this->id;
     }
-
+/*
     public function getJobAmount()
     {
         return ((float)$this->SectionEnd - (float)$this->SectionBegin)*1000*$this->SectionWidth;
@@ -51,7 +51,7 @@ class WinterJobRoadSection
     public function getTreatmentRate()
     {
         return (float)((($this->SaltValue + $this->SandValue)* 10 ** 6) / $this->getJobAmount());
-    }
+    }*/
 
     public function getSectionType(): ?string
     {
@@ -65,14 +65,14 @@ class WinterJobRoadSection
         return $this;
     }
 
-    public function getSectionWidth(): ?float
+    public function getQuadrature(): ?float
     {
-        return $this->SectionWidth;
+        return $this->Quadrature;
     }
 
-    public function setSectionWidth(float $SectionWidth): self
+    public function setQuadrature(float $Quadrature): self
     {
-        $this->SectionWidth = $SectionWidth;
+        $this->Quadrature = $Quadrature;
 
         return $this;
     }

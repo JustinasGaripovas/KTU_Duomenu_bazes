@@ -18,6 +18,8 @@ class WinterJobRoadSection
 
     private $SectionEnd;
 
+    private $SectionWidth;
+
     private $Quadrature;
 
     private $level;
@@ -61,6 +63,18 @@ class WinterJobRoadSection
     public function setSectionType(string $SectionType): self
     {
         $this->SectionType = $SectionType;
+
+        return $this;
+    }
+
+    public function getSectionWidth(): ?float
+    {
+        return $this->SectionWidth;
+    }
+
+    public function setSectionWidth(string $SectionWidth): self
+    {
+        $this->SectionWidth = $SectionWidth;
 
         return $this;
     }

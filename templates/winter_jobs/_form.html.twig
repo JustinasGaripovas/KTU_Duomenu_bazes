@@ -291,13 +291,15 @@
                 return;
             });
 
+            console.log($('#'+autocomplete).val() + " pow");
+
             $('#'+sectionSearch).autocomplete({
                 source: "{{ path('search/road/winter') }}",
                 minLength: 1,
                 delay: 500,
                 select: function( event, ui ) {
                     $('#'+autocomplete).val("true"),
-                    $('#'+sectionId).val(autp),
+                    $('#'+sectionId).val(ui.item.section_id),
                     $('#'+sectionType).val(ui.item.section_type), //****
                     $('#'+sectionName).val(ui.item.road_name),
                     $('#'+sectionBegin).show().val(ui.item.section_begin),

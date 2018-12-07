@@ -91,8 +91,6 @@ class SearchController extends Controller
         if(!$request->isXmlHttpRequest()){
             return $this->render('search/index.html.twig');
         }
-        $username = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName());
-        $subunit = $username->getSubunit()->getSubunitId();
 
         $results = [];
         $searchString = $request->get('term');
@@ -102,7 +100,6 @@ class SearchController extends Controller
         $em = $this->get('doctrine.orm.entity_manager');
         $dql = "SELECT s FROM App:Subunit s WHERE s.Name LIKE '$searchString%'" ;
         $foundEntities = $em->createQuery($dql)->execute();
-
 
         if (!$foundEntities) {
             $results[] = ['value' => "No items there found in database"] ;

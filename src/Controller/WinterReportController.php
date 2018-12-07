@@ -90,7 +90,9 @@ class WinterReportController extends Controller
                             ->setCellValue('L' . $index, $value->getSectionEnd())
                             ->setCellValue('M' . $index, $value->getSaltValue())
                             ->setCellValue('N' . $index, $value->getSandValue())
-                            ->setCellValue('O' . $index, $value->getSolutionValue());
+                            ->setCellValue('O' . $index, $value->getSolutionValue())
+                            ->setCellValue('P' . $index, $value->getQuadrature());
+
                         $index++;
                     }
                 }

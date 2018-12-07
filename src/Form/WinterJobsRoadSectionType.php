@@ -32,7 +32,7 @@ class WinterJobsRoadSectionType extends AbstractType
                // 'attr' => ['disabled' => true],
             ))
             ->add('Quadrature', null, array(
-                'required' => true,
+                'required' => false,
             ))
             ->add('level', HiddenType::class)
             ->add('SaltChecked', CheckboxType::class, array(

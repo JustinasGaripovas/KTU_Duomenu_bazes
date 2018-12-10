@@ -66,7 +66,7 @@
             transition: all 0.4s ease 0s;
         }
 
-        #content-header{
+        .content-header{
             padding: 10px;
             text-align: center;
         }
@@ -161,8 +161,11 @@
 
     <script>
         var txt;
+        var structure_array;
 
         $(document).ready(function () {
+
+
 
             initSideMenu();
 
@@ -172,11 +175,6 @@
 
             viewToggle();
 
-            $("#winter-roads-container").hide();
-
-            triggerClick("#winter-road-trigger","#winter-road-content","#winter-icon");
-
-            paginatorClick(".winter_page");
         });
 
         function viewToggle() {
@@ -185,15 +183,36 @@
                 var header = $(this).text();
 
                 if($(this).attr("data-type") == 1){
+
                     $("#winter-roads-container").hide();
+                    $("#contract-jobs-container").show();
+
+                    console.log(id);
+
+                    initCheckBox(id);
+
+                    //contractAjax([id],0);
 
                 } else if($(this).attr("data-type") == 2){
                     $("#winter-roads-container").show();
+                    $("#contract-jobs-container").show();
+
+                    if(searchedStructureId == null)
+                    {
+                        searchedStructureId = id;
+                    }
+
                     header += " kelių tarnyba";
+
                     winterRoadAjax(id,0);
+                    contractAjax(id,0);
 
                 }else if($(this).attr("data-type") == 3){
                     $("#winter-roads-container").hide();
+                    $("#contract-jobs-container").hide();
+
+                    initCheckBox(id);
+
                     header += " master tarnyba";
 
                 }else{
@@ -210,103 +229,6 @@
                 $(this).toggleClass("active");
                 $("#wrapper").toggleClass("active");
             });
-        }
-
-        function paginatorClick(page_type) {
-            $(document).on("click", page_type, function() {
-                winterRoadAjax($(this).attr("data-master"), $(this).attr("data-winter-page"));
-            });
-        }
-
-        function triggerClick(trigger, content, icon) {
-            $(document).on("click", trigger, function() {
-
-                $(content).stop();
-                $(icon).toggleClass("fa-plus").toggleClass("fa-minus");
-
-                $(content).slideToggle("fast","linear",function () {
-                    $(icon).toggleClass("open");
-                });
-
-            });
-        }
-
-        function addPagination(object, page_count, current_page, id) {
-            object.html('');
-            txt = ""
-
-            if (current_page <= 3)
-            {
-                for (i = 1; i < page_count; i++) {
-                    if (i > 5) {
-                        break;
-                    }
-                    txt += "<a data-master=" + id + " data-winter-page=" + i + " class='winter_page' >" + i + "</a>"
-                }
-
-                txt += "<a class='disabled' > .... </a>"
-                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' >" + page_count + "</a>"
-
-            } else if (current_page > page_count-3) {
-                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' >" + 1 + "</a>"
-                txt += "<a class='disabled' > .... </a>"
-
-                for (i = -4; i <= 0;i++ ) {
-                    var page_num = parseInt(page_count)+i;
-                    txt += "<a data-master=" + id + " data-winter-page=" + page_num + " class='winter_page' >" + page_num + "</a>"
-                }
-            } else {
-                txt += "<a data-master=" + id + " data-winter-page=" + 1 + " class='winter_page' >" + 1 + "</a>"
-                txt += "<a class='disabled' > .... </a>"
-
-                for (i = -2; i <= 2;i++ ) {
-                    var page_num = parseInt(current_page)+i;
-                    txt += "<a data-master=" + id + " data-winter-page=" + page_num + " class='winter_page' >" + page_num + "</a>"
-                }
-
-                txt += "<a class='disabled' > .... </a>"
-                txt += "<a data-master=" + id + " data-winter-page=" + page_count + " class='winter_page' >" + page_count + "</a>"
-            }
-
-            object.append(txt);
-
-            object.find('*[data-winter-page="'+ current_page +'"]').addClass("active-page");
-        }
-
-        function winterRoadAjax(id, winter_roads_page) {
-
-            var ajaxRoads = $.ajax({
-                url: '/structure/ajax/winter_roads',
-                type: 'POST',
-                dataType: 'json',
-                async: true,
-                data: {name: id, page: winter_roads_page}
-            });
-
-            ajaxRoads.done(function(data) {
-                $('#winter-roads-page').html('');
-                $('#winter-roads').html('');
-
-                console.log(data);
-
-                for (i = 0; i < data[1].length; i++) {
-                    structure = data[1][i];
-
-                    var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
-                    route = route.replace("PLACEHOLDER", structure['section_id']);
-
-                    var e = $('<div style="text-align: center;color: black;" class=\'col-md-4 col-lg-3 p-1\'>' +
-                        '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['section_id'] +"<br/>(" + structure['section_begin'] +"->"+ structure['section_end'] + ')</a>' +
-                        '</div>');
-                    $('#winter-roads').append(e);
-                }
-
-                addPagination($("#winter-road-pages"),data[0],winter_roads_page,id);
-
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
-            });
-
         }
 
         function dropdownClick() {
@@ -328,6 +250,8 @@
             var json = {{ structure|json_encode|raw }};
 
             var myObj = JSON.parse(json);
+
+            structure_array = myObj;
 
             txt = "<div class='row-fluid' id='sidebar_container'>"
             findObject(myObj);
@@ -383,41 +307,10 @@
                 </div>
             </nav>
 
-            <div id="content" class="container-fluid">
-                <h1 id="content-header"></h1>
-                <div>
-                    <div id="winter-roads-container" class="card border-primary" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-                        <div class="card-header">
-                            <h1 id="winter-road-trigger" style="text-align: center;padding-top: 10px;">Žiemos keliai <i id="winter-icon" style="font-size: 1em;" class="fa fa-minus" aria-hidden="true"></i></h1>
-                        </div>
-                        <div id="winter-road-content">
-                            <div id="winter_search_bar" class="card-body row">
-                                <div class="col-md-3">
-                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
-                                </div>
-                                <div class="col-md-3">
-                                    <input class="search-input form-control" placeholder="Įveskite x" value="{{ app.request.get('filterJob') }}" type="text" name="x">
-                                </div>
-                            </div>
+            {{ include('structure/Contents/winter_road_content.twig') }}
+            <br>
+            {{ include('structure/Contents/contract_jobs_content.twig') }}
 
-                            <div id="winter-roads" class="row" style="margin:10px;"></div>
-                            <ul id="winter-road-pages" class="pagination" style="padding: 10px;"></ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div id="winter_roads2" class="row"></div>
-                    <ul id="winter_road_pages2" class="pagination">
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 

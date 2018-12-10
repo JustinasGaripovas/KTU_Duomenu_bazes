@@ -1,0 +1,247 @@
+{% trans_default_domain 'translation' %}
+
+<style>
+    .btn span.fa-check {
+        opacity: 0;
+    }
+    .btn.active span.fa-check {
+        opacity: 1;
+    }
+</style>
+
+<script>
+    var txt;
+
+    $(document).ready(function () {
+
+
+
+
+
+
+
+        $(document).on("click", "#subunit-filter", function() {
+            $('#contract-jobs-pages').html('');
+            $('#contract-jobs').html('');
+            contractAjax(null,1/*active page*/);
+
+
+        });
+
+
+        $("#contract-jobs-container").hide();
+
+        contractTriggerClick("#contract-jobs-trigger","#contract-jobs-content","#contract-icon");
+
+        contractPaginatorClick("contract-page");
+    });
+
+    function contractPaginatorClick(page_type) {
+        $(document).on("click", "." + page_type, function() {
+
+            console.log($(this));
+
+            contractAjax($(this).attr("data-master"), $(this).attr("data-" + page_type));
+        });
+    }
+
+    function contractTriggerClick(trigger, content, icon) {
+        $(document).on("click", trigger, function() {
+
+            $(content).stop();
+            $(icon).toggleClass("fa-plus").toggleClass("fa-minus");
+
+            $(content).slideToggle("fast","linear",function () {
+                $(icon).toggleClass("open");
+            });
+
+        });
+    }
+
+    function addPagination(object, page_count, current_page, classname) {
+        object.html('');
+        txt = "";
+
+        if (current_page <= 3)
+        {
+            for (i = 1; i < page_count; i++) {
+                if (i > 5) {
+                    break;
+                }
+                txt += "<a data-"+classname+"=" + i + " class="+classname+" >" + i + "</a>"
+            }
+
+            txt += "<a class='disabled' > .... </a>"
+            txt += "<a data-"+classname+"=" + page_count + " class='"+classname+"' >" + page_count + "</a>"
+
+        } else if (current_page > page_count-3) {
+            txt += "<a  data-"+classname+"=" + 1 + " class='"+classname+"' >" + 1 + "</a>"
+            txt += "<a class='disabled' > .... </a>"
+
+            for (i = -4; i <= 0;i++ ) {
+                var page_num = parseInt(page_count)+i;
+                txt += "<a  data-"+classname+"=" + page_num + " class='"+classname+"' >" + page_num + "</a>"
+            }
+        } else {
+            txt += "<a  data-"+classname+"=" + 1 + " class='"+classname+"' >" + 1 + "</a>"
+            txt += "<a class='disabled' > .... </a>"
+
+            for (i = -2; i <= 2;i++ ) {
+                var page_num = parseInt(current_page)+i;
+                txt += "<a  data-"+classname+"=" + page_num + " class='"+classname+"' >" + page_num + "</a>"
+            }
+
+            txt += "<a class='disabled' > .... </a>"
+            txt += "<a  data-"+classname+"=" + page_count + " class='"+classname+"' >" + page_count + "</a>"
+        }
+
+        object.append(txt);
+
+        object.find('*[data-'+classname+'="'+ current_page +'"]').addClass("active-page");
+    }
+
+
+
+    var searchedStructureId;
+    var checkboxArrayId = [];
+    var checkboxArrayName = [];
+    var activeArray = [];
+
+    var found = false;
+
+    function findCheckBoxes(array) {
+
+        if(found)
+        {
+            return;
+        }
+
+        array.forEach(function (entity) {
+            if(entity["array"] != null)
+            {
+                if(searchedStructureId == entity["StructureId"])
+                {
+                    addCheckBoxes(entity["array"]);
+                    found = true;
+                }else{
+                    findCheckBoxes(entity["array"]);
+                }
+            }
+        });
+    }
+
+    function addCheckBoxes(array) {
+
+        array.forEach(function (entity) {
+            if(entity["array"] != null)
+            {
+                checkboxArrayId.push(entity["StructureId"]);
+                checkboxArrayName.push(entity["Name"]);
+
+                addCheckBoxes(entity["array"]);
+            }
+        });
+    }
+
+
+
+
+    function initCheckBox(id) {
+
+        $('#contract-jobs-pages').html('');
+        $('#contract-jobs').html('');
+        $('#contract-checkbox-content').html('');
+
+        checkboxArrayId = [];
+        checkboxArrayName = [];
+        found = false;
+
+        activeArray = [];
+
+        searchedStructureId = id;
+
+        checkboxArrayId = [];
+        checkboxArrayName = [];
+        found = false;
+
+        findCheckBoxes(structure_array);
+
+        var textToAppend = "";
+
+        for (i = 0; i < checkboxArrayId.length; i++) {
+            textToAppend += '<label data-checkbox-id="' + checkboxArrayId[i] + '" class="btn btn-outline-primary active">' + checkboxArrayName[i] + '<span class="fa fa-check"></span></label>';
+        }
+
+        textToAppend += "<div id='subunit-filter' class='btn btn-outline-primary'>filtruoti</div>";
+
+        $('#contract-checkbox-content').append(textToAppend);
+
+
+        console.log(activeArray);
+    }
+
+
+    function contractAjax(winter_roads_page) {
+
+
+        var ajaxRoads = $.ajax({
+            url: '/contract/jobs/structure/ajax',
+            type: 'POST',
+            dataType: 'json',
+            async: true,
+            data: {active_array: activeArray, page: winter_roads_page}
+        });
+
+
+
+
+
+
+        ajaxRoads.done(function(data) {
+
+            console.log(data);
+
+
+            for (i = 0; i < data[1].length; i++) {
+                structure = data[1][i];
+
+                var route = "{{ path('user_show', { 'slug': "PLACEHOLDER" }) }}";
+                route = route.replace("PLACEHOLDER", structure['name']);
+
+                var e = $('<div style="text-align: center;color: black;" class=\'col-md-4 col-lg-3 p-1\'>' +
+                    '<a class="btn-primary btn-lg btn-block" style="color: black;" href=' + route + '>' + structure['name'] +"<br/>(" + structure['role'] + ')</a>' +
+                    '</div>');
+                $('#contract-jobs').append(e);
+            }
+
+            addPagination($("#contract-jobs-pages"),data[0],winter_roads_page, "contract-page");
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        });
+
+    }
+
+</script>
+
+
+<div class="content container-fluid">
+    <h3 class="content-header"></h3>
+    <div>
+        <div id="contract-jobs-container" class="card border-primary" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+            <div class="card-header" style="margin: 0 auto; background: white;">
+                <h3 id="contract-jobs-trigger" style="text-align: center;padding-top: 10px;">Rangos darbai <i id="contract-icon" style="font-size: 1em;" class="fa fa-minus" aria-hidden="true"></i></h3>
+
+
+                <div style='padding: 0px;display: inline;margin: 0 auto;' class="col-10 btn-group " data-toggle="buttons" id='contract-checkbox-content'></div>
+
+
+            </div>
+            <div id="contract-jobs-content">
+                <div id="contract-jobs" class="row" style="margin:10px;"></div>
+                <ul id="contract-jobs-pages" class="pagination" style="padding: 10px;"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>

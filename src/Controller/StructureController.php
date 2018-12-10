@@ -211,7 +211,7 @@ class StructureController extends Controller
 
             return new JsonResponse($jsonData);
         } else {
-            return $this->render('structure/content.html.twig');
+            return $this->render('structure/winter_road_content.twig');
         }
     }
 
@@ -243,7 +243,7 @@ class StructureController extends Controller
 
             return new JsonResponse($jsonArray);
         } else {
-            return $this->render('structure/content.html.twig');
+            return $this->render('structure/winter_road_content.twig');
         }
     }
     /**

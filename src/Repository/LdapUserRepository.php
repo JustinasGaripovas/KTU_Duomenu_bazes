@@ -62,15 +62,24 @@ class LdapUserRepository extends ServiceEntityRepository
         ;
     }
 
-   /* public function findUserByUserName($value): ?LdapUser
+    public function findWithPages($offset, $limit, $subunit)
     {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.name = :val')
-            ->setParameter('val', $value)
-            ->setMaxResults(1)
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.Subunit = :val')
+            ->setParameter('val', $subunit)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
             ;
-    }*/
+    }
+
+    public function findCount()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('count(r.id)')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 
 }

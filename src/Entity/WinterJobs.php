@@ -118,6 +118,24 @@ class WinterJobs
         return $str;
     }
 
+    public function getRoadSectionQuadratures()
+    {
+        $str = array();
+        foreach ($this->RoadSections as $road )
+        {
+            if($road->getQuadrature()  === null)
+            {
+                $str[] = " ";
+
+            }else{
+                $str[] = $road->getQuadrature();
+
+            }
+        }
+
+        return $str;
+    }
+
     public function getRoadSectionsSaltSum()
     {
         $str = 0;

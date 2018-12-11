@@ -65,6 +65,7 @@
                 <th>{% trans %} Salt {% endtrans %}</th>
                 <th>{% trans %} Sand {% endtrans %}</th>
                 <th>{% trans %} Solution {% endtrans %}</th>
+                <th>{% trans %} Quadrature {% endtrans %}</th>
                 <th>{% trans %} actions {% endtrans %}</th>
             </tr>
         </thead>
@@ -82,6 +83,7 @@
                 <td>{{ winter_job.getRoadSectionsSalt| join('\n')| nl2br }}</td>
                 <td>{{ winter_job.getRoadSectionsSand| join('\n')| nl2br }}</td>
                 <td>{{ winter_job.getRoadSectionsSolution| join('\n')| nl2br }}</td>
+                <td>{{ winter_job.getRoadSectionQuadratures| join('\n')| nl2br }}</td>
 
                 <td>
                     <a href="{{ path('winter_jobs_edit', {'id': winter_job.id}) }}">edit</a>

@@ -169,6 +169,8 @@
 
             initSideMenu();
 
+            console.log(structure_array);
+
             sideMenuToggle();
 
             dropdownClick();
@@ -181,6 +183,8 @@
             $(document).on("click", ".side-button", function() {
                 var id = $(this).attr('id');
                 var header = $(this).text();
+
+                resetContracts();
 
                 if($(this).attr("data-type") == 1){
 
@@ -197,12 +201,8 @@
                     $("#winter-roads-container").show();
                     $("#contract-jobs-container").show();
 
-                    if(searchedStructureId == null)
-                    {
-                        searchedStructureId = id;
-                    }
-
                     header += " kelių tarnyba";
+
 
                     winterRoadAjax(id,0);
                     contractAjax(id,0);

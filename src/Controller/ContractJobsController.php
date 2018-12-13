@@ -38,25 +38,24 @@ class ContractJobsController extends AbstractController
     public function ajaxAction(SubunitRepository $subunitRepository,LdapUserRepository $ldapUserRepository, StructureRepository $structureRepository, Request $request) {
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+
             $pages = $request->request->get('page');
             $activeArray= $request->request->get('active_array');
 
-
             $allUsers = array();
-
+            $sum =0;
             if($activeArray!=null)
             foreach ($activeArray as $subunit)
             {
-                $allUsers = array_merge($allUsers, $ldapUserRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE,(int)$subunit));
+                $allUsers = array_merge($allUsers, $ldapUserRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE,(int)$subunit["StructureId"]));
+                $sum += $ldapUserRepository->findCount((int)$subunit["StructureId"])[0]["1"];
             }else{
                 $allUsers = [];
             }
 
-           // $allUsers = array_merge($activeArray, $ldapUserRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE,(int)$subunit));
-
-
             $jsonData = array();
             $idx = 0;
+
             foreach($allUsers as $item) {
                 $temp = array(
                     'name' => $item->getName(),
@@ -66,8 +65,11 @@ class ContractJobsController extends AbstractController
             }
 
             $jsonArray= array();
-            //$jsonArray[0] =  floor($ldapUserRepository->findCount()[0][1]/self::ITEMS_PER_PAGE);
-            $jsonArray[0] =  $activeArray;
+            $jsonArray[0] =  $ldapUserRepository->findCount((int)$activeArray[0]["StructureId"])[0][1];
+            $jsonArray[3] =  $activeArray[0]["StructureId"];
+
+            $jsonArray[2] =  $sum;
+
             $jsonArray[1] = $jsonData;
 
             return new JsonResponse($jsonArray);

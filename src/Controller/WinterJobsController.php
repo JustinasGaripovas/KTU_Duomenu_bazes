@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\WinterJobs;
+use App\Entity\WinterJobUnique;
 use App\Form\WinterJobsType;
 use App\Repository\ChoicesRepository;
 use App\Repository\LdapUserRepository;
 use App\Repository\MechanismRepository;
 use App\Repository\WinterJobsRepository;
+use App\Repository\WinterJobUniqueRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,8 +117,43 @@ class WinterJobsController extends Controller
         if ($form->isSubmitted() && $form->isValid()){
 
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($winterJob);
             $em->flush();
+
+            foreach ($winterJob->getRoadSections() as $roadSection)
+            {
+                $winterJobUnique = new WinterJobUnique();
+
+                $winterJobUnique->setCreatedAt($winterJob->getCreatedAt());
+                $winterJobUnique->setCreatedBy($winterJob->getCreatedBy());
+                $winterJobUnique->setDate($winterJob->getDate());
+                $winterJobUnique->setJob($winterJob->getJob());
+                $winterJobUnique->setJobId($winterJob->getJobId());
+                $winterJobUnique->setJobName($winterJob->getJobName());
+                $winterJobUnique->setJobQuantity($winterJob->getJobQuantity());
+                $winterJobUnique->setMechanism($winterJob->getMechanism());
+                $winterJobUnique->setSubunit($winterJob->getSubunit());
+                $winterJobUnique->setTimeFrom($winterJob->getTimeFrom());
+                $winterJobUnique->setTimeTo($winterJob->getTimeTo());
+                $winterJobUnique->setOriginalId($winterJob->getId());
+
+                $winterJobUnique->setQuadrature($roadSection->getQuadrature());
+                $winterJobUnique->setSalt($roadSection->getSaltValue());
+                $winterJobUnique->setSand($roadSection->getSandValue());
+                $winterJobUnique->setSolution($roadSection->getSolutionValue());
+
+                $winterJobUnique->setSectionBegin($roadSection->getSectionBegin());
+                $winterJobUnique->setSectionEnd($roadSection->getSectionEnd());
+                $winterJobUnique->setSectionId($roadSection->getSectionId());
+                $winterJobUnique->setSectionType($roadSection->getSectionType());
+
+                $em->persist($winterJobUnique);
+            }
+
+            $em->flush();
+
+
             return $this->redirectToRoute('winter_jobs_index');
 
         }
@@ -140,7 +177,7 @@ class WinterJobsController extends Controller
     /**
      * @Route("/{id}/edit", name="winter_jobs_edit", methods="GET|POST")
      */
-    public function edit(ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository, Request $request, WinterJobs $winterJob): Response
+    public function edit(WinterJobUniqueRepository $winterJobUniqueRepository,ChoicesRepository $choicesRepository, MechanismRepository $mechanismRepository, LdapUserRepository $ldapUserRepository, Request $request, WinterJobs $winterJob): Response
     {
         $this->denyAccessUnlessGranted('EDIT',$winterJob);
 
@@ -168,9 +205,42 @@ class WinterJobsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
             $items = $winterJob->getRoadSections();
             $winterJob->setRoadSections($items);
+
+            $winterJobUniqueRepository->deleteWithOriginal($winterJob->getId());
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($winterJob->getRoadSections() as $roadSection)
+            {
+                $winterJobUnique = new WinterJobUnique();
+
+                $winterJobUnique->setCreatedAt($winterJob->getCreatedAt());
+                $winterJobUnique->setCreatedBy($winterJob->getCreatedBy());
+                $winterJobUnique->setDate($winterJob->getDate());
+                $winterJobUnique->setJob($winterJob->getJob());
+                $winterJobUnique->setJobId($winterJob->getJobId());
+                $winterJobUnique->setJobName($winterJob->getJobName());
+                $winterJobUnique->setJobQuantity($winterJob->getJobQuantity());
+                $winterJobUnique->setMechanism($winterJob->getMechanism());
+                $winterJobUnique->setSubunit($winterJob->getSubunit());
+                $winterJobUnique->setTimeFrom($winterJob->getTimeFrom());
+                $winterJobUnique->setTimeTo($winterJob->getTimeTo());
+                $winterJobUnique->setOriginalId($winterJob->getId());
+
+                $winterJobUnique->setQuadrature($roadSection->getQuadrature());
+                $winterJobUnique->setSalt($roadSection->getSaltValue());
+                $winterJobUnique->setSand($roadSection->getSandValue());
+                $winterJobUnique->setSolution($roadSection->getSolutionValue());
+
+                $winterJobUnique->setSectionBegin($roadSection->getSectionBegin());
+                $winterJobUnique->setSectionEnd($roadSection->getSectionEnd());
+                $winterJobUnique->setSectionId($roadSection->getSectionId());
+                $winterJobUnique->setSectionType($roadSection->getSectionType());
+
+                $em->persist($winterJobUnique);
+            }
+            $em->flush();
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -186,13 +256,14 @@ class WinterJobsController extends Controller
     /**
      * @Route("/{id}", name="winter_jobs_delete", methods="DELETE")
      */
-    public function delete(Request $request, WinterJobs $winterJob): Response
+    public function delete(Request $request, WinterJobs $winterJob, WinterJobUniqueRepository $winterJobUniqueRepository): Response
     {
         $this->denyAccessUnlessGranted('DELETE',$winterJob);
 
         if ($this->isCsrfTokenValid('delete'.$winterJob->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($winterJob);
+            $winterJobUniqueRepository->deleteWithOriginal($winterJob->getId());
             $em->flush();
         }
 

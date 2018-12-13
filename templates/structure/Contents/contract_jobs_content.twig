@@ -14,20 +14,11 @@
 
     $(document).ready(function () {
 
-
-
-
-
-
-
         $(document).on("click", "#subunit-filter", function() {
             $('#contract-jobs-pages').html('');
             $('#contract-jobs').html('');
-            contractAjax(null,1/*active page*/);
-
-
+            contractAjax(1);
         });
-
 
         $("#contract-jobs-container").hide();
 
@@ -101,53 +92,57 @@
     }
 
 
+    var idToFind = 0;
+    var isFound = false;
+    var foundArray = [];
 
-    var searchedStructureId;
-    var checkboxArrayId = [];
-    var checkboxArrayName = [];
-    var activeArray = [];
+    function findArray(array) {
 
-    var found = false;
-
-    function findCheckBoxes(array) {
-
-        if(found)
-        {
+        if(isFound)
             return;
-        }
 
-        array.forEach(function (entity) {
-            if(entity["array"] != null)
+        array.forEach(function fun(item) {
+            if(parseInt(item["StructureId"]) == idToFind)
             {
-                if(searchedStructureId == entity["StructureId"])
-                {
-                    addCheckBoxes(entity["array"]);
-                    found = true;
-                }else{
-                    findCheckBoxes(entity["array"]);
-                }
+                isFound = true;
+                foundArray = item["array"];
+            }else{
+                findArray(item["array"]);
             }
         });
+
     }
 
-    function addCheckBoxes(array) {
+    function resetContracts() {
+         idToFind = 0;
+         isFound = false;
+         foundArray = [];
 
-        array.forEach(function (entity) {
-            if(entity["array"] != null)
-            {
-                checkboxArrayId.push(entity["StructureId"]);
-                checkboxArrayName.push(entity["Name"]);
+        $('#contract-checkbox-content').html('');
+        $('#contract-jobs-pages').html('');
+        $('#contract-jobs').html('');
 
-                addCheckBoxes(entity["array"]);
-            }
-        });
     }
-
-
-
 
     function initCheckBox(id) {
 
+        console.log(structure_array);
+
+        idToFind = id;
+        findArray(structure_array);
+        console.log(foundArray);
+
+        var textToAppend = "";
+
+        for (i = 0; i < foundArray.length; i++) {
+            textToAppend += '<label data-checkbox-id="' + foundArray[i]["StructureId"] + '" class="btn btn-outline-primary active">' + foundArray[i]["Name"] + '<span class="fa fa-check"></span></label>';
+        }
+
+        textToAppend += "<div id='subunit-filter' class='btn btn-outline-primary'>filtruoti</div>";
+
+        $('#contract-checkbox-content').append(textToAppend);
+
+        /*
         $('#contract-jobs-pages').html('');
         $('#contract-jobs').html('');
         $('#contract-checkbox-content').html('');
@@ -178,23 +173,20 @@
 
 
         console.log(activeArray);
+
+        */
     }
 
 
     function contractAjax(winter_roads_page) {
-
 
         var ajaxRoads = $.ajax({
             url: '/contract/jobs/structure/ajax',
             type: 'POST',
             dataType: 'json',
             async: true,
-            data: {active_array: activeArray, page: winter_roads_page}
+            data: {active_array: foundArray, page: winter_roads_page}
         });
-
-
-
-
 
 
         ajaxRoads.done(function(data) {

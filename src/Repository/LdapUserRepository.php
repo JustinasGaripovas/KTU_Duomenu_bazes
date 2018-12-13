@@ -72,10 +72,12 @@ class LdapUserRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findCount()
+    public function findCount($subunit)
     {
         return $this->createQueryBuilder('r')
             ->select('count(r.id)')
+            ->andWhere('r.Subunit = :val')
+            ->setParameter('val', $subunit)
             ->getQuery()
             ->getResult()
             ;

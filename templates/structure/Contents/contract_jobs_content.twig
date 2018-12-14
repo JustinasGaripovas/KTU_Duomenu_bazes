@@ -17,7 +17,21 @@
         $(document).on("click", "#subunit-filter", function() {
             $('#contract-jobs-pages').html('');
             $('#contract-jobs').html('');
-            contractAjax(1);
+
+            //TODO:
+
+            var finalArray = [];
+
+            $("#contract-checkbox-content").find(".active").each(function (index) {
+                if($(this).attr("id") != "subunit-filter") {
+                    finalArray[index] = [$(this).text(),$(this).attr("data-checkbox-id")];
+                    console.log(index + ": " + $(this).text());
+                }
+            });
+
+
+
+            contractAjax(finalArray,1);
         });
 
         $("#contract-jobs-container").hide();
@@ -141,58 +155,22 @@
         textToAppend += "<div id='subunit-filter' class='btn btn-outline-primary'>filtruoti</div>";
 
         $('#contract-checkbox-content').append(textToAppend);
-
-        /*
-        $('#contract-jobs-pages').html('');
-        $('#contract-jobs').html('');
-        $('#contract-checkbox-content').html('');
-
-        checkboxArrayId = [];
-        checkboxArrayName = [];
-        found = false;
-
-        activeArray = [];
-
-        searchedStructureId = id;
-
-        checkboxArrayId = [];
-        checkboxArrayName = [];
-        found = false;
-
-        findCheckBoxes(structure_array);
-
-        var textToAppend = "";
-
-        for (i = 0; i < checkboxArrayId.length; i++) {
-            textToAppend += '<label data-checkbox-id="' + checkboxArrayId[i] + '" class="btn btn-outline-primary active">' + checkboxArrayName[i] + '<span class="fa fa-check"></span></label>';
-        }
-
-        textToAppend += "<div id='subunit-filter' class='btn btn-outline-primary'>filtruoti</div>";
-
-        $('#contract-checkbox-content').append(textToAppend);
-
-
-        console.log(activeArray);
-
-        */
     }
 
 
-    function contractAjax(winter_roads_page) {
+    function contractAjax(finalArray,winter_roads_page) {
 
         var ajaxRoads = $.ajax({
             url: '/contract/jobs/structure/ajax',
             type: 'POST',
             dataType: 'json',
             async: true,
-            data: {active_array: foundArray, page: winter_roads_page}
+            data: {active_array: finalArray, page: winter_roads_page}
         });
-
 
         ajaxRoads.done(function(data) {
 
             console.log(data);
-
 
             for (i = 0; i < data[1].length; i++) {
                 structure = data[1][i];

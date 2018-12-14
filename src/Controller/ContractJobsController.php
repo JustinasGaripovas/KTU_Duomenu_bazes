@@ -42,21 +42,28 @@ class ContractJobsController extends AbstractController
             $pages = $request->request->get('page');
             $activeArray= $request->request->get('active_array');
 
-            $allUsers = array();
+            $allData = array();
             $sum =0;
+            $dql = "";
+            $dql = "SELECT d FROM App:LdapUser d WHERE d ORDER BY d.Date DESC";
+
             if($activeArray!=null)
             foreach ($activeArray as $subunit)
             {
-                $allUsers = array_merge($allUsers, $ldapUserRepository->findWithPages(self::ITEMS_PER_PAGE * $pages, self::ITEMS_PER_PAGE,(int)$subunit["StructureId"]));
-                $sum += $ldapUserRepository->findCount((int)$subunit["StructureId"])[0]["1"];
+
+
+
+                $sum += $ldapUserRepository->findCount((int)$subunit[1])[0]["1"];
+
             }else{
-                $allUsers = [];
+                $allData = [];
             }
+
 
             $jsonData = array();
             $idx = 0;
 
-            foreach($allUsers as $item) {
+            foreach($allData as $item) {
                 $temp = array(
                     'name' => $item->getName(),
                     'role' => $item->getRole()
@@ -65,12 +72,10 @@ class ContractJobsController extends AbstractController
             }
 
             $jsonArray= array();
-            $jsonArray[0] =  $ldapUserRepository->findCount((int)$activeArray[0]["StructureId"])[0][1];
-            $jsonArray[3] =  $activeArray[0]["StructureId"];
-
-            $jsonArray[2] =  $sum;
-
+            $jsonArray[0] =  $ldapUserRepository->findCount((int)$activeArray[0][0])[0][1];
             $jsonArray[1] = $jsonData;
+            $jsonArray[2] = $activeArray;
+            $jsonArray[3] = $sum;
 
             return new JsonResponse($jsonArray);
         } else {

@@ -33,6 +33,15 @@ class WinterJobUniqueRepository extends ServiceEntityRepository
         ;
     }
 
+    public function deleteAll()
+    {
+        return $this->createQueryBuilder('w')
+            ->delete()
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function findByOriginalId($originalId)
     {
         return $this->createQueryBuilder('w')
@@ -42,5 +51,7 @@ class WinterJobUniqueRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
 
 }

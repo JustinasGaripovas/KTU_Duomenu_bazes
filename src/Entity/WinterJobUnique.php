@@ -116,6 +116,16 @@ class WinterJobUnique
      */
     private $OriginalId;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $SubunitName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $UniqueId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -357,6 +367,30 @@ class WinterJobUnique
     public function setOriginalId(?int $OriginalId): self
     {
         $this->OriginalId = $OriginalId;
+
+        return $this;
+    }
+
+    public function getSubunitName(): ?string
+    {
+        return $this->SubunitName;
+    }
+
+    public function setSubunitName(string $SubunitName): self
+    {
+        $this->SubunitName = $SubunitName;
+
+        return $this;
+    }
+
+    public function getUniqueId(): ?string
+    {
+        return $this->UniqueId;
+    }
+
+    public function setUniqueId(string $UniqueId): self
+    {
+        $this->UniqueId = $UniqueId;
 
         return $this;
     }

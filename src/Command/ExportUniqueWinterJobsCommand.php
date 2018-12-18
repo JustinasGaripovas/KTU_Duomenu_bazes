@@ -30,17 +30,20 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
     }
 
 
-    public function transferData()
+    public function transferData($f, $t)
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $batchIndex = 0;
         $index =0;
 
+        $dateFrom = new \DateTime($f);
+        $dateFrom = $dateFrom->format("Y-m-d");
+        $dateTo = new \DateTime($t);
+        $dateTo = $dateTo->format("Y-m-d");
+
         $this->winterJobUniqueRepository->deleteAll();
 
-        $from = new \DateTime('-7 day');
-        $from = $from->format("Y-m-d");
-        $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$from'";
+        $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$dateFrom' AND r.Date <= '$dateTo'";
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $query = $em->createQuery($dql);
         $winterJobs = $query->execute();
@@ -104,38 +107,36 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
 
     function validate($roadSection)
     {
-       // if(null ==$roadSection->getSectionBegin()){ return false; }
+        // if(null ==$roadSection->getSectionBegin()){ return false; }
         if(null ==$roadSection->getSectionEnd()){ return false; }
         if(null ==$roadSection->getSectionId()){ return false; }
 
         return true;
     }
 
-
     protected function configure()
     {
         $this
             ->setDescription('Make excel file from WinterJobsUnique entity')
-            ->addArgument('dateFrom', InputArgument::OPTIONAL, 'For testing purpose')
-            ->addArgument('dateTo', InputArgument::OPTIONAL, 'For testing purpose')
+            ->addArgument('dateFrom', InputArgument::REQUIRED, 'For testing purpose')
+            ->addArgument('dateTo', InputArgument::REQUIRED, 'For testing purpose')
             ->addOption('generateXLS');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $currentDate = new \DateTime('now');
+
+        $starttime = microtime();
 
         $output->writeln([
             '┌─────────────────────────┐',
             '│Welcome to export service│',
-            '│                         │',
+            '├─────────────────────────┤',
             '│Option to generate file  │',
             '│                         │',
             '│--generateXLS            │',
             '└─────────────────────────┘',
-            'Current date: ' . $currentDate->format('Y-m-d H:i:s'),
-
         ]);
 
         $output->writeln([
@@ -144,7 +145,7 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
             '└───────────────────┘',
         ]);
 
-        $this->transferData();
+        $this->transferData($input->getArgument('dateFrom'),$input->getArgument('dateTo'));
 
 
         if ($input->getOption('generateXLS')) {
@@ -155,11 +156,9 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
                 '└───────────────────┘',
             ]);
 
-            $from = new \DateTime('-7 day');
-            $from = $from->format("Y-m-d");
 
 
-            $dql = "SELECT r FROM App:WinterJobUnique r WHERE r.Date >= '$from' ORDER BY r.Date ASC";
+            $dql = "SELECT r FROM App:WinterJobUnique r ORDER BY r.Date ASC";
             $em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $query = $em->createQuery($dql);
             $report = $query->execute();
@@ -186,12 +185,16 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
             }
             // Rename worksheet
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-            $writer->save('/home/DAIS_GIS.csv');
+            $writer->save('/home/administrator/DAIS_GIS_2.csv');
+
+            $currentDate = new \DateTime('now');
 
             $output->writeln([
-                '┌─────────────────┐',
-                '│    <fg=green>Success!</>     │',
-                '└─────────────────┘',
+                '┌───────────────────┐',
+                '│      <fg=green>Success!</>     │',
+                '├───────────────────┤',
+                '│'.$currentDate->format('Y-m-d H:i:s').'│',
+                '└───────────────────┘',
             ]);
         }
     }

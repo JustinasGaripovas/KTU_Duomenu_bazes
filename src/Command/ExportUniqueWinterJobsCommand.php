@@ -195,7 +195,7 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
             }
             // Rename worksheet
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-            $writer->save('/var/www/DAIS_GIS_1.csv');
+            $writer->save('/home/samba/DAIS/DAIS_GIS_2.csv');
 
             $currentDate = new \DateTime('now');
 

@@ -36,14 +36,24 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
         $batchIndex = 0;
         $index =0;
 
-        $dateFrom = new \DateTime($f);
-        $dateFrom = $dateFrom->format("Y-m-d");
-        $dateTo = new \DateTime($t);
-        $dateTo = $dateTo->format("Y-m-d");
+        if($f==null && $t==null) {
+            $dateFrom = new \DateTime('-7 days');
+            $dateFrom = $dateFrom->format("Y-m-d");
+            $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$dateFrom'";
+        }else if($t == null){
+            $dateFrom = new \DateTime($f);
+            $dateFrom = $dateFrom->format("Y-m-d");
+            $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$dateFrom'";
+        }else{
+            $dateFrom = new \DateTime($f);
+            $dateFrom = $dateFrom->format("Y-m-d");
+            $dateTo = new \DateTime($t);
+            $dateTo = $dateTo->format("Y-m-d");
+            $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$dateFrom' AND r.Date <= '$dateTo'";
+        }
 
         $this->winterJobUniqueRepository->deleteAll();
 
-        $dql = "SELECT r FROM App:WinterJobs r WHERE r.Date >= '$dateFrom' AND r.Date <= '$dateTo'";
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $query = $em->createQuery($dql);
         $winterJobs = $query->execute();
@@ -118,8 +128,8 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
     {
         $this
             ->setDescription('Make excel file from WinterJobsUnique entity')
-            ->addArgument('dateFrom', InputArgument::REQUIRED, 'For testing purpose')
-            ->addArgument('dateTo', InputArgument::REQUIRED, 'For testing purpose')
+            ->addArgument('dateFrom', InputArgument::OPTIONAL, 'For testing purpose')
+            ->addArgument('dateTo', InputArgument::OPTIONAL, 'For testing purpose')
             ->addOption('generateXLS');
     }
 
@@ -185,7 +195,7 @@ class ExportUniqueWinterJobsCommand extends ContainerAwareCommand
             }
             // Rename worksheet
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
-            $writer->save('/home/administrator/DAIS_GIS_2.csv');
+            $writer->save('/var/www/DAIS_GIS_1.csv');
 
             $currentDate = new \DateTime('now');
 

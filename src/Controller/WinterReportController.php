@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\RoadSectionForWinterJobs;
+use App\Entity\WinterJobs;
+use App\Form\ReportType;
 use App\Form\WinterJobsReportType;
 use App\Repository\LdapUserRepository;
 use App\Utils\MaterialReportObjectForSubunit;
@@ -359,6 +362,218 @@ class WinterReportController extends Controller
     }
 
     /**
+     * @Route("/winter/report/done_jobs", name="winter_done_jobs")
+     */
+    public function index(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+        $username = $this->getUser()->getUserName();
+
+        if (!$ldapUserRepository->findUnitIdByUserName($username)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        }
+
+        $form = $this->createForm(WinterJobsReportType::class);
+
+        $form->handleRequest($request);
+        $subunit = $ldapUserRepository->findUnitIdByUserName($this->getUser()->getUserName())->getSubunit();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $from = $form->get('From')->getData();
+            $to = $form->get('To')->getData();
+
+            $dql = '';
+            if ($this->isGranted('ADMIN')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            } elseif ($this->isGranted('ROAD_MASTER')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Subunit = '$subunit' AND d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            } elseif ($this->isGranted('SUPER_MASTER')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Subunit = '$subunit' AND d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            } elseif ($this->isGranted('UNIT_VIEWER')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Subunit = '$subunit' AND d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            } elseif ($this->isGranted('SUPER_VIEWER')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            } elseif ($this->isGranted('WORKER')) {
+                $dql = "SELECT d FROM App:WinterJobs d WHERE (d.Username = '$username' AND d.Date >= '$from' AND d.Date <= '$to') ORDER BY d.Date ASC";
+            }
+
+            $em = $this->get('doctrine.orm.entity_manager');
+            $query = $em->createQuery($dql);
+            $report = $query->execute();
+
+            if ($form->get('GenerateXLS')->isClicked()) {
+                $fileName = md5($this->getUser()->getUserName() . microtime());
+                $reader = IOFactory::createReader('Xlsx');
+                $spreadsheet = $reader->load('winter_done_job.xlsx');
+
+                $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                    ->setLastModifiedBy('VĮ Kelių priežiūra')
+                    ->setTitle('Atliktų žiemos medžiagų ataskaita')
+                    ->setSubject('Atliktų žiemos medžiagų ataskaita')
+                    ->setDescription('Atliktų žiemos medžiagų ataskaita')
+                    ->setKeywords('Atliktų žiemos medžiagų ataskaita')
+                    ->setCategory('Atliktų žiemos medžiagų ataskaita');
+
+                $index = 3;
+
+                foreach ($report as $item) {
+                    foreach ($item->getRoadSections() as $value) {
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('F' . $index, $item->getJobId())
+                            ->setCellValue('G' . $index, $item->getJobName())
+                            ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
+                            ->setCellValue('H' . $index, $item->getJobQuantity())
+                            ->setCellValue('D' . $index, $value->getSectionId() . '(' . $value->getSectionBegin() . '-' . $value->getSectionEnd() . ')');
+                        $index++;
+                    }
+                }
+
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                $writer->save('files/' . $fileName . '.xlsx');
+                return $this->file(('files/' . $fileName . '.xlsx'));
+            }
+            // Rename worksheet
+
+            return $this->render('winter_report/winter_done_job_report.twig', ['form' => $form->createView(), 'report' => $report]);
+        } else {
+            return $this->render('winter_report/winter_done_job_report.twig', ['form' => $form->createView(), ['report' => null]]);
+        }
+
+    }
+
+    /**
+     * @Route("/reports/jobs/road/type", name="winter_done_jobs_type")
+     */
+    public function sumReportsByRoadType(LdapUserRepository $ldapUserRepository, Request $request, AuthorizationCheckerInterface $authChecker)
+    {
+        $userName = $this->getUser()->getUserName();
+        if (!$ldapUserRepository->findUnitIdByUserName($userName)->getSubunit()) {
+            $this->addFlash(
+                'danger',
+                'Jūs nepasirinkęs kelių tarnybos!'
+            );
+            return $this->redirectToRoute('ldap_user_index');
+        } else {
+            $username = $this->getUser()->getUserName();
+            $subUnitName = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getName();
+            $subUnitId = $ldapUserRepository->findUnitIdByUserName($username)->getSubunit()->getId();
+            $form = $this->createForm(ReportType::class);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->html = '';
+                $from = $form->get('From')->getData();
+                $to = $form->get('To')->getData();
+                $em = $this->get('doctrine.orm.entity_manager');
+                $dql = '';
+
+                if ($this->isGranted('ADMIN')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('SUPER_VIEWER')){
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('UNIT_VIEWER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('SUPER_MASTER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif ($this->isGranted('ROAD_MASTER')) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.SubUnitId = '$subUnitId' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+                elseif($this->isGranted('WORKER') ) {
+                    $dql = "SELECT i.RoadLevel,i.JobId, i.JobName, i.UnitOf, ROUND(SUM(i.Quantity), 2) AS SumOfQuantity FROM App:DoneJobs i WHERE (i.Username = '$username' AND i.DoneJobDate >= '$from' AND i.DoneJobDate <= '$to') GROUP BY i.RoadLevel, i.JobId, i.JobName, i.UnitOf";
+                }
+
+                $query = $em->createQuery($dql);
+                $report = $query->execute();
+                $html = $this->renderView('reports/report_sum_level.html.twig', [
+                    'report' => $report,
+                    'subunit_name' => $subUnitName
+                ]);
+
+                if ($form->get('GeneratePDF')->isClicked()) {
+                    return new PdfResponse(
+                        $this->get('knp_snappy.pdf')->getOutputFromHtml($html, ['orientation' => 'Portrait']),
+                        'file.pdf'
+                    );
+                }
+                if ($form->get('GenerateXLS')->isClicked()) {
+                    $fileName = md5($this->getUser()->getUserName() . microtime());
+                    $reader = IOFactory::createReader('Xlsx');
+                    $spreadsheet = $reader->load('sum_tmpl_1.xlsx');
+// Set document properties
+                    $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
+                        ->setLastModifiedBy('VĮ Kelių priežiūra')
+                        ->setTitle('Suminė darbų ataskaita')
+                        ->setSubject('Suminė darbų ataskaita')
+                        ->setDescription('Suminė darbų ataskaita')
+                        ->setKeywords('Suminė darbų ataskaita')
+                        ->setCategory('Suminė darbų ataskaita');
+                    $index = 7;
+                    $dateNow = new \DateTime('now');
+                    $styleArray = ['font' => ['bold' => false]];
+                    $spreadsheet->getActiveSheet()->setCellValue('A4', $dateNow->format('Y-m-d'));
+                    $spreadsheet->getActiveSheet()->setCellValue('A1', 'VĮ "KELIŲ PRIEŽIŪRA" ' . strtoupper($subUnitName) . ' KELIŲ TARNYBA');
+                    foreach ($report as $rep) {
+                        $spreadsheet->getActiveSheet()->insertNewRowBefore($index, 1);
+                        $spreadsheet->getActiveSheet()
+                            ->setCellValue('A' . $index, $rep['RoadLevel'])
+                            ->setCellValue('B' . $index, $rep['JobId'])
+                            ->setCellValue('C' . $index, $rep['JobName'])
+                            ->setCellValue('D' . $index, $rep['UnitOf'])
+                            ->setCellValue('E' . $index, $rep['SumOfQuantity']);
+                        $spreadsheet->getActiveSheet()
+                            ->getStyle($index)
+                            ->getAlignment()
+                            ->setWrapText(true);
+                        $spreadsheet->getActiveSheet()->getStyle('A' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('B' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('C' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('D' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()->getStyle('E' . $index)->applyFromArray($styleArray);
+                        $spreadsheet->getActiveSheet()
+                            ->getRowDimension($index)
+                            ->setRowHeight(40);
+                        $spreadsheet->getActiveSheet()
+                            ->getColumnDimension('C')->setWidth(40);
+                        $index++;
+                    }
+                    $spreadsheet->getActiveSheet()
+                        ->getStyle($index)
+                        ->getAlignment()
+                        ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $spreadsheet->getActiveSheet()
+                        ->getStyle($index)
+                        ->getAlignment()
+                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $spreadsheet->getActiveSheet()->removeRow($index, 1);
+                    //$spreadsheet->getActiveSheet()->setCellValue('A1', $report[0]);
+                    // Set page orientation and size
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setOrientation(PageSetup::ORIENTATION_PORTRAIT);
+                    $spreadsheet->getActiveSheet()
+                        ->getPageSetup()
+                        ->setPaperSize(PageSetup::PAPERSIZE_A4);
+// Rename worksheet
+                    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+                    $writer->save('files/' . $fileName . '.xlsx');
+                    return $this->file(('files/' . $fileName . '.xlsx'));
+                }
+
+                return $this->render('reports/index_sum_level.html.twig', ['form' => $form->createView(), 'report' => $report]);
+            } else {
+                return $this->render('reports/index_sum_level.html.twig', ['form' => $form->createView(), ['report' => null]]);
+            }
+        }
+    }
+
+
+    /**
      * @param $start -> Pradine data nuo kada ieskosim
      * @param $end -> Galutine data nuo kada ieskosim
      * @return array -> Grazinamas visu subunit array
@@ -511,6 +726,41 @@ class WinterReportController extends Controller
         return $result;
     }
 
+    private function getTypeSumForAll($start,$end)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $sectionTypes = array("Krašto"=>array(),"Magistralinis"=>array(),"Rajoninis"=>array(),"Jungiamasis"=>array());
+
+        //Gauname visus KT
+        $dql = "SELECT w FROM App:Subunit w ORDER BY w.SubunitId";
+        $subunits = $em->createQuery($dql)->getArrayResult();
+
+        //einame pro visus KT
+        foreach ($subunits as $subunit) {
+            //Kadangi is Query imam tik SubunitId delto reikia patikslinti su ["SubunitId"]
+            $subunitId = $subunit["SubunitId"];
+
+            $dql = "SELECT DISTINCT w FROM App:WinterJobs w WHERE w.Subunit = '$subunitId' AND (w.Date >='$start' AND w.Date <= '$end')";
+
+            $winterJobArray = $em->createQuery($dql)->getResult();
+
+            $x = new RoadSectionForWinterJobs();
+
+            foreach ($winterJobArray as $winterJob) {
+                foreach ($winterJob->getRoadSections() as $road)
+                {
+                    //$sectionTypes[$x->getSectionType()] = ;
+                }
+            }
+        }
+    }
+
+    private function getTypeSumForSubunit($start,$end,$subunit)
+    {
+
+
+    }
 
     /**
      * @param $start
@@ -564,6 +814,8 @@ class WinterReportController extends Controller
 
         return $result;
     }
+
+
 
     /**
      * @param $start

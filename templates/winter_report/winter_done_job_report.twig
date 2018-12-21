@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+            @media print {
+                .print_a {
+                    overflow: visible !important;
+                }
+            }
+            thead { display: table-header-group; }
+            tr{page-break-inside: avoid !important;}
+        </style>
+
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+        <br>
+        <hr>
+        <div class="print_a">
+            <table class="table table-sm thead-dark table-bordered">
+                <thead>
+                <tr>
+                    <th style="text-align: center; vertical-align: middle"  colspan="1">{% trans %} Id {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle"  colspan="1">{% trans %} Date {% endtrans %} </th>
+                    <th style="text-align: center; vertical-align: middle" colspan="1" ><br>{% trans %} JobId{% endtrans %} <br></th>
+                    <th style="width: 300px;text-align: center; vertical-align: middle" colspan="1" ><br>{% trans %} Job name {% endtrans%} <br></th>
+                    <th style="width: 100px;text-align: center; vertical-align: middle" >{% trans %} Unit of {% endtrans %} </th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" >{% trans %} Road section {% endtrans %} </th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" >{% trans %} Section begin {% endtrans %} </th>
+                    <th style="width: 150px;text-align: center; vertical-align: middle" >{% trans %} Section end {% endtrans %} </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for job in report | default('') %}
+                <tr>
+                    <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        {{ job.id }}
+                    </td>
+                    <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        {{ job.Date | date('Y-m-d') }}
+                    </td>
+                    <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        {{ job.JobId }}
+                    </td>
+                    <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                        {{ job.JobName }}
+                    </td>
+                        <td rowspan="{{ job.RoadSections|length + 1}}" style="white-space: nowrap;text-align: center; vertical-align: middle">
+                            {{ job.JobQuantity }}
+                        </td>
+                    {% for item in  job.RoadSections %}
+                        <tr>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionId }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionBegin }}
+                            </td>
+                            <td style="white-space: nowrap;text-align: center; vertical-align: middle">
+                                {{ item.SectionEnd }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+
+

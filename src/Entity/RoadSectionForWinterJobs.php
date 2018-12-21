@@ -46,6 +46,11 @@ class RoadSectionForWinterJobs
      */
     private $Subunit;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $Quadrature;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +124,18 @@ class RoadSectionForWinterJobs
     public function setSubunit(int $Subunit): self
     {
         $this->Subunit = $Subunit;
+
+        return $this;
+    }
+
+    public function getQuadrature(): ?float
+    {
+        return $this->Quadrature;
+    }
+
+    public function setQuadrature(?float $Quadrature): self
+    {
+        $this->Quadrature = $Quadrature;
 
         return $this;
     }

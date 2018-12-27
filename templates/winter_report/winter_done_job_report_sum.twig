@@ -1,0 +1,54 @@
+
+
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
+        </script>
+        <style>
+
+        </style>
+
+        {{ include('/reports/form.html.twig') }}
+        <br>
+        <hr>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>KELIO KATEGORIJA</th>
+                    <th>DARBO KODAS</th>
+                    <th>DARBŲ APRAŠYMAS</th>
+                    <th>MATO VIENETAS</th>
+                    <th>KIEKIS m2</th>
+                    <th>DARBŲ GRUPĖ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tbody>
+                {% for done_job in report | default('') %}
+                    {% for key, job in done_job.getDoneJobs %}
+                        <tr>
+                            <td style="text-align: center; vertical-align: middle">{{ done_job.Type }} </td>
+                            <td style="text-align: center; vertical-align: middle">{{ key }} </td>
+                            <td>{{ done_job.getDoneJobsName[key] }}</td>
+                            <td>1000 m2</td>
+                            <td style="text-align: center; vertical-align: middle">{{ job }} </td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </tbody>
+            </table>
+    {% endblock %}
+

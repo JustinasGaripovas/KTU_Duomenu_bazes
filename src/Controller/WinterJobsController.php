@@ -119,38 +119,6 @@ class WinterJobsController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($winterJob);
-            $em->flush();
-
-            foreach ($winterJob->getRoadSections() as $roadSection)
-            {
-                $winterJobUnique = new WinterJobUnique();
-
-                $winterJobUnique->setCreatedAt($winterJob->getCreatedAt());
-                $winterJobUnique->setCreatedBy($winterJob->getCreatedBy());
-                $winterJobUnique->setDate($winterJob->getDate());
-                $winterJobUnique->setJob($winterJob->getJob());
-                $winterJobUnique->setJobId($winterJob->getJobId());
-                $winterJobUnique->setJobName($winterJob->getJobName());
-                $winterJobUnique->setJobQuantity($winterJob->getJobQuantity());
-                $winterJobUnique->setMechanism($winterJob->getMechanism());
-                $winterJobUnique->setSubunit($winterJob->getSubunit());
-                $winterJobUnique->setTimeFrom($winterJob->getTimeFrom());
-                $winterJobUnique->setTimeTo($winterJob->getTimeTo());
-                $winterJobUnique->setOriginalId($winterJob->getId());
-                $winterJobUnique->setSubunitName($winterJob->getSubunitName());
-
-                $winterJobUnique->setQuadrature($roadSection->getQuadrature());
-                $winterJobUnique->setSalt($roadSection->getSaltValue());
-                $winterJobUnique->setSand($roadSection->getSandValue());
-                $winterJobUnique->setSolution($roadSection->getSolutionValue());
-
-                $winterJobUnique->setSectionBegin($roadSection->getSectionBegin());
-                $winterJobUnique->setSectionEnd($roadSection->getSectionEnd());
-                $winterJobUnique->setSectionId($roadSection->getSectionId());
-                $winterJobUnique->setSectionType($roadSection->getSectionType());
-
-                $em->persist($winterJobUnique);
-            }
 
             $em->flush();
 

@@ -127,11 +127,8 @@
         forms[7].wrap('<div class = "col-md-3"></div>');
         forms[8].wrap('<div class = "col-md-3"></div>');
         forms[9].wrap('<div class = "col-md-3"></div>');
-
-
-       // $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"></div><div class="col-md-4"><div class="form-additional"> <label class="required">Darbų kiekis, m2 </label> <input readonly type="text" class="form-control JobAmount" value="0"> </div> </div>')
-       // $panelBody.find('#winter_jobs_RoadSections_'+index).append('<div class="col-md-4"><div class="form-additional"> <label class="required">Barstymo norma, g/m2 </label> <input readonly type="text" class="form-control TreatmentRate" value="0"> </div> </div>')
-
+        forms[10].wrap('<div class = "col-md-3"></div>');
+        forms[11].wrap('<div class = "col-md-9"></div>');
 
         $panelBody.find('#winter_jobs_RoadSections_'+index).addClass('row col-12');
        // $panelBody.find('.check_class').wrapAll('<div class = "col-md-3"></div>')
@@ -183,8 +180,10 @@
             var sectionName =       $(this).find('[id*=_SectionName]').attr('id');
             var sectionBegin =      $(this).find('[id*=_SectionBegin]').attr('id');
             var sectionEnd =        $(this).find('[id*=_SectionEnd]').attr('id');
+            var sectionWidth =      $(this).find('[id*=_SectionWidth]').attr('id');
             var quadrature =        $(this).find('[id*=_Quadrature]').attr('id');
             var autocomplete =      $(this).find('[id*=_Autocomplete]').attr('id');
+            var treatmentRate =      $(this).find('[id*=_TreatmentRate]').attr('id');
 
             var saltLabel =         $(this).find('label[for*=_SaltValue]');
             var sandLabel =         $(this).find('label[for*=_SandValue]');
@@ -254,19 +253,22 @@
                 $('#'+sectionBegin).hide();
                 $('#'+sectionEnd).hide();
                 $('#'+quadrature).hide();
+                $('#'+sectionWidth).hide();
 
+                $('#'+sectionWidth).val(null);
                 $('#'+sectionBegin).val(null);
                 $('#'+sectionEnd).val(null);
                 $('#'+quadrature).val(null);
-
             }
 
+            calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel,quadrature,treatmentRate);
 
-            //calculateTreatmentAndAmount(sectionEnd,sectionBegin,0,Salt,Sand,currentPanel);
 
             $(document).on("keyup", this, function(e) {
 
-              //  calculateTreatmentAndAmount(sectionEnd,sectionBegin,0,Salt,Sand,currentPanel);
+                calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel,quadrature,treatmentRate);
+
+
 
             });
 
@@ -282,6 +284,9 @@
                     $('#'+sectionEnd).val(null);
                     $('#'+quadrature).val(null);
                     $('#'+autocomplete).val(null);
+                    $('#'+sectionWidth).hide();
+
+                    $('#'+sectionWidth).val(null);
                     $('#'+sectionBegin).hide();
                     $('#'+sectionEnd).hide();
                     $('#'+quadrature).hide();
@@ -302,9 +307,13 @@
                     $('#'+sectionId).val(ui.item.section_id),
                     $('#'+sectionType).val(ui.item.section_type), //****
                     $('#'+sectionName).val(ui.item.road_name),
+                    $('#'+quadrature).val(ui.item.quadrature),
+                    $('#'+sectionWidth).show().val(ui.item.width),
                     $('#'+sectionBegin).show().val(ui.item.section_begin),
                     $('#'+sectionEnd).show().val(ui.item.section_end),
-                    $('#'+quadrature).show()
+                    $('#'+quadrature).show(),
+                    calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel,quadrature,treatmentRate)
+
                 },
             });
         });
@@ -314,27 +323,38 @@
         return ($e - $s)*1000*$w;
     }
 
-    function calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel) {
-        var sEnd = parseFloat($('#'+sectionEnd).val());
+    function calculateTreatmentAndAmount(sectionEnd,sectionBegin,sectionWidth,Salt,Sand,currentPanel,quad, treatmentRate) {
+        var sEnd =   parseFloat($('#'+sectionEnd).val());
         var sBegin = parseFloat($('#'+sectionBegin).val());
         var sWidth = parseFloat($('#'+sectionWidth).val());
-        var saltV = (parseFloat($('#'+Salt).val())==null)?0:parseFloat($('#'+Salt).val());
-        var sandV = (parseFloat($('#'+Sand).val())==null)?0:parseFloat($('#'+Sand).val());
+        var saltV = (($('#'+Salt).val())=="")?0:parseFloat($('#'+Salt).val());
+        var sandV = (($('#'+Sand).val())=="")?0:parseFloat($('#'+Sand).val());
+
+        console.log(sEnd);
+        console.log(sBegin);
+        console.log(sWidth);
+        console.log(saltV);
+        console.log(sandV);
+
 
         var job_amount = calcuateJobAmount(sBegin,sEnd,sWidth);
 
         var treatment_rate = Number((((saltV + sandV) * Math.pow(10,6))/job_amount).toFixed(2));
 
+        $('#'+treatmentRate).val(treatment_rate);
+
         if(treatment_rate >= 8 && treatment_rate <=80)
         {
-            currentPanel.find(".TreatmentRate").css("background","#77dd77")
+            $('#'+treatmentRate).css("background","#77dd77")
         }else{
-            currentPanel.find(".TreatmentRate").css("background","#ff6961")
-
+            $('#'+treatmentRate).css("background","#ff6961")
         }
 
-        currentPanel.find(".TreatmentRate").val(treatment_rate);
-        currentPanel.find(".JobAmount").val(Number((job_amount).toFixed(2)));
+        console.log(job_amount);
+        console.log(treatment_rate);
+
+        $('#'+treatmentRate).val(treatment_rate);
+        $('#'+quad).val(job_amount);
 
     }
 
@@ -370,7 +390,7 @@
                     {{  form_row(row.SectionEnd) }}
                 </div>
                 <div class="col-md-3">
-                    {{  form_row(row.Quadrature) }}
+                    {{  form_row(row.SectionWidth) }}
                 </div>
 
                 <div class="col-md-1">
@@ -404,17 +424,12 @@
                     {{ form_row(row.SolutionValue) }}
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    {{ form_row(row.Quadrature) }}
                 </div>
-
-                {#
-                    <div class="col-md-4">
-                        <div class="form-additional">
-                            <label class="required">Barstymo norma, g/m2</label>
-                            <input readonly type="text" class="form-control TreatmentRate" value="0">
-                        </div>
-                    </div>
-                #}
+                <div class="col-md-9">
+                    {{ form_row(row.TreatmentRate) }}
+                </div>
 
                 {{ form_row(row.SectionId) }}
                 {{ form_row(row.SectionName) }}

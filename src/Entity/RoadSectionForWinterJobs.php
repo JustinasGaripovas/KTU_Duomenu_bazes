@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoadSectionForWinterJobsRepository")
@@ -47,9 +48,19 @@ class RoadSectionForWinterJobs
     private $Subunit;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float")
      */
-    private $Quadrature;
+    private $AverageWidth;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $MaintenanceLevel;
+
+    public function getQuadrature()
+    {
+        return (float)($this->getAverageWidth() * $this->getSectionLength());
+    }
 
     public function getId(): ?int
     {
@@ -128,14 +139,26 @@ class RoadSectionForWinterJobs
         return $this;
     }
 
-    public function getQuadrature(): ?float
+    public function getAverageWidth(): ?float
     {
-        return $this->Quadrature;
+        return $this->AverageWidth;
     }
 
-    public function setQuadrature(?float $Quadrature): self
+    public function setAverageWidth(float $AverageWidth): self
     {
-        $this->Quadrature = $Quadrature;
+        $this->AverageWidth = $AverageWidth;
+
+        return $this;
+    }
+
+    public function getMaintenanceLevel(): ?string
+    {
+        return $this->MaintenanceLevel;
+    }
+
+    public function setMaintenanceLevel(string $MaintenanceLevel): self
+    {
+        $this->MaintenanceLevel = $MaintenanceLevel;
 
         return $this;
     }

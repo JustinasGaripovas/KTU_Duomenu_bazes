@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Query\Expr\Math;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WinterJobsRepository")
@@ -92,12 +93,28 @@ class WinterJobs
     {
         $str = array();
 
-
         foreach ($this->RoadSections as $road)
         {
             $str[] = $road->getSectionId() . " ( ". $road->getSectionBegin() . "km -> " . $road->getSectionEnd() . "km )";
         }
         return $str;
+    }
+
+    public function calculateJobAmount()
+    {
+        $str = array();
+
+        foreach ($this->RoadSections as $road)
+        {
+            $str[] =$this->calculation($road->getSaltValue(),$road->getSandValue(),$road->getQuadrature())." m2";
+        }
+
+        return $str;
+    }
+
+    private function calculation($salt, $sand, $quad)
+    {
+        return (float)((($salt+$sand)*pow(10,6))/$quad);
     }
 
     public function getRoadSectionsSalt()

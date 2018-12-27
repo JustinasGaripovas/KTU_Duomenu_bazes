@@ -486,12 +486,11 @@ class WinterReportController extends Controller
                 }else{
                     $report = null;
                 }
-
-
+                
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('...xlsx');
+                    $spreadsheet = $reader->load('sum_tmpl_1.xlsx');
 
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -501,19 +500,20 @@ class WinterReportController extends Controller
                         ->setKeywords('Atliktų žiemos medžiagų ataskaita')
                         ->setCategory('Atliktų žiemos medžiagų ataskaita');
 
-                    $index = 3;
-/*
+                    $index = 8;
+
                     foreach ($report as $item) {
-                        foreach ($item["DoneJobs"] as $x => $x_value) {
+                        foreach ($item->getDoneJobs() as $x => $x_value) {
                             $spreadsheet->getActiveSheet()
-                                ->setCellValue('F' . $index, $item->getJobId())
-                                ->setCellValue('G' . $index, $item->getJobName())
-                                ->setCellValue('B' . $index, $item->getDate()->format('Y-m-d'))
-                                ->setCellValue('H' . $index, $item->getJobQuantity())
-                                ->setCellValue('D' . $index, $value->getSectionId() . '(' . $value->getSectionBegin() . '-' . $value->getSectionEnd() . ')');
+                                ->setCellValue('A' . $index, $item->getType())
+                                ->setCellValue('B' . $index, $x)
+                                ->setCellValue('C' . $index, $item->getName($x))
+                                ->setCellValue('D' . $index, "1000 m2")
+                                ->setCellValue('E' . $index, $x_value)
+                                ->setCellValue('F' . $index,    "");
                             $index++;
                         }
-                    }*/
+                    }
 
                     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
                     $writer->save('files/' . $fileName . '.xlsx');

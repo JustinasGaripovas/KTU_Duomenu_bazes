@@ -33,6 +33,11 @@ class WinterDoneJobsObjectForType
         }
     }
 
+    public function getName($index)
+    {
+        return $this->getDoneJobsName()[$index];
+    }
+
     public function contains($job)
     {
        return (array_key_exists($job, $this->DoneJobs));

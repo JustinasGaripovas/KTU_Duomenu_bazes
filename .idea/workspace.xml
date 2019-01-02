@@ -38,14 +38,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/ReserveController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="32" column="13" lean-forward="true" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+            <state relative-caret-position="180">
+              <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
               <folding>
                 <element signature="e#34#74#0#PHP" expanded="true" />
-                <element signature="e#432#457#0#PHP" expanded="true" />
+                <element signature="e#632#657#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -60,10 +60,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/reserve/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="493">
               <caret line="29" column="64" lean-forward="true" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
               <folding>
                 <element signature="e#1657#1793#0#HTML" expanded="true" />
@@ -85,7 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>DateTim</find>
       <find>$index</find>
       <find>SubUnitId</find>
       <find>DoneJobDate</find>
@@ -115,6 +114,7 @@
       <find>btn-lg</find>
       <find>Object 1</find>
       <find>rowspan</find>
+      <find>ajax</find>
     </findStrings>
     <replaceStrings>
       <replace>col-sm-4</replace>
@@ -215,8 +215,8 @@
         <option value="$PROJECT_DIR$/src/Utils/WinterDoneJobsObjectForType.php" />
         <option value="$PROJECT_DIR$/templates/winter_report/winter_done_job_report_sum.twig" />
         <option value="$PROJECT_DIR$/src/Controller/ContractJobsController.php" />
-        <option value="$PROJECT_DIR$/src/Controller/ReserveController.php" />
         <option value="$PROJECT_DIR$/templates/reserve/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Controller/ReserveController.php" />
       </list>
     </option>
   </component>
@@ -324,7 +324,7 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1677" />
+    <option name="x" value="-5" />
     <option name="y" value="-4" />
     <option name="width" value="1851" />
     <option name="height" value="1068" />
@@ -792,7 +792,7 @@
       <workItem from="1546093303486" duration="524000" />
       <workItem from="1546188754311" duration="419000" />
       <workItem from="1546409816753" duration="6460000" />
-      <workItem from="1546417567749" duration="14618000" />
+      <workItem from="1546417567749" duration="14702000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -833,7 +833,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="555675000" />
+    <option name="totallyTimeSpent" value="555759000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -845,7 +845,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1985" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28081813" />
@@ -1318,23 +1318,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ReserveController.php">
+    <entry file="file://$PROJECT_DIR$/templates/reserve/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="32" column="13" lean-forward="true" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        <state relative-caret-position="493">
+          <caret line="29" column="64" lean-forward="true" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
           <folding>
-            <element signature="e#34#74#0#PHP" expanded="true" />
-            <element signature="e#432#457#0#PHP" expanded="true" />
+            <element signature="e#1657#1793#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/reserve/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Controller/ReserveController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="29" column="64" lean-forward="true" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
+        <state relative-caret-position="180">
+          <caret line="13" column="3" lean-forward="true" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
           <folding>
-            <element signature="e#1657#1793#0#HTML" expanded="true" />
+            <element signature="e#34#74#0#PHP" expanded="true" />
+            <element signature="e#632#657#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

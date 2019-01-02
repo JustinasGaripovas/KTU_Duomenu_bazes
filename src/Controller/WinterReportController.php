@@ -490,7 +490,7 @@ class WinterReportController extends Controller
                 if ($form->get('GenerateXLS')->isClicked()) {
                     $fileName = md5($this->getUser()->getUserName() . microtime());
                     $reader = IOFactory::createReader('Xlsx');
-                    $spreadsheet = $reader->load('sum_tmpl_1.xlsx');
+                    $spreadsheet = $reader->load('winter_done_jobs_sum_tmpl.xlsx');
 
                     $spreadsheet->getProperties()->setCreator($this->getUser()->getUserName())
                         ->setLastModifiedBy('VĮ Kelių priežiūra')
@@ -500,7 +500,10 @@ class WinterReportController extends Controller
                         ->setKeywords('Atliktų žiemos medžiagų ataskaita')
                         ->setCategory('Atliktų žiemos medžiagų ataskaita');
 
-                    $index = 8;
+                    $index = 5;
+
+                    $spreadsheet->getActiveSheet()
+                        ->setCellValue('A' . 2, "Data: nuo {$from} iki {$to}" );
 
                     foreach ($report as $item) {
                         foreach ($item->getDoneJobs() as $x => $x_value) {

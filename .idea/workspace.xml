@@ -55,8 +55,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="264" column="95" lean-forward="true" selection-start-line="264" selection-start-column="95" selection-end-line="264" selection-end-column="95" />
+            <state relative-caret-position="548">
+              <caret line="328" column="75" lean-forward="true" selection-start-line="328" selection-start-column="75" selection-end-line="328" selection-end-column="75" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="e#8017#8032#0#Twig" expanded="true" />
@@ -849,7 +849,7 @@
       <workItem from="1546093303486" duration="524000" />
       <workItem from="1546188754311" duration="419000" />
       <workItem from="1546409816753" duration="6460000" />
-      <workItem from="1546417567749" duration="17375000" />
+      <workItem from="1546417567749" duration="17454000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -890,7 +890,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="558432000" />
+    <option name="totallyTimeSpent" value="558511000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1384,8 +1384,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/main/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="264" column="95" lean-forward="true" selection-start-line="264" selection-start-column="95" selection-end-line="264" selection-end-column="95" />
+        <state relative-caret-position="548">
+          <caret line="328" column="75" lean-forward="true" selection-start-line="328" selection-start-column="75" selection-end-line="328" selection-end-column="75" />
           <folding>
             <element signature="n#style#0;n#a#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="e#8017#8032#0#Twig" expanded="true" />

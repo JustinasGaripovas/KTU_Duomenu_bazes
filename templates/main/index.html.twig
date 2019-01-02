@@ -5,34 +5,60 @@
 
 {% block body %}
 
-    <style>/*
-        .btn-squared-default
-        {
-            width: 220px !important;
-            height: 100px !important;
-            font-size: 0.8vw;
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
+
+    <style>
+        @media only screen and (max-width: 576px) {
+
+            .container{
+                padding: 0px;
+            }
+
+            h1{
+                font-size: 8vw;
+                text-align: center;
+            }
+            p{
+                font-size: 4vw;
+            }
         }
 
-        .btn-squared-default:hover
-        {
-            border: 1px solid white;
-
-        }
-        .btn-squared-default-plain
-        {
-            width: 100px !important;
-            height: 100px !important;
-            font-size: 10px;
+        @media (min-width: 576px) {
+            h1{
+                font-size: 2rem;
+                text-align: center;
+            }
+            p{
+                font-size: 1.2rem;
+            }
         }
 
-        .btn-squared-default-plain:hover
-        {
-            border: 0px solid white;
-        }*/
+        @media (min-width: 768px) {
+            h1{
+                text-align: center;
+                font-size: 2rem;
+            }
+            p{
+                text-align: center;
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            h1{
+                font-size: 2.8rem;
+                text-align: left
+
+            }
+            p{
+                font-size: 1.2rem;
+            }
+        }
+
     </style>
 
-    <div class="container" style="padding-right: 50px; padding-left: 50px;">
+    <div class="container">
 
             {% if (is_granted('ADMIN')) %}
                 <h1>Administravimas</h1>
@@ -41,40 +67,46 @@
                             <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                                <a style=" margin: 2px;" class="btn btn-danger btn-lg btn-squared-default btn-block" href="{{ path('ldap_user_index') }}">
                                    <i style="font-size: 3rem" class="fas fa-users"></i>
-                                   <p style="font-size: 1.1rem">{% trans %}LdapUsers list{% endtrans %}</p>
+                                   <p >{% trans %}LdapUsers list{% endtrans %}</p>
                                </a>
                            </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-danger btn-lg  btn-squared-default btn-block" href="{{ path('mechanism_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-snowplow"></i>
-                                    <p style="font-size: 1.1rem">{% trans %}Mechanism{% endtrans %}</p>
+                                    <p>{% trans %}Mechanism{% endtrans %}</p>
                                 </a>
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-danger btn-lg  btn-squared-default btn-block" href="{{ path('road_section_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-road"></i>
-                                    <p style="font-size: 1.1rem">{% trans %}Road Sections{% endtrans %}</p>
+                                    <p>{% trans %}Road Sections{% endtrans %}</p>
                                 </a>
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-danger btn-lg  btn-squared-default btn-block" href="{{ path('winter_road_section') }}">
                                     <i style="font-size: 3rem" class="fas fa-road"></i>
-                                    <p style="font-size: 1.1rem">{% trans %}Winter Road Sections{% endtrans %}</p>
+                                    <p>{% trans %}Winter Road Sections{% endtrans %}</p>
                                 </a>
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-danger btn-lg  btn-squared-default btn-block" href="{{ path('structure_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-file-signature"></i>
-                                    <p style="font-size: 1.1rem">{% trans %} Contract Jobs {% endtrans %}</p>
+                                    <p>{% trans %} Contract Jobs {% endtrans %}</p>
                                 </a>
                             </div>
 
                             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-danger btn-squared-default btn-block" href="{{ path('job_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-business-time"></i>
-                                    <p style="font-size: 1.1rem">{% trans %} Jobs {% endtrans %}</p>
+                                    <p>{% trans %} Jobs {% endtrans %}</p>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
+                                <a style=" margin: 2px;" class="btn btn-danger btn-squared-default btn-block" href="{{ path('reserve') }}">
+                                    <i style="font-size: 3rem" class="fas fa-warehouse"></i>
+                                    <p>{% trans %} Likučiai {% endtrans %}</p>
                                 </a>
                             </div>
                         </div>
@@ -89,13 +121,13 @@
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('inspection_new') }}">
                                 <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
-                                <p style="font-size: 1.1rem">{% trans %}New Inspection {% endtrans %}</p>
+                                <p>{% trans %}New Inspection {% endtrans %}</p>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('inspection_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-list-ul"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Inspections List{% endtrans %}</p>
+                                <p>{% trans %}Inspections List{% endtrans %}</p>
                             </a>
                         </div>
                     </div>
@@ -109,13 +141,13 @@
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('done_jobs_new') }}">
                                 <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
-                                <p style="font-size: 1.1rem">{% trans %}New Job {% endtrans %}</p>
+                                <p>{% trans %}New Job {% endtrans %}</p>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('done_jobs_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-tools"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Jobs list{% endtrans %}</p>
+                                <p>{% trans %}Jobs list{% endtrans %}</p>
                             </a>
                         </div>
                     </div>
@@ -133,13 +165,12 @@
                             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('restriction_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-unlock-alt"></i>
-                                    <p style="font-size: 1.1rem">{% trans %}Restrictions{% endtrans %}</p>
+                                    <p>{% trans %}Restrictions{% endtrans %}</p>
                                 </a>
                             </div>
 
                         {% endif %}
                     </div>
-
 
                     <div class="col-md-6 row" style="margin: 0px;padding: 0px;">
                         {% if is_granted('FLOOD') %}
@@ -148,7 +179,7 @@
                             <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" align="center">
                                 <a style=" margin: 2px;" class="btn btn-warning btn-lg  btn-squared-default btn-block" href="{{ path('flooded_roads_index') }}">
                                     <i style="font-size: 3rem" class="fas fa-water"></i>
-                                    <p style="font-size: 1.1rem">{% trans %}Flooded Roads List{% endtrans %}</p>
+                                    <p>{% trans %}Flooded Roads List{% endtrans %}</p>
                                 </a>
                             </div>
                         {% endif %}
@@ -157,20 +188,20 @@
 
 
             {% if is_granted('INSURED') %}
-                <h1>{% trans %}Insured Events{% endtrans %} ir {% trans %}Uninsured Events{% endtrans %}</h1>
+                <h1>{% trans %}Insured Events{% endtrans %}</h1>
 
                 <div class="card border-success mb-3">
                     <div class="row p-3">
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('insured_event_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-file-signature"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Insured Events{% endtrans %}</p>
+                                <p>{% trans %}Insured Events{% endtrans %}</p>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('uninsured_event_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-file-excel"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Uninsured Events{% endtrans %}</p>
+                                <p>{% trans %}Uninsured Events{% endtrans %}</p>
                             </a>
                         </div>
                     </div>
@@ -187,13 +218,13 @@
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_maintenance_new') }}">
                                 <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
-                                <p style="font-size: 0.8rem">{% trans %}Winter Maintenance New{% endtrans %}</p>
+                                <p>{% trans %}Winter Maintenance New{% endtrans %}</p>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg  btn-squared-default btn-block" href="{{ path('winter_maintenance_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-snowflake"></i>
-                                <p style="font-size: 0.9rem">{% trans %}Winter Maintenance List{% endtrans %}</p>
+                                <p>{% trans %}Winter Maintenance List{% endtrans %}</p>
                             </a>
                         </div>
 
@@ -201,13 +232,13 @@
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_jobs_new') }}">
                                 <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Winter Jobs New {% endtrans %}</p>
+                                <p>{% trans %}Winter Jobs New {% endtrans %}</p>
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg  btn-squared-default btn-block" href="{{ path('winter_jobs_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-snowplow"></i>
-                                <p style="font-size: 1.1rem">{% trans %}Winter Jobs List{% endtrans %}</p>
+                                <p>{% trans %}Winter Jobs List{% endtrans %}</p>
                             </a>
                         </div>
                     </div>

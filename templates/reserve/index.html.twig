@@ -1,0 +1,41 @@
+
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
+{% block title %}WinterJobs index{% endblock %}
+{% block body %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            //Initializing and information reading
+            connectionStatus();
+            readReserves();
+
+            //Further processing
+
+
+        });
+        
+        function connectionStatus() {
+            var json = {{ connectionStatus|json_encode|raw }};
+            var myObj = JSON.parse(json);
+            $('#connection').html("Statusas: " + myObj.status + " <br/> Kodas:" + myObj.description);
+        }
+
+        function readReserves() {
+            var json = {{ reserves|json_encode|raw }};
+            var myObj = JSON.parse(json);
+            $('#reserves').html("Statusas: " + myObj.status + " <br/> " + myObj.description);
+        }
+
+    </script>
+
+    <p id="connection" style="background: #66dd66; text-align: center;"></p>
+
+    <div class="container-fluid" style="background: #5eb5e0;">
+        <p id="reserves" style="text-align: center;"></p>
+    </div>
+
+
+{% endblock %}

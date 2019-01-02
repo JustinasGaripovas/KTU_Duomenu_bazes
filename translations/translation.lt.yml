@@ -135,8 +135,8 @@ Mechanism: Mechanizmai
 Create new mechanism: Sukurti naują mechanizmą
 Mechanism number: Mechanizmo numeris
 Edit mechanism: Redaguoti mechanizmą
-Winter Maintenance New: Eismo ir oro sąlygos (Naujas įrašas)
-Winter Maintenance List: Eismo ir oro sąlygos (Sąrašas)
+Winter Maintenance New: Eismo ir oro sąlygos </br> (Naujas įrašas)
+Winter Maintenance List: Eismo ir oro sąlygos </br> (Sąrašas)
 Winter Maintenance: Žiemos priežiūra
 RoadCondition: Kelių būklė
 TrafficChanges: Eismo pokytis
@@ -156,7 +156,7 @@ Salt checked: Druska
 Sand checked: Smėlis
 Mix checked: Mišinys
 Solution checked: Tirpalas
-Winter Jobs New: Žiemos darbai (Įvedimas)
+Winter Jobs New: Žiemos darbai </br> (Įvedimas)
 Winter Jobs List: Žiemos darbų sąrašas
 CreatedAt: Įrašo data
 Maintenance level: Priežiūros lygis

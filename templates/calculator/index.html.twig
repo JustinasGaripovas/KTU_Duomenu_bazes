@@ -1,20 +1,60 @@
+
+
 {% extends 'base.html.twig' %}
+{% trans_default_domain 'translation' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+    {% block body %}
+        <script>
+            $( function() {
+                $( ".js-datepicker-1" ).datepicker();
+                $( ".js-datepicker-2" ).datepicker();
+            });
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+            $('#subunitInput').autocomplete({
+                source: "{{ path('search/sections') }}",
+                minLength: 1,
+                delay: 500,
+                select: function( event, ui ) {
+                    $('#subunitInput').val(ui.item.subunitInput)
+                },
+            });
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        </script>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/CalculatorController.php'|file_link(0) }}">src/Controller/CalculatorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/calculator/index.html.twig'|file_link(0) }}">templates/calculator/index.html.twig</a></code></li>
-    </ul>
-</div>
-{% endblock %}
+        <br>
+        <hr>
+
+        {{ include('/reports/form.html.twig') }}
+
+        <table class="table" style="margin-bottom: 50px;">
+            <thead>
+            <tr>
+                <th>Subunit</th>
+                <th>DARBO KODAS</th>
+                <th>DARBŲ APRAŠYMAS</th>
+                <th>DARBŲ APRAŠYMAS</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for key, timeStamps in results %}
+                {% for times in timeStamps.getTimeStamps %}
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle">{{ subunits[times.getSubunit] }} </td>
+                        <td style="text-align: center; vertical-align: middle">{{ key }} </td>
+                        <td style="text-align: center; vertical-align: middle">{{ times.getTimeFrom|date('H:i') }} </td>
+                        <td style="text-align: center; vertical-align: middle">{{ times.getTimeTo|date('H:i') }} </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+    {% endblock %}
+

@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="530a509b-f121-492f-ba96-c5629620109f" name="Default Changelist" comment="Flooded roads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/WinterReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/WinterReportController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="500" column="75" lean-forward="true" selection-start-line="500" selection-start-column="75" selection-end-line="500" selection-end-column="75" />
+            <state relative-caret-position="279">
+              <caret line="477" column="22" selection-start-line="477" selection-start-column="22" selection-end-line="477" selection-end-column="22" />
               <folding>
                 <element signature="e#34#74#0#PHP" expanded="true" />
                 <element signature="e#10005#13156#0#PHP" />
@@ -833,7 +832,7 @@
       <workItem from="1546093303486" duration="524000" />
       <workItem from="1546188754311" duration="419000" />
       <workItem from="1546409816753" duration="6460000" />
-      <workItem from="1546417567749" duration="673000" />
+      <workItem from="1546417567749" duration="992000" />
     </task>
     <task id="LOCAL-00001" summary="last changes">
       <created>1537446173093</created>
@@ -874,7 +873,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="541730000" />
+    <option name="totallyTimeSpent" value="542049000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1331,8 +1330,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/WinterReportController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="500" column="75" lean-forward="true" selection-start-line="500" selection-start-column="75" selection-end-line="500" selection-end-column="75" />
+        <state relative-caret-position="279">
+          <caret line="477" column="22" selection-start-line="477" selection-start-column="22" selection-end-line="477" selection-end-column="22" />
           <folding>
             <element signature="e#34#74#0#PHP" expanded="true" />
             <element signature="e#10005#13156#0#PHP" />

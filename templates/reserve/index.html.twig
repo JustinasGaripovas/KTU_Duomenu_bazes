@@ -2,26 +2,71 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'translation' %}
 {% block title %}WinterJobs index{% endblock %}
+
+
+{% block top_menu %}
+
+   <script>
+       function connectionStatus() {
+           var json = {{ connectionStatus|json_encode|raw }};
+           var myObj = JSON.parse(json);
+           $('#connection').html(myObj.description.split("-")[0]);
+       }
+
+       $(document).ready(function () {
+           connectionStatus();
+       });
+   </script>
+
+   <nav class="navbar navbar-default navbar-static-top navbar navbar-dark bg-dark" style="margin-bottom: 0">
+       <div class="navbar-header">
+           <a class="navbar-brand" href="{{ path('main') }}">DAIS</a>
+       </div>
+       <ul class="nav navbar-top-links navbar-right">
+           <li class="divider"></li>
+           <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out fa-fw"></i>{% trans %} Logout{% endtrans %}</a>
+           </li>
+       </ul>
+   </nav>
+    {#
+        TODO add red when status is not 00 or yellow if only some part is not working
+    #}
+   <p id="connection" style="background: #66dd66; text-align: center;"></p>
+
+{% endblock %}
+
+
 {% block body %}
+
+
+    <style>
+
+    </style>
 
     <script>
 
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+                $("#desktop-table").hide();
+                $("#mobile-table").show();
+            } else {
+                $("#desktop-table").show();
+                $("#mobile-table").hide();
+            }
+        }
+
         $(document).ready(function () {
 
-            //Initializing and information reading
-            connectionStatus();
-            readReserves();
+            //table media query
+            var x = window.matchMedia("(max-width: 600px)")
+            myFunction(x) // Call listener function at run time
+            x.addListener(myFunction) // Attach listener function on state changes
 
-            //Further processing
+            //Initializing and information reading
+            readReserves();
 
 
         });
-        
-        function connectionStatus() {
-            var json = {{ connectionStatus|json_encode|raw }};
-            var myObj = JSON.parse(json);
-            $('#connection').html("Statusas: " + myObj.status + " <br/> Kodas:" + myObj.description);
-        }
 
         function readReserves() {
             var json = {{ reserves|json_encode|raw }};
@@ -31,11 +76,148 @@
 
     </script>
 
-    <p id="connection" style="background: #66dd66; text-align: center;"></p>
+    <p id="reserves" style="text-align: center;background: #5eb5e0;"></p>
 
-    <div class="container-fluid" style="background: #5eb5e0;">
-        <p id="reserves" style="text-align: center;"></p>
-    </div>
+    <!------ Include the above in your HEAD tag ---------->
+
+
+
+    <table id="desktop-table" class="table table-striped">
+        <thead>
+        <tr class="table-success">
+            <td></td>
+            <th>Thing A</th>
+            <th>Thing B</th>
+            <th>Thing C</th>
+            <th>Thing D</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th> Object 1</th>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Object 2</th>
+            <td>❌</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Object 3</th>
+            <td>❌</td>
+            <td>❌</td>
+            <td>✔</td>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Object 4</th>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>✔</td>
+        </tr>
+        <tbody>
+    </table>
+
+    <table id="mobile-table" class="table table-striped">
+        <thead>
+        <tr>
+            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Thing A</th>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Thing B</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing C</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing D</th>
+            <td>❌</td>
+        </tr>
+        <tbody>
+        <thead>
+        <tr>
+            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Thing A</th>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Thing B</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing C</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing D</th>
+            <td>❌</td>
+        </tr>
+        <tbody>
+        <thead>
+        <tr>
+            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Thing A</th>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Thing B</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing C</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing D</th>
+            <td>❌</td>
+        </tr>
+        <tbody>
+        <thead>
+        <tr>
+            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Thing A</th>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Thing B</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing C</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing D</th>
+            <td>❌</td>
+        </tr>
+        <tbody>
+    </table>
 
 
 {% endblock %}

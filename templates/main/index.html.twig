@@ -20,6 +20,7 @@
             }
             p{
                 font-size: 4vw;
+                word-wrap: break-word;overflow-x: hidden
             }
         }
 
@@ -30,6 +31,7 @@
             }
             p{
                 font-size: 1.2rem;
+                overflow-wrap: break-word;overflow-x: hidden
             }
         }
 
@@ -41,6 +43,7 @@
             p{
                 text-align: center;
                 font-size: 1.4rem;
+                overflow-wrap: break-word;overflow-x: hidden
             }
         }
 
@@ -52,6 +55,7 @@
             }
             p{
                 font-size: 1.2rem;
+                overflow-wrap: break-word;overflow-x: hidden
             }
         }
 
@@ -153,38 +157,45 @@
                 </div>
             {% endif %}
 
-
-                <div class="row" style="margin: 0px;padding: 0px;">
-
-                    <div class="col-md-6 row" style="margin: 0px;padding: 0px;">
-                        {% if is_granted('RESTRICTIONS') %}
-                            <h1 class="col-12">{% trans %} Restrictions {% endtrans %}</h1>
-
-
-                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" align="center">
-                                <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('restriction_index') }}">
-                                    <i style="font-size: 3rem" class="fas fa-unlock-alt"></i>
-                                    <p>{% trans %}Restrictions{% endtrans %}</p>
-                                </a>
-                            </div>
-
-                        {% endif %}
-                    </div>
-
-                    <div class="col-md-6 row" style="margin: 0px;padding: 0px;">
-                        {% if is_granted('FLOOD') %}
-                            <h1 class="col-12">{% trans %} Flooded roads {% endtrans %}</h1>
-
-                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" align="center">
-                                <a style=" margin: 2px;" class="btn btn-warning btn-lg  btn-squared-default btn-block" href="{{ path('flooded_roads_index') }}">
-                                    <i style="font-size: 3rem" class="fas fa-water"></i>
-                                    <p>{% trans %}Flooded Roads List{% endtrans %}</p>
-                                </a>
-                            </div>
-                        {% endif %}
+            {% if is_granted('RESTRICTIONS') %}
+                <h1>{% trans %} Restrictions {% endtrans %}</h1>
+                <div class="card border-success mb-3">
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('restriction_new') }}">
+                                <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
+                                <p>{% trans %}New{% endtrans %}</p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-success btn-lg  btn-squared-default btn-block" href="{{ path('restriction_index') }}">
+                                <i style="font-size: 3rem" class="fas fa-unlock-alt"></i>
+                                <p>{% trans %}Restrictions{% endtrans %}</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
+            {% endif %}
 
+            {% if is_granted('FLOOD') %}
+                <h1>{% trans %} Flooded roads {% endtrans %}</h1>
+                <div class="card border-warning mb-3">
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-warning btn-lg btn-squared-default btn-block" href="{{ path('flooded_roads_new') }}">
+                                <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
+                                <p>{% trans %}New{% endtrans %}</p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-warning btn-lg  btn-squared-default btn-block" href="{{ path('flooded_roads_index') }}">
+                                <i style="font-size: 3rem" class="fas fa-water"></i>
+                                <p>{% trans %}Flooded Roads List{% endtrans %}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
 
             {% if is_granted('INSURED') %}
                 <h1>{% trans %}Insured Events{% endtrans %}</h1>
@@ -205,7 +216,6 @@
                         </div>
                     </div>
                 </div>
-
             {% endif %}
 
 
@@ -220,6 +230,7 @@
                                 <p>{% trans %}Winter Maintenance New{% endtrans %}</p>
                             </a>
                         </div>
+
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg  btn-squared-default btn-block" href="{{ path('winter_maintenance_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-snowflake"></i>
@@ -227,17 +238,17 @@
                             </a>
                         </div>
 
-
                         <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_jobs_new') }}">
                                 <i style="font-size: 3rem" class="fas fa-folder-plus"></i>
                                 <p>{% trans %}Winter Jobs New {% endtrans %}</p>
                             </a>
                         </div>
+
                         <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12" align="center">
                             <a style=" margin: 2px;" class="btn btn-primary btn-lg  btn-squared-default btn-block" href="{{ path('winter_jobs_index') }}">
                                 <i style="font-size: 3rem" class="fas fa-snowplow"></i>
-                                <p>{% trans %}Winter Jobs List{% endtrans %}</p>
+                                <p><br>{% trans %}Winter Jobs List{% endtrans %}</p>
                             </a>
                         </div>
                     </div>
@@ -246,24 +257,124 @@
             {% endif %}
 
             {% if is_granted('REPORTS') %}
-            <h1>{% trans %}Reports{% endtrans %}</h1>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('reports') }}">{% trans %}Done Jobs report{% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('inspection_reports') }}">{% trans %} Inspection report{% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('insured_events_report') }}">{% trans %} Insured Events {% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('report_done_jobs_by road_level') }}">{% trans %} Sum report {% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('reports_restrictions') }}">{% trans %} Restriction {% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('reports_filter') }}">{% trans %} Report with filter {% endtrans %}</a>
-            <a class="btn btn-success btn-squared-default btn-block" href="{{ path('reports_filter_inspection') }}">{% trans %} Bendra patrulinių {% endtrans %}</a>
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_report_jobs') }}">{% trans %} Žiemos darbų ataskaita {% endtrans %}</a>
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_done_jobs') }}">{% trans %} Žiemos atliktu darbų ataskaita{% endtrans %}</a>
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_done_jobs_type') }}">{% trans %} Žiemos atliktu darbų suminė ataskaita{% endtrans %}</a>
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('wintermaintenance_LAKD') }}">{% trans %} Žiemos ataskaita LAKD {% endtrans %}</a>
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_report_materials') }}">{% trans %} Žiemos medžiagų ataskaita{% endtrans %}</a>
-            {% if (is_granted('ADMIN') or is_granted('SUPER_VIEWER') ) %}
-                <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_report_materials_region') }}">{% trans %} Žiemos medžiagų ataskaita regioninė{% endtrans %}</a>
-            {% endif %}
-            <a class="btn btn-primary btn-squared-default btn-block" href="{{ path('winter_report_mechanism') }}">{% trans %} Žiemos mechanizmų ataskaita {% endtrans %}</a>
-            <a class="btn btn-warning btn-squared-default btn-block" href="{{ path('flooded_roads_reports') }}">{% trans %} Flooded Roads report {% endtrans %}</a>
+                <h1>{% trans %}Reports{% endtrans %}</h1>
+
+            <div class="card border-success mb-3">
+                <div class="row p-3">
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('reports') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Done Jobs report{% endtrans %}</p>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('inspection_reports') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Inspection report{% endtrans %}</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('insured_events_report') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Insured Events{% endtrans %}</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('report_done_jobs_by road_level') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Sum report{% endtrans %}</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('reports_restrictions') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Restriction{% endtrans %}</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('reports_filter') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Report with filter{% endtrans %}</p>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                        <a style=" margin: 2px;" class="btn btn-success btn-lg btn-squared-default btn-block" href="{{ path('reports_filter_inspection') }}">
+                            <i style="font-size: 3rem" class="far fa-file"></i>
+                            <p>{% trans %}Bendra patrulinių{% endtrans %}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+                <h1>{% trans %}Žiemos ataskaitos{% endtrans %}</h1>
+
+                <div class="card border-primary mb-3">
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_report_jobs') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos darbų <br> ataskaita{% endtrans %}</p>
+                            </a>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_done_jobs') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos atliktu <br> darbų ataskaita{% endtrans %}</p>
+                            </a>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_done_jobs_type') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos atliktu <br> darbų suminė ataskaita{% endtrans %}</p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('wintermaintenance_LAKD') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos ataskaita <br> LAKD{% endtrans %}</p>
+                            </a>
+                        </div>
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_report_materials') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos medžiagų <br> ataskaita{% endtrans %}</p>
+                            </a>
+                        </div>
+                        {% if (is_granted('ADMIN') or is_granted('SUPER_VIEWER') ) %}
+
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_report_materials_region') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p style="  overflow-wrap: break-word;">{% trans %}Žiemos medžiagų <br> ataskaita regioninė{% endtrans %}</p>
+                            </a>
+                        </div>
+
+                        {% endif %}
+
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                            <a style=" margin: 2px;" class="btn btn-primary btn-lg btn-squared-default btn-block" href="{{ path('winter_report_mechanism') }}">
+                                <i style="font-size: 3rem" class="far fa-file"></i>
+                                <p>{% trans %}Žiemos mechanizmų <br> ataskaita{% endtrans %}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <h1>{% trans %}Kitos ataskaitos{% endtrans %}</h1>
+
+                <div class="card border-warning mb-3">
+                    <div class="row p-3">
+                        <div class="col-lg-3 col-md-6  col-sm-12 col-xs-12" align="center">
+                          <a style=" margin: 2px;" class="btn btn-warning btn-lg btn-squared-default btn-block" href="{{ path('flooded_roads_reports') }}">
+                              <i style="font-size: 3rem" class="far fa-file"></i>
+                              <p>{% trans %}Flooded Roads report{% endtrans %}</p>
+                          </a>
+                         </div>
+                    </div>
+              </div>
             {% endif %}
 
     </div>

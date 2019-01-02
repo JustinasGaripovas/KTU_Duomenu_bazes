@@ -23,7 +23,6 @@ class ReserveController extends AbstractController
      */
     public function index()
     {
-
         return $this->render('reserve/index.html.twig', [
             'controller_name' => 'ReserveController',
             'connectionStatus' => $this->connectionStatus(),

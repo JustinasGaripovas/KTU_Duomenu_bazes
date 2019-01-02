@@ -14,6 +14,7 @@ class WinterDoneJobsObjectForType
     private $Type;
     private $DoneJobs = array();
     private $DoneJobsName=array();
+    private $DoneJobQuantity=array();
 
     public function __construct($t)
     {
@@ -22,7 +23,7 @@ class WinterDoneJobsObjectForType
 
     }
 
-    public function addJob($job, $amount, $jobName)
+    public function addJob($job, $amount, $jobName, $jobQuantity)
     {
         if($this->contains($job))
         {
@@ -30,12 +31,19 @@ class WinterDoneJobsObjectForType
         }else{
             $this->DoneJobs[$job] = $amount;
             $this->DoneJobsName[$job] = $jobName;
+            $this->DoneJobQuantity[$job] = $jobQuantity;
         }
     }
 
     public function getName($index)
     {
         return $this->getDoneJobsName()[$index];
+    }
+
+    public function getJobQuantity($index)
+    {
+        return $this->getDoneJobQuantity()[$index];
+
     }
 
     public function contains($job)
@@ -88,5 +96,21 @@ class WinterDoneJobsObjectForType
     public function setType($Type): void
     {
         $this->Type = $Type;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDoneJobQuantity(): array
+    {
+        return $this->DoneJobQuantity;
+    }
+
+    /**
+     * @param array $DoneJobQuantity
+     */
+    public function setDoneJobQuantity(array $DoneJobQuantity): void
+    {
+        $this->DoneJobQuantity = $DoneJobQuantity;
     }
 }

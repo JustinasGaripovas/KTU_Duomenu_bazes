@@ -511,7 +511,7 @@ class WinterReportController extends Controller
                                 ->setCellValue('A' . $index, $item->getType())
                                 ->setCellValue('B' . $index, $x)
                                 ->setCellValue('C' . $index, $item->getName($x))
-                                ->setCellValue('D' . $index, "1000 m2")
+                                ->setCellValue('D' . $index, $item->getJobQuantity($x))
                                 ->setCellValue('E' . $index, $x_value)
                                 ->setCellValue('F' . $index,    "");
                             $index++;
@@ -703,7 +703,7 @@ class WinterReportController extends Controller
             foreach ($winterJobArray as $winterJob) {
                 foreach ($winterJob->getRoadSections() as $road) {
                     if ($road->getSectionType() == $type) {
-                        $x->addJob($winterJob->getJobId(), $road->getQuadrature(),$winterJob->getJobName());
+                        $x->addJob($winterJob->getJobId(), $road->getQuadrature(),$winterJob->getJobName(), $winterJob->getJobQuantity());
                     }
                 }
             }

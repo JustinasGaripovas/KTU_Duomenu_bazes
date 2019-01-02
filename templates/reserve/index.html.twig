@@ -5,16 +5,36 @@
 
 
 {% block top_menu %}
-
    <script>
        function connectionStatus() {
            var json = {{ connectionStatus|json_encode|raw }};
            var myObj = JSON.parse(json);
            $('#connection').html(myObj.description.split("-")[0]);
+           $('#connection').css("background","#66dd66");
+
        }
 
        $(document).ready(function () {
            connectionStatus();
+
+           time=setInterval(function(){
+               var ajax = $.ajax({
+                   url: '/reserve/connection_ajax',
+                   type: 'POST',
+                   dataType: 'json',
+                   async: true,
+               });
+
+               ajax.done(function(data) {
+                   $('#connection').html("OK");
+                   $('#connection').css("background","#66dd66");
+               }).fail(function(jqXHR, textStatus, errorThrown) {
+                   $('#connection').html("BAD");
+                   $('#connection').css("background","#dd4233");
+               });
+           },30000);
+
+
        });
    </script>
 
@@ -28,11 +48,16 @@
            </li>
        </ul>
    </nav>
+
+    <div id="connection" style="opacity: 0.8;border:1px solid #2A3F54;position: fixed;left: 10px; bottom: 1%; width: 100px; height: 25px; text-align: center; ">
+        WAITING
+    </div>
+
     {#
         TODO add red when status is not 00 or yellow if only some part is not working
-    #}
-   <p id="connection" style="background: #66dd66; text-align: center;"></p>
+           <p id="connection" style="background: #66dd66; text-align: center;"></p>
 
+    #}
 {% endblock %}
 
 

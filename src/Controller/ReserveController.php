@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +28,7 @@ class ReserveController extends AbstractController
     /*
      * Gets the JSON from http://192.168.192.25/ws2/online to verify connection success.
      */
-    private function connectionStatus()
+    public function connectionStatus()
     {
         try {
             $ctx = stream_context_create(array(
@@ -48,6 +51,18 @@ class ReserveController extends AbstractController
         }
 
         return $jsonContent;
+    }
+
+    /**
+     * @Route("/reserve/connection_ajax", name="connection_ajax")
+     */
+    public function ajaxAction(Request $request) {
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+            return new JsonResponse($this->connectionStatus());
+        } else {
+            return $this->render('structure/winter_road_content.twig');
+        }
     }
 
     /*

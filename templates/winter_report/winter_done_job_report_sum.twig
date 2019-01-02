@@ -17,19 +17,17 @@
         {{ include('/reports/form.html.twig') }}
         <br>
         <hr>
-
             <table class="table">
                 <thead>
-                <tr>
-                    <th>KELIO KATEGORIJA</th>
-                    <th>DARBO KODAS</th>
-                    <th>DARBŲ APRAŠYMAS</th>
-                    <th>MATO VIENETAS</th>
-                    <th>KIEKIS m2</th>
-                    <th>DARBŲ GRUPĖ</th>
-                </tr>
+                    <tr>
+                        <th>KELIO KATEGORIJA</th>
+                        <th>DARBO KODAS</th>
+                        <th>DARBŲ APRAŠYMAS</th>
+                        <th>MATO VIENETAS</th>
+                        <th>KIEKIS m2</th>
+                        <th>DARBŲ GRUPĖ</th>
+                    </tr>
                 </thead>
-                <tbody>
                 <tbody>
                 {% for done_job in report | default('') %}
                     {% for key, job in done_job.getDoneJobs %}
@@ -47,7 +45,6 @@
                         <td colspan="13">{% trans %}no records found{% endtrans %}</td>
                     </tr>
                 {% endfor %}
-                </tbody>
                 </tbody>
             </table>
     {% endblock %}

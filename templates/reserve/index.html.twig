@@ -8,15 +8,16 @@
    <script>
        function connectionStatus() {
            var json = {{ connectionStatus|json_encode|raw }};
-           var myObj = JSON.parse(json);
-           $('#connection').html(myObj.description.split("-")[0]);
-           $('#connection').css("background","#66dd66");
+           var myObj = json;
 
+           console.log(myObj);
+
+           $('#connection').html(myObj.description.split("-")[1]);
+           $('#connection').css("background","#66dd66");
        }
 
-       $(document).ready(function () {
-           connectionStatus();
-
+       function connectionStatusInterval(seconds)
+       {
            time=setInterval(function(){
                var ajax = $.ajax({
                    url: '/reserve/connection_ajax',
@@ -32,9 +33,12 @@
                    $('#connection').html("BAD");
                    $('#connection').css("background","#dd4233");
                });
-           },30000);
+           },seconds*1000);
+       }
 
-
+       $(document).ready(function () {
+           connectionStatus();
+           connectionStatusInterval(20);
        });
    </script>
 
@@ -88,15 +92,139 @@
             x.addListener(myFunction) // Attach listener function on state changes
 
             //Initializing and information reading
-            readReserves();
 
+
+            //Generateing tables
+            generateTableDesktop(readReserves());
+
+            //Generating mobile table
+            generateTableMobile(readReserves());
 
         });
+        
+        function generateTableMobile(infoArray) {
+            /*
+            *
+        <table id="mobile-table" class="table table-striped">
+        <thead>
+        <tr>
+            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Thing A</th>
+            <td>✔</td>
+        </tr>
+        <tr>
+            <th>Thing B</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing C</th>
+            <td>❌</td>
+        </tr>
+        <tr>
+            <th>Thing D</th>
+            <td>❌</td>
+        </tr>
+        <tbody>
 
-        function readReserves() {
-            var json = {{ reserves|json_encode|raw }};
-            var myObj = JSON.parse(json);
-            $('#reserves').html("Statusas: " + myObj.status + " <br/> " + myObj.description);
+    </table>
+            * */
+
+            var text = '<table id="mobile-table" class="table table-striped">';
+
+            for (var key in infoArray['list']) {
+                text += '<thead><tr><th class="table-success" colspan="2" style="text-align: center;">' + infoArray['list'][key]['pav'] + '</th></tr></thead>';
+                text += "<tbody>";
+                for (var key1 in infoArray['list'][key]) {
+
+                    text += "<tr><th>" + key1 + "</th>";
+
+                    text += "<td>" + infoArray['list'][key][key1] + "</td></tr>";
+                }
+                text += '</tbody>'
+            }
+            text += '</table>';
+
+            $("#main_container").append(text);
+
+        }
+        
+        function generateTableDesktop(infoArray) {
+
+                /*
+        <table id="desktop-table" class="table table-striped">
+           <thead>
+           <tr class="table-success">
+               <td></td>
+               <th>Thing A</th>
+               <th>Thing B</th>
+               <th>Thing C</th>
+               <th>Thing D</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr>
+               <th> Object 1</th>
+               <td>✔</td>
+               <td>✔</td>
+               <td>✔</td>
+               <td>✔</td>
+           </tr>
+           <tr>
+               <th>Object 2</th>
+               <td>❌</td>
+               <td>✔</td>
+               <td>✔</td>
+               <td>✔</td>
+           </tr>
+           <tr>
+               <th>Object 3</th>
+               <td>❌</td>
+               <td>❌</td>
+               <td>✔</td>
+               <td>✔</td>
+           </tr>
+           <tr>
+               <th>Object 4</th>
+               <td>❌</td>
+               <td>❌</td>
+               <td>❌</td>
+               <td>✔</td>
+           </tr>
+           <tbody>
+        </table>
+        */
+
+       var text = '<table id="desktop-table" class="table table-striped"><thead><tr class="table-success">'
+
+       for (var key in infoArray['list'][0]) {
+           text += '<th>'+key+'</th>';
+       }
+
+       text += '</tr></thead><tbody>';
+
+       for (var key1 in infoArray['list']) {
+           text+="<tr>";
+           for (var key2 in infoArray['list'][key1]) {
+               text += "<td>"+infoArray['list'][key1][key2]+"</td>";
+           }
+           text+="</tr>";
+       }
+
+       text +="<tbody></table>"
+
+       $("#main_container").append(text);
+
+   }
+
+   function readReserves() {
+       var json = {{ reserves|json_encode|raw }};
+            var myObj = json;
+
+            return myObj;
         }
 
     </script>
@@ -106,143 +234,9 @@
     <!------ Include the above in your HEAD tag ---------->
 
 
+    <div id="main_container" class="container-fluid">
 
-    <table id="desktop-table" class="table table-striped">
-        <thead>
-        <tr class="table-success">
-            <td></td>
-            <th>Thing A</th>
-            <th>Thing B</th>
-            <th>Thing C</th>
-            <th>Thing D</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th> Object 1</th>
-            <td>✔</td>
-            <td>✔</td>
-            <td>✔</td>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Object 2</th>
-            <td>❌</td>
-            <td>✔</td>
-            <td>✔</td>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Object 3</th>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✔</td>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Object 4</th>
-            <td>❌</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>✔</td>
-        </tr>
-        <tbody>
-    </table>
-
-    <table id="mobile-table" class="table table-striped">
-        <thead>
-        <tr>
-            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>Thing A</th>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Thing B</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing C</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing D</th>
-            <td>❌</td>
-        </tr>
-        <tbody>
-        <thead>
-        <tr>
-            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>Thing A</th>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Thing B</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing C</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing D</th>
-            <td>❌</td>
-        </tr>
-        <tbody>
-        <thead>
-        <tr>
-            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>Thing A</th>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Thing B</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing C</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing D</th>
-            <td>❌</td>
-        </tr>
-        <tbody>
-        <thead>
-        <tr>
-            <th class="table-success" colspan="2" style="text-align: center;"> Object 1</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>Thing A</th>
-            <td>✔</td>
-        </tr>
-        <tr>
-            <th>Thing B</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing C</th>
-            <td>❌</td>
-        </tr>
-        <tr>
-            <th>Thing D</th>
-            <td>❌</td>
-        </tr>
-        <tbody>
-    </table>
+    </div>
 
 
 {% endblock %}

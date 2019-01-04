@@ -347,13 +347,21 @@
         {
             $('#'+treatmentRate).css("background","#77dd77")
         }else{
-            $('#'+treatmentRate).css("background","#ff6961")
+            $('#'+treatmentRate).css("background","#fdfd96")
         }
 
         console.log(job_amount);
         console.log(treatment_rate);
 
         $('#'+treatmentRate).val(treatment_rate);
+
+        //Mato vienetas is darbo
+        var regexString = /([0-9])+/;
+        var jobQuantity = $("#winter_jobs_JobQuantity").val().match(regexString);
+
+        console.log("job quant");
+        console.log(jobQuantity);
+
         $('#'+quad).val(job_amount);
 
     }

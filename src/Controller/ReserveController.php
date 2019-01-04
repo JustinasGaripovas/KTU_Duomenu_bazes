@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use GuzzleHttp\Client;
 
 /**
  * Class ReserveController
@@ -18,15 +19,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ReserveController extends AbstractController
 {
+
+    private $client;
+
     /**
      * @Route("/reserve", name="reserve")
      */
     public function index()
     {
+        dump($this->connectionStatus());
+        dump($this->getReserves());
+
         return $this->render('reserve/index.html.twig', [
             'controller_name' => 'ReserveController',
             'connectionStatus' => $this->connectionStatus(),
-            'reserves' => $this->getReserves(),
+            'reserves' => $this->getReserves()
         ]);
     }
 
@@ -36,26 +43,14 @@ class ReserveController extends AbstractController
     public function connectionStatus()
     {
         try {
-            $ctx = stream_context_create(array(
-                    'http' => array(
-                        'timeout' => 1
-                    )
-                )
-            );
-
-            $jsonContent = file_get_contents("http://192.168.192.25/ws2/online", 0, $ctx);
-
-            if ($jsonContent === false) {
-                dump("Something went wrong");
-
-            }
+            $client = new Client();
+            $response = $client->request('GET', 'http://192.168.192.25/ws2/online');
         } catch (Exception $e) {
-
-            $jsonContent = null;
+            $response = null;
             dump("Something went super wrong");
         }
 
-        return $jsonContent;
+        return json_decode($response->getBody());
     }
 
     /**
@@ -64,7 +59,7 @@ class ReserveController extends AbstractController
     public function ajaxAction(Request $request) {
 
         if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
-            return new JsonResponse($this->connectionStatus());
+           return new JsonResponse($this->connectionStatus());
         } else {
             return $this->render('structure/winter_road_content.twig');
         }
@@ -75,33 +70,41 @@ class ReserveController extends AbstractController
      */
     private function getReserves()
     {
-        $userId = "darzvi";
-        $terminalId = 0;
-        $terminalId2 = 0;
-
         try {
-            $ctx = stream_context_create(array(
-                    'http' => array(
-                        'timeout' => 1
-                    )
-                )
-            );
+            $this->client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => 'http://192.168.192.25/',
+                // You can set any number of default request options.
+                'timeout' => 30.0,
+            ]);
 
-            dump("http://192.168.192.25/ws2/r_likuciai/{$userId}/{$terminalId}/{$terminalId2}");
-
-            $jsonContent = file_get_contents("http://192.168.192.25/ws2/r_likuciai/{$userId}/{$terminalId}/{$terminalId2}", 0, $ctx);
-
-            if ($jsonContent === false) {
-                dump("Something went wrong");
-
-            }
+            $response = $this->client->request('POST', 'ws2/likuciai', [
+                'multipart' => [
+                    [
+                        'name' => 'login',
+                        'contents' => 'MASTER'
+                    ],
+                    [
+                        'name' => 'pass',
+                        'contents' => '92405a71c600c7a655ca3a40684ace58'
+                    ],
+                    [
+                        'name' => 'kodas_is',
+                        'contents' => 'AMAMRSKT-015',
+                    ],
+                    [
+                        'name' => 'kodas_os',
+                        'contents' => 'VYTSEL',
+                    ]
+                ]
+            ]);
         } catch (Exception $e) {
 
-            $jsonContent = null;
+            $response = null;
             dump("Something went super wrong");
         }
 
-        return $jsonContent;
+        return json_decode($response->getBody());
     }
 
 

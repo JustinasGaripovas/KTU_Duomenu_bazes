@@ -4,7 +4,9 @@
     "require": {
         "php": "^7.1.3",
         "ext-iconv": "*",
+        "ext-json": "*",
         "friendsofsymfony/user-bundle": "~2.0",
+        "guzzlehttp/guzzle": "~6.0",
         "knplabs/knp-paginator-bundle": "^2.7",
         "knplabs/knp-snappy-bundle": "^1.5",
         "phpoffice/phpspreadsheet": "^1.2",
@@ -31,8 +33,7 @@
         "symfony/validator": "^4.0",
         "symfony/web-server-bundle": "^4.0",
         "symfony/yaml": "^4.0",
-        "twig/extensions": "^1.5",
-      "ext-json": "*"
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

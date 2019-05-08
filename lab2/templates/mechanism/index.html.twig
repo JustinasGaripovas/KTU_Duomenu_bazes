@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mechanizmų sąrašas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Mechanizmų sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('mechanism_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Mašinos numeriai</th>
+                <th>Paskutinės patikros data</th>
+                <th>Ar paruošta nadojimui</th>
+                <th>Tipas</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mechanism in mechanisms %}
+            <tr>
+                <td>{{ mechanism.id }}</td>
+                <td>{{ mechanism.VehicleCode }}</td>
+                <td>{{ mechanism.LastChecked ? mechanism.LastChecked|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mechanism.isUsable ? 'Yes' : 'No' }}</td>
+                <td>{{ mechanism.VehicleType }}</td>
+                <td>
+                    {{ include('mechanism/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('mechanism_edit', {'id': mechanism.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

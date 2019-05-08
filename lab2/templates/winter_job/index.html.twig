@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Žiemos darbų sąrašas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Žiemos darbų sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('winter_job_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Sukurimo data</th>
+                <th>Atlikimo data</th>
+                <th>Numatoma suma</th>
+                <th>Suma</th>
+                <th>Temperatūra</th>
+                <th>Būklė</th>
+                <th>Drėgmės lygis</th>
+                <th>Slėgio lygis</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for winter_job in winter_jobs %}
+            <tr>
+                <td>{{ winter_job.id }}</td>
+                <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ winter_job.FinishedAt ? winter_job.FinishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ winter_job.EstimatedCost }}</td>
+                <td>{{ winter_job.ActualCost }}</td>
+                <td>{{ winter_job.Temperature }}</td>
+                <td>{{ winter_job.GeneralCondition }}</td>
+                <td>{{ winter_job.MoistureLevel }}</td>
+                <td>{{ winter_job.PressureLevel }}</td>
+                <td>
+                    {{ include('winter_job/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('winter_job_edit', {'id': winter_job.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

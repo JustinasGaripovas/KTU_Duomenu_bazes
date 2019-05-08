@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medžiagų sąrašas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Medžiagų sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('materials_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Amount</th>
+                <th>Material</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for material in materials %}
+            <tr>
+                <td>{{ material.id }}</td>
+                <td>{{ material.Amount }}</td>
+                <td>{{ material.Material }}</td>
+                <td>
+                    {{ include('materials/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('materials_edit', {'id': material.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

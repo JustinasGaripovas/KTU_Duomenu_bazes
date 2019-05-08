@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sandelių sąrašas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Sandelių sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('warehouse_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Maksimali talpa</th>
+                <th>Dabartinė talpa</th>
+                <th>Tarnyba</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for warehouse in warehouses %}
+            <tr>
+                <td>{{ warehouse.id }}</td>
+                <td>{{ warehouse.Capasity }}</td>
+                <td>{{ warehouse.CurrentCapacity }}</td>
+                <td>{{ warehouse.getFkSubunit.Name }}</td>
+                <td>
+                    {{ include('warehouse/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('warehouse_edit', {'id': warehouse.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

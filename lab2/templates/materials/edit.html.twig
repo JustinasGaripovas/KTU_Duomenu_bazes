@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medžiagos koregavimas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Medžiagos koregavimas</h1>
+
+    {{ include('materials/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-light btn-block" href="{{ path('materials_index') }}">Atgal į sąrašą</a>
+
+    {{ include('materials/_delete_form.html.twig') }}
+{% endblock %}

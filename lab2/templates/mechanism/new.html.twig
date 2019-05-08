@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naujas mechanizmas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Naujas mechanizmas</h1>
+
+    {{ include('mechanism/_form.html.twig') }}
+    <a class="btn btn-light btn-block" href="{{ path('mechanism_index') }}">Atgal į sąrašą</a>
+
+{% endblock %}

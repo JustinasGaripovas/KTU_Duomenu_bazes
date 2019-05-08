@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kelio ruožo koregavimas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Kelio ruožo koregavimas</h1>
+
+    {{ include('road_section/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-light btn-block" href="{{ path('road_section_index') }}">Atgal į sąrašą</a>
+
+    {{ include('road_section/_delete_form.html.twig') }}
+{% endblock %}

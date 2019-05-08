@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Žiemos darbų koregavimas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Žiemos darbų koregavimas</h1>
+
+    {{ include('winter_job/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-light btn-block" href="{{ path('winter_job_index') }}">Atgal į sąrašą</a>
+
+    {{ include('winter_job/_delete_form.html.twig') }}
+{% endblock %}

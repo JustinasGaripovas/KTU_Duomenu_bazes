@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personalo sąrašas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Personalo sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('person_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Vardas</th>
+                <th>pavardė</th>
+                <th>Telefonas</th>
+                <th>Adresas</th>
+                <th>Paštas</th>
+                <th>Rolė</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for person in people %}
+            <tr>
+                <td>{{ person.id }}</td>
+                <td>{{ person.Name }}</td>
+                <td>{{ person.Surname }}</td>
+                <td>{{ person.Phone }}</td>
+                <td>{{ person.Address }}</td>
+                <td>{{ person.Email }}</td>
+                <td>{{ person.Role }}</td>
+                <td>
+                    {{ include('person/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('person_edit', {'id': person.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

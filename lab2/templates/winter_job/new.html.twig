@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naujas žiemos darbas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Naujas žiemos darbas</h1>
+
+    {{ include('winter_job/_form.html.twig') }}
+    <a class="btn btn-light btn-block" href="{{ path('winter_job_index') }}">Atgal į sąrašą</a>
+{% endblock %}

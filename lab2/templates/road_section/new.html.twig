@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naujas kelio ruožas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Naujas kelio ruožas</h1>
+
+    {{ include('road_section/_form.html.twig') }}
+    <a class="btn btn-light btn-block" href="{{ path('road_section_index') }}">Atgal į sąrašą</a>
+
+{% endblock %}

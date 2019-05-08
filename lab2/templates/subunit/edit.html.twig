@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tarnybos koregavimas{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Tarnybos koregavimas</h1>
+
+    {{ include('subunit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-light btn-block" href="{{ path('subunit_index') }}">Atgal į sąrašą</a>
+
+    {{ include('subunit/_delete_form.html.twig') }}
+{% endblock %}

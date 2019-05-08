@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Job{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Darbų koregavimas</h1>
+
+    {{ include('job/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-light btn-block" href="{{ path('job_index') }}">Atgal į sąrašą</a>
+
+    {{ include('job/_delete_form.html.twig') }}
+{% endblock %}

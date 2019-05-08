@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Darbų sąrašas{% endblock %}
+
+{% block body %}
+
+    <h1 align="center" class="py-3 m-0">Darbų sąrašas</h1>
+
+    <div class="pt-2 mb-2">
+        <a href="{{ path('job_new') }}" class="btn btn-block btn-success">Naujas įrašas</a>
+    </div>
+
+    <table class="table table-hover mb-2 table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Aprašymas</th>
+                <th>Kvadratūra</th>
+                <th>Kvadratūros matas</th>
+                <th>Kodas</th>
+                <th>Pavojaus lygis</th>
+                <th>Žiemos darbo data</th>
+                <th colspan="2">Veiksmai</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job['id'] }}</td>
+                <td>{{ job['descr'] }}</td>
+                <td>{{ job['quad'] }}</td>
+                <td>{{ job['quadUnit'] }}</td>
+                <td>{{ job['code'] }}</td>
+                <td>{{ job['danger'] }}</td>
+                <td>{{ job['createdAt']|date("Y-m-d") }}</td>
+                <td>
+                    {{ include('job/_delete_form.html.twig') }}
+                </td>
+                <td>
+                    <a class="btn btn-success btn-block" href="{{ path('job_edit', {'id': job.id}) }}">Redaguoti</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Nerasta rezultatų</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

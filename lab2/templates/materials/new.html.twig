@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nauja medžiaga{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Nauja medžiaga</h1>
+
+    {{ include('materials/_form.html.twig') }}
+
+    <a class="btn btn-light btn-block" href="{{ path('materials_index') }}">Atgal į sąrašą</a>
+{% endblock %}

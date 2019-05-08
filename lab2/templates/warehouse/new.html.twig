@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Naujas sandelys{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Naujas sandelys</h1>
+
+    {{ include('warehouse/_form.html.twig') }}
+    <a class="btn btn-light btn-block" href="{{ path('warehouse_index') }}">Atgal į sąrašą</a>
+
+{% endblock %}

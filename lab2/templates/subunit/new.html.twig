@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nauja tarnyba{% endblock %}
+
+{% block body %}
+    <h1 align="center" class="py-3 m-0">Nauja tarnyba</h1>
+
+    {{ include('subunit/_form.html.twig') }}
+    <a class="btn btn-light btn-block" href="{{ path('subunit_index') }}">Atgal į sąrašą</a>
+{% endblock %}

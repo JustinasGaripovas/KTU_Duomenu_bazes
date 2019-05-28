@@ -14,7 +14,6 @@ class MainController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager)
     {
-
         return $this->render('main/index.html.twig', [
         ]);
     }

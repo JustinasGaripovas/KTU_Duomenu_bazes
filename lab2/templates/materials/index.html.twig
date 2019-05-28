@@ -13,22 +13,28 @@
         <thead class="thead-light">
             <tr>
                 <th>Id</th>
-                <th>Amount</th>
-                <th>Material</th>
+                <th>Kiekis</th>
+                <th>Medžiaga</th>
+                <th>Žiemos darbo data</th>
+                <th>Sandėlis</th>
                 <th colspan="2">Veiksmai</th>
             </tr>
         </thead>
         <tbody>
         {% for material in materials %}
             <tr>
-                <td>{{ material.id }}</td>
-                <td>{{ material.Amount }}</td>
-                <td>{{ material.Material }}</td>
+                <td>{{ material['id'] }}</td>
+                <td>{{ material['amount'] }}</td>
+                <td>{{ material['material'] }}</td>
+                <td>{{ material['startAt']|date('Y-m-d') }}</td>
+                <td>
+                     <a href="{{ path('warehouse_edit', {'id': material['id']})}}">Sandėlis</a>
+                   </td>
                 <td>
                     {{ include('materials/_delete_form.html.twig') }}
                 </td>
                 <td>
-                    <a class="btn btn-success btn-block" href="{{ path('materials_edit', {'id': material.id}) }}">Redaguoti</a>
+                    <a class="btn btn-success btn-block" href="{{ path('materials_edit', {'id': material['id']}) }}">Redaguoti</a>
                 </td>
             </tr>
         {% else %}

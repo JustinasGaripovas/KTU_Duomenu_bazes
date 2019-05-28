@@ -51,7 +51,7 @@ class Warehouse
 
     public function __toString()
     {
-        return "{$this->getFkSubunit()->getName()} sandėlis";
+        return "{$this->getFkSubunit()->getName()} - {$this->getId()}";
     }
 
     public function __construct()
@@ -64,12 +64,12 @@ class Warehouse
         return $this->id;
     }
 
-    public function getCapasity(): ?float
+    public function getCapacity(): ?float
     {
         return $this->Capacity;
     }
 
-    public function setCapasity(float $Capasity): self
+    public function setCapacity(float $Capasity): self
     {
         $this->Capacity = $Capasity;
 

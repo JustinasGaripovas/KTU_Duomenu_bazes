@@ -49,16 +49,6 @@ class SubunitController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="subunit_show", methods={"GET"})
-     */
-    public function show(Subunit $subunit): Response
-    {
-        return $this->render('subunit/show.html.twig', [
-            'subunit' => $subunit,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="subunit_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Subunit $subunit): Response
@@ -68,6 +58,8 @@ class SubunitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+
 
             return $this->redirectToRoute('subunit_index', [
                 'id' => $subunit->getId(),

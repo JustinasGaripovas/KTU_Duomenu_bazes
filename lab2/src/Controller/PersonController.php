@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Person;
 use App\Form\PersonType;
 use App\Repository\PersonRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,19 @@ class PersonController extends AbstractController
     /**
      * @Route("/", name="person_index", methods={"GET"})
      */
-    public function index(PersonRepository $personRepository): Response
+    public function index(EntityManagerInterface $entityManager,PersonRepository $personRepository): Response
     {
+        $conn = $entityManager
+            ->getConnection();
+        $sql = 'SELECT  person.*,
+                        subunit.name as subunit
+                        FROM person
+                        INNER JOIN subunit ON person.fk_subunit_id = subunit.id; ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
         return $this->render('person/index.html.twig', [
-            'people' => $personRepository->findAll(),
+            'people' => $stmt->fetchAll(),
         ]);
     }
 
@@ -35,9 +45,9 @@ class PersonController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($person);
-            $entityManager->flush();
+
+            $this->getDoctrine()->getManager()->persist($person);
+            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('person_index');
         }
@@ -69,6 +79,7 @@ class PersonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+
             return $this->redirectToRoute('person_index', [
                 'id' => $person->getId(),
             ]);
@@ -79,6 +90,7 @@ class PersonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="person_delete", methods={"DELETE"})

@@ -13,8 +13,9 @@
         <thead class="thead-light">
             <tr>
                 <th>Id</th>
+                <th>Tarnyba</th>
                 <th>Vardas</th>
-                <th>pavardė</th>
+                <th>Pavardė</th>
                 <th>Telefonas</th>
                 <th>Adresas</th>
                 <th>Paštas</th>
@@ -25,13 +26,15 @@
         <tbody>
         {% for person in people %}
             <tr>
-                <td>{{ person.id }}</td>
-                <td>{{ person.Name }}</td>
-                <td>{{ person.Surname }}</td>
-                <td>{{ person.Phone }}</td>
-                <td>{{ person.Address }}</td>
-                <td>{{ person.Email }}</td>
-                <td>{{ person.Role }}</td>
+                <td>{{ person['id'] }}</td>
+                <td>{{ person['subunit'] }}</td>
+                <td>{{ person['name'] }}</td>
+                <td>{{ person['surname'] }}</td>
+                <td>{{ person['phone'] }}</td>
+                <td>{{ person['address'] }}</td>
+                <td>{{ person['email'] }}</td>
+                <td>{{ person['role'] }}</td>
+
                 <td>
                     {{ include('person/_delete_form.html.twig') }}
                 </td>

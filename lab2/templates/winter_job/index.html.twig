@@ -28,8 +28,8 @@
         {% for winter_job in winter_jobs %}
             <tr>
                 <td>{{ winter_job.id }}</td>
-                <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ winter_job.FinishedAt ? winter_job.FinishedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ winter_job.CreatedAt ? winter_job.CreatedAt|date('Y-m-d ') : '' }}</td>
+                <td>{{ winter_job.FinishedAt ? winter_job.FinishedAt|date('Y-m-d ') : '' }}</td>
                 <td>{{ winter_job.EstimatedCost }}</td>
                 <td>{{ winter_job.ActualCost }}</td>
                 <td>{{ winter_job.Temperature }}</td>

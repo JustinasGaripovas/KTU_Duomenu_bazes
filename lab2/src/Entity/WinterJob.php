@@ -91,7 +91,7 @@ class WinterJob
 
     public function __toString()
     {
-       return "{$this->id}";
+       return "{$this->id} - pradžia {$this->getStartedAt()->format('Y-m-d')}";
     }
 
     public function __construct()

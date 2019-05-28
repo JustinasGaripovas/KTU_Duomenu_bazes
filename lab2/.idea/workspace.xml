@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3d41c490-f05c-4c4b-a482-d4855f5b3cda" name="Default Changelist" comment="K">
-      <change afterPath="$PROJECT_DIR$/public/js/datepicker-lt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../DataDog_nd/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DataDog_nd/.idea/codeStyles/Project.xml" afterDir="false" />
@@ -47,24 +46,6 @@
       <change beforePath="$PROJECT_DIR$/../config/routes/dev/web_profiler.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../config/services.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/MaterialsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MaterialsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PersonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PersonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SubunitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubunitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Warehouse.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Warehouse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/WinterJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/WinterJob.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/MechanismType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/MechanismType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PersonType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PersonType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RoadSectionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RoadSectionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SubunitType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SubunitType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/WarehouseType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WarehouseType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/WinterJobType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/WinterJobType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/materials/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/materials/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mechanism/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mechanism/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/person/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/person/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/warehouse/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/warehouse/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/winter_job/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/winter_job/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../nvidia.save" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../public/DAIS_GIS.xlsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../public/DAIS_GIS_1.xlsx" beforeDir="false" />
@@ -515,6 +496,9 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -597,8 +581,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/materials/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
+            <state relative-caret-position="403">
+              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
             </state>
           </provider>
         </entry>
@@ -786,10 +770,9 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-583" />
     <option name="y" value="27" />
-    <option name="width" value="1910" />
-    <option name="height" value="755" />
+    <option name="width" value="1920" />
+    <option name="height" value="988" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -797,6 +780,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -804,62 +788,10 @@
               <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
               <item name="lab2" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Form" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="materials" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="mechanism" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lab2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lab2" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="person" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -897,16 +829,17 @@
       <updated>1557263525815</updated>
       <workItem from="1557263528188" duration="28168000" />
       <workItem from="1557382238635" duration="34000" />
+      <workItem from="1559040590156" duration="2179000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28202000" />
+    <option name="totallyTimeSpent" value="30381000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1920" height="988" extended-state="6" />
+    <frame x="0" y="27" width="960" height="988" extended-state="4" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2946524" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.61318684" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" weight="0.32994652" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -921,8 +854,8 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49946523" weight="0.32938388" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4983957" visible="true" weight="0.33056873" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50160426" side_tool="true" visible="true" weight="0.33056873" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49786097" visible="true" weight="0.33056873" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50213903" side_tool="true" weight="0.33175355" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1359,9 +1292,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding>
-            <element signature="e#349#489#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1402,8 +1332,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/materials/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="28" column="64" selection-start-line="28" selection-start-column="64" selection-end-line="28" selection-end-column="64" />
+        <state relative-caret-position="403">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
     </entry>

@@ -19,32 +19,35 @@ class WinterJobRepository extends ServiceEntityRepository
         parent::__construct($registry, WinterJob::class);
     }
 
-    // /**
-    //  * @return WinterJob[] Returns an array of WinterJob objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findForReport($from, $to)
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('w.StartedAt BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->leftJoin('w.people', 'people', 'w.people == people.id')
+            ->leftJoin('people.fk_subunit', 'fk_subunit', 'people.fk_subunit == fk_subunit.id')
+            ->select('fk_subunit.id','fk_subunit.Name','SUM(w.ActualCost) as actualSum','SUM(w.EstimatedCost) as estimatedSum')
+            ->groupBy('fk_subunit.id','fk_subunit.Name')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?WinterJob
+    public function findWinterJobsBySubunit($from, $to, $id)
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('w.StartedAt BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->leftJoin('w.people', 'people', 'w.people == people.id')
+            ->leftJoin('people.fk_subunit', 'fk_subunit', 'people.fk_subunit == fk_subunit.id')
+            ->andWhere('people.fk_subunit = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
+
 }

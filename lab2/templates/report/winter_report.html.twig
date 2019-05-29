@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Žiemos darbai{% endblock %}
+
+{% block body %}
+
+    <h1 align="center" class="py-3 m-0">Atąskaitos</h1>
+    <br>
+
+    {{ form_start(form) }}
+            {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if exists == true %}
+
+    <table class="table table-sm thead-dark table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Darbas</th>
+            <th>Pradėjimo data</th>
+            <th>Pabaigos data</th>
+            <th>Numatoma kaina, €</th>
+            <th>Išleista suma, €</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for winter_job in report %}
+
+            {% if winter_job['winterJobs']  is not empty %}
+                <tr class="table-secondary">
+                    <td colspan="5">{{ winter_job['Name'] }}</td>
+                </>
+                {% for winter in winter_job['winterJobs'] %}
+
+                <tr>
+                    <td><a href="{{ path('winter_job_show',{'id': winter.id}) }}">Darbas</a></td>
+                    <td>{{ winter.StartedAt ? winter.StartedAt|date('Y-m-d') : '' }}</td>
+                    <td>{{ winter.FinishedAt ? winter.FinishedAt|date('Y-m-d') : '' }}</td>
+                    <td>{{ winter.EstimatedCost }}</td>
+                    <td>{{ winter.ActualCost }} </td>
+                </tr>
+                {% else %}
+
+                {% endfor %}
+
+                <tr>
+                    <td colspan="3"></td>
+                    <td>Suma: {{ winter_job['estimatedSum'] }}</td>
+                    <td>Suma: {{ winter_job['actualSum'] }}</td>
+                </tr>
+            {% endif %}
+
+        {% else %}
+            <tr>
+                <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+{% endblock %}

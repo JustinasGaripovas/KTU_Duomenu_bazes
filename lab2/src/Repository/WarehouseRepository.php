@@ -19,32 +19,26 @@ class WarehouseRepository extends ServiceEntityRepository
         parent::__construct($registry, Warehouse::class);
     }
 
-    // /**
-    //  * @return Warehouse[] Returns an array of Warehouse objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findForReport($from, $to)
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('w.fk_subunit', 'fk_subunit', 'w.fk_subunit == fk_subunit.id')
+            ->select('fk_subunit.id','fk_subunit.Name', 'SUM(w.Capacity) as capacity','SUM(w.CurrentCapacity) as currentCapacity')
+            ->groupBy('fk_subunit.Name','fk_subunit.id')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Warehouse
+    public function findForReportWithSubunit($from, $to, $id)
     {
         return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
+            ->leftJoin('w.fk_subunit', 'fk_subunit', 'w.fk_subunit == fk_subunit.id')
+            ->andWhere('w.fk_subunit = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
     }
-    */
+
 }

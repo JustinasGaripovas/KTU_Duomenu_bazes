@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sandeliai{% endblock %}
+
+{% block body %}
+
+    <h1 align="center" class="py-3 m-0">Atąskaitos</h1>
+    <br>
+
+    {{ form_start(form) }}
+            {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if exists == true %}
+
+    <table class="table table-sm thead-dark table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Sandelys</th>
+            <th>Maksimali talpa</th>
+            <th>Dabartinė talpa</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for warehouse in report %}
+
+            {% if warehouse['warehouse']  is not empty %}
+                <tr class="table-secondary">
+                    <td colspan="5">{{ warehouse['Name'] }}</td>
+                </>
+                {% for warehouse_in in warehouse['warehouse'] %}
+
+                <tr>
+                    <td><a href="{{ path('warehouse_show',{'id': warehouse_in.id}) }}">Sandelis</a></td>
+                    <td>{{ warehouse_in.Capacity }}</td>
+                    <td>{{ warehouse_in.CurrentCapacity }}</td>
+                </tr>
+                {% else %}
+
+                {% endfor %}
+
+                <tr>
+                    <td colspan="1"></td>
+                    <td>Suma: {{ warehouse['capacity'] }}</td>
+                    <td>Suma: {{ warehouse['currentCapacity'] }}</td>
+                </tr>
+            {% endif %}
+
+        {% else %}
+            <tr>
+                <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+{% endblock %}

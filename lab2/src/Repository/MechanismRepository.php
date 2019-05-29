@@ -19,32 +19,18 @@ class MechanismRepository extends ServiceEntityRepository
         parent::__construct($registry, Mechanism::class);
     }
 
-    // /**
-    //  * @return Mechanism[] Returns an array of Mechanism objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findForReport($from,$to)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('m.LastChecked BETWEEN :from AND :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to)
+            ->groupBy('m.fk_winterjob')
+            ->select('COUNT(m.fk_winterjob) as count', 'm.VehicleCode', 'm.isUsable', 'm.VehicleType', 'm.id')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Mechanism
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

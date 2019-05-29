@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReportController!{% endblock %}
+
+{% block body %}
+
+    <h1 align="center" class="py-3 m-0">Atąskaitos</h1>
+    <br>
+
+    <table class="table table-hover">
+        <tbody>
+        <tr>
+            <td>
+                <p class="pb-0 mb-0"><a  href="{{ path('report_winter_job') }}"> Darbų atąskaita </a></p>
+                <p class="pb-0 mb-0">Nurodytu laikotarpiu sudarytų žiemos darbų sąrašas pagal regioną.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="pb-0 mb-0"><a  href="{{ path('report_warehouse') }}"> Sandėlių atąskaita </a></p>
+                <p class="pb-0 mb-0">Nurodytu laikotarpiu sudarytų sandėlių sąrašas pagal regioną.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="pb-0 mb-0"><a  href="{{ path('report_mechanism') }}"> Mechanismų atąskaita </a></p>
+                <p class="pb-0 mb-0">Nurodytu laikotarpiu mechanizmų naudojamumas. </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

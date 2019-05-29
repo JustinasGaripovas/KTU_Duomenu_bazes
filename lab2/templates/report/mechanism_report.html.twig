@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sandeliai{% endblock %}
+
+{% block body %}
+
+    <h1 align="center" class="py-3 m-0">Atąskaitos</h1>
+    <br>
+
+    {{ form_start(form) }}
+            {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    {% if exists == true %}
+
+    <table class="table table-sm thead-dark table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Mechanismas</th>
+            <th>Mašinos numeris</th>
+            <th>Ar dar naudojamas </th>
+            <th>Tipas</th>
+            <th>Naudojimu skaičius darbuose</th>
+        </tr>
+
+        </thead>
+        <tbody>
+        {% for mechanism in report %}
+
+            <tr>
+                <td><a href="{{ path('mechanism_show',{'id': mechanism['id']}) }}">Mechanismas</a></td>
+                <td>{{ mechanism['VehicleCode'] }}</td>
+                <td>{{ mechanism['isUsable'] ? 'Naudojama' : 'Nenaudojama' }}</td>
+                <td>{{ mechanism['VehicleType'] }}</td>
+                <td>{{ mechanism['count'] }}</td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="13">{% trans %}no records found{% endtrans %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+{% endblock %}
